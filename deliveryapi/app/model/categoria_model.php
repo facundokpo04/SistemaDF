@@ -42,7 +42,11 @@ class CategoriaModel
         
         return $this->response->SetResponse(true);
     }
-    
+      public function obtener($id)
+    {
+        return $this->db->from($this->table, $id)
+                        ->fetch();
+    }
       public function update($data,$id)
     {
        

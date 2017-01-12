@@ -16,7 +16,7 @@ $app->group('/categoria/', function () {
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->obtener($args['id']))
+                     json_encode($this->model->categoria->obtener($args['cat_id']))
                    );
     });
     
@@ -46,14 +46,14 @@ $app->group('/categoria/', function () {
         
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->actualizar($req->getParsedBody(), $args['id']))
+                     json_encode($this->model->categoria->actualizar($req->getParsedBody(), $args['cat_id']))
                    );   
     });
     
     $this->delete('eliminar/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->eliminar($args['id']))
+                     json_encode($this->model->categoria->eliminar($args['cat_id']))
                    );   
     });
 });
