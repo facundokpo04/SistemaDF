@@ -16,44 +16,45 @@ $app->group('/categoria/', function () {
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->obtener($args['cat_id']))
+                     json_encode($this->model->categoria->get($args['id']))
                    );
     });
     
     $this->post('insertar', function ($req, $res, $args) {
-        $r = EmpleadoValidation::validate($req->getParsedBody());
+       $r = CategoriaValidation::validate($req->getParsedBody());
         
         if(!$r->response){
             return $res->withHeader('Content-type', 'application/json')
                        ->withStatus(422)
                        ->write(json_encode($r->errors));
         }
-        
+//        
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->registrar($req->getParsedBody()))
+                     json_encode($this->model->categoria->insert($req->getParsedBody()))
                    ); 
     });
     
     $this->put('actualizar/{id}', function ($req, $res, $args) {
-        $r = EmpleadoValidation::validate($req->getParsedBody(), true);
+        $r = CategoriaValidation::validate($req->getParsedBody());
         
         if(!$r->response){
             return $res->withHeader('Content-type', 'application/json')
                        ->withStatus(422)
-                       ->write(json_encode($r->errors));            
+                       ->write(json_encode($r->errors));
         }
-        
+   
+//        
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->actualizar($req->getParsedBody(), $args['cat_id']))
+                     json_encode($this->model->categoria->update($req->getParsedBody(), $args['id']))
                    );   
     });
     
     $this->delete('eliminar/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->eliminar($args['cat_id']))
+                     json_encode($this->model->categoria->delete($args['id']))
                    );   
     });
 });

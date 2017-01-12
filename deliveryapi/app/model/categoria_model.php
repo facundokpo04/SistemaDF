@@ -42,24 +42,28 @@ class CategoriaModel
         
         return $this->response->SetResponse(true);
     }
-      public function obtener($id)
+      public function get($id)
     {
-        return $this->db->from($this->table, $id)
+        return $this->db->from($this->table)
+                        ->where('cat_id', $id)
                         ->fetch();
+        
     }
       public function update($data,$id)
     {
-       
         
-        $this->db->update($this->table, $data, $id)
+        $this->db->update($this->table)
+                ->set($data)
+                 ->where('cat_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);
     }
     
-     public function eliminar($id)
+     public function delete($id)
     {
-        $this->db->deleteFrom($this->table, $id)
+        $this->db->deleteFrom($this->table)
+                ->where('cat_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);
