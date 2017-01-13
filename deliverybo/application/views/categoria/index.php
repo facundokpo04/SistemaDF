@@ -31,7 +31,7 @@
                 </tr>
                <?php foreach($model as $m): ?>
                 <tr>
-                    <td><?php echo $m->cat_id; ?></td>
+                  <td><?php echo $m->cat_id; ?></td>
                   <td><?php echo $m->cat_nombre; ?></td>
                   <td><?php echo $m->cat_descripcion; ?></td>
                   <td><?php echo $m->cat_idEstado; ?></td>

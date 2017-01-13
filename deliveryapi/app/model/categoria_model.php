@@ -53,7 +53,7 @@ class CategoriaModel
     {
         
         $this->db->update($this->table)
-                ->set($data)
+                 ->set($data)
                  ->where('cat_id', $id)
                  ->execute();
         

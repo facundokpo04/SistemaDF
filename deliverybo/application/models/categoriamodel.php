@@ -1,5 +1,6 @@
 <?php
 class CategoriaModel extends CI_Model{
+    
     public function getAll($l = 5, $p = 0){
         return RestApi::call(
             RestApiMethod::GET,
