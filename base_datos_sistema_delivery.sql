@@ -181,14 +181,14 @@ ENGINE = InnoDB;
 -- Table `deliverydb`.`Persona`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `deliverydb`.`Persona` (
-  `pers_id` INT NOT NULL,
+  `per_id` INT NOT NULL,
   `per_nombre` VARCHAR(45) NOT NULL,
   `per_email` VARCHAR(45) NOT NULL,
   `per_documento` VARCHAR(45) NULL,
   `per_password` VARCHAR(45) NULL,
   `per_nacionalidad` VARCHAR(45) NULL,
   `per_perfilUsuario` VARCHAR(45) NULL,
-  PRIMARY KEY (`pers_id`))
+  PRIMARY KEY (`per_id`))
 ENGINE = InnoDB;
 
 
