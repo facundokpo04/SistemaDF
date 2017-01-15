@@ -63,19 +63,60 @@ class Categoria extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function get_categorias() {
-        
+    public function get_categorias($limite, $p) {
+
         $data = [];
         $total = 0;
 
         try {
             $result = $this->cm->getAll($limite, $p);
+
             $total = $result->total;
             $data = $result->data;
         } catch (Exception $e) {
             var_dump($e);
         }
         echo json_encode($data);
+    }
+
+    public function get_categoriaById($idCategoria) {
+
+
+
+        try {
+            $result = $this->cm->obtener($idCategoria);
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+
+    public function updCategoria() {
+
+        $id = $this->input->post('cat_id');
+        $errors = array();
+        $data = [
+            'cat_nombre' => $this->input->post('cat_nombre'),
+            'cat_descripcion' => $this->input->post('cat_descripcion'),
+            'cat_idEstado' => $this->input->post('cat_idEstado'),
+            'cat_Imagen' => $this->input->post('cat_Imagen')
+        ];
+        try {
+
+            if (empty($id)) {
+                $this->cm->registrar($data);
+            } else {
+
+                $this->cm->actualizar($data, $id);
+            }
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+            }
+        }
+
+        echo json_encode($errors);
     }
 
     public function guardar() {
