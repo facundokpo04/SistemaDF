@@ -21,58 +21,26 @@ class Categoria extends CI_Controller {
         $this->load->view('layout/header');
         $this->load->view('layout/menu');
         //definimos variable para traer la data y mantner la logica de paginacion
-        $limite = 5;
-        $data = [];
-        $total = 0;
-
-        try {
-            $result = $this->cm->getAll($limite, $p);
-            $total = $result->total;
-            $data = $result->data;
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-
         //inicializacion de paginacion
-        $this->pagination->initialize(
-                paginacion_config(
-                        site_url("categoria/index"), $total, $limite
-                )
-        );
 
-        $this->load->view('categoria/index.php', [
-            'model' => $data
-        ]);
+
+        $this->load->view('categoria/index.php');
 
         //footer
         $this->load->view('layout/footer');
     }
 
-    public function crud($id = 0) {
-
-        $data = null;
-
-        if ($id > 0)
-            $data = $this->em->obtener($id);
-
-        $this->load->view('template/header', $this->user);
-        $this->load->view('template/menu', $this->user);
-        $this->load->view('empleado/crud', [
-            'model' => $data
-        ]);
-        $this->load->view('template/footer');
-    }
-
-    public function get_categorias($limite, $p) {
+    public function get_categorias($limite=5, $p = 0) {
 
         $data = [];
         $total = 0;
-
+        $limite = 10;
+        $data = new stdClass();
         try {
             $result = $this->cm->getAll($limite, $p);
 
             $total = $result->total;
-            $data = $result->data;
+            $data->data = $result->data;
         } catch (Exception $e) {
             var_dump($e);
         }
@@ -102,10 +70,15 @@ class Categoria extends CI_Controller {
             'cat_idEstado' => $this->input->post('cat_idEstado'),
             'cat_Imagen' => $this->input->post('cat_Imagen')
         ];
+        
+      
         try {
 
             if (empty($id)) {
+                   
+                
                 $this->cm->registrar($data);
+                
             } else {
 
                 $this->cm->actualizar($data, $id);
