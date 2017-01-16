@@ -49,11 +49,52 @@
         {"orderable": true,
             render: function (data, type, row) {
            
-                return '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
+               return '<span class="pull-right" >' +
+                      '<div class="dropdown">' +
+                      '  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+                      '    Acciones' +
+                      '  <span class="caret"></span>' +
+                      '  </button>' +
+                      '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
+                      '    <li><a href="#" title="Editar informacion" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                      '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
+                      '    <li><a href="#" title="Eliminar Categoria" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
+                      '    </ul>' +
+                      '</div>' +
+                      '</span>';
+              // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
+                
+
             }
 
         }
 
+    ],
+    "columnDefs": [
+        {
+          "targets": [3], 
+          "data": "cat_idEstado", 
+          "render": function(data, type, row) {
+            
+            if (data == 0) {
+              return "<span class='label label-warning'>Pendiente</span>";
+            }else if (data == 1) {
+              return "<span class='label label-success'>Habilitado</span>";
+            }else if (data == 2) {
+              return "<span class='label label-danger'>Desaprobado</span>";
+            }
+              
+          }
+        },
+         {
+          "targets": [1], 
+          "data": "cat_nombre", 
+          "orderData": [ 1, 0 ],
+          "render": function(data, type, row) {
+            return "<span style='color:#006699;'><i class='fa fa-cutlery'></i>&nbsp;&nbsp;"+data+"</span>"
+              
+          }
+        },
     ],
     "order": [[0, "asc"]],
 });
