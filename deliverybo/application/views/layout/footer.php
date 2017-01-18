@@ -52,6 +52,7 @@
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
 <script   type="text/javascript" src="<?php echo base_url('assets/js/categoria.js') ?>"></script>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/persona.js') ?>"></script>
 
 </body>
 </html>
