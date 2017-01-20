@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);     ?>
+<?php // var_dump($model);       ?>
 <ol class="breadcrumb">
     <li class="active">Categoria</li>
 </ol>
@@ -99,14 +99,17 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Estado</label>
                                 <div class="col-sm-9"> 
-                                    <!--select--><input type="text" name="mEstado" id="mEstado" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
+                                <select name="mEstado" id="mEstado" class="form-control">                       
+                                    <option value="1">Habilitado</option>
+                                    <option value="2">Deshabilitado</option>
+                                </select>
+                                       </div>
                             </div>
                             <div class="form-group">
 
                                 <label class="col-sm-3 control-label">Imagen</label>
                                 <div class="col-sm-9">
-                                    <input   type="file" id="mImagen">
+                                    <input   type="file"  id="mImagen">
                                 </div>
                             </div>
 

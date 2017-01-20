@@ -30,7 +30,7 @@ class Categoria extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function get_categorias($limite=5, $p = 0) {
+    public function get_categorias($limite = 5, $p = 0) {
 
         $data = [];
         $total = 0;
@@ -62,25 +62,38 @@ class Categoria extends CI_Controller {
 
     public function updCategoria() {
 
-        $id = $this->input->post('cat_id');
+        $config = [
+            "upload_path" => "./assets/imagenes/categoria",
+            "allowed_types" => "png|jpg"
+        ];
         $errors = array();
+
+        $this->load->library("upload", $config);
+
+        $id = $this->input->post('cat_id');
+
+
+
+        if ($this->upload->do_upload('cat_imagen')) {
+            $archivo = array("upload_data" => $this->upload->data());
+            $imagen = $archivo['upload_data']['full_path'];
+        } else {
+            //echo  json_encode($this->upload->display_errors());
+            $imagen = $this->cm->obtener($id)->cat_imagen;
+          
+        }
+
         $data = [
             'cat_nombre' => $this->input->post('cat_nombre'),
             'cat_descripcion' => $this->input->post('cat_descripcion'),
             'cat_idEstado' => $this->input->post('cat_idEstado'),
-            'cat_Imagen' => $this->input->post('cat_Imagen')
+            'cat_Imagen' => $imagen
         ];
-        
-      
         try {
 
             if (empty($id)) {
-                   
-                
                 $this->cm->registrar($data);
-                
             } else {
-
                 $this->cm->actualizar($data, $id);
             }
         } catch (Exception $e) {
