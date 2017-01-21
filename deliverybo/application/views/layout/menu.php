@@ -37,6 +37,18 @@
             <li><a href="persona"><i class="fa fa-circle-o"></i> Persona</a></li>
           </ul>
         </li>
+             <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-building"></i> <span>Empresa</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li class="active"><a href="parametros"><i class="fa fa-cogs"></i>Configuracion Empresa</a></li>
+              <li><a href="sucursal"><i class="fa fa-home"></i> Sucursales</a></li>
+          </ul>
+        </li>
         <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>

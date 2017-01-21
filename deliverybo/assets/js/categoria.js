@@ -101,7 +101,14 @@ $('#mbtnCerrarModal').click(function () {
             //ajax para traer todos los estados
             $('#mIdCategoria').val('');
 })
-
+$('#mCerrarModal').click(function () {
+    
+            $('#mDescripcion').val('');
+            $('#mNombre').val('');
+            $('#mEstado').val('1');//select
+            //ajax para traer todos los estados
+            $('#mIdCategoria').val('');
+})
 
 $('#mbtnUpdCategoria').click(function () {
     var inputFile = $('input#mImagen');

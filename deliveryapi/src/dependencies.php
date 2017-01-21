@@ -35,6 +35,7 @@ $container['model'] = function($c){
         'test'     => new App\Model\TestModel($c->db),
          'auth' => new App\Model\AuthModel($c->db),
         'categoria' => new App\Model\CategoriaModel($c->db),
-        'persona' => new App\Model\PersonaModel($c->db)
+        'persona' => new App\Model\PersonaModel($c->db),
+        'empresa' => new App\Model\EmpresaModel($c->db)
     ];
 };

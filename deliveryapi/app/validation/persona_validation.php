@@ -24,8 +24,8 @@ class PersonaValidation {
         } else {
             $value = $data[$key];
             
-           if(filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $response->errors[$key][] = 'Debe contener como mínimo 4 caracteres';
+           if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $response->errors[$key][] = 'Correo no Valido';
             }
         }
         
