@@ -18,24 +18,26 @@ $container['logger'] = function ($c) {
 };
 
 // Database
-$container['db'] = function($c){
+$container['db'] = function($c) {
     $connectionString = $c->get('settings')['connectionString'];
-    
+
     $pdo = new PDO($connectionString['dns'], $connectionString['user'], $connectionString['pass']);
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
-    return new FluentPDO($pdo); 
+    return new FluentPDO($pdo);
 };
 
 // Models
-$container['model'] = function($c){
-    return (object)[
-        'test'     => new App\Model\TestModel($c->db),
-         'auth' => new App\Model\AuthModel($c->db),
-        'categoria' => new App\Model\CategoriaModel($c->db),
-        'persona' => new App\Model\PersonaModel($c->db),
-        'empresa' => new App\Model\EmpresaModel($c->db)
+$container['model'] = function($c) {
+    return (object) [
+                'test' => new App\Model\TestModel($c->db),
+                'auth' => new App\Model\AuthModel($c->db),
+                'categoria' => new App\Model\CategoriaModel($c->db),
+                'persona' => new App\Model\PersonaModel($c->db),
+                'empresa' => new App\Model\EmpresaModel($c->db),
+                'sucursal' => new App\Model\SucursalModel($c->db),
+                'diahorario' => new App\Model\DiahorarioModel($c->db)
     ];
 };

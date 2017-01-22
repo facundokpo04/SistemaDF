@@ -20,17 +20,9 @@ class Empresa extends CI_Controller {
         //header
         $this->load->view('layout/header');
         $this->load->view('layout/menu');
-        //definimos variable para traer la data y mantner la logica de paginacion
-        //inicializacion de paginacion
-
-
         $this->load->view('Empresa/index.php');
-
-        //footer
         $this->load->view('layout/footer');
     }
-
-    
 
     public function get_EmpresaById($idEmpresa) {
 
@@ -48,34 +40,38 @@ class Empresa extends CI_Controller {
     public function updEmpresa() {
 
         $config = [
-            "upload_path" => "./assets/imagenes/categoria",
+            "upload_path" => "./assets/imagenes/empresa",
             "allowed_types" => "png|jpg"
         ];
         $errors = array();
+        $imagen='';
 
         $this->load->library("upload", $config);
-
-        $id = $this->input->post('cat_id');
-
-
-
+        $id = $this->input->post('idEmpresa');
         if ($this->upload->do_upload('logo')) {
             $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['full_path'];
+            var_dump($archivo);
+            $imagen = $archivo['upload_data']['file_name'];
         } else {
             //echo  json_encode($this->upload->display_errors());
-            $imagen = $this->em->obtener($id)->logo;
-          
+             if (!empty($id)) {
+             $imagen = $this->em->obtener($id)->logo;
+             
+             }
         }
 
         $data = [
             'cuilt' => $this->input->post('cuilt'),
             'telefono' => $this->input->post('telefono'),
             'razonSocial' => $this->input->post('razonSocial'),
-            'imagen' => $imagen
+            'Rubro' => $this->input->post('Rubro'),
+            'Domicilio' => $this->input->post('Domicilio'),
+            'Email' => $this->input->post('Email'),
+            'Pais' => $this->input->post('Pais'),
+            'logo' => $imagen
         ];
+        var_dump($data);
         try {
-
             if (empty($id)) {
                 $this->em->registrar($data);
             } else {
@@ -90,14 +86,6 @@ class Empresa extends CI_Controller {
         echo json_encode($errors);
     }
 
-    public function guardar() {
-        
-    }
-
-    public function eliminar($id) {
-        
-    }
+   
 
 }
-
-

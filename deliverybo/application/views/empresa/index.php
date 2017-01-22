@@ -14,7 +14,7 @@
                     <div class="panel-body">
                           
 
-                        <input id="fIdEmpresa" name="idEmpresa" style="display:none;">
+                        <input id="idEmpresa" name="idEmpresa" style="display:none;">
 
                         <div class="col-lg-6 form-group">
                             <label for="">Razon Social</label>
@@ -108,7 +108,7 @@
                                 <div class="thumbnail">
                                     <!--Foto de 76 x 76 -->
 <!--									<img src="assets/img/Logo-impresion.png" alt="logo">-->
-                                    <img src="../assets/imagenes/categoria/logo.jpg" alt="logo">	
+                                    <img id="imagen" src="" alt="logo">	
                                 </div>
                             </div> 
                         </div>
