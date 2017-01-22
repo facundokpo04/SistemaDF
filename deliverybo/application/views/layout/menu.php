@@ -45,7 +45,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li class="active"><a href="parametros"><i class="fa fa-cogs"></i>Configuracion Empresa</a></li>
+              <li class="active"><a href="empresa"><i class="fa fa-cogs"></i>Configuracion Empresa</a></li>
               <li><a href="sucursal"><i class="fa fa-home"></i> Sucursales</a></li>
           </ul>
         </li>
