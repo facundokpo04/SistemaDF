@@ -54,6 +54,7 @@
 <script   type="text/javascript" src="<?php echo base_url('assets/js/categoria.js') ?>"></script>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/persona.js') ?>"></script>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/empresa.js') ?>"></script>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/empleado.js') ?>"></script>
 </body>
 </html>
 

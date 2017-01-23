@@ -35,6 +35,7 @@
           <ul class="treeview-menu">
               <li class="active"><a href="categoria"><i class="fa fa-circle-o"></i> Categor&iacute;a</a></li>
             <li><a href="persona"><i class="fa fa-circle-o"></i> Persona</a></li>
+            <li><a href="empleado"><i class="fa fa-circle-o"></i> Persona</a></li>
           </ul>
         </li>
              <li class="active treeview">
