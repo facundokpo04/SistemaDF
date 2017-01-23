@@ -37,10 +37,11 @@ class PersonaModel
     public function insert($data)
     {
         
-        $this->db->insertInto($this->table, $data)
+       $query = $this->db->insertInto($this->table, $data)
                  ->execute();
+
         
-        return $this->response->SetResponse(true);
+        return $this->response->SetResponse(true,'Exito',$query);
     }
       public function get($id)
     {
