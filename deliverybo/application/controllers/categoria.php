@@ -102,7 +102,7 @@ class Categoria extends CI_Controller {
             }
         }
 
-        echo json_encode($errors);
+               echo json_encode($errors);
     }
 
     public function guardar() {

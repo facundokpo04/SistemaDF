@@ -20,27 +20,21 @@ class Sucursal extends CI_Controller {
         //header
         $this->load->view('layout/header');
         $this->load->view('layout/menu');
-        //definimos variable para traer la data y mantner la logica de paginacion
-        //inicializacion de paginacion
-
-
-        $this->load->view('categoria/index.php');
-
+        $this->load->view('sucursal/index.php');
         //footer
         $this->load->view('layout/footer');
     }
 
-    public function get_sucursales($limite = 5, $p = 0) {
+    public function get_sucursales($idEmpresa=1) {
 
         $data = [];
-        $total = 0;
-        $limite = 10;
+   ;
         $data = new stdClass();
         try {
-            $result = $this->cm->getAll($limite, $p);
-
+            $result = $this->sm->getAll($idEmpresa);
             $total = $result->total;
             $data->data = $result->data;
+            
         } catch (Exception $e) {
             var_dump($e);
         }
