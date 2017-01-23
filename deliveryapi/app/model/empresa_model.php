@@ -28,7 +28,7 @@ class EmpresaModel
       public function get($id)
     {
         return $this->db->from($this->table)
-                        ->where('idEmpresa', $id)
+                        ->where('emp_id', $id)
                         ->fetch();
         
     }
@@ -37,7 +37,7 @@ class EmpresaModel
         
         $this->db->update($this->table)
                  ->set($data)
-                 ->where('idEmpresa', $id)
+                 ->where('emp_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);
@@ -46,7 +46,7 @@ class EmpresaModel
      public function delete($id)
     {
         $this->db->deleteFrom($this->table)
-                ->where('idEmpresa', $id)
+                ->where('emp_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);
