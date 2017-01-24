@@ -11,8 +11,6 @@ class EmpresaModel extends CI_Model{
     }
     
     public function registrar($data){
-        
-      
         return RestApi::call(
             RestApiMethod::POST,
             'empresa/insertar',

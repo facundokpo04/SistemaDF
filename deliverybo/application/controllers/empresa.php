@@ -80,6 +80,7 @@ class Empresa extends CI_Controller {
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                var_dump($errors);
             }
         }
 
