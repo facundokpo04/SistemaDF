@@ -64,6 +64,38 @@ class SucursalModel extends CI_Model{
             "diahorario/eliminar/$id"
         );
     }
+    
+     
+        public function getPar($idSucursal){
+        return RestApi::call(
+            RestApiMethod::GET,
+            "parametros/obtener/$idSucursal"
+        );
+        
+    }
+      public function registrarPar($data){
+          return RestApi::call(
+            RestApiMethod::POST,
+            'parametros/insertar',
+            $data
+        );
+          
+       
+    }
+    
+       public function actualizarPar($data, $idSucursal){
+        return RestApi::call(
+            RestApiMethod::PUT,
+            "parametros/actualizar/$idSucursal" , $data
+        );
+    }
+    
+     public function eliminarPar( $idSucursal){
+        return RestApi::call(
+            RestApiMethod::DELETE,
+            "parametros/eliminar/$idSucursal"
+        );
+    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.

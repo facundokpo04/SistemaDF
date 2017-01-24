@@ -42,25 +42,25 @@ class ParametrosModel {
         return $this->response->SetResponse(true);
     }
 
-    public function get($id) {
+    public function get($idSucursal) {
         return $this->db->from($this->table)
-                        ->where('par_id', $id)
+                        ->where('par_idSucursal', $idSucursal)
                         ->fetch();
     }
 
-    public function update($data, $id) {
+    public function update($data, $idSucursal) {
 
         $this->db->update($this->table)
                 ->set($data)
-                ->where('par_id', $id)
+                ->where('par_idSucursal', $idSucursal)
                 ->execute();
 
         return $this->response->SetResponse(true);
     }
 
-    public function delete($id) {
+    public function delete($idSucursal) {
         $this->db->deleteFrom($this->table)
-                ->where('par_id', $id)
+                ->where('par_idSucursal', $idSucursal)
                 ->execute();
 
         return $this->response->SetResponse(true);
