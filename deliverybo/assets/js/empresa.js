@@ -11,7 +11,7 @@ iniciar = function (idEmpresa) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
-            $('#idEmpresa').val(res.idEmpresa);
+            $('#idEmpresa').val(res.emp_id);
             $('#txtRazonSocial').val(res.razonSocial);
             $('#txtRubro').val(res.Rubro);
             $('#txtCuit').val(res.cuilt);
@@ -48,7 +48,7 @@ $('#btnUpdEmpresa').click(function () {
         formData.append('telefono', $('#txtTelefono').val());
         formData.append('Email', $('#txtEmail').val());
         formData.append('Pais', $('#txtPais').val());
-        formData.append('idEmpresa', $('#idEmpresa').val());
+        formData.append('emp_id', $('#idEmpresa').val());
         formData.append('logo', fileToUpload);
 
         // now upload the file using $.ajax
@@ -78,7 +78,7 @@ $('#btnUpdEmpresa').click(function () {
                 telefono: $('#txtTelefono').val(),
                 Email: $('#txtEmail').val(),
                 Pais: $('#txtPais').val(),
-                idEmpresa: $('#idEmpresa').val()
+                emp_id: $('#idEmpresa').val()
                
             },
             success: function (res) {

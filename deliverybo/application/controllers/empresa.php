@@ -47,7 +47,8 @@ class Empresa extends CI_Controller {
         $imagen='';
 
         $this->load->library("upload", $config);
-        $id = $this->input->post('idEmpresa');
+        $id = $this->input->post('emp_id');
+        
         if ($this->upload->do_upload('logo')) {
             $archivo = array("upload_data" => $this->upload->data());
             var_dump($archivo);
@@ -83,8 +84,19 @@ class Empresa extends CI_Controller {
                 var_dump($errors);
             }
         }
+        
+                 
+        if(count($errors) === 0) redirect('empresa');
+        else {
+            $this->load->view('layout/header');
+            $this->load->view('layout/menu');
+            $this->load->view('empleado/validation', [
+                'errors' => $errors
+            ]);
+             $this->load->view('layout/footer');
+        }
 
-        echo json_encode($errors);
+     
     }
 
    

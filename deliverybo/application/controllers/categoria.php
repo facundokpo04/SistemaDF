@@ -38,7 +38,6 @@ class Categoria extends CI_Controller {
         $data = new stdClass();
         try {
             $result = $this->cm->getAll($limite, $p);
-
             $total = $result->total;
             $data->data = $result->data;
         } catch (Exception $e) {

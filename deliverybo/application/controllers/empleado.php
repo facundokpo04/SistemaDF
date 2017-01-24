@@ -40,7 +40,6 @@ class Empleado extends CI_Controller {
         $data = new stdClass();
         try {
             $result = $this->em->getAll($limite, $p);
-
             $total = $result->total;
             $data->data = $result->data;
         } catch (Exception $e) {
