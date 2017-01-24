@@ -15,6 +15,7 @@ class Empleado extends CI_Controller {
 //
         $this->load->model('EmpleadoModel', 'em');
         $this->load->model('SucursalModel', 'sm');
+        $this->load->model('PersonaModel', 'pm');
     }
 
     public function index($p = 0) {
@@ -50,13 +51,13 @@ class Empleado extends CI_Controller {
 
     public function get_empleadoById($idEmpleado) {
 
-      $data=new stdClass();
+        $data = new stdClass();
 
         try {
             $result = $this->em->obtener($idEmpleado);
-            $data->empleados= $result;
-            $result = $this->sm->getAll(1);//agrwgar empresa de manera dinamica
-            $data->sucursales= $result;
+            $data->empleados = $result;
+            $result = $this->sm->getAll(1); //
+            $data->sucursales = $result;
         } catch (Exception $e) {
             var_dump($e);
         }
@@ -73,8 +74,9 @@ class Empleado extends CI_Controller {
 
         $this->load->library("upload", $config);
 
-        $id = $this->input->post('emp_id');
+        $id = $this->input->post('per_id');
 
+        $idEmpleado = $this->input->post('emp_id');
 
 
         if ($this->upload->do_upload('emp_imagen')) {
@@ -82,27 +84,47 @@ class Empleado extends CI_Controller {
             $imagen = $archivo['upload_data']['full_path'];
         } else {
             //echo  json_encode($this->upload->display_errors());
-            $imagen = $this->em->obtener($id)->cat_imagen;
-          
+            if(!empty($idEmpleado))
+            $imagen = $this->em->obtener($idEmpleado)->emp_imagen;
         }
 
         $data = [
-            'emp_legajo' => $this->input->post('emp_legajo'),
-            'emp_idPersona' => $this->input->post('emp_idPersona'),
-            'emp_cargo' => $this->input->post('emp_cargo'),
-            'emp_idSucursal' => $this->input->post('emp_idSucursal'),
-            'cat_Imagen' => $imagen
+            'per_nombre' => $this->input->post('per_nombre'),
+            'per_email' => $this->input->post('per_email'),
+            'per_documento' => $this->input->post('per_documento'),
+            'per_password' => $this->input->post('per_password'),
+            'per_nacionalidad' => $this->input->post('per_nacionalidad'),
+            'per_id' => $this->input->post('per_id'),
+            'per_perfilUsuario' => $this->input->post('per_perfilUsuario')
         ];
+        $dataEmpleado = [
+            'emp_legajo' => $this->input->post('emp_legajo'),
+            'emp_cargo' => $this->input->post('emp_cargo'),
+           
+            'emp_idSucursal' => $this->input->post('emp_idSucursal'),
+          
+            'emp_Imagen' => '1'
+        ];
+//        var_dump($dataEmpleado);
+
         try {
 
             if (empty($id)) {
-                $this->em->registrar($data);
+                $result = $this->pm->registrar($data);
+                var_dump($result);
+               
+                
+                $this->em->registrar($dataEmpleado);
             } else {
-                $this->em->actualizar($data, $id);
+                  
+                $result=$this->pm->actualizar($data, $id);
+               
+                $this->em->actualizar($data, $idEmpleado);
             }
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                var_dump($errors);
             }
         }
 

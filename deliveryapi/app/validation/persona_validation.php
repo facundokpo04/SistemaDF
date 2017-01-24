@@ -18,16 +18,16 @@ class PersonaValidation {
             }
         }
         
-        $key = 'per_email';
-        if(empty($data[$key])) {
-            $response->errors[$key][] = 'Este campo es obligatorio';
-        } else {
-            $value = $data[$key];
-            
-           if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $response->errors[$key][] = 'Correo no Valido';
-            }
-        }
+//        $key = 'per_email';
+//        if(empty($data[$key])) {
+//            $response->errors[$key][] = 'Este campo es obligatorio';
+//        } else {
+//            $value = $data[$key];
+//            
+//           if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+//                $response->errors[$key][] = 'Correo no Valido';
+//            }
+//        }
         
         $key = 'per_documento';
         if(!isset($data[$key])) {

@@ -53,12 +53,12 @@ class PersonaModel
       public function update($data,$id)
     {
         
-        $this->db->update($this->table)
+       $query =  $this->db->update($this->table)
                  ->set($data)
                  ->where('per_id', $id)
                  ->execute();
         
-        return $this->response->SetResponse(true);
+        return $this->response->SetResponse(true,'Exito',$query);
     }
     
      public function delete($id)

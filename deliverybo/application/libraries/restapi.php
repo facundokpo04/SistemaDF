@@ -132,6 +132,10 @@ class RestApi{
     public static function destroyToken(){
         self::$ci->session->sess_destroy();
     }
+    
+    public static function getEntityValidationFieldsError(){
+        return self::$entity_validation_fields;
+    }
 }
 
 RestApi::initialize(

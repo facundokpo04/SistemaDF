@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);            ?>
+<?php // var_dump($model);             ?>
 <ol class="breadcrumb">
     <li class="active">Empleado</li>
 </ol>
@@ -138,8 +138,16 @@
                                 <label class="col-sm-3 control-label">Sucursal</label>
                                 <div class="col-sm-9"> 
                                     <select class="form-control" id="mSucursal" name="mSucursal">
+                                        <option value="1">1</option>
 
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-sm-3 control-label">Imagen</label>
+                                <div class="col-sm-9">
+                                    <input   type="file"  id="mImagen">
                                 </div>
                             </div>
 
@@ -150,7 +158,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdEmpleado">Actualizar</button>
+                    <button type="button" class="btn btn-info" id="mbtnUpdEmpleado2">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

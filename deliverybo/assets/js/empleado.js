@@ -33,7 +33,7 @@ $('#tblEmpleados').DataTable({
                         '    </ul>' +
                         '</div>' +
                         '</span>';
-                // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditEmpelado" onClick="selEmpleado(\'' + row.emp_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
+                // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditEmpleado" onClick="selEmpleado(\'' + row.emp_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
 
 
             }
@@ -48,6 +48,21 @@ $('#tblEmpleados').DataTable({
 
 
 
+
+//$.ajax({
+//    type: "POST",
+//    url: baseurl + "index.php/sucursales/get_sucursales/1",
+//    dataType: 'json',
+//    data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+//    success: function (res) {
+//        debugger;
+//        $('#mSucursal').append($('<option>', {
+//            value: res.suc_id,
+//            text: res.suc_nombre
+//
+//        }));
+//    }
+//})
 selEmpleado = function (idEmpleados) {
 
 
@@ -60,10 +75,9 @@ selEmpleado = function (idEmpleados) {
 
             var sucursales = res.sucursales.data;
             var empleados = res.empleados;
-
             $('#mNombre').val(empleados.per_nombre);
             $('#mEmail').val(empleados.per_email);
-            $('#mDocumento').val(empleados.per_documento);//select
+            $('#mDocumento').val(empleados.per_documento); //select
             //ajax para traer todos los estados
             $('#mNacionalidad').val(empleados.per_nacionalidad);
             $('#mPassword').val(empleados.per_password);
@@ -71,48 +85,57 @@ selEmpleado = function (idEmpleados) {
             $('#mIdPersona').val(empleados.per_id);
             $('#mLegajo').val(empleados.emp_legajo);
             $('#mCargo').val(empleados.emp_cargo);
-            debugger;
             for (var i = 0; i < sucursales.length; i++) {
 
                 $('#mSucursal').append($('<option>', {
                     value: sucursales[i].suc_id,
                     text: sucursales[i].suc_nombre
                 }));
-
             }
-            $('#mSucursal option[value='+empleados.suc_id+']').attr('selected','selected');
-
-
-            $('#mImagen').val(res.cat_imagen);
+            $('#mSucursal option[value=' + empleados.suc_id + ']').attr('selected', 'selected');
+//            $('#mImagen').val(res.cat_imagen);
         }
     });
-
 };
 
+$('#mbtnUpdEmpleado2').click(function () {
+    debugger;
+    var inputFile = $('input#mImagen');
+    var fileToUpload = inputFile[0].files[0];
+    // make sure there is file to upload
 
-$('#mbtnUpdPersona').click(function () {
+    // provide the form data
+    // that would be sent to sever through ajax
+    if (fileToUpload != 'undefined') {
+        var formData = new FormData();
+        formData.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
+        formData.append('per_nombre', $('#mNombre').val());
+        formData.append('per_email', $('#mEmail').val());
+        formData.append('per_documento', $('#mDocumento').val());
+        formData.append('per_password', $('#mPassword').val());
+        formData.append('per_nacionalidad', $('#mNacionalidad').val());
+        formData.append('per_id', $('#mIdPersona').val());
+        formData.append('per_perfilUsuario', $('#mPerfilUsuario').val());
+        formData.append('emp_legajo', $('#mLegajo').val());
+        formData.append('emp_cargo', $('#mCargo').val());
+        formData.append('emp_idSucursal', $('#mSucursal').val());
+        formData.append('emp_imagen', fileToUpload);
+        $.ajax({
+            url: baseurl + "index.php/empleado/updEmpleado",
+            type: 'post',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
 
-    $.ajax({
-        type: "POST",
-        url: baseurl + "index.php/persona/updPersona",
-        dataType: 'json',
-        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            per_nombre: $('#mNombre').val(),
-            per_email: $('#mEmail').val(),
-            per_documento: $('#mDocumento').val(),
-            per_password: $('#mPassword').val(),
-            per_Nacionalidad: $('#mNacionalidad').val(),
-            per_id: $('#mIdPersona').val(),
-            per_perfilUsuario: $('#mPerfilUsuario').val()},
-        success: function (res) {
 
 
-            var a = 0;
-            $('#mbtnCerrarModal').click();
-
-            location.reload();
-        }
-    });
+                $('#mbtnCerrarModal').click();
+                location.reload();
+            }
+        });
+    }
 
 });
 
