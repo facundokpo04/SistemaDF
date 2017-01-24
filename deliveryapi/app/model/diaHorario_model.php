@@ -17,7 +17,7 @@ class DiahorarioModel {
 
     public function getAll($idSucursal) {
         $data = $this->db->from($this->table)
-                   ->where('dh_idSucursal', $idSucursal)
+                ->where('dh_idSucursal', $idSucursal)
                 ->orderBy('dh_id DESC')
                 ->fetchAll();
 
@@ -37,7 +37,7 @@ class DiahorarioModel {
 
         var_dump($data);
         $this->db->insertInto($this->table, $data)
-                   ->execute();
+                ->execute();
 
         return $this->response->SetResponse(true);
     }

@@ -39,6 +39,7 @@ $container['model'] = function($c) {
                 'empresa' => new App\Model\EmpresaModel($c->db),
                 'sucursal' => new App\Model\SucursalModel($c->db),
                 'diahorario' => new App\Model\DiahorarioModel($c->db),
-                'empleado' => new App\Model\EmpleadoModel($c->db)
+                'empleado' => new App\Model\EmpleadoModel($c->db),
+                'parametros' => new App\Model\ParametrosModel($c->db)
     ];
 };
