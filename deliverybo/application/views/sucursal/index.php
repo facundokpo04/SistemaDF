@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);        ?>
+<?php // var_dump($model);              ?>
 <ol class="breadcrumb">
     <li class="active">Sucursal</li>
 </ol>
@@ -102,41 +102,87 @@
                                         <span class="input-group-addon cajaParametro "><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtZona" id="txtZona" type="text" autocomplete="on" autofocus="" tabindex="1" required="">
                                     </div>	
                                 </div>  
+
                                 <div class="col-sm-6 form-group">
                                     <label for="">Pedido Minimo</label>
+
                                     <div class="input-group">
-                                        <span class="input-group-addon cajaParametro "><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtPedidoM" id="txtPedidoM" type="text" autocomplete="on" autofocus="" tabindex="2" required="">
+                                        <input  id="rangepm" type="range" value="15" max="500" min="0" step="10" onchange="txtPedidoM.value = rangepm.value" /> 
+                                        <span class="input-group-addon cajaParametro "><i class="fa fa-money fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtPedidoM" id="txtPedidoM" type="text" autocomplete="on" autofocus="" tabindex="2" required="">
                                     </div>	
-                                </div>  
-                                <div class="col-sm-6">
-                                   <input type="text" value="-180,-45" class="slider form-control" data-slider-min="-200" data-slider-max="200" data-slider-step="5" data-slider-value="[-100,100]" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red" data-value="-180,-45" >
 
-
-                                   
                                 </div> 
 
                                 <div class="col-sm-6 form-group">
                                     <label for="">Costo de Envio</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon cajaParametro"><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtCostoE" id="txtCostoE" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
+                                        <span class="input-group-addon cajaParametro"><i class="fa fa-money  fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtCostoE" id="txtCostoE" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
                                     </div>	
-                                </div>  
+                                </div> 
+                                <div class="col-sm-6 form-group">
+                                    <label for="">Tiempo Entrega</label>
+
+                                    <div class="input-group">
+                                        <input  id="rangete" type="range" value="15" max="500" min="0" step="10" onchange="txtTiempoe.value = rangete.value" /> 
+                                        <span class="input-group-addon cajaParametro "><i class="fa  fa-hourglass-half fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtTiempoe" id="txtTiempoe" type="text" autocomplete="on" autofocus="" tabindex="2" required="">
+                                    </div>	
+
+                                </div> 
                             </div>
                         </div>
-                        <div class="tab-pane active" id="tabHorarios">  
-                            <div class="media-body">
+                       
+                        
+                      <div class="tab-pane active" id="tabHorarios">  
 
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane active" id="tabHorarios">  
                         <div class="media-body">
+                            <table id="tabla">
+                                <!-- Cabecera de la tabla -->
+                                <thead>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Hora Apertura</th>
+                                        <th>Hora Cierre</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- Cuerpo de la tabla con los campos -->
+                                <tbody>
+
+                                    <!-- fila base para clonar y agregar al final -->
+                                    <tr class="fila-base">
+                                        <td>
+                                            <select class="dia">
+                                                <option value="1">Lunes</option>
+                                                <option value="2">Martes</option>
+                                                <option value="3">Miercoles</option>
+                                                <option value="4">Jueves</option>
+                                                <option value="5">Viernes</option>
+                                                <option value="6">Sabado</option>
+                                                <option value="0">Domingo</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="horaapertura" /></td>
+                                        <td><input type="text" class="horacierre" /></td>
+
+                                        <td class="eliminar">Eliminar</td>
+                                    </tr>
+                                    <!-- fin de código: fila base -->
+
+                                   
+                                    <!-- fin de código: fila de ejemplo -->
+
+                                </tbody>
+                            </table>
+                            <!-- Botón para agregar filas -->
+                            <input type="button" id="agregar" value="Agregar fila" />
 
 
                         </div>
                     </div>
+                    </div>
+
+
 
                 </div> 
 
@@ -151,13 +197,6 @@
 
 
 <style>
-
-
-    .reviews {
-        color: #555;    
-        font-weight: bold;
-        margin: 10px auto 20px;
-    }
     .tab-content {
         padding: 50px 15px;
         border: 1px solid #ddd;
@@ -168,16 +207,32 @@
     .width_input{
         max-width: 50%;
     }
+
+    input[type="range"] {
+        position: relative;
+        margin-left: 1em;
+    }
+    input[type="range"]:after,
+    input[type="range"]:before {
+        position: absolute;
+        top: 1em;
+        color: #aaa;
+    }
+    input[type="range"]:before {
+        left:0em;
+        content: attr(min);
+    }
+    input[type="range"]:after {
+        right: 0em;
+        content: attr(max);
+    }
 </style>
-<script>
-  $(function () {
-    /* BOOTSTRAP SLIDER */
-    $('.slider').slider();
 
-
- 
-  });
-</script>
 <script type="text/javascript">
+
     var baseurl = "<?php echo base_url(); ?>";
+
+
+
+
 </script>

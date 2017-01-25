@@ -1,3 +1,20 @@
+$("#ex14").slider({
+    ticks: [0, 100, 200, 300, 400],
+    ticks_positions: [0, 30, 60, 70, 90, 100],
+    ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
+    ticks_snap_bounds: 30
+});
+
+
+$("#agregar").on('click', function(){
+		$("#tabla tbody tr:eq(0)").clone().removeClass('fila-base').appendTo("#tabla tbody");
+	});
+ 
+	// Evento que selecciona la fila y la elimina 
+	$(document).on("click",".eliminar",function(){
+		var parent = $(this).parents().get(0);
+		$(parent).remove();
+	});
 $('#tbSucursales').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,

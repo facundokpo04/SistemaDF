@@ -51,11 +51,14 @@
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
-<!-- Ion Slider -->
-<script src="<?php echo base_url(); ?>assets/plugins/ionslider/ion.rangeSlider.min.js"></script>
+
 <!-- Bootstrap slider -->
 <script src="<?php echo base_url(); ?>assets/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 
+
+
+
+ 
 <?php if($this->uri->segment(1)=='categoria'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/categoria.js') ?>"></script>
 <?php }?>
