@@ -80,11 +80,11 @@ class Empleado extends CI_Controller {
 
         if ($this->upload->do_upload('emp_imagen')) {
             $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['full_path'];
+            $imagen = $archivo['upload_data']['file_name'];
         } else {
             //echo  json_encode($this->upload->display_errors());
-            if(!empty($idEmpleado))
-            $imagen = $this->em->obtener($idEmpleado)->emp_imagen;
+            if (!empty($idEmpleado))
+                $imagen = $this->em->obtener($idEmpleado)->emp_imagen;
         }
 
         $data = [
@@ -96,29 +96,33 @@ class Empleado extends CI_Controller {
             'per_id' => $this->input->post('per_id'),
             'per_perfilUsuario' => $this->input->post('per_perfilUsuario')
         ];
-        $dataEmpleado = [
-            'emp_legajo' => $this->input->post('emp_legajo'),
-            'emp_cargo' => $this->input->post('emp_cargo'),
-           
-            'emp_idSucursal' => $this->input->post('emp_idSucursal'),
-          
-            'emp_Imagen' => '1'
-        ];
+        
 //        var_dump($dataEmpleado);
 
         try {
 
-            if (empty($id)) {
+            if (empty($idEmpleado)) {
                 $result = $this->pm->registrar($data);
-                var_dump($result);
-               
-                
+                $id = $result->result;
+                $dataEmpleado = [
+                    'emp_legajo' => $this->input->post('emp_legajo'),
+                    'emp_cargo' => $this->input->post('emp_cargo'),
+                    'emp_idSucursal' => $this->input->post('emp_idSucursal'),
+                    'emp_idPersona' => $id,
+                    'emp_imagen' => $imagen
+                ];
                 $this->em->registrar($dataEmpleado);
             } else {
-                  
-                $result=$this->pm->actualizar($data, $id);
-               
-                $this->em->actualizar($data, $idEmpleado);
+                $dataEmpleado = [
+                    'emp_legajo' => $this->input->post('emp_legajo'),
+                    'emp_cargo' => $this->input->post('emp_cargo'),
+                    'emp_idSucursal' => $this->input->post('emp_idSucursal'),
+                    'emp_idPersona' => $id,
+                    'emp_imagen' => '1'
+                ];
+                $result = $this->pm->actualizar($data, $id);
+
+                $this->em->actualizar($dataEmpleado, $idEmpleado);
             }
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {

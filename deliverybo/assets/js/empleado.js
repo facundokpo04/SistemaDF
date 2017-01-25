@@ -82,7 +82,8 @@ selEmpleado = function (idEmpleados) {
             $('#mNacionalidad').val(empleados.per_nacionalidad);
             $('#mPassword').val(empleados.per_password);
             $('#mPerfilUsuario').val(empleados.per_perfilUsuario);
-            $('#mIdPersona').val(empleados.per_id);
+            $('#mIdPersona').val(empleados.emp_idPersona);
+            $('#mIdEmpleado').val(empleados.emp_id);
             $('#mLegajo').val(empleados.emp_legajo);
             $('#mCargo').val(empleados.emp_cargo);
             for (var i = 0; i < sucursales.length; i++) {
@@ -92,14 +93,18 @@ selEmpleado = function (idEmpleados) {
                     text: sucursales[i].suc_nombre
                 }));
             }
+            debugger;
             $('#mSucursal option[value=' + empleados.suc_id + ']').attr('selected', 'selected');
+            $('#imagen').attr('src', '../assets/imagenes/empleado/'+empleados.emp_imagen);
 //            $('#mImagen').val(res.cat_imagen);
         }
     });
 };
 
+
+
 $('#mbtnUpdEmpleado2').click(function () {
-    debugger;
+   
     var inputFile = $('input#mImagen');
     var fileToUpload = inputFile[0].files[0];
     // make sure there is file to upload
@@ -115,6 +120,7 @@ $('#mbtnUpdEmpleado2').click(function () {
         formData.append('per_password', $('#mPassword').val());
         formData.append('per_nacionalidad', $('#mNacionalidad').val());
         formData.append('per_id', $('#mIdPersona').val());
+        formData.append('emp_id', $('#mIdEmpleado').val());
         formData.append('per_perfilUsuario', $('#mPerfilUsuario').val());
         formData.append('emp_legajo', $('#mLegajo').val());
         formData.append('emp_cargo', $('#mCargo').val());
@@ -139,4 +145,19 @@ $('#mbtnUpdEmpleado2').click(function () {
 
 });
 
+
+$('#mCerrarModal,#mbtnCerrarModal').click(function () {
+    
+        $('#mNombre').val('');
+            $('#mEmail').val('');
+            $('#mDocumento').val(''); //select
+            //ajax para traer todos los estados
+            $('#mNacionalidad').val('');
+            $('#mPassword').val('');
+            $('#mPerfilUsuario').val('');
+            $('#mIdPersona').val('');
+            $('#mIdEmpleado').val('');
+            $('#mLegajo').val('');
+            $('#mCargo').val('');
+})
          

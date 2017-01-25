@@ -2,7 +2,7 @@
 
 use App\Lib\Auth,
     App\Lib\Response,
-    App\Validation\EmpeladoValidation,
+    App\Validation\EmpleadoValidation,
     App\Middleware\AuthMiddleware;
 
 $app->group('/empleado/', function () {

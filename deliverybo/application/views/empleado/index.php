@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);             ?>
+<?php // var_dump($model);                     ?>
 <ol class="breadcrumb">
     <li class="active">Empleado</li>
 </ol>
@@ -67,88 +67,123 @@
     .example-modal .modal {
         background: transparent !important;
     }
+    .modal-dialog {
+        width: 90%;
+        height: 90%;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .modal-content {
+        height: auto;
+        min-height: 100%;
+        border-radius: 0;
+    }
+    .modal {
+        text-align: center;
+    }
 </style>
 
 <div class="example-modal modal fade" id="modalEditEmpleado" tabindex="-1" >
     <div class="modal">
         <div class="modal-dialog">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar/ Eliminar Categor&iacute;a</h4>
+                    <h4 class="modal-title">Agregar/ Eliminar Empleado</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <!-- parametros ocultos -->
                         <input type="hidden" id="mIdEmpleado">
+                        <input type="hidden" id="mIdPersona">
+
                         <div class="box-body">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Nombre Persona</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Nombre Persona</label>
+                                    <div class="col-sm-9"> 
+                                        <input  type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Legajo</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="number" name="mLegajo" id="mLegajo" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Legajo</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mLegajo" id="mLegajo" class="form-control" id="mtxtNombre" placeholder="">
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Documento</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="number" min="6" max="8" name="mDocumento" id="mDocumento" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Email</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="email" name="mEmail" id="mEmail" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Password</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="mPassword" id="mPassword" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Nacionalidad</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Perfil Usuario</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="mPerfilUsuario" id="mPerfilUsuario" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Cargo</label>
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="mCargo" id="mCargo" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-3 control-label">Sucursal</label>
+                                    <div class="col-sm-9"> 
+                                        <select class="form-control" id="mSucursal" name="mSucursal">
+                                            <option value="1">1</option>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Documento</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mDocumento" id="mDocumento" class="form-control" id="mtxtNombre" placeholder="">
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Email</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mEmail" id="mEmail" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Password</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mPassword" id="mPassword" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Nacionalidad</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
-                            </div>
+                            <div class="col-lg-12 form-group">
+                                <label for="">Imagen Empleapo</label>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Perfil Usuario</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mPerfilUsuario" id="mPerfilUsuario" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Cargo</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mCargo" id="mCargo" class="form-control" id="mtxtNombre" placeholder="">
-                                </div>
-                            </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
+                                    <input class="form-control" type="file" name="mImagen" id="mImagen" tabindex="16">  
+                                </div>  
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Sucursal</label>
-                                <div class="col-sm-9"> 
-                                    <select class="form-control" id="mSucursal" name="mSucursal">
-                                        <option value="1">1</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <label class="col-sm-3 control-label">Imagen</label>
-                                <div class="col-sm-9">
-                                    <input   type="file"  id="mImagen">
-                                </div>
+                                <div class="form-group">    
+                                    <br>	
+                                    <div class="thumbnail">
+                                        <!--Foto de 76 x 76 -->
+    <!--									<img src="assets/img/Logo-impresion.png" alt="logo">-->
+                                        <img id="imagen" src="" alt="logo">	
+                                    </div>
+                                </div> 
                             </div>
 
 
@@ -156,7 +191,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="text-align: center;">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-info" id="mbtnUpdEmpleado2">Actualizar</button>
                 </div>

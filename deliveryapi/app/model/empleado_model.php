@@ -18,7 +18,7 @@ class EmpleadoModel {
     public function getAll($l, $p) {
       
         $data = $this->db->from($this->table.' e')
-                ->select('p.*,s.*,emp.*')
+                ->select('p.*,s.*')
                 ->innerJoin('persona p ON e.emp_idPersona =  p.per_id')
                 ->innerJoin('sucursal s ON e.emp_idSucursal =  s.suc_id')
                 ->innerJoin('persona p ON e.emp_idPersona =  p.per_id')
