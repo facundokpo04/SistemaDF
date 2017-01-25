@@ -47,8 +47,6 @@ class Sucursal extends CI_Controller {
     }
     public function get_sucursalById($idSucursal) {
 
-
-
         try {
             $result = $this->sm->obtener($idSucursal);
             $data = $result;
