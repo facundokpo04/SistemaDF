@@ -118,7 +118,7 @@ class Empleado extends CI_Controller {
                     'emp_cargo' => $this->input->post('emp_cargo'),
                     'emp_idSucursal' => $this->input->post('emp_idSucursal'),
                     'emp_idPersona' => $id,
-                    'emp_imagen' => '1'
+                    'emp_imagen' => $imagen
                 ];
                 $result = $this->pm->actualizar($data, $id);
 

@@ -68,6 +68,9 @@
 <?php if($this->uri->segment(1)=='sucursal'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/sucursal.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(1)=='empleado'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/empleado.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 
