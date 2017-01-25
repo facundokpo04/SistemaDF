@@ -1,9 +1,9 @@
 
-<?php // var_dump($model);              ?>
+<?php // var_dump($model);                    ?>
 <ol class="breadcrumb">
     <li class="active">Sucursal</li>
 </ol>
-<div class="panel panel-default">
+<div id="herramientas" class="panel panel-default">
     <div class="panel-heading">
         Herramientas
     </div>
@@ -19,7 +19,7 @@
     </div>
 </div>
 <br/>
-<div class="row">
+<div id="sucursales" class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
@@ -51,7 +51,7 @@
         <!-- /.box -->
     </div>
 </div>
-<div class="row" style="display:block;">               
+<div id="sucursal" class="row" style="display:block;">               
     <div class="col-lg-12">     
         <div class="panel panel-bluedark">
             <div class="panel-heading">Datos de la Sucursal</div>
@@ -130,56 +130,72 @@
                                 </div> 
                             </div>
                         </div>
-                       
-                        
-                      <div class="tab-pane active" id="tabHorarios">  
+                        <div class="tab-pane" id="tabHorarios">  
 
-                        <div class="media-body">
-                            <table id="tabla">
-                                <!-- Cabecera de la tabla -->
-                                <thead>
-                                    <tr>
-                                        <th>Dia</th>
-                                        <th>Hora Apertura</th>
-                                        <th>Hora Cierre</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
+                            <div class="media-body">
+                                <table class="table table-bordered" id="tablahorario">
+                                    <!-- Cabecera de la tabla -->
+                                    <thead>
+                                        <tr>
+                                            <th>Dia</th>
+                                            <th>Hora Apertura</th>
+                                            <th>Hora Cierre</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
 
-                                <!-- Cuerpo de la tabla con los campos -->
-                                <tbody>
+                                    <!-- Cuerpo de la tabla con los campos -->
+                                    <tbody>
 
-                                    <!-- fila base para clonar y agregar al final -->
-                                    <tr class="fila-base">
-                                        <td>
-                                            <select class="dia">
-                                                <option value="1">Lunes</option>
-                                                <option value="2">Martes</option>
-                                                <option value="3">Miercoles</option>
-                                                <option value="4">Jueves</option>
-                                                <option value="5">Viernes</option>
-                                                <option value="6">Sabado</option>
-                                                <option value="0">Domingo</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" class="horaapertura" /></td>
-                                        <td><input type="text" class="horacierre" /></td>
+                                        <!-- fila base para clonar y agregar al final -->
+                                        <tr class="fila-base">
+                                            <td>
+                                                <select style="width: 90%" class="form-control">
+                                                    <option value="1">Lunes</option>
+                                                    <option value="2">Martes</option>
+                                                    <option value="3">Miercoles</option>
+                                                    <option value="4">Jueves</option>
+                                                    <option value="5">Viernes</option>
+                                                    <option value="6">Sabado</option>
+                                                    <option value="0">Domingo</option>
+                                                </select>
+                                            </td>
+                                            <td> <div id="datetimepicker1" class="input-append">
+                                                    <input id="horaApertura" data-format="hh:mm:ss" type="text" style="width: 90%"></input>
+                                                    <span class="add-on">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="datetimepicker2" class="input-append">
+                                                    <input id="horaCierre" data-format="hh:mm:ss" type="text" style="width: 90%"></input>
+                                                    <span class="add-on">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
+                                                </div>
 
-                                        <td class="eliminar">Eliminar</td>
-                                    </tr>
-                                    <!-- fin de código: fila base -->
+                                            </td>
 
-                                   
-                                    <!-- fin de código: fila de ejemplo -->
+                                            <td class="eliminar"><a href="#" title="Eliminar Sucursal" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> </a></td>
 
-                                </tbody>
-                            </table>
-                            <!-- Botón para agregar filas -->
-                            <input type="button" id="agregar" value="Agregar fila" />
+                                        </tr>
+                                        <!-- fin de código: fila base -->
 
 
+                                        <!-- fin de código: fila de ejemplo -->
+
+                                    </tbody>
+                                </table>
+                                <!-- Botón para agregar filas -->
+                                <input type="button" id="agregar" value="Agregar fila" />
+                                <input type="button" id="guardarHor" value="Guardar" />
+
+
+                            </div>
                         </div>
-                    </div>
                     </div>
 
 
@@ -229,6 +245,8 @@
 </style>
 
 <script type="text/javascript">
+    //Timepicker
+
 
     var baseurl = "<?php echo base_url(); ?>";
 

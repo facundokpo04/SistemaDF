@@ -1,20 +1,73 @@
-$("#ex14").slider({
-    ticks: [0, 100, 200, 300, 400],
-    ticks_positions: [0, 30, 60, 70, 90, 100],
-    ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
-    ticks_snap_bounds: 30
+
+function VerForm() {
+    $("#sucursal").show();// Mostramos el formulario
+    $("#herramientas").hide();// ocultamos el boton nuevo
+    $("#sucursales").hide();
+}
+
+
+function OcultarForm() {
+    $("#sucursal").hide();// Mostramos el formulario
+    $("#herramientas").show();// ocultamos el boton nuevo
+    $("#sucursales").show();
+}
+
+
+OcultarForm();
+$('#datetimepicker1').datetimepicker({
+    pickDate: false,
+    pickSeconds: false,
+    format: "hh:mm",
+    pick12HourFormat: false
 });
 
+$('#datetimepicker2').datetimepicker({
+    pickDate: false,
+    pickSeconds: false,
+    format: "hh:mm",
+    pick12HourFormat: false
+});
 
-$("#agregar").on('click', function(){
-		$("#tabla tbody tr:eq(0)").clone().removeClass('fila-base').appendTo("#tabla tbody");
-	});
- 
-	// Evento que selecciona la fila y la elimina 
-	$(document).on("click",".eliminar",function(){
-		var parent = $(this).parents().get(0);
-		$(parent).remove();
-	});
+$("#agregar").on('click', function () {
+    $('#tablahorario tr:last').after(' <tr class="fila-base">' +
+            ' <td>' +
+            '      <select style="width: 90%" class="form-control">' +
+            '    <option value="1">Lunes</option>' +
+            '     <option value="2">Martes</option>' +
+            '    <option value="3">Miercoles</option>' +
+            '   <option value="4">Jueves</option>' +
+            '   <option value="5">Viernes</option>' +
+            '     <option value="6">Sabado</option>' +
+            '  <option value="0">Domingo</option>' +
+            ' </select>' +
+            '  </td>' +
+            ' <td> <div id="datetimepicker1" class="input-append">' +
+            '  <input id="horaApertura" data-format="hh:mm:ss" type="text" style="width: 90%"></input>' +
+            ' <span class="add-on">' +
+            '   <i class="fa fa-clock-o"></i>' +
+            ' </span>' +
+            '  </div>' +
+            '</div>' +
+            '  </td>' +
+            ' <td>' +
+            '   <div id="datetimepicker2" class="input-append">' +
+            '  <input id="horaCierre" data-format="hh:mm:ss" type="text" style="width: 90%"></input>' +
+            '  <span class="add-on">' +
+            '    <i class="fa fa-clock-o"></i>' +
+            '  </span>' +
+            '   </div>' +
+            '   </div>' +
+            ' </td>' +
+            ' <td class="eliminar"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
+            ' </tr>');
+});
+
+// Evento que selecciona la fila y la elimina 
+$(document).on("click", ".eliminar", function () {
+    var parent = $(this).parents().get(0);
+    $(parent).remove();
+});
+
 $('#tbSucursales').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
@@ -60,7 +113,7 @@ $('#tbSucursales').DataTable({
 
     ],
     "columnDefs": [
-      
+
         {
             "targets": [1],
             "data": "suc_nombre",
@@ -74,9 +127,10 @@ $('#tbSucursales').DataTable({
     "order": [[0, "asc"]],
 });
 
-function cargarDataSucursal(idSucursal){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
-		
-$.ajax({
+
+function cargarDataSucursal(idSucursal) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+    VerForm();
+    $.ajax({
         type: "POST",
         url: baseurl + "index.php/sucursal/get_sucursalById/" + idSucursal,
         dataType: 'json',
@@ -90,8 +144,8 @@ $.ajax({
 
         }
     });
-		
- 	}	
+
+}
 
 
 /* 
