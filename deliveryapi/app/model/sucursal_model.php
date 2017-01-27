@@ -35,11 +35,11 @@ class SucursalModel {
 
     public function insert($data) {
 
-        var_dump($data);
-        $this->db->insertInto($this->table, $data)
-                   ->execute();
+   
+       $query = $this->db->insertInto($this->table, $data)
+                ->execute();
 
-        return $this->response->SetResponse(true);
+        return $this->response->SetResponse(true, 'Exito', $query);
     }
 
     public function get($id) {

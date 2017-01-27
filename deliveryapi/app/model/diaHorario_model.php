@@ -18,7 +18,7 @@ class DiahorarioModel {
     public function getAll($idSucursal) {
         $data = $this->db->from($this->table)
                 ->where('dh_idSucursal', $idSucursal)
-                ->orderBy('dh_id DESC')
+                ->orderBy('dh_id')
                 ->fetchAll();
 
         $total = $this->db->from($this->table)
@@ -66,4 +66,12 @@ class DiahorarioModel {
         return $this->response->SetResponse(true);
     }
 
+     public function deleteAll($idSucursal) {
+        $this->db->deleteFrom($this->table)
+                ->where('dh_idSucursal', $idSucursal)
+                ->execute();
+
+        return $this->response->SetResponse(true);
+    }
+    
 }

@@ -90,7 +90,7 @@ class Empresa extends CI_Controller {
         else {
             $this->load->view('layout/header');
             $this->load->view('layout/menu');
-            $this->load->view('empleado/validation', [
+            $this->load->view('empresa/validation', [
                 'errors' => $errors
             ]);
              $this->load->view('layout/footer');

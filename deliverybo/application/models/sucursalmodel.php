@@ -86,7 +86,7 @@ class SucursalModel extends CI_Model{
        public function actualizarPar($data, $idSucursal){
         return RestApi::call(
             RestApiMethod::PUT,
-            "parametros/actualizar/$idSucursal" , $data
+            "parametros/actualizar/$idSucursal",$data
         );
     }
     

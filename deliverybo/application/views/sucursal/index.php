@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                    ?>
+<?php // var_dump($model);                     ?>
 <ol class="breadcrumb">
     <li class="active">Sucursal</li>
 </ol>
@@ -10,11 +10,9 @@
     <!-- /.panel-heading -->
     <div class="panel-body">
         <div class="btn-group"> 
-            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditSucursal" >Agregar</button>
+            <button class="btn btn-primary" type="button" id="btnAgregarSuc" >Agregar</button>
         </div>
-        <div class="btn-group"> 
-            <button class="btn btn-danger" type="button" onClick="">Eliminar</button>
-        </div>
+       
 
     </div>
 </div>
@@ -58,7 +56,7 @@
             <div class="panel-body" >
 
 
-                <input id="idEmpresa" name="idEmpresa" style="display:none;">
+                <input id="idSucursal" name="idSucursa" style="display:none;">
 
                 <div class="col-sm-6 form-group">
                     <label for="">Nombre</label>
@@ -87,19 +85,19 @@
                     </div>	
                 </div>    
                 <div class="col-sm-12">
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist" id="paneles">
                         <li class="active"><a href="#tabParametros" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Parametros</h4></a></li>
                         <li><a href="#tabHorarios" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Horarios Antencion</h4></a></li>
 
                     </ul> 
-                    <div class="tab-content">
+                    <div class="tab-content" id="panelCont">
                         <div class="tab-pane active" id="tabParametros">  
                             <div class="media-body">
 
                                 <div class="col-sm-6 form-group">
                                     <label for="">Zona Entrega</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon cajaParametro "><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtZona" id="txtZona" type="text" autocomplete="on" autofocus="" tabindex="1" required="">
+                                        <span class="input-group-addon cajaParametro "><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtZonaE" id="txtZonaE" type="text" autocomplete="on" autofocus="" tabindex="5" required="">
                                     </div>	
                                 </div>  
 
@@ -107,8 +105,8 @@
                                     <label for="">Pedido Minimo</label>
 
                                     <div class="input-group">
-                                        <input  id="rangepm" type="range" value="15" max="500" min="0" step="10" onchange="txtPedidoM.value = rangepm.value" /> 
-                                        <span class="input-group-addon cajaParametro "><i class="fa fa-money fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtPedidoM" id="txtPedidoM" type="text" autocomplete="on" autofocus="" tabindex="2" required="">
+                                        <input  id="rangepm" type="range"  max="500" min="0" step="10" onchange="txtPedidoM.value = rangepm.value" /> 
+                                        <span class="input-group-addon cajaParametro "><i class="fa fa-money fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtPedidoM" id="txtPedidoM" type="text" autocomplete="on" autofocus="" tabindex="6" required="">
                                     </div>	
 
                                 </div> 
@@ -116,15 +114,15 @@
                                 <div class="col-sm-6 form-group">
                                     <label for="">Costo de Envio</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon cajaParametro"><i class="fa fa-money  fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtCostoE" id="txtCostoE" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
+                                        <span class="input-group-addon cajaParametro"><i class="fa fa-money  fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtCostoE" id="txtCostoE" type="text" autocomplete="on" autofocus="" tabindex="7" required=""/>
                                     </div>	
                                 </div> 
                                 <div class="col-sm-6 form-group">
                                     <label for="">Tiempo Entrega</label>
 
                                     <div class="input-group">
-                                        <input  id="rangete" type="range" value="15" max="500" min="0" step="10" onchange="txtTiempoe.value = rangete.value" /> 
-                                        <span class="input-group-addon cajaParametro "><i class="fa  fa-hourglass-half fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtTiempoe" id="txtTiempoe" type="text" autocomplete="on" autofocus="" tabindex="2" required="">
+                                        <input  id="rangete" type="range"  max="60" min="0" step="1" onchange="txtTiempoE.value = rangete.value" /> 
+                                        <span class="input-group-addon cajaParametro "><i class="fa  fa-hourglass-half fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtTiempoE" id="txtTiempoE" type="text" autocomplete="on" autofocus="" tabindex="8" required=""/>
                                     </div>	
 
                                 </div> 
@@ -137,6 +135,7 @@
                                     <!-- Cabecera de la tabla -->
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Dia</th>
                                             <th>Hora Apertura</th>
                                             <th>Hora Cierre</th>
@@ -146,52 +145,13 @@
 
                                     <!-- Cuerpo de la tabla con los campos -->
                                     <tbody>
-
-                                        <!-- fila base para clonar y agregar al final -->
-                                        <tr class="fila-base">
-                                            <td>
-                                                <select style="width: 90%" class="form-control">
-                                                    <option value="1">Lunes</option>
-                                                    <option value="2">Martes</option>
-                                                    <option value="3">Miercoles</option>
-                                                    <option value="4">Jueves</option>
-                                                    <option value="5">Viernes</option>
-                                                    <option value="6">Sabado</option>
-                                                    <option value="0">Domingo</option>
-                                                </select>
-                                            </td>
-                                            <td> <div id="datetimepicker1" class="input-append">
-                                                    <input id="horaApertura" data-format="hh:mm:ss" type="text" style="width: 90%"></input>
-                                                    <span class="add-on">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </span>
-                                                </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div id="datetimepicker2" class="input-append">
-                                                    <input id="horaCierre" data-format="hh:mm:ss" type="text" style="width: 90%"></input>
-                                                    <span class="add-on">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </span>
-                                                </div>
-                                                </div>
-
-                                            </td>
-
-                                            <td class="eliminar"><a href="#" title="Eliminar Sucursal" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> </a></td>
-
-                                        </tr>
-                                        <!-- fin de código: fila base -->
-
-
-                                        <!-- fin de código: fila de ejemplo -->
+                                        <tr></tr>
 
                                     </tbody>
                                 </table>
                                 <!-- Botón para agregar filas -->
-                                <input type="button" id="agregar" value="Agregar fila" />
-                                <input type="button" id="guardarHor" value="Guardar" />
+                                <input type="button" class="btn btn-warning" id="agregar" value="Agregar fila" />
+                                <input type="button" class="btn btn-info" id="guardarHor" value="Guardar" />
 
 
                             </div>
@@ -204,10 +164,15 @@
 
             </div>  
 
+            <div class="panel-footer"><button type="button" class="btn btn-default"><a href="sucursal">Cancelar</button>
+                <button type="button" class="btn btn-info" id="mbtnUpdSucursal">Actualizar</button></div>
+
 
 
         </div> 
-    </div>  
+    </div>
+
+
 </div>   
 </div>	
 
@@ -227,6 +192,7 @@
     input[type="range"] {
         position: relative;
         margin-left: 1em;
+        width:85%;
     }
     input[type="range"]:after,
     input[type="range"]:before {
