@@ -42,6 +42,8 @@ $container['model'] = function($c) {
                 'empleado' => new App\Model\EmpleadoModel($c->db),
                 'parametros' => new App\Model\ParametrosModel($c->db),
                 'componente' => new App\Model\ComponenteModel($c->db),
-                'producto' => new App\Model\ProductoModel($c->db)
+                'producto' => new App\Model\ProductoModel($c->db),
+                'promo' => new App\Model\PromoModel($c->db),
+                'variedad' => new App\Model\VariedadModel($c->db)
     ];
 };
