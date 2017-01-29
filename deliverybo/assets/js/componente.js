@@ -1,14 +1,14 @@
 
 
 
-$('#tblCategorias').DataTable({
+$('#tblComponentes').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
     'info': true,
     'filter': true,
     'stateSave': true,
     'ajax': {
-        "url": baseurl + "index.php/categoria/get_categorias/",
+        "url": baseurl + "index.php/componente/get_componentes/1",
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
@@ -16,10 +16,11 @@ $('#tblCategorias').DataTable({
     },
     'columns': [
 
-        {data: 'cat_id', 'sClass': 'dt-body-center'},
-        {data: 'cat_nombre'},
-        {data: 'cat_descripcion'},
-        {data: 'cat_idEstado'},
+        {data: 'com_id', 'sClass': 'dt-body-center'},
+        {data: 'com_nombre'},
+        {data: 'com_descripcion'},
+        {data: 'com_precio'},
+        {data: 'com_idEstado'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -30,7 +31,7 @@ $('#tblCategorias').DataTable({
                         '  <span class="caret"></span>' +
                         '  </button>' +
                         '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                        '    <li><a href="#" title="Editar informacion" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                        '    <li><a href="#" title="Editar informacion" data-toggle="modal" data-target="#modalEditCategoria" onClick="selComponente(\'' + row.cat_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
                         '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
                         '    <li><a href="#" title="Eliminar Categoria" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
                         '    </ul>' +
@@ -47,7 +48,7 @@ $('#tblCategorias').DataTable({
     "columnDefs": [
         {
             "targets": [3],
-            "data": "cat_idEstado",
+            "data": "com_idEstado",
             "render": function (data, type, row) {
 
                 if (data == 1) {
@@ -60,7 +61,7 @@ $('#tblCategorias').DataTable({
         },
         {
             "targets": [1],
-            "data": "cat_nombre",
+            "data": "com_nombre",
             "orderData": [1, 0],
             "render": function (data, type, row) {
                 return "<span style='color:#006699;'><i class='fa fa-cutlery'></i>&nbsp;&nbsp;" + data + "</span>"
@@ -72,22 +73,24 @@ $('#tblCategorias').DataTable({
 });
 
 
-selCategoria = function (idCategorias) {
+selCategoria = function (idComponente) {
 
 
     $.ajax({
         type: "POST",
-        url: baseurl + "index.php/categoria/get_categoriaById/" + idCategorias,
+        url: baseurl + "index.php/categoria/get_componenteById/" + idComponente,
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
 
-            $('#mDescripcion').val(res.cat_descripcion);
-            $('#mNombre').val(res.cat_nombre);
-            $('#mEstado').val(res.cat_idEstado);//select
+            $('#mDescripcion').val(res.com_descripcion);
+            $('#mNombre').val(res.com_nombre);
+            $('#mEstado').val(res.com_idEstado);//select
             //ajax para traer todos los estados
-            $('#mIdCategoria').val(res.cat_id);
+            $('#mPrecio').val(res.com_precio);
+            
+            $('#mIdCategoria').val(res.com_id);
 
         }
     });
@@ -97,15 +100,21 @@ $('#mbtnCerrarModal').click(function () {
     
             $('#mDescripcion').val('');
             $('#mNombre').val('');
-            $('#mEstado').val('1');//select
+            $('#mEstado').val('1');
+            $('#mPrecio').val('');
+            //
+            ////select
             //ajax para traer todos los estados
             $('#mIdCategoria').val('');
 })
 $('#mCerrarModal').click(function () {
     
-            $('#mDescripcion').val('');
+           $('#mDescripcion').val('');
             $('#mNombre').val('');
-            $('#mEstado').val('1');//select
+            $('#mEstado').val('1');
+            $('#mPrecio').val('');
+            //
+            ////select
             //ajax para traer todos los estados
             $('#mIdCategoria').val('');
 })
@@ -171,4 +180,10 @@ $('#mbtnUpdCategoria').click(function () {
 });
 
 
-         
+         /* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
