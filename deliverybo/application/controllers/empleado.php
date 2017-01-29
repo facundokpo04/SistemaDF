@@ -91,7 +91,7 @@ class Empleado extends CI_Controller {
             'per_nombre' => $this->input->post('per_nombre'),
             'per_email' => $this->input->post('per_email'),
             'per_documento' => $this->input->post('per_documento'),
-            'per_password' => $this->input->post('per_password'),
+            'per_password' => md5($this->input->post('per_password')),
             'per_nacionalidad' => $this->input->post('per_nacionalidad'),
             'per_id' => $this->input->post('per_id'),
             'per_perfilUsuario' => $this->input->post('per_perfilUsuario')

@@ -3,7 +3,7 @@ namespace App\Model;
 
 use App\Lib\Response;
 
-class CategoriaModel
+class PromoModel
 {
     private $db;
     private $table = 'promo';

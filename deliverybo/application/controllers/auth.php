@@ -17,30 +17,30 @@ class Auth extends CI_Controller {
 	}
     
     public function autenticar(){
-//        $error = '';
-//        //uso am el modelo
-//        $r = $this->am->autenticar(
-//            $this->input->post('Correo'),
-//            $this->input->post('Password')
-//        );
-//        
-//        if($r->response){
-//            // Seteamos el token
-//            RestApi::setToken($r->result);
-//            
-//            // User
-//            $user = RestApi::getUserData();
-//            
-//            if($user->EsAdmin == 1) {
+        $error = '';
+        //uso am el modelo
+        $r = $this->am->autenticar(
+            $this->input->post('Correo'),
+            $this->input->post('Password')
+        );
+        
+        if($r->response){
+            // Seteamos el token
+            RestApi::setToken($r->result);
+            
+            // User
+            $user = RestApi::getUserData();
+            
+            if($user->per_perfilUsuario == 'Admin') {
                 redirect('categoria');
-//            } else {
-//                RestApi::destroyToken();
-//                $error = 'Usted no tiene privlegios de administrador';
-//            }
-//        } else {
-//            $error = $r->message;
-//        }
-//        
+            } else {
+                RestApi::destroyToken();
+                $error = 'Usted no tiene privlegios de administrador';
+            }
+        } else {
+            $error = $r->message;
+        }
+        
 //        $this->load->view('header');
 //        $this->load->view('auth/index.php', [
 //            'error' => $error
