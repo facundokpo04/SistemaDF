@@ -10,7 +10,7 @@
     <!-- /.panel-heading -->
     <div class="panel-body">
         <div class="btn-group"> 
-            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditCompnente" >Agregar</button>
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditComponente" >Agregar</button>
         </div>
         <div class="btn-group"> 
             <button class="btn btn-danger" type="button" onClick="">Eliminar</button>
@@ -85,7 +85,7 @@
 
                         <div class="box-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Nombre Categoria</label>
+                                <label class="col-sm-3 control-label">Nombre Componente</label>
                                 <div class="col-sm-9"> 
                                     <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
                                 </div>
