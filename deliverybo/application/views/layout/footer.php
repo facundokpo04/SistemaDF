@@ -77,6 +77,9 @@
 <?php if($this->uri->segment(1)=='empleado'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/empleado.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(1)=='componente'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/componente.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 
