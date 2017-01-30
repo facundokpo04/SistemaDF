@@ -1,14 +1,14 @@
 
 
 
-$('#tblVariantes').DataTable({
+$('#tblVariedades').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
     'info': true,
     'filter': true,
     'stateSave': true,
     'ajax': {
-        "url": baseurl + "index.php/variante/get_variantes/",
+        "url": baseurl + "index.php/variedad/get_variedades/",
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
@@ -31,13 +31,13 @@ $('#tblVariantes').DataTable({
                         '  <span class="caret"></span>' +
                         '  </button>' +
                         '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                        '    <li><a href="#" title="Editar informacion" data-toggle="modal" data-target="#modalEditVariante" onClick="selVariante(\'' + row.var_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                        '    <li><a href="#" title="Editar informacion" data-toggle="modal" data-target="#modalEditVariedad" onClick="selVariedad(\'' + row.var_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
                         '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
-                        '    <li><a href="#" title="Eliminar Variante" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
+                        '    <li><a href="#" title="Eliminar Variedad" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
                         '    </ul>' +
                         '</div>' +
                         '</span>';
-                // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditVariante" onClick="selVariante(\'' + row.var_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
+                // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditVariedad" onClick="selVariedad(\'' + row.var_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
 
 
             }
@@ -51,12 +51,12 @@ $('#tblVariantes').DataTable({
 });
 
 
-selVariante = function (idVariantes) {
+selVariedad = function (idVariedades) {
 
 
     $.ajax({
         type: "POST",
-        url: baseurl + "index.php/variante/get_varianteById/" + idVariantes,
+        url: baseurl + "index.php/variedad/get_variedadById/" + idVariedades,
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
@@ -67,7 +67,7 @@ selVariante = function (idVariantes) {
             $('#mTipo').val(res.var_tipo);//select
             $('#mPrecio').val(res.var_precio);//select
             //ajax para traer todos los estados
-            $('#mIdVariante').val(res.var_id);
+            $('#mIdVariedad').val(res.var_id);
 
         }
     });
@@ -79,7 +79,7 @@ $('#mbtnCerrarModal').click(function () {
             $('#mNombre').val('');
             $('#mEstado').val('1');//select
             //ajax para traer todos los estados
-            $('#mIdVariante').val('');
+            $('#mIdVariedad').val('');
 })
 $('#mCerrarModal').click(function () {
     
@@ -87,21 +87,22 @@ $('#mCerrarModal').click(function () {
             $('#mNombre').val('');
             $('#mEstado').val('1');//select
             //ajax para traer todos los estados
-            $('#mIdVariante').val('');
+            $('#mIdVariedad').val('');
 })
 
-$('#mbtnUpdVariante').click(function () {
+$('#mbtnUpdVariedad').click(function () {
   
 
         $.ajax({
             type: "POST",
-            url: baseurl + "index.php/variante/updVariante",
+            url: baseurl + "index.php/variedad/updVariedad",
             dataType: 'json',
             data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
                 var_nombre: $('#mNombre').val(),
                 var_descripcion: $('#mDescripcion').val(),
                 var_tipo: $('#mTipo').val(),
-                var_precio: $('#mIdVariante').val()
+                var_idProducto: $('#mIdProducto').val(),
+                var_id: $('#mIdVariedad').val()
             },
             success: function (res) {
 

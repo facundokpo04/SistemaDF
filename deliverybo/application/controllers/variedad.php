@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Variante extends CI_Controller {
+class Variedad extends CI_Controller {
 
     private $user;
 
@@ -13,7 +13,7 @@ class Variante extends CI_Controller {
         // Valida que exista el usuario obtenido del token, del caso contrario lo regresa a la pagina de inicio que es nuestro controlador auth
 //        if($this->user['user'] === null) redirect('');
 //
-        $this->load->model('VarianteModel', 'cm');
+        $this->load->model('VariedadModel', 'cm');
     }
 
     public function index($p = 0) {
@@ -24,13 +24,13 @@ class Variante extends CI_Controller {
         //inicializacion de paginacion
 
 
-        $this->load->view('variante/index.php');
+        $this->load->view('variedad/index.php');
 
         //footer
         $this->load->view('layout/footer');
     }
 
-    public function get_variantes($limite = 5, $p = 0) {
+    public function get_variedades($limite = 5, $p = 0) {
 
         $data = [];
         $total = 0;
@@ -46,12 +46,12 @@ class Variante extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function get_varianteById($idVariante) {
+    public function get_variedadById($idVariedad) {
 
 
 
         try {
-            $result = $this->cm->obtener($idVariante);
+            $result = $this->cm->obtener($idVariedad);
             $data = $result;
         } catch (Exception $e) {
             var_dump($e);
@@ -59,7 +59,7 @@ class Variante extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function updVariante() {
+    public function updVariedad() {
 
 
         $errors = array();
@@ -69,7 +69,8 @@ class Variante extends CI_Controller {
 
         $data = [
             'var_nombre' => $this->input->post('var_nombre'),
-            'var_descripcion' => $this->input->post('var__descripcion'),
+            'var_descripcion' => $this->input->post('var_descripcion'),
+            'var_tipo' => $this->input->post('var_tipo'),
             'var_idProducto' => $this->input->post('var_idProducto')
         ];
         try {

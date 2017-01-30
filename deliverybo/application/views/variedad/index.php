@@ -1,7 +1,7 @@
 
 <?php // var_dump($model);       ?>
 <ol class="breadcrumb">
-    <li class="active">Variante</li>
+    <li class="active">Variedad</li>
 </ol>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -10,7 +10,7 @@
     <!-- /.panel-heading -->
     <div class="panel-body">
         <div class="btn-group"> 
-            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditVariante" >Agregar</button>
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditVariedad" >Agregar</button>
         </div>
         <div class="btn-group"> 
             <button class="btn btn-danger" type="button" onClick="">Eliminar</button>
@@ -23,11 +23,11 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Variantes</h3>
+                <h3 class="box-title">Variedades</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-                <table  id="tblVariantes" class="table table-bordered table-striped">
+                <table  id="tblVariedades" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<!-- Modal Editar Variante -->
+<!-- Modal Editar Variedad -->
 
 <style>
     .example-modal .modal {
@@ -69,23 +69,24 @@
     }
 </style>
 
-<div class="example-modal modal fade" id="modalEditVariante" tabindex="-1" >
+<div class="example-modal modal fade" id="modalEditVariedad" tabindex="-1" >
     <div class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar/ Eliminar Variante</h4>
+                    <h4 class="modal-title">Agregar/ Eliminar Variedad</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <!-- parametros ocultos -->
-                        <input type="hidden" id="mIdaVriante">
+                        <input type="hidden" id="mIdVariedad">
+                         <input type="hidden" id="mIdProducto" value="1">
 
                         <div class="box-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Nombre Variante</label>
+                                <label class="col-sm-3 control-label">Nombre Variedad</label>
                                 <div class="col-sm-9"> 
                                     <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
                                 </div>
@@ -118,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdVariante">Actualizar</button>
+                    <button type="button" class="btn btn-info" id="mbtnUpdVariedad">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

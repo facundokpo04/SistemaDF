@@ -1,17 +1,17 @@
 <?php
-class VarianteModel extends CI_Model{
+class VariedadModel extends CI_Model{
     
     public function getAll($l = 5, $p = 0){
         return RestApi::call(
             RestApiMethod::GET,
-            "variante/listar/$l/$p"
+            "variedad/listar/$l/$p"
         );
     }
 
     public function obtener($id){
         return RestApi::call(
             RestApiMethod::GET,
-            "variante/obtener/$id"
+            "variedad/obtener/$id"
         );
     }
     
@@ -20,7 +20,7 @@ class VarianteModel extends CI_Model{
       
         return RestApi::call(
             RestApiMethod::POST,
-            'variante/insertar',
+            'variedad/insertar',
             $data
         );
     }
@@ -28,14 +28,14 @@ class VarianteModel extends CI_Model{
     public function actualizar($data, $id){
         return RestApi::call(
             RestApiMethod::PUT,
-            "variante/actualizar/$id" , $data
+            "variedad/actualizar/$id" , $data
         );
     }
 
      public function eliminar( $id){
         return RestApi::call(
             RestApiMethod::DELETE,
-            "variante/eliminar/$id"
+            "variedad/eliminar/$id"
         );
     }
 }
