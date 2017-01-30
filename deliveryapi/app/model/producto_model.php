@@ -17,8 +17,8 @@ class ProductoModel {
 
     public function getAll() {
         $data = $this->db->from($this->table)
-                         ->orderBy('prod_id DESC')
-                          ->fetchAll();
+                ->orderBy('prod_id DESC')
+                ->fetchAll();
 
         $total = $this->db->from($this->table)
                         ->select('COUNT(*) Total')
@@ -48,8 +48,8 @@ class ProductoModel {
             'total' => $total
         ];
     }
-    
-     public function getAllSuc($idSucursal) {
+
+    public function getAllSuc($idSucursal) {
         $data = $this->db->from($this->table)
                 ->where('prod_idSucursal', $idSucursal)
                 ->orderBy('prod_id DESC')
@@ -66,11 +66,11 @@ class ProductoModel {
             'total' => $total
         ];
     }
-    
+
     public function insert($data) {
 
-   
-       $query = $this->db->insertInto($this->table, $data)
+
+        $query = $this->db->insertInto($this->table, $data)
                 ->execute();
 
         return $this->response->SetResponse(true, 'Exito', $query);
@@ -95,6 +95,28 @@ class ProductoModel {
     public function delete($id) {
         $this->db->deleteFrom($this->table)
                 ->where('prod_id', $id)
+                ->execute();
+
+        return $this->response->SetResponse(true);
+    }
+
+    public function insertComp($idProducto, $idComponente) {
+
+        $data = array(
+            'cp_idProducto' => $idProducto,
+            'cp_idComponente' => $idComponente
+        );
+            
+        $query = $this->db->insertInto('componenteproducto', $data)
+                ->execute();
+
+        return $this->response->SetResponse(true, 'Exito', $query);
+    }
+
+    public function deleteComp($idProducto, $idComponente) {
+
+        $this->db->deleteFrom('componenteproducto')
+                ->where(array('cp_idProducto'=>$idProducto,'cp_idComponente'=>$idComponente))
                 ->execute();
 
         return $this->response->SetResponse(true);
