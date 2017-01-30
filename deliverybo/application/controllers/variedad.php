@@ -71,6 +71,7 @@ class Variedad extends CI_Controller {
             'var_nombre' => $this->input->post('var_nombre'),
             'var_descripcion' => $this->input->post('var_descripcion'),
             'var_tipo' => $this->input->post('var_tipo'),
+            'var_precio' => $this->input->post('var_precio'),
             'var_idProducto' => $this->input->post('var_idProducto')
         ];
         try {

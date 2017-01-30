@@ -101,6 +101,7 @@ $('#mbtnUpdVariedad').click(function () {
                 var_nombre: $('#mNombre').val(),
                 var_descripcion: $('#mDescripcion').val(),
                 var_tipo: $('#mTipo').val(),
+                var_precio: $('#mPrecio').val(),
                 var_idProducto: $('#mIdProducto').val(),
                 var_id: $('#mIdVariedad').val()
             },
