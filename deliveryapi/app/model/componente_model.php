@@ -34,6 +34,8 @@ class ComponenteModel
         ];
     }
     
+  
+    
     public function insert($data)
     {
         

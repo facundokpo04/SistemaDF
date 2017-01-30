@@ -100,20 +100,18 @@ class ProductoModel {
         return $this->response->SetResponse(true);
     }
 
-    public function insertComp($idProducto, $idComponente) {
+    public function insertComp($data) {
 
-        $data = array(
-            'cp_idProducto' => $idProducto,
-            'cp_idComponente' => $idComponente
-        );
-            
+       
         $query = $this->db->insertInto('componenteproducto', $data)
                 ->execute();
 
         return $this->response->SetResponse(true, 'Exito', $query);
     }
 
-    public function deleteComp($idProducto, $idComponente) {
+    public function deleteComp($idProducto,$idComponente) {
+        
+        
 
         $this->db->deleteFrom('componenteproducto')
                 ->where(array('cp_idProducto'=>$idProducto,'cp_idComponente'=>$idComponente))
@@ -121,5 +119,29 @@ class ProductoModel {
 
         return $this->response->SetResponse(true);
     }
+    
+        public function getAllComp($idProducto) {
+            
+  
+        return $this->db->from("componente c")
+                    ->select("c.com_id,c.com_nombre ,c.com_descripcion,c.com_imagen")
+                    ->innerJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
+                    ->where('p.cp_idProducto',$idProducto)
+                    ->fetchAll();
+        
+            
+    }
+        public function getAllVar($idProducto) {
+            
+  
+        return $this->db->from("variedad v")
+                    ->select("v.var_id,v.var_nombre ,v.var_descripcion,v.var_tipo,v.var_precio")                  
+                    ->where('v.var_idProducto',$idProducto)
+                    ->fetchAll();
+        
+            
+    }
+    
+    
 
 }
