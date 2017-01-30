@@ -46,47 +46,49 @@ class Componente extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function get_componenteById($idCategoria) {
+    public function get_componenteById($idComponente) {
 
 
 
         try {
-            $result = $this->cm->obtener($idCategoria);
-            $data = $result;
+            $result = $this->cm->obtener($idComponente);
+       
         } catch (Exception $e) {
             var_dump($e);
         }
-        echo json_encode($data);
+        echo json_encode($result);
     }
 
     public function updComponente() {
 
         $config = [
-            "upload_path" => "./assets/imagenes/categoria",
+            "upload_path" => "./assets/imagenes/componente",
             "allowed_types" => "png|jpg"
         ];
         $errors = array();
 
         $this->load->library("upload", $config);
 
-        $id = $this->input->post('cat_id');
+        $id = $this->input->post('com_id');
 
 
 
-        if ($this->upload->do_upload('cat_imagen')) {
+        if ($this->upload->do_upload('com_imagen')) {
             $archivo = array("upload_data" => $this->upload->data());
             $imagen = $archivo['upload_data']['full_path'];
         } else {
             //echo  json_encode($this->upload->display_errors());
-            $imagen = $this->cm->obtener($id)->cat_imagen;
+                if (!empty($id)) {
+                $imagen = $this->cm->obtener($id)->com_imagen;}
           
         }
 
         $data = [
-            'cat_nombre' => $this->input->post('cat_nombre'),
-            'cat_descripcion' => $this->input->post('cat_descripcion'),
-            'cat_idEstado' => $this->input->post('cat_idEstado'),
-            'cat_Imagen' => $imagen
+            'com_Nombre' => $this->input->post('com_Nombre'),
+            'com_descripcion' => $this->input->post('com_descripcion'),
+            'com_idEstado' => $this->input->post('com_idEstado'),
+            'com_precio' => $this->input->post('com_precio'),
+            'com_imagen' => $imagen
         ];
         try {
 
