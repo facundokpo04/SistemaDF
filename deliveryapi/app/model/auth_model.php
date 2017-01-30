@@ -33,10 +33,10 @@ class AuthModel {
                         //'Imagen' => $empleado->Imagen, LO DEJAMOS COMENTADO PORQUE HACE GENERAR UN TOKEN DEMASIADO GRANDE
                         'Perfil' => $persona->per_perfilUsuario
             ]);
-
+//var_dump($token);
             $this->response->result = $token;
 
-            return $this->response->SetResponse(true);
+            return $this->response->SetResponse(true,'Credenciales Validas',$token);
         } else {
             return $this->response->SetResponse(false, "Credenciales no válidas");
         }

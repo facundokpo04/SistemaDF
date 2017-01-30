@@ -31,7 +31,7 @@ class Auth extends CI_Controller {
             // User
             $user = RestApi::getUserData();
             
-            if($user->per_perfilUsuario == 'Admin') {
+            if($user->Perfil == 'Admin') {
                 redirect('categoria');
             } else {
                 RestApi::destroyToken();
@@ -42,9 +42,9 @@ class Auth extends CI_Controller {
         }
         
 //        $this->load->view('header');
-//        $this->load->view('auth/index.php', [
-//            'error' => $error
-//        ]);
+        $this->load->view('auth/index.php', [
+            'error' => $error
+        ]);
 //        $this->load->view('footer');
     }
     
