@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Categoria extends CI_Controller {
 
     private $user;
+    private $imagen2;
 
     public function __CONSTRUCT() {
         parent::__construct();
@@ -12,7 +13,7 @@ class Categoria extends CI_Controller {
 //        $this->user = ['user' => RestApi::getUserData()];
         // Valida que exista el usuario obtenido del token, del caso contrario lo regresa a la pagina de inicio que es nuestro controlador auth
 //        if($this->user['user'] === null) redirect('');
-//
+     
         $this->load->model('CategoriaModel', 'cm');
     }
 
@@ -46,6 +47,7 @@ class Categoria extends CI_Controller {
         echo json_encode($data);
     }
 
+    
     public function get_categoriaById($idCategoria) {
 
 
@@ -59,6 +61,7 @@ class Categoria extends CI_Controller {
         echo json_encode($data);
     }
 
+    
     public function updCategoria() {
 
         $config = [
