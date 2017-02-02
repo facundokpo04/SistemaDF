@@ -31,7 +31,7 @@ class ProductoModel extends CI_Model{
        public function getAllSuc($idSucursal){
         return RestApi::call(
             RestApiMethod::GET,
-            "producto/listarVar/$idSucursal"
+            "producto/listarSuc/$idSucursal"
         );
     }
     

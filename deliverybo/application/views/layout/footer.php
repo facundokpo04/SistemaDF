@@ -83,6 +83,10 @@
 <?php if($this->uri->segment(1)=='variedad'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/variedad.js') ?>"></script>
 <?php }?>
+
+<?php if($this->uri->segment(1)=='producto'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/producto.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 

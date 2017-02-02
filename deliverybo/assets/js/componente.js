@@ -17,7 +17,7 @@ $('#tblComponentes').DataTable({
     'columns': [
 
         {data: 'com_id', 'sClass': 'dt-body-center'},
-        {data: 'com_Nombre'},
+        {data: 'com_nombre'},
         {data: 'com_descripcion'},
         {data: 'com_precio'},
         {data: 'com_idEstado'},
