@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);       ?>
+<?php // var_dump($model);        ?>
 <ol class="breadcrumb">
     <li class="active">Componente</li>
 </ol>
@@ -26,25 +26,24 @@
                 <h3 class="box-title">Componentes</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-                <table  id="tblComponentes" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table class="table table-bordered" id="tablacomponentes">
+                <!-- Cabecera de la tabla -->
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
 
-                    </tbody>
+                <!-- Cuerpo de la tabla con los campos -->
+                <tbody>
+                  
 
-                </table>
-
-            </div>
+                </tbody>
+            </table>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -97,21 +96,21 @@
                                     <input type="text" name="mDescripcion" id="mDescripcion" class="form-control" placeholder="">
                                 </div>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">Precio</label>
                                 <div class="col-sm-9"> 
                                     <input type="text" name="mPrecio" id="mPrecio" class="form-control" placeholder="">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Estado</label>
                                 <div class="col-sm-9"> 
-                                <select name="mEstado" id="mEstado" class="form-control">                       
-                                    <option value="1">Habilitado</option>
-                                    <option value="2">Deshabilitado</option>
-                                </select>
-                                       </div>
+                                    <select name="mEstado" id="mEstado" class="form-control">                       
+                                        <option value="1">Habilitado</option>
+                                        <option value="2">Deshabilitado</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
 

@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                         ?>
+<?php // var_dump($model);                          ?>
 <ol class="breadcrumb">
     <li class="active">Productos</li>
 </ol>
@@ -17,7 +17,7 @@
     </div>
 </div>
 <br/>
-<div id="sucursales" class="row">
+<div id="productos" class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
@@ -53,7 +53,7 @@
 <div id="producto" class="row" >   
     <div class="col-lg-12">     
         <div class="panel panel-bluedark">
-            <div class="panel-heading">Datos de Producto</div>
+            <div class="panel-heading">Datos del Producto</div>
             <div class="panel-body" >
 
 
@@ -62,45 +62,45 @@
                 <div class="col-sm-6 form-group">
                     <label for="">Nombre</label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-university fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
+                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
                     </div>	
                 </div>    
                 <div class="col-sm-6 form-group">
                     <label for="">Descripcion</label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-building fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
+                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
                     </div>
                 </div>     
 
                 <div class="col-sm-6 form-group">
                     <label for="">Codigo Producto</label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-building fa-fw"></i></span><input class="form-control" placeholder="" name="txtCodigo" id="txtCodigo" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
+                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i></span><input class="form-control" placeholder="" name="txtCodigo" id="txtCodigo" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
                     </div>	
                 </div>     
 
                 <div class="col-sm-6 form-group">
                     <label for="">Precio </label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-map-marker fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
+                        <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div>   
 
                 <div class="col-sm-6 form-group">
                     <label for="">Max Cant Componentes </label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-map-marker fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMaxCompo" id="txtMaxCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
+                        <span class="input-group-addon cajaParametro"><i class="fa  fa-plus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMaxCompo" id="txtMaxCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div> 
                 <div class="col-sm-6 form-group">
                     <label for="">Min Cant Componentes </label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-map-marker fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMinCompo" id="txtMinCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
+                        <span class="input-group-addon cajaParametro"><i class="fa  fa-minus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMinCompo" id="txtMinCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div> 
                 <div class="col-sm-6 form-group">
                     <label for="">Estado</label>
-                    <div class="input-group"> 
+                    <div class="input-group col-sm-12"> 
                         <select name="PEstado" id="PEstado" class="form-control">                       
                             <option value="1">Habilitado</option>
                             <option value="2">Deshabilitado</option>
@@ -109,85 +109,111 @@
                 </div>
                 <div  class="col-sm-6 form-group">
                     <label for="">Visible Menu</label>
-                    <div class="input-group"> 
+                    <div class="input-group col-sm-12" > 
                         <select   name="VEstado" id="VEstado" class="form-control">                       
                             <option value="1">Visible</option>
                             <option value="2">No Visible</option>
                         </select>
                     </div>
                 </div>
-            </div> 
-
-        </div> 
-
-        <div class="col-sm-12">
+                
+                <div class="col-sm-12">
             <ul class="nav nav-tabs" role="tablist" id="paneles">
-                <li class="active"><a href="#tabParametros" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Parametros</h4></a></li>
-                <li><a href="#tabHorarios" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Horarios Antencion</h4></a></li>
+                <li class="active"><a href="#tabVariedad" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Variedades</h4></a></li>
+                <li><a href="#tabComponentes" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Componentes</h4></a></li>
+                <li><a href="#tabImagen" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Imagen Producto</h4></a></li>
 
             </ul> 
             <div class="tab-content" id="panelCont">
-                <div class="tab-pane active" id="tabParametros">  
+                <div class="tab-pane active" id="tabVariedad">  
                     <div class="media-body">
 
-                        <div class="col-sm-6 form-group">
-                            <label for="">Zona Entrega</label>
-                            <div class="input-group">
-                                <span class="input-group-addon cajaParametro "><i class="fa fa-building fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtZonaE" id="txtZonaE" type="text" autocomplete="on" autofocus="" tabindex="5" required="">
-                            </div>	
-                        </div>  
+                              <div class="media-body">
+                        <div class="box-body table-responsive no-padding">
+                            <table  id="tblVariedades" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Precio</th>                                     
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                        <div class="col-sm-6 form-group">
-                            <label for="">Pedido Minimo</label>
+                                </tbody>
 
-                            <div class="input-group">
-                                <input  id="rangepm" type="range"  max="500" min="0" step="10" onchange="txtPedidoM.value = rangepm.value" /> 
-                                <span class="input-group-addon cajaParametro "><i class="fa fa-money fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtPedidoM" id="txtPedidoM" type="text" autocomplete="on" autofocus="" tabindex="6" required="">
-                            </div>	
+                            </table>
 
-                        </div> 
+                        </div>
+                        <!-- Botón para agregar filas -->
+                        <input type="button" class="btn btn-warning" id="agregar" value="Agregar Variedad" />
+                        <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />
 
-                        <div class="col-sm-6 form-group">
-                            <label for="">Costo de Envio</label>
-                            <div class="input-group">
-                                <span class="input-group-addon cajaParametro"><i class="fa fa-money  fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtCostoE" id="txtCostoE" type="text" autocomplete="on" autofocus="" tabindex="7" required=""/>
-                            </div>	
-                        </div> 
-                        <div class="col-sm-6 form-group">
-                            <label for="">Tiempo Entrega</label>
 
-                            <div class="input-group">
-                                <input  id="rangete" type="range"  max="60" min="0" step="1" onchange="txtTiempoE.value = rangete.value" /> 
-                                <span class="input-group-addon cajaParametro "><i class="fa  fa-hourglass-half fa-fw"></i></span><input class="form-control width_input" placeholder="" name="txtTiempoE" id="txtTiempoE" type="text" autocomplete="on" autofocus="" tabindex="8" required=""/>
-                            </div>	
-
-                        </div> 
+                    </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tabHorarios">  
+                <div class="tab-pane" id="tabComponentes">  
 
                     <div class="media-body">
-                        <table class="table table-bordered" id="tablahorario">
-                            <!-- Cabecera de la tabla -->
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Dia</th>
-                                    <th>Hora Apertura</th>
-                                    <th>Hora Cierre</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
+                        <div class="box-body table-responsive no-padding">
+                            <table  id="tblComponentes" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Precio</th>                                     
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            <!-- Cuerpo de la tabla con los campos -->
-                            <tbody>
-                                <tr></tr>
+                                </tbody>
 
-                            </tbody>
-                        </table>
+                            </table>
+
+                        </div>
                         <!-- Botón para agregar filas -->
-                        <input type="button" class="btn btn-warning" id="agregar" value="Agregar fila" />
-                        <input type="button" class="btn btn-info" id="guardarHor" value="Guardar" />
+                        <input type="button" class="btn btn-warning" id="agregar" value="Agregar Componente" />
+                        <input type="button" class="btn btn-info" id="guardarCom" value="Guardar" />
+
+
+                    </div>
+                </div>
+                 <div class="tab-pane" id="tabImagen">  
+
+                    <div class="media-body">
+                         <div class="panel panel-bluedark">
+               
+              
+                    <div class="col-lg-12 form-group">
+                        <label for="">Imagen Producto</label>
+                        <span class="label label-primary">La imagen debe ser de 76 x 76</span>     
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
+                            <input class="form-control" type="file" name="txtImagen" id="txtLogo" tabindex="16">  
+                        </div>  
+
+                        <div class="form-group">    
+                            <br>	
+                            <div class="thumbnail">
+                                <!--Foto de 76 x 76 -->
+<!--									<img src="assets/img/Logo-impresion.png" alt="logo">-->
+                                <img id="imagen" src="" alt="logo">	
+                            </div>
+                        </div> 
+                    </div>
+               
+                <div style="height:35px;">
+                </div>
+            </div>    
+                        <!-- Botón para agregar filas -->
+                        
+                   
+                        <input type="button" class="btn btn-info" id="guardarImg" value="Guardar" />
 
 
                     </div>
@@ -197,18 +223,20 @@
 
 
         </div> 
+                
+                
+            </div> 
+
+        </div> 
+
+        
 
     </div>  
 
-    <div class="panel-footer"><button type="button" class="btn btn-default"><a href="sucursal">Cancelar</button>
+    <div class="panel-footer"><button type="button" class="btn btn-default"><a href="producto">Cancelar</button>
         <button type="button" class="btn btn-info" id="mbtnUpdSucursal">Actualizar</button></div>
-
-
-
 </div> 
-</div>
 
-</div>
 
 <script type="text/javascript">
     //Timepicker
