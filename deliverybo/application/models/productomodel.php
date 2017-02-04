@@ -20,6 +20,11 @@ class ProductoModel extends CI_Model{
             RestApiMethod::GET,
             "producto/listarComp/$idProducto"
         );
+    }    public function getAllNotComp($idProducto){
+        return RestApi::call(
+            RestApiMethod::GET,
+            "producto/listarNotComp/$idProducto"
+        );
     }
             public function getAllVar($idProducto){
         return RestApi::call(

@@ -123,14 +123,28 @@ class ProductoModel {
         public function getAllComp($idProducto) {
             
   
-        return $this->db->from("componente c")
-                    ->select("c.com_id,c.com_nombre ,c.com_descripcion,c.com_imagen")
-                    ->innerJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
-                    ->where('p.cp_idProducto',$idProducto)
+       return $this->db->from("componente c")
+                    ->select("c.com_id,c.com_precio,c.com_nombre,c.com_descripcion,c.com_imagen")
+                    ->leftJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
+                    ->where('p.cp_idProducto',$idProducto)              
                     ->fetchAll();
         
             
     }
+    
+    
+       public function getAllNotComp($idProducto) {
+            
+  
+        return $this->db->from("componente c")
+                    ->select("c.com_id,c.com_precio,c.com_nombre,c.com_descripcion,c.com_imagen")
+                    ->leftJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
+                     ->where('p.cp_idProducto IS NULL OR p.cp_idProducto <> ?', $idProducto)           
+                    ->fetchAll();
+        
+            
+    }
+    
         public function getAllVar($idProducto) {
             
   

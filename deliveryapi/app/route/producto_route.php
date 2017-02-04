@@ -29,6 +29,13 @@ $app->group('/producto/', function () {
                                 json_encode($this->model->producto->getAllComp($args['idProducto']))
         );
     });
+     $this->get('listarNotComp/{idProducto}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->producto->getAllNotComp($args['idProducto']))
+        );
+    });
+    
      $this->get('listarVar/{idProducto}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(

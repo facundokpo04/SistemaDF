@@ -63,6 +63,19 @@ class Producto extends CI_Controller {
         echo json_encode($data);
     }
 
+        public function get_NotComponentesById($idProducto) {
+
+        try {
+            $result = $this->pm->getAllNotComp($idProducto);
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+
+    
+    
     public function get_VariedadesById($idProducto) {
 
         try {

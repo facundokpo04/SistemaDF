@@ -116,7 +116,47 @@ function cargarVariedades(idProducto) {
     });
 
 }
+function CargarComponetesAgregar(idProducto) {
+     $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/get_NotComponentesById/" + idProducto,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            debugger;
+            $.each(res, function (key, data) {
+                debugger;
 
+                $('#tblComponentes2 tbody').append('<tr>' +
+                        ' <td>' +
+                        data.com_id +
+                        ' </td>' +
+                        ' <td>' +
+                        data.com_nombre +
+                        ' </td>' +
+                        ' <td>' +
+                        data.com_descripcion +
+                        ' </td>' +
+                        ' <td>' + '$&nbsp;' +
+                        data.com_precio +
+                        ' </td>' +
+                        ' <td> <input type="checkbox" id="compSel"></td>' +
+                        '</tr>'
+                        );
+            });
+
+
+
+        }
+    });
+}
+
+/**
+ * funcion para agregar todos los componentes que selecciono
+ */
+function ActualizarComponentes(idProducto) {
+    
+}
 OcultarForm();
 debugger;
 $('#tbProductos').DataTable({
