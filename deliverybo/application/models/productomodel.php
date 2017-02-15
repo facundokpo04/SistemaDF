@@ -15,6 +15,13 @@ class ProductoModel extends CI_Model{
         );
     }
     
+     public function getAllCate(){
+        return RestApi::call(
+            RestApiMethod::GET,
+            "producto/listarCate"
+        );
+    }
+    
         public function getAllComp($idProducto){
         return RestApi::call(
             RestApiMethod::GET,

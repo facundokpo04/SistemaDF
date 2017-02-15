@@ -14,8 +14,46 @@ function OcultarForm() {
     $("#productos").show();
 }
 
+
+function cargarCategorias() {
+      $("#Pcategoria option").remove();
+       
+        $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/get_categorias",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            $.each(res, function (key, data) {
+                debugger;
+                
+                   $("#Pcategoria").append("<option value=" + data.cat_id + ">" + data.cat_nombre + "</option>");
+
+            });
+
+
+
+        }
+    });
+       
+    
+        
+   
+    
+
+}
+function VerFormAgregar( ){
+    $("#producto").show();// Mostramos el formulario
+    $("#paneles").hide();
+     $("#panelCont").hide();
+    $("#herramientas").hide();// ocultamos el boton nuevo
+    $("#productos").hide();
+    
+    
+}
 function cargarDataProducto(idProducto) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
    VerForm();
+   cargarCategorias();
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_productoById/" + idProducto,
@@ -32,9 +70,12 @@ function cargarDataProducto(idProducto) {// funcion que llamamos del archivo aja
             $('#PEstado').val(res.prod_idEstado);//selec
             $('#VEstado').val(res.prod_idEstadoVisible);//selec
             $('#imagen').attr('src', '../assets/imagenes/producto/' + res.prod_imagen);
+           $('#idProducto').val(res.prod_id);
+            $('#Pcategoria').val(res.prod_idCategoria);
 
         }
     });
+    
     cargarComponentes(idProducto);
     cargarVariedades(idProducto);
    
@@ -51,9 +92,9 @@ function cargarComponentes(idProducto) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            debugger;
+        
             $.each(res, function (key, data) {
-                debugger;
+               
 
                 $('#tblComponentes tbody').append('<tr>' +
                         ' <td>' +
@@ -88,9 +129,9 @@ function cargarVariedades(idProducto) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            debugger;
+          
             $.each(res, function (key, data) {
-                debugger;
+            
 
                 $('#tblVariedades tbody').append('<tr>' +
                         ' <td>' +
@@ -123,9 +164,9 @@ function CargarComponetesAgregar(idProducto) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            debugger;
+           
             $.each(res, function (key, data) {
-                debugger;
+         
 
                 $('#tblComponentes2 tbody').append('<tr>' +
                         ' <td>' +
@@ -157,8 +198,55 @@ function CargarComponetesAgregar(idProducto) {
 function ActualizarComponentes(idProducto) {
     
 }
+
+function ActualizarVariedad(idProducto) {
+    
+}
+
+function actualizarProducto() {
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/updProducto",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            prod_nombre: $('#txtNombre').val(),
+            prod_descripcionProducto: $('#txtDescripcion').val(),
+            prod_codigoProducto: $('#txtCodigo').val(),
+            prod_precioBase: $('#txtPrecio').val(),
+            prod_maxComponente: $('#txtMaxCompo').val(),
+            prod_minComponente: $('#txtMinCompo').val(),
+            prod_idEstado: $('#PEstado').val(),       
+            prod_idCategoria: $('#Pcategoria').val(),
+            prod_idEstadoVisible: $('#VEstado').val(),
+            prod_id: $('#idProducto').val()
+
+
+        },
+        success: function (res) {
+            
+            debugger;
+
+        }
+    });
+}
+
+
+
+$('#agregarCom').click(function () {
+   
+    CargarComponetesAgregar($('#idProducto').val());
+    
+            $('#modalAgregarComp').modal('show');
+})
+ 
+ 
+$(document).on("click", ".eliminar", function () {
+    var parent = $(this).parents().get(0);
+    $(parent).remove();
+});
+
 OcultarForm();
-debugger;
+
 $('#tbProductos').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
@@ -253,3 +341,16 @@ $('#tbProductos').DataTable({
     "order": [[0, "asc"]],
 
 });
+$('#mbtnUpdProducto').click(function () {
+
+    actualizarProducto();
+
+
+});
+$('#btnAgregarProd').click(function () {
+   
+    VerFormAgregar();
+    cargarCategorias();
+    
+
+})

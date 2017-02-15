@@ -14,6 +14,7 @@ class Producto extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('ProductoModel', 'pm');
+     
     }
 
     public function index($p = 0) {
@@ -73,7 +74,16 @@ class Producto extends CI_Controller {
         }
         echo json_encode($data);
     }
+public function get_Categorias() {
 
+        try {
+            $result = $this->pm->getAllCate();
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
     
     
     public function get_VariedadesById($idProducto) {
@@ -204,7 +214,63 @@ class Producto extends CI_Controller {
 //        }
        
     }
+    public function updProducto() 
+        
+        {
 
+        $errors = array();
+
+        $id = $this->input->post('prod_id');
+        $respuesta;
+
+
+
+        $data = [
+            'prod_nombre' => $this->input->post('prod_nombre'),
+            'prod_descripcionProducto' => $this->input->post('prod_descripcionProducto'),
+            'prod_codigoProducto' => $this->input->post('prod_codigoProducto'),
+            'prod_precioBase' => $this->input->post('prod_precioBase'),
+            'prod_maxComponente' => $this->input->post('prod_maxComponente'),
+            'prod_minComponente' => $this->input->post('prod_minComponente'),
+            'prod_idEstado' => $this->input->post('prod_idEstado'),
+            'prod_idCategoria' => $this->input->post('prod_idCategoria'),
+            'prod_idEstadoVisible' => $this->input->post('prod_idEstadoVisible'),
+            'prod_idSucursal' => '4'
+        ];
+        
+       
+
+        try {
+            if (empty($id)) {
+                $response = $this->pm->registrar($data);
+
+                $respuesta = ($response->result);
+            } else {
+                $this->pm->actualizar($data, $id);
+                $respuesta = $id;
+            }
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+                var_dump($errors);
+            }
+        }
+
+
+        if (count($errors) === 0) //redirect('sucursal')
+            //
+         echo json_encode($respuesta);
+        else {
+            $this->load->view('layout/header');
+            $this->load->view('layout/menu');
+            $this->load->view('producto/validation', [
+                'errors' => $errors
+            ]);
+            $this->load->view('layout/footer');
+        }
+    }
+        
+    
  
 
     public function eliminar($idProducto) {

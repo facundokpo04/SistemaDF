@@ -131,7 +131,15 @@ class ProductoModel {
         
             
     }
-    
+        public function getAllCate() {
+            
+  
+       return  $this->db->from("Categoria")
+                         ->orderBy('cat_nombre')
+                         ->fetchAll();
+        
+            
+    }
     
        public function getAllNotComp($idProducto) {
             

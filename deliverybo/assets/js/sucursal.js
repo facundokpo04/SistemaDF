@@ -119,11 +119,15 @@ function actualizarSucursal() {
         url: baseurl + "index.php/sucursal/updsucursal",
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            suc_nombre: $('#txtNombre').val(),
-            suc_cuit: $('#txtCuit').val(),
-            suc_razonSocial: $('#txtRazonSocial').val(),
-            suc_direccion: $('#txtDomicilio').val(),
-            suc_id: $('#idSucursal').val()
+            prod_nombre: $('#txtNombre').val(),
+            prod_descripcionProducto: $('#txtDescripcion').val(),
+            prod_codigoProducto: $('#txtCodigo').val(),
+            prod_PrecioBase: $('#txtPrecio').val(),
+            prod_maxComponente: $('#txtMaxCompo').val(),
+            prod_minComponente: $('#txtMaxCompo').val(),
+            prod_idEstado: $('#PEstado').val(),
+            prod_idEstadoVisible: $('#VEstado').val(),
+            prod_idCategoria: $('#Pcategoria').val()
 
 
         },
