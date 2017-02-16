@@ -78,7 +78,7 @@ class Categoria extends CI_Controller {
 
         if ($this->upload->do_upload('cat_imagen')) {
             $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['full_path'];
+            $imagen = $archivo['upload_data']['file_name'];
         } else {
             //echo  json_encode($this->upload->display_errors());
             $imagen = $this->cm->obtener($id)->cat_imagen;

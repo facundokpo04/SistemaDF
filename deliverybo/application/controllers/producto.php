@@ -14,6 +14,8 @@ class Producto extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('ProductoModel', 'pm');
+        $this->load->model('VariedadModel', 'vm');
+         
      
     }
 
@@ -40,6 +42,8 @@ class Producto extends CI_Controller {
         echo json_encode($data);
     }
 
+    
+    
     
 
     public function get_productoById($idProducto) {
@@ -97,121 +101,78 @@ public function get_Categorias() {
         echo json_encode($data);
     }
 
-    public function updParametro($idSucursal) {
-//        $errors = array();
-//        $result = '';
-//
-//        $result = $this->sm->getPar($idSucursal);
-//        
-//        
-//        $data = [
-//            'par_zonaEntrega' => $this->input->post('par_zonaEntrega'),
-//            'par_pedidoMinimo' => $this->input->post('par_pedidoMinimo'),
-//            'par_tiempoEntrega' => $this->input->post('par_tiempoEntrega'),
-//            'par_costoEnvio' => $this->input->post('par_costoEnvio'),
-//            'par_idSucursal' => $this->input->post('par_idSucursal')
-//        ];
-//        try {
-//            if ($result == 'false') {
-//                $this->sm->registrarPar($data);
-//                
-//            } else {
-//                $this->sm->actualizarPar($data, $idSucursal);
-//            }
-//        } catch (Exception $e) {
-//
-//            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-//                $errors = RestApi::getEntityValidationFieldsError();
-//            }
-//        }
-//        if (count($errors) === 0)
-//                 redirect('sucursal');
-//
-//        else {
-//            $this->load->view('layout/header');
-//            $this->load->view('layout/menu');
-//            $this->load->view('sucursal/validation', [
-//                'errors' => $errors
-//            ]);
-//            $this->load->view('layout/footer');
-//        }
-//    }
-//
-//    public function updsucursal() {
-//
-//        $errors = array();
-//
-//        $id = $this->input->post('suc_id');
-//        $respuesta;
-//
-//
-//
-//        $data = [
-//            'suc_nombre' => $this->input->post('suc_nombre'),
-//            'suc_cuit' => $this->input->post('suc_cuit'),
-//            'suc_razonSocial' => $this->input->post('suc_razonSocial'),
-//            'suc_idEmpresa' => 1,
-//            'suc_direccion' => $this->input->post('suc_direccion')
-//        ];
-//
-//        try {
-//            if (empty($id)) {
-//                $response = $this->sm->registrar($data);
-//
-//                $respuesta = ($response->result);
-//            } else {
-//                $this->sm->actualizar($data, $id);
-//                $respuesta = $id;
-//            }
-//        } catch (Exception $e) {
-//            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-//                $errors = RestApi::getEntityValidationFieldsError();
-//                var_dump($errors);
-//            }
-//        }
-//
-//
-//        if (count($errors) === 0) //redirect('sucursal')
-//            //
-//         echo json_encode($respuesta);
-//        else {
-//            $this->load->view('layout/header');
-//            $this->load->view('layout/menu');
-//            $this->load->view('sucursal/validation', [
-//                'errors' => $errors
-//            ]);
-//            $this->load->view('layout/footer');
-//        }
+    
+    public function updImagen(){
+        
+        
+          $config = [
+            "upload_path" => "./assets/imagenes/producto",
+            "allowed_types" => "png|jpg"
+        ];
+        $errors = array();
+
+        $this->load->library("upload", $config);
+        
+            if ($this->upload->do_upload('prod_imagen')) {
+            $archivo = array("upload_data" => $this->upload->data());
+            $imagen = $archivo['upload_data']['file_name'];
+        } else {
+            //echo  json_encode($this->upload->display_errors());
+            //$imagen = $this->cm->obtener($id)->cat_imagen;
+          
+        }
+    }
+
+    public function updVariedad($idProducto) {
+//         $errors = array();
+
+        $id = $this->input->post('var_id');
+
+
+        $data = [
+            'var_nombre' => $this->input->post('var_nombre'),
+            'var_descripcion' => $this->input->post('var_descripcion'),
+            'var_tipo' => $this->input->post('var_tipo'),
+            'var_precio' => $this->input->post('var_precio'),
+            'var_idProducto' => $this->input->post('var_idProducto')
+        ];
+        try {
+
+            if (empty($id)) {
+                $this->vm->registrar($data);
+            } else {
+                $this->vm->actualizar($data, $id);
+            }
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+            }
+        }
+
+        echo json_encode($errors);
     }
 
     public function updComponente() {
-//        $errors = array();
+        $errors = array();
+
+        $data = [
+            'cp_idProducto' => $this->input->post('cp_idProducto'),
+            'cp_idComponente' => $this->input->post('cp_idComponente')   
+        ];
 //
-//        $id = $this->input->post('dh_id');
 //
 //
-//
-//        $data = [
-//            'dh_diaSemana' => $this->input->post('dh_diaSemana'),
-//            'dh_horaApertura' => $this->input->post('dh_horaApertura'),
-//            'dh_horaCierre' => $this->input->post('dh_horaCierre'),
-//            'dh_idSucursal' => $this->input->post('dh_idSucursal')
-//        ];
-//
-//       try {
-//            if (empty($id)) {
-//                $response = $this->sm->registrarDh($data);
-//                $respuesta = ($response->result);
-//            } else {
-//                $this->sm->actualizarDh($data, $id);
-//                $respuesta = $id;
-//            }
-//        } catch (Exception $e) {
-//            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-//                $errors = RestApi::getEntityValidationFieldsError();
-//             
-//            }
-//        }
+       try {
+           
+                $response = $this->pm->registrarComp($data);
+                $respuesta = ($response->result);
+           
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+             
+            }
+        }
        
     }
     public function updProducto() 
