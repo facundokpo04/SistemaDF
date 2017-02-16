@@ -158,7 +158,7 @@
                                     </div>
                                     <!-- Botón para agregar filas -->
                                     <button class="btn btn-warning"  type="button" data-toggle="modal" data-target="#modalEditVariedad" >Agregar Variedad</button>
-                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />
+<!--                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />-->
 
 
                                 </div>
@@ -187,7 +187,7 @@
                                 </div>
                                 <!-- Botón para agregar filas -->
                                 <button type="button" class="btn btn-warning"  id="agregarCom"> Agregar Componente</button>
-                                <input type="button" class="btn btn-info" id="guardarCom" value="Guardar" />
+<!--                                <input type="button" class="btn btn-info" id="guardarCom" value="Guardar" />-->
 
 
                             </div>
@@ -204,7 +204,7 @@
                                         <span class="label label-primary">La imagen debe ser de 76 x 76</span>     
                                         <div class="input-group">
                                             <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
-                                            <input class="form-control" type="file" name="txtImagen" id="txtLogo" tabindex="16">  
+                                            <input class="form-control" type="file" name="pImagen" id="pImagen" tabindex="16">  
                                         </div>  
 
                                         <div class="form-group">    
@@ -221,7 +221,7 @@
                                     </div>
                                 </div>    
                                 <!-- Botón para agregar filas -->
-                                <input type="button" class="btn btn-info" id="guardarImg" value="Guardar" />
+                                <input type="button" class="btn btn-info" id="btnGuardarImg" value="Guardar" />
 
 
                             </div>
@@ -276,7 +276,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
+                    <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

@@ -25,7 +25,7 @@ function cargarCategorias() {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             $.each(res, function (key, data) {
-                debugger;
+                ;
 
                 $("#Pcategoria").append("<option value=" + data.cat_id + ">" + data.cat_nombre + "</option>");
 
@@ -51,6 +51,9 @@ function VerFormAgregar( ) {
 
 
 }
+
+
+
 function cargarDataProducto(idProducto) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
     VerForm();
     cargarCategorias();
@@ -78,7 +81,7 @@ function cargarDataProducto(idProducto) {// funcion que llamamos del archivo aja
 
     cargarComponentes(idProducto);
     cargarVariedades(idProducto);
-    CargarComponetesAgregar(idProducto);
+//    CargarComponetesAgregar(idProducto);
 
 
 
@@ -93,6 +96,8 @@ function cargarComponentes(idProducto) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
+            
+           $('#tblComponentes tbody tr').remove();
 
             $.each(res, function (key, data) {
 
@@ -110,7 +115,7 @@ function cargarComponentes(idProducto) {
                         ' <td>' + '$&nbsp;' +
                         data.com_precio +
                         ' </td>' +
-                        ' <td class="eliminar"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
+                        ' <td class="eliminarComp"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
                         '</tr>'
                         );
             });
@@ -147,7 +152,7 @@ function cargarVariedades(idProducto) {
                         ' <td>' + '$&nbsp;' +
                         data.var_precio +
                         ' </td>' +
-                        ' <td class="eliminar"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
+                        ' <td class="eliminarVar"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
                         '</tr>'
                         );
             });
@@ -159,6 +164,7 @@ function cargarVariedades(idProducto) {
 
 }
 function CargarComponetesAgregar(idProducto) {
+    
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_NotComponentesById/" + idProducto,
@@ -166,9 +172,10 @@ function CargarComponetesAgregar(idProducto) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
+           $('#tblComponentes2 tbody tr').remove();
+
             $.each(res, function (key, data) {
-
-
+                             
                 $('#tblComponentes2 tbody').append('<tr>' +
                         ' <td>' +
                         data.com_id +
@@ -198,18 +205,16 @@ function CargarComponetesAgregar(idProducto) {
  */
 function ActualizarComponentes() {
 
+//  $('#tblComponentes2 tbody tr').remove();
 
+  
     $('#tblComponentes2 tbody tr').each(function () {
-        debugger;
-
+       
         if ($(this).find('td').length > 0) {
-            debugger;
+           
             var comp_id = $(this).find('td').eq(0).html();
 
             var comp_check = $(this).find('td').eq(4).find("input").eq(0);
-
-            debugger;
-
             if (comp_check.is(':checked')) {
                 $.ajax({
                     type: "POST",
@@ -229,8 +234,15 @@ function ActualizarComponentes() {
 
 
         }
+        
+       
 
     });
+    
+     
+
+    cargarComponentes($('#idProducto').val());
+   
 
 
 
@@ -267,20 +279,94 @@ function actualizarProducto() {
     });
 }
 
+/**
+ * Comment
+ */
+function guardarImagen() {
+    var inputFile = $('input#pImagen');
 
+    var fileToUpload = inputFile[0].files[0];
+    // make sure there is file to upload
+
+    // provide the form data
+    // that would be sent to sever through ajax
+    if (fileToUpload != 'undefined') {
+        var formData = new FormData();
+      formData.append('prod_imagen', fileToUpload);
+       formData.append('prod_id', $('#idProducto').val());
+       
+       debugger;
+
+        // now upload the file using $.ajax
+        $.ajax({
+            url: baseurl + "index.php/producto/updImagen",
+            type: 'post',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                
+                debugger;
+                $('#imagen').attr('src', '../assets/imagenes/producto/' + res.prod_Imagen);
+              
+            }
+        });
+    }
+}
 
 
 $('#agregarCom').click(function () {
 
+
+   CargarComponetesAgregar($('#idProducto').val()) ;
+       
     $('#modalAgregarComp').modal('show');
-})
-$('#guardarCom').click(function () {
-
-    ActualizarComponentes();
+    
+    
 })
 
-$(document).on("click", ".eliminar", function () {
+
+$(document).on("click", ".eliminarComp", function () {
+ 
     var parent = $(this).parents().get(0);
+    var comp_id = $(parent).find('td').eq(0).html();
+        $.ajax({
+                    type: "POST",
+                    url: baseurl + "index.php/producto/eliminarComponente",
+                    dataType: 'json',
+                    data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+                        idProducto: $('#idProducto').val(),
+                        idComponente: comp_id
+
+                    },
+                    success: function (res) {
+                        
+
+
+                    }
+                });
+    
+    $(parent).remove();
+});
+$(document).on("click", ".eliminarVar", function () {
+ 
+    var parent = $(this).parents().get(0);
+    var var_id = $(parent).find('td').eq(0).html();
+    debugger;
+        $.ajax({
+                    type: "POST",
+                    url: baseurl + "index.php/producto/eliminarVariedad/"+ var_id,
+                    dataType: 'json',
+                    data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+                    },
+                    success: function (res) {
+                        
+
+
+                    }
+                });
+    
     $(parent).remove();
 });
 
@@ -391,5 +477,11 @@ $('#btnAgregarProd').click(function () {
     VerFormAgregar();
     cargarCategorias();
 
+
+})
+
+$('#btnGuardarImg').click(function () {
+
+    guardarImagen();
 
 })

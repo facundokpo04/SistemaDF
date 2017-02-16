@@ -111,7 +111,7 @@ $('#mCerrarModal').click(function () {
 })
 
 $('#mbtnUpdCategoria').click(function () {
-    var inputFile = $('input#mImagen');
+    var inputFile = $('input#pImagen');
 
     var fileToUpload = inputFile[0].files[0];
     // make sure there is file to upload

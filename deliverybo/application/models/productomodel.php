@@ -85,8 +85,8 @@ class ProductoModel extends CI_Model{
     }
      public function eliminarComp($idprod,$idcomp){
         return RestApi::call(
-            RestApiMethod::POST,
-            "producto/eliminarcomp/$idprod/$idcomp", $data
+            RestApiMethod::DELETE,
+            "producto/eliminarcomp/{$idprod}/{$idcomp}"
         );
     }
     

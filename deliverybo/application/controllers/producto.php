@@ -105,6 +105,8 @@ public function get_Categorias() {
     public function updImagen(){
         
         
+         $id = $this->input->post('prod_id');
+        
           $config = [
             "upload_path" => "./assets/imagenes/producto",
             "allowed_types" => "png|jpg"
@@ -115,7 +117,20 @@ public function get_Categorias() {
         
             if ($this->upload->do_upload('prod_imagen')) {
             $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['file_name'];
+            $imagen = $archivo['upload_data']['file_name'];           
+            $data = [
+               'prod_Imagen' => $imagen
+              ];
+             try {          
+               $this->pm->actualizar($data, $id);
+               echo json_encode($data);
+            
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+            }
+        }
+            
         } else {
             //echo  json_encode($this->upload->display_errors());
             //$imagen = $this->cm->obtener($id)->cat_imagen;
@@ -231,8 +246,44 @@ public function get_Categorias() {
         }
     }
         
-    
+    public function eliminarComponente() {
+        
+         $idProducto = $this->input->post('idProducto');
+         $idComponente = $this->input->post('idComponente');   
+     
+       try {
+               $respuesta =  $this->pm->eliminarComp($idProducto,$idComponente);
+          
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+             
+            }
+        }
+//           
+         
+           echo json_encode($respuesta);
+        
+        
+    }
  
+    
+    public function eliminarVariedad($idVariedad){
+        
+        try {
+               $respuesta =  $this->vm->eliminar($idVariedad);
+          
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+             
+            }
+        }
+//           
+         
+           echo json_encode($respuesta);
+        
+    }
 
     public function eliminar($idProducto) {
         

@@ -76,6 +76,8 @@ class ProductoModel {
         return $this->response->SetResponse(true, 'Exito', $query);
     }
 
+    
+  
     public function get($id) {
         return $this->db->from($this->table)
                         ->where('prod_id', $id)
@@ -102,68 +104,57 @@ class ProductoModel {
 
     public function insertComp($data) {
 
-       
+
         $query = $this->db->insertInto('componenteproducto', $data)
                 ->execute();
 
         return $this->response->SetResponse(true, 'Exito', $query);
     }
 
-    public function deleteComp($idProducto,$idComponente) {
-        
-        
+    public function deleteComp($idProducto, $idComponente) {
+
+
 
         $this->db->deleteFrom('componenteproducto')
-                ->where(array('cp_idProducto'=>$idProducto,'cp_idComponente'=>$idComponente))
+                ->where(array('cp_idProducto' => $idProducto, 'cp_idComponente' => $idComponente))
                 ->execute();
 
         return $this->response->SetResponse(true);
     }
-    
-        public function getAllComp($idProducto) {
-            
-  
-       return $this->db->from("componente c")
-                    ->select("c.com_id,c.com_precio,c.com_nombre,c.com_descripcion,c.com_imagen")
-                    ->leftJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
-                    ->where('p.cp_idProducto',$idProducto)              
-                    ->fetchAll();
-        
-            
-    }
-        public function getAllCate() {
-            
-  
-       return  $this->db->from("Categoria")
-                         ->orderBy('cat_nombre')
-                         ->fetchAll();
-        
-            
-    }
-    
-       public function getAllNotComp($idProducto) {
-            
-  
+
+    public function getAllComp($idProducto) {
+
+
         return $this->db->from("componente c")
-                    ->select("c.com_id,c.com_precio,c.com_nombre,c.com_descripcion,c.com_imagen")
-                    ->leftJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
-                     ->where('p.cp_idProducto IS NULL OR p.cp_idProducto <> ?', $idProducto)           
-                    ->fetchAll();
-        
-            
+                        ->select("c.com_id,c.com_precio,c.com_nombre,c.com_descripcion,c.com_imagen")
+                        ->leftJoin('componenteproducto p ON c.com_id = p.cp_idComponente')
+                        ->where('p.cp_idProducto', $idProducto)
+                        ->fetchAll();
     }
-    
-        public function getAllVar($idProducto) {
-            
-  
+
+    public function getAllCate() {
+
+
+        return $this->db->from("Categoria")
+                        ->orderBy('cat_nombre')
+                        ->fetchAll();
+    }
+
+    public function getAllNotComp($idProducto) {
+
+                 
+            return $this->db->from("componente c")                     
+                        ->where('c.com_id NOT IN (SELECT cp_idComponente FROM componenteproducto p WHERE cp_idProducto = ?)', $idProducto )
+                        ->fetchAll();
+    }
+
+    public function getAllVar($idProducto) {
+
+
         return $this->db->from("variedad v")
-                    ->select("v.var_id,v.var_nombre ,v.var_descripcion,v.var_tipo,v.var_precio")                  
-                    ->where('v.var_idProducto',$idProducto)
-                    ->fetchAll();
-        
-            
+                        ->select("v.var_id,v.var_nombre ,v.var_descripcion,v.var_tipo,v.var_precio")
+                        ->where('v.var_idProducto', $idProducto)
+                        ->fetchAll();
     }
-    
-    
 
 }
