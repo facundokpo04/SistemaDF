@@ -326,6 +326,16 @@ $('#agregarCom').click(function () {
     
 })
 
+$('#agregarVar').click(function () {
+
+debugger;
+  
+       
+    $('#modalEditVariedad').modal('show');
+    
+    
+})
+
 
 $(document).on("click", ".eliminarComp", function () {
  

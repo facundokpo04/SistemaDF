@@ -157,7 +157,7 @@
 
                                     </div>
                                     <!-- Botón para agregar filas -->
-                                    <button class="btn btn-warning"  type="button" data-toggle="modal" data-target="#modalEditVariedad" >Agregar Variedad</button>
+                                    <button type="button" class="btn btn-warning"  id="agregarVar"> Agregar Variedad</button>
 <!--                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />-->
 
 
@@ -302,7 +302,7 @@
     }
 </style>
 
-<div class="example-modal modal fade" id="modalEditVariedad" tabindex="-1" >
+<div class="example-modal modal fade" id="modalEditVariedad" >
     <div class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -314,34 +314,33 @@
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <!-- parametros ocultos -->
-                        <input type="hidden" id="mIdVariedad">
-                         
-
+                        <input type="hidden" id="mIdVariedad">   
+                        
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nombre Variedad</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mvNombre" id="mvNombre" class="form-control" >
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Descripci&oacute;n</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mDescripcion" id="mDescripcion" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mvDescripcion" id="mvDescripcion" class="form-control"  >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Tipo</label>
                                 <div class="col-sm-9"> 
-                                   <input type="text" name="mTipo" id="mTipo" class="form-control" id="mtxtTipo" placeholder="">
+                                   <input type="text" name="mvTipo" id="mvTipo" class="form-control"  >
                                
                                        </div>
                             </div>
                              <div class="form-group">
                                 <label class="col-sm-3 control-label">Precio</label>
                                 <div class="col-sm-9"> 
-                                   <input type="text" name="mPrecio" id="mPrecio" class="form-control" id="mtxtPrecio" placeholder="">
+                                   <input type="text" name="mvPrecio" id="mvPrecio" class="form-control" >
                                
                                        </div>
                             </div>
