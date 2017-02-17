@@ -48,7 +48,19 @@
                     <li class="active"><a href="categoria"><i class="fa fa-circle-o"></i> Categor&iacute;a</a></li>
                     <li class="active"><a href="producto"><i class="fa fa-circle-o"></i> Producto</a></li>
                     <li class="active"><a href="componente"><i class="fa fa-circle-o"></i> Componente </a></li>
-                    <li class="active"><a href="variedad"><i class="fa fa-circle-o"></i> Variedad </a></li>                 
+                    <li class="active"><a href="variedad"><i class="fa fa-circle-o"></i> Variedad </a></li> 
+                     <li class="active"><a href="variedad"><i class="fa fa-circle-o"></i> Promos </a></li>  
+                </ul>
+            </li>
+              <li class="active treeview">
+                <a href="#">
+                    <i class="fa fa-cart-plus"></i> <span>Pedidos </span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active"><a href=""><i class="fa fa-calendar-check-o"></i> Tablero</a></li>                   
                 </ul>
             </li>
             <li class="active treeview">

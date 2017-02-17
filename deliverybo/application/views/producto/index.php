@@ -246,7 +246,6 @@
 </div> 
  <!-- modal agregar componente -->
 <div class="modal fade" id="modalAgregarComp" role="dialog"  style="overflow-y: scroll;" >
-   
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -286,24 +285,8 @@
  
   
  <!-- modal agregar variedad -->
-<style>
-    .example-modal .modal {
-        position: relative;
-        top: auto;
-        bottom: auto;
-        right: auto;
-        left: auto;
-        display: block;
-        z-index: 1;
-    }
 
-    .example-modal .modal {
-        background: transparent !important;
-    }
-</style>
-
-<div class="example-modal modal fade" id="modalEditVariedad" >
-    <div class="modal">
+   <div class="modal fade" id="modalEditVariedad" role="dialog"  style="overflow-y: scroll;" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -312,11 +295,13 @@
                     <h4 class="modal-title">Agregar/ Eliminar Variedad</h4>
                 </div>
                 <div class="modal-body">
+                    
+                   
                     <form class="form-horizontal">
-                        <!-- parametros ocultos -->
+                         
                         <input type="hidden" id="mIdVariedad">   
                         
-                        <div class="box-body">
+                        
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nombre Variedad</label>
                                 <div class="col-sm-9"> 
@@ -345,13 +330,13 @@
                                        </div>
                             </div>
                            
-
-                        </div>
                     </form>
                 </div>
+                           
+               
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModalVar" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdVariedad">Actualizar</button>
+                    <button type="button" class="btn btn-info"  onclick="ActualizarComponentes($('#idProducto').val())" >Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -359,8 +344,6 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-</div>
-   <!-- /.example-modal -->
 
 
 <script type="text/javascript">

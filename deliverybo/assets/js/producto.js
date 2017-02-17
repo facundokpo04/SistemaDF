@@ -249,7 +249,28 @@ function ActualizarComponentes() {
 }
 
 function ActualizarVariedad(idProducto) {
+    
+ $.ajax({
+            type: "POST",
+            url: baseurl + "index.php/producto/updVariedad",
+            dataType: 'json',
+            data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+                var_nombre: $('#mvNombre').val(),
+                var_descripcion: $('#mvDescripcion').val(),
+                var_tipo: $('#mvTipo').val(),
+                var_precio: $('#mvPrecio').val(),
+                var_idProducto: $('#idProducto').val(),
+                var_id: $('#mIdVariedad').val()
+            },
+            success: function (res) {
 
+
+                  var a = 0;
+                $('#mbtnCerrarModal').click();
+
+                
+            }
+        });
 }
 
 function actualizarProducto() {
