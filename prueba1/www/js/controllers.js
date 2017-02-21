@@ -224,7 +224,6 @@ angular.module('app.controllers', [])
 
   $scope.loadCategorias = function() {
     sharedUtils.showLoading();
-    debugger;
        restApi.call({
             method: 'get',
             url: 'categoria/listar/5/0',
@@ -239,8 +238,7 @@ angular.module('app.controllers', [])
 
             }
         });
-//    $scope.categorias=cate.get();
-    debugger;
+//    $scope.categorias=cate.get();  
     sharedUtils.hideLoading();
   }
 
