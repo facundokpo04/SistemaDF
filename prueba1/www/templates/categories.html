@@ -4,17 +4,17 @@
     <ion-content class="has-header" padding="false"  ng-init="loadCategorias()"  >
 
 
-		<div class="row" ng-repeat="item in categorias" ng-if="$index % 2 === 0" style="border-top: 1px solid #999;">
+		<div class="row" ng-repeat="item in categorias"  style="border-top: 1px solid #999;">
 
 
-			<div class="col col-90 " ng-if="$index < categorias.length" style="padding:1px;border-right:1px solid #999" >
+			<div class="col col-90 "  style="padding:1px;border-right:1px solid #999" >
 
 				  <div class="item item-image" style="border-width: 0px; border-style: none;">
-					<img ng-click="showProductInfo(item.$id)" ng-src="{{'img/fk/'+ item.cat_imagen +'.jpg'}}" width="100%" />
+					<img ng-click="showProductInfo(item.cat_id)" ng-src="{{'img/fk/'+ '' +'.jpg'}}" width="100%" />
 				  </div>
 
 				  <a class="item item-icon-right assertive" href="#"  style="border-width: 0px; border-style: none;" >
-					<p ng-click="showProductInfo(item.$id)" style="font-size: 12px;text-align:left;">
+					<p ng-click="showProductInfo(item.cat_id)" style="font-size: 12px;text-align:left;">
                                            {{item.cat_nombre}} <br/>
 						
 					</p>

@@ -227,7 +227,7 @@ angular.module('app.controllers', [])
     debugger;
        restApi.call({
             method: 'get',
-            url: 'categoria/listar',
+            url: 'categoria/listar/5/0',
             response: function(r) {
                 debugger;
                 $scope.categorias = r;
