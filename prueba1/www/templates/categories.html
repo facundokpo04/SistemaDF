@@ -1,0 +1,32 @@
+
+
+<ion-view style="" class=" " id="page16" title="Categorias">
+    <ion-content class="has-header" padding="false"  ng-init="loadCategorias()"  >
+
+
+		<div class="row" ng-repeat="item in categorias" ng-if="$index % 2 === 0" style="border-top: 1px solid #999;">
+
+
+			<div class="col col-90 " ng-if="$index < categorias.length" style="padding:1px;border-right:1px solid #999" >
+
+				  <div class="item item-image" style="border-width: 0px; border-style: none;">
+					<img ng-click="showProductInfo(item.$id)" ng-src="{{'img/fk/'+ item.cat_imagen +'.jpg'}}" width="100%" />
+				  </div>
+
+				  <a class="item item-icon-right assertive" href="#"  style="border-width: 0px; border-style: none;" >
+					<p ng-click="showProductInfo(item.$id)" style="font-size: 12px;text-align:left;">
+                                           {{item.cat_nombre}} <br/>
+						
+					</p>
+					
+				  </a>
+
+			</div>
+
+
+			
+		</div>
+
+
+	</ion-content>
+</ion-view>
