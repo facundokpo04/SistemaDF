@@ -186,7 +186,7 @@ angular.module('app.controllers', [])
   };
 
 })
-.controller('categoriasCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,resApi,$state,
+.controller('categoriasCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,restApi,$state,
                                   $ionicHistory,sharedCartService,sharedUtils) {
 
   //Check if user already logged in
