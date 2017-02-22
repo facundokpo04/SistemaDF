@@ -10,11 +10,11 @@
 			<div class="col col-center"  style="padding:1px;border-right:1px solid #999" >
 
 				  <div class="item item-image" style="border-width: 0px; border-style: none;">
-					<img ng-click="showProductInfo()" ng-src="{{'img/fk/'+ item.cat_imagen +'.png'}}" width="100%" />
+					<img ng-click="showProductInfo(item)" ng-src="{{'img/fk/'+ item.cat_imagen +'.png'}}" width="100%" />
 				  </div>
 
 				  <a class="item item-icon-right assertive" href="#"  style="border-width: 0px; border-style: none;" >
-					<p ng-click="showProductInfo()" style="font-size: 20px;text-align:center;">
+					<p ng-click="showProductInfo(item)" style="font-size: 20px;text-align:center;">
                                            {{item.cat_nombre}} <br/>
 						
 					</p>

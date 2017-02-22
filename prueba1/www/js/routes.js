@@ -47,7 +47,13 @@ angular.module('app.routes', [])
       controller: 'categoriasCtrl'
     })
 
-
+.state('menucat', {
+      url: '/page17/:id',
+      templateUrl: 'templates/menucat.html',
+      params:{'nombre': null},
+      controller: 'menucatCtrl'
+    })
+    
   .state('offers', {
     url: '/page8',
     templateUrl: 'templates/offers.html',

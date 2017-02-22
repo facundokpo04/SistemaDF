@@ -20,14 +20,10 @@ angular.module('app.controllers', [])
       }
     });
 
-
-
-
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-
-        $ionicHistory.nextViewOptions({
+          $ionicHistory.nextViewOptions({
           historyRoot: true
         });
         $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
@@ -228,7 +224,7 @@ angular.module('app.controllers', [])
             method: 'get',
             url: 'categoria/listar/5/0',
             response: function(r) {
-                debugger;
+           
                 $scope.categorias = r.data;
             },
             error: function(r) {
@@ -242,7 +238,81 @@ angular.module('app.controllers', [])
     sharedUtils.hideLoading();
   }
 
+  $scope.showProductInfo=function (item) {
+   debugger;
+      $state.go("menucat", {"id": item.cat_id,"nombre":item.cat_nombre}); 
+
+  };
+  
+  $scope.addToCart=function(item){
+    sharedCartService.add(item);
+  };
+
+})
+.controller('menucatCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,restApi,$state,
+                                  $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
+
+ $scope.titulo = $stateParams.nombre;
+ debugger;
+  //Check if user already logged in
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $scope.user_info=user; //Saves data to user_info
+    }else {
+
+      $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+      $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+      $ionicHistory.nextViewOptions({
+        historyRoot: true
+      });
+      $rootScope.extras = false;
+      sharedUtils.hideLoading();
+      $state.go('tabsController.login', {}, {location: "replace"});
+
+    }
+  });
+
+  // On Loggin in to menu page, the sideMenu drag state is set to true
+  $ionicSideMenuDelegate.canDragContent(true);
+  $rootScope.extras=true;
+
+  // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
+  $scope.$on('$ionicView.enter', function(ev) {
+    if(ev.targetScope !== $scope){
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+    }
+  });
+
+
+
+  $scope.loadProductos = function() {
+    sharedUtils.showLoading();
+    
+  
+   
+       restApi.call({
+            method: 'get',
+            url: 'producto/listarCat/'+ $stateParams.id,
+            response: function(r) {
+        
+                $scope.menu = r.data;
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+//    $scope.categorias=cate.get();  
+    sharedUtils.hideLoading();
+  }
+
   $scope.showProductInfo=function (id) {
+      
+      
 
   };
   
