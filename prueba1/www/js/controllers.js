@@ -229,7 +229,7 @@ angular.module('app.controllers', [])
             url: 'categoria/listar/5/0',
             response: function(r) {
                 debugger;
-                $scope.categorias = r;
+                $scope.categorias = r.data;
             },
             error: function(r) {
 
@@ -245,6 +245,7 @@ angular.module('app.controllers', [])
   $scope.showProductInfo=function (id) {
 
   };
+  
   $scope.addToCart=function(item){
     sharedCartService.add(item);
   };
