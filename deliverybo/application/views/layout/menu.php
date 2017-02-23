@@ -49,7 +49,7 @@
                     <li class="active"><a href="producto"><i class="fa fa-circle-o"></i> Producto</a></li>
                     <li class="active"><a href="componente"><i class="fa fa-circle-o"></i> Componente </a></li>
                     <li class="active"><a href="variedad"><i class="fa fa-circle-o"></i> Variedad </a></li> 
-                     <li class="active"><a href="variedad"><i class="fa fa-circle-o"></i> Promos </a></li>  
+                     <li class="active"><a href="promo"><i class="fa fa-circle-o"></i> Promos </a></li>  
                 </ul>
             </li>
               <li class="active treeview">

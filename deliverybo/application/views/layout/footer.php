@@ -87,6 +87,9 @@
 <?php if($this->uri->segment(1)=='producto'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/producto.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(1)=='promo'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/promo.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 

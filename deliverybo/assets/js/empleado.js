@@ -95,23 +95,29 @@ selEmpleado = function (idEmpleados) {
             }
             debugger;
             $('#mSucursal option[value=' + empleados.suc_id + ']').attr('selected', 'selected');
-            $('#imagen').attr('src', '../assets/imagenes/empleado/'+empleados.emp_imagen);
+            $('#imagen').attr('src', '../assets/imagenes/empleado/' + empleados.emp_imagen);
 //            $('#mImagen').val(res.cat_imagen);
         }
     });
 };
 
 
+$.validator.setDefaults( {
+			submitHandler: function () {
+				alert( "submitted!" );
+			}
+		} );
+$("#FormCategoria").submit(function(e) {
 
-$('#mbtnUpdEmpleado2').click(function () {
-   
+alert('a');
     var inputFile = $('input#mImagen');
+    
     var fileToUpload = inputFile[0].files[0];
     // make sure there is file to upload
 
     // provide the form data
     // that would be sent to sever through ajax
-    if (fileToUpload != 'undefined') {
+    if (fileToUpload != 'undefined' && false) {
         var formData = new FormData();
         formData.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
         formData.append('per_nombre', $('#mNombre').val());
@@ -147,17 +153,55 @@ $('#mbtnUpdEmpleado2').click(function () {
 
 
 $('#mCerrarModal,#mbtnCerrarModal').click(function () {
-    
-        $('#mNombre').val('');
-            $('#mEmail').val('');
-            $('#mDocumento').val(''); //select
-            //ajax para traer todos los estados
-            $('#mNacionalidad').val('');
-            $('#mPassword').val('');
-            $('#mPerfilUsuario').val('');
-            $('#mIdPersona').val('');
-            $('#mIdEmpleado').val('');
-            $('#mLegajo').val('');
-            $('#mCargo').val('');
+
+    $('#mNombre').val('');
+    $('#mEmail').val('');
+    $('#mDocumento').val(''); //select
+    //ajax para traer todos los estados
+    $('#mNacionalidad').val('');
+    $('#mPassword').val('');
+    $('#mPerfilUsuario').val('');
+    $('#mIdPersona').val('');
+    $('#mIdEmpleado').val('');
+    $('#mLegajo').val('');
+    $('#mCargo').val('');
 })
-         
+
+
+$("#FormCategoria").validate({
+    rules: {
+       
+        mNombre: {
+            required: true,
+            minlength: 4
+        },
+        password: {
+            required: true,
+            minlength: 5
+        }
+    },
+    messages: {
+        
+        mNombre: {
+            required: "Please enter a username",
+            minlength: "Your username must consist of at least 2 characters"
+        }
+    },
+    errorElement: "em",
+    errorPlacement: function (error, element) {
+        // Add the `help-block` class to the error element
+        error.addClass("help-block");
+
+        if (element.prop("type") === "checkbox") {
+            error.insertAfter(element.parent("label"));
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    highlight: function (element, errorClass, validClass) {
+        $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+    }
+});

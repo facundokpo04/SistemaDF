@@ -95,7 +95,7 @@
                     <h4 class="modal-title">Agregar/ Eliminar Empleado</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
+                    <form id="FormCategoria" class="form-horizontal" method="post">
                         <!-- parametros ocultos -->
                         <input type="hidden" id="mIdEmpleado">
                         <input type="hidden" id="mIdPersona">
@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-12 form-group">
-                                <label for="">Imagen Empleapo</label>
+                                <label for="">Imagen Empleado</label>
 
                                 <div class="input-group">
                                     <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
@@ -193,7 +193,7 @@
                 </div>
                 <div class="modal-footer" style="text-align: center;">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdEmpleado2">Actualizar</button>
+                    <button type="submit" class="btn btn-info" id="mbtnUpdEmpleado2">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
