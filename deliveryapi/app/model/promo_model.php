@@ -15,11 +15,10 @@ class PromoModel
         $this->response = new Response();
     }
     
-    public function getAll($l, $p)
+    public function getAll()
     {
         $data = $this->db->from($this->table)
-                         ->limit($l)
-                         ->offset($p)
+                       
                          ->orderBy('pro_id DESC')
                          ->fetchAll();
         

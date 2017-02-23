@@ -6,10 +6,10 @@ use App\Lib\Auth,
     App\Middleware\AuthMiddleware;
 
 $app->group('/promo/', function () {
-    $this->get('listar/{l}/{p}', function ($req, $res, $args) {
+    $this->get('listar', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->promo->getAll($args['l'], $args['p']))
+                     json_encode($this->model->promo->getAll())
                    );
     });
     
