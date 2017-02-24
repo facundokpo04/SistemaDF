@@ -13,12 +13,10 @@
 
 
 -- Dumping database structure for deliverydb
-DROP DATABASE IF EXISTS `deliverydb`;
 CREATE DATABASE IF NOT EXISTS `deliverydb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `deliverydb`;
 
 -- Dumping structure for table deliverydb.categoria
-DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_nombre` varchar(45) DEFAULT NULL,
@@ -28,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   PRIMARY KEY (`cat_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.categoria: ~4 rows (approximately)
+-- Dumping data for table deliverydb.categoria: ~5 rows (approximately)
 DELETE FROM `categoria`;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
 INSERT INTO `categoria` (`cat_id`, `cat_nombre`, `cat_descripcion`, `cat_idEstado`, `cat_imagen`) VALUES
@@ -40,7 +38,6 @@ INSERT INTO `categoria` (`cat_id`, `cat_nombre`, `cat_descripcion`, `cat_idEstad
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.componente
-DROP TABLE IF EXISTS `componente`;
 CREATE TABLE IF NOT EXISTS `componente` (
   `com_id` int(11) NOT NULL AUTO_INCREMENT,
   `com_precio` float NOT NULL,
@@ -61,7 +58,6 @@ INSERT INTO `componente` (`com_id`, `com_precio`, `com_idEstado`, `com_nombre`, 
 /*!40000 ALTER TABLE `componente` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.componenteppedido
-DROP TABLE IF EXISTS `componenteppedido`;
 CREATE TABLE IF NOT EXISTS `componenteppedido` (
   `cpp_id` int(11) NOT NULL AUTO_INCREMENT,
   `cpp_idProductoPedido` int(11) NOT NULL,
@@ -79,7 +75,6 @@ DELETE FROM `componenteppedido`;
 /*!40000 ALTER TABLE `componenteppedido` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.componenteproducto
-DROP TABLE IF EXISTS `componenteproducto`;
 CREATE TABLE IF NOT EXISTS `componenteproducto` (
   `cp_id` int(11) NOT NULL AUTO_INCREMENT,
   `cp_idProducto` int(11) NOT NULL,
@@ -91,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `componenteproducto` (
   CONSTRAINT `fk_ComponenteProducto_Producto1` FOREIGN KEY (`cp_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.componenteproducto: ~2 rows (approximately)
+-- Dumping data for table deliverydb.componenteproducto: ~4 rows (approximately)
 DELETE FROM `componenteproducto`;
 /*!40000 ALTER TABLE `componenteproducto` DISABLE KEYS */;
 INSERT INTO `componenteproducto` (`cp_id`, `cp_idProducto`, `cp_idComponente`) VALUES
@@ -102,7 +97,6 @@ INSERT INTO `componenteproducto` (`cp_id`, `cp_idProducto`, `cp_idComponente`) V
 /*!40000 ALTER TABLE `componenteproducto` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.detallepedido
-DROP TABLE IF EXISTS `detallepedido`;
 CREATE TABLE IF NOT EXISTS `detallepedido` (
   `dp_id` int(11) NOT NULL AUTO_INCREMENT,
   `dp_Cantidad` int(11) NOT NULL,
@@ -123,7 +117,6 @@ DELETE FROM `detallepedido`;
 /*!40000 ALTER TABLE `detallepedido` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.diahorario
-DROP TABLE IF EXISTS `diahorario`;
 CREATE TABLE IF NOT EXISTS `diahorario` (
   `dh_id` int(11) NOT NULL AUTO_INCREMENT,
   `dh_diaSemana` varchar(45) DEFAULT NULL,
@@ -152,7 +145,6 @@ INSERT INTO `diahorario` (`dh_id`, `dh_diaSemana`, `dh_horaApertura`, `dh_horaCi
 /*!40000 ALTER TABLE `diahorario` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.empleado
-DROP TABLE IF EXISTS `empleado`;
 CREATE TABLE IF NOT EXISTS `empleado` (
   `emp_id` int(11) NOT NULL AUTO_INCREMENT,
   `emp_legajo` varchar(45) DEFAULT NULL,
@@ -171,7 +163,6 @@ DELETE FROM `empleado`;
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.empresa
-DROP TABLE IF EXISTS `empresa`;
 CREATE TABLE IF NOT EXISTS `empresa` (
   `emp_id` int(11) NOT NULL DEFAULT '1',
   `Rubro` varchar(50) NOT NULL,
@@ -194,7 +185,6 @@ INSERT INTO `empresa` (`emp_id`, `Rubro`, `Domicilio`, `Email`, `Pais`, `cuilt`,
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.listaproductopromopedido
-DROP TABLE IF EXISTS `listaproductopromopedido`;
 CREATE TABLE IF NOT EXISTS `listaproductopromopedido` (
   `ppp_id` int(11) NOT NULL,
   `ppp_idProductoPedido` int(11) NOT NULL,
@@ -212,7 +202,6 @@ DELETE FROM `listaproductopromopedido`;
 /*!40000 ALTER TABLE `listaproductopromopedido` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.parametros
-DROP TABLE IF EXISTS `parametros`;
 CREATE TABLE IF NOT EXISTS `parametros` (
   `par_id` int(11) NOT NULL AUTO_INCREMENT,
   `par_zonaEntrega` varchar(45) DEFAULT NULL,
@@ -233,7 +222,6 @@ INSERT INTO `parametros` (`par_id`, `par_zonaEntrega`, `par_pedidoMinimo`, `par_
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.pedidoencabezado
-DROP TABLE IF EXISTS `pedidoencabezado`;
 CREATE TABLE IF NOT EXISTS `pedidoencabezado` (
   `pe_id` int(11) NOT NULL AUTO_INCREMENT,
   `pe_idCliente` varchar(45) DEFAULT NULL,
@@ -256,7 +244,6 @@ DELETE FROM `pedidoencabezado`;
 /*!40000 ALTER TABLE `pedidoencabezado` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.persona
-DROP TABLE IF EXISTS `persona`;
 CREATE TABLE IF NOT EXISTS `persona` (
   `per_id` int(11) NOT NULL AUTO_INCREMENT,
   `per_nombre` varchar(45) NOT NULL,
@@ -268,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`per_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.persona: ~4 rows (approximately)
+-- Dumping data for table deliverydb.persona: ~5 rows (approximately)
 DELETE FROM `persona`;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `per_password`, `per_nacionalidad`, `per_perfilUsuario`) VALUES
@@ -280,7 +267,6 @@ INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `pe
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.producto
-DROP TABLE IF EXISTS `producto`;
 CREATE TABLE IF NOT EXISTS `producto` (
   `prod_id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_idCategoria` int(11) NOT NULL,
@@ -301,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   CONSTRAINT `fk_Producto_Categoria0` FOREIGN KEY (`prod_idCategoria`) REFERENCES `categoria` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.producto: ~3 rows (approximately)
+-- Dumping data for table deliverydb.producto: ~5 rows (approximately)
 DELETE FROM `producto`;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_codigoProducto`, `prod_nombre`, `prod_descripcionProducto`, `prod_precioBase`, `prod_maxComponente`, `prod_minComponente`, `prod_idEstado`, `prod_idEstadoVisible`, `prod_idSucursal`, `prod_imagen`) VALUES
@@ -313,7 +299,6 @@ INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_codigoProducto`, `p
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.productopedido
-DROP TABLE IF EXISTS `productopedido`;
 CREATE TABLE IF NOT EXISTS `productopedido` (
   `pp_id` int(11) NOT NULL AUTO_INCREMENT,
   `pp_precioBase` float DEFAULT NULL,
@@ -333,7 +318,6 @@ DELETE FROM `productopedido`;
 /*!40000 ALTER TABLE `productopedido` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.productopromo
-DROP TABLE IF EXISTS `productopromo`;
 CREATE TABLE IF NOT EXISTS `productopromo` (
   `ppro_id` int(11) NOT NULL AUTO_INCREMENT,
   `ppro_idPromo` int(11) NOT NULL,
@@ -351,7 +335,6 @@ DELETE FROM `productopromo`;
 /*!40000 ALTER TABLE `productopromo` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.promo
-DROP TABLE IF EXISTS `promo`;
 CREATE TABLE IF NOT EXISTS `promo` (
   `pro_id` int(11) NOT NULL AUTO_INCREMENT,
   `pro_nombre` varchar(45) DEFAULT NULL,
@@ -364,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `promo` (
   PRIMARY KEY (`pro_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.promo: ~1 rows (approximately)
+-- Dumping data for table deliverydb.promo: ~3 rows (approximately)
 DELETE FROM `promo`;
 /*!40000 ALTER TABLE `promo` DISABLE KEYS */;
 INSERT INTO `promo` (`pro_id`, `pro_nombre`, `pro_descripcion`, `pro_precio`, `pro_descuento`, `pro_FechaInicio`, `pro_FechaFin`, `pro_imagen`) VALUES
@@ -374,7 +357,6 @@ INSERT INTO `promo` (`pro_id`, `pro_nombre`, `pro_descripcion`, `pro_precio`, `p
 /*!40000 ALTER TABLE `promo` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.promopedido
-DROP TABLE IF EXISTS `promopedido`;
 CREATE TABLE IF NOT EXISTS `promopedido` (
   `ppro_id` int(11) NOT NULL AUTO_INCREMENT,
   `ppro_Nombre` varchar(45) DEFAULT NULL,
@@ -394,7 +376,6 @@ DELETE FROM `promopedido`;
 /*!40000 ALTER TABLE `promopedido` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.sucursal
-DROP TABLE IF EXISTS `sucursal`;
 CREATE TABLE IF NOT EXISTS `sucursal` (
   `suc_id` int(11) NOT NULL AUTO_INCREMENT,
   `suc_nombre` varchar(45) DEFAULT NULL,
@@ -416,7 +397,6 @@ INSERT INTO `sucursal` (`suc_id`, `suc_nombre`, `suc_cuit`, `suc_razonSocial`, `
 /*!40000 ALTER TABLE `sucursal` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.tablasrelacion
-DROP TABLE IF EXISTS `tablasrelacion`;
 CREATE TABLE IF NOT EXISTS `tablasrelacion` (
   `idEstado` int(11) NOT NULL,
   `relacion` varchar(45) DEFAULT NULL,
@@ -432,7 +412,6 @@ DELETE FROM `tablasrelacion`;
 /*!40000 ALTER TABLE `tablasrelacion` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.variedad
-DROP TABLE IF EXISTS `variedad`;
 CREATE TABLE IF NOT EXISTS `variedad` (
   `var_id` int(11) NOT NULL AUTO_INCREMENT,
   `var_idProducto` int(11) NOT NULL,
@@ -445,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `variedad` (
   CONSTRAINT `fk_Variedad_Producto1` FOREIGN KEY (`var_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.variedad: ~0 rows (approximately)
+-- Dumping data for table deliverydb.variedad: ~2 rows (approximately)
 DELETE FROM `variedad`;
 /*!40000 ALTER TABLE `variedad` DISABLE KEYS */;
 INSERT INTO `variedad` (`var_id`, `var_idProducto`, `var_nombre`, `var_descripcion`, `var_tipo`, `var_precio`) VALUES
