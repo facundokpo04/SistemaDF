@@ -352,9 +352,15 @@ loadPromos();
                                   $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
 
 // $scope.titulo = $stateParams.nombre;
+var cart = sharedCartService.cart;
+var item = {};       
+       
+       
+      $scope.selectedVariedad = {};
       $scope.producto = {};
       $scope.componentes = [];
       $scope.variedades = [];
+      $scope.componentesSelected = [];
       
    loadProducto = function (){
          restApi.call({
@@ -414,7 +420,23 @@ loadPromos();
         });
 //    $scope.categorias=cate.get();  
   }
-   
+  getSelectedComponentes = function (componentes) {
+      debugger;
+      var salida = {};
+      salida.items = []
+      salida.price = 0;
+      
+      
+      angular.forEach(componentes , function(componente) {
+                if (componente.selected) {
+                salida.items.push(componente)
+                salida.price+=parseInt(componente.com_precio)
+                }
+            })
+            return salida;
+			
+		}
+                
     loadProducto();
     loadComponentes();
     loadVariedades();
@@ -477,10 +499,29 @@ loadPromos();
 
   };
   
-  $scope.addToCart=function(item){
+  $scope.addToCart=function(){
+ 
+   
+     $scope.componentesSelected = getSelectedComponentes($scope.componentes);
+     
+     item.producto= $scope.producto;
+     item.variedad = $scope.selectedVariedad;
+     item.componentes = $scope.componentesSelected;
+     item.qty = 1;
+     item.price = parseFloat(componentes.price + variedad.var_precio)
+     
+     cart.add(item);
      
   };
-
+  $scope.SelectedVariedadChange=function(variedad){
+      
+      $scope.selectedVariedad=variedad;
+     
+  };
+ 
+  
+  
+   
 })
 
 
@@ -502,11 +543,7 @@ loadPromos();
         //Only when the user is logged in, the cart qty is shown
         //Else it will show unwanted console error till we get the user object
         $scope.get_total= function() {
-          var total_qty=0;
-          for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-            total_qty += sharedCartService.cart_items[i].item_qty;
-          }
-          return total_qty;
+          return sharedCartService.total_qty;
         };
 
       }else {

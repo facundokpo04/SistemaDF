@@ -20,41 +20,38 @@
             <ion-radio
                 name="price"
                 ng-repeat="variedad in variedades"
-                ng-model="vm.selectedPrice"
+                ng-model="selectedVariedad"
                 ng-value="variedad"
-                ng-change="vm.onSelectedPriceChange(price)">
+                ng-change="SelectedVariedadChange(variedad)">
                 {{variedad.var_nombre}}: {{variedad.var_precio| currency : (option.currency || '$') : 2}}
             </ion-radio>
-            <div >
+            <div>
                 <h4>Opciones y Adicionales</h4>
                 <p>Selecione una opcion para incluir</p>
             </div>
-
             <ion-list>
 
-                <div class="item item-divider" ng-if="">
+                <div class="item item-divider" >
                     ADICIONALES
                 </div>
                 <ion-item class="item-toggle" ng-repeat="componente in componentes">
                     {{componente.com_nombre}}: {{componente.com_precio| currency : (option.currency || '$') : 2}}
                     <label class="toggle">
-                        <input type="checkbox" ng-model="option.selected">
+                        <input type="checkbox" ng-model="componente.selected">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
                     </label>
                 </ion-item>
             </ion-list>
-
-
         </div>
-      <div class="row">
-			<div class="col">
-				<a class="button button-block" ng-click="vm.quickAddToCart()">
-					<i class="icon ion-bag"></i>
-					Agregar al Pedido
-				</a>
-			</div>
-		</div>
+        <div class="row">
+            <div class="col">
+                <a class="button button-block" ng-click="addToCart()">
+                    <i class="icon ion-bag"></i>
+                    Agregar al Pedido
+                </a>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

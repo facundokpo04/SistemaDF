@@ -68,98 +68,71 @@ angular.module('app.services', ['ngResource'])
 
 
 
-.factory('sharedCartService', ['$ionicPopup', 'fireBaseData', '$firebaseArray', function($ionicPopup, fireBaseData, $firebaseArray) {
+.factory('sharedCartService', ['$ionicPopup',function($ionicPopup){
+	
+	var cartObj = {};
+	cartObj.cart=[];
+	cartObj.total_amount=0;
+	cartObj.total_qty=0;
+	
+	cartObj.cart.add=function(item){
+		if(cartObj.cart.find(item.producto.prod_id)!=-1 ){
+			var alertPopup = $ionicPopup.alert({
+                title: 'El Producto ya fue agregado',
+                template: 'Incremente la cantidad en el pedido'
+            });
+			//cartObj.cart[cartObj.cart.find(id)].cart_item_qty+=1;
+			//cartObj.total_qty+= 1;	
+			//cartObj.total_amount+= parseInt(cartObj.cart[cartObj.cart.find(id)].cart_item_price);
+		}
+		else{
+		    cartObj.cart.push( item);
+			cartObj.total_qty+=1;	
+			cartObj.total_amount+=parseInt(item.price);	
+		}
+	};
+	
+	cartObj.cart.find=function(id){	
+		var result=-1;
+		for( var i = 0, len = cartObj.cart.length; i < len; i++ ) {
+			if( cartObj.cart[i].item.producto.prod_id === id ) {
+				result = i;
+				break;
+			}
+		}
+		return result;
+                //revisar hacerlo con each
+	};
+	
+	cartObj.cart.drop=function(id){
+	 var temp=cartObj.cart[cartObj.cart.find(id)];
+	 cartObj.total_qty-= parseInt(temp.qty);
+	 cartObj.total_amount-=( parseInt(temp.qty) * parseInt(temp.price) );
+	 cartObj.cart.splice(cartObj.cart.find(id), 1);
 
-    var uid; // uid is temporary user_id
+	};
+	
+	cartObj.cart.increment=function(id){
+		 cartObj.cart[cartObj.cart.find(id)].qty+=1;
+		 cartObj.total_qty+= 1;
+		 cartObj.total_amount+=( parseInt( cartObj.cart[cartObj.cart.find(id)].price) );	
+	};
+	
+	cartObj.cart.decrement=function(id){
+		
+		 cartObj.total_qty-= 1;
+		 cartObj.total_amount-= parseInt( cartObj.cart[cartObj.cart.find(id)].price) ;
+		 
 
-    var cart = {}; // the main Object
-
-
-    //Check if user already logged in
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            uid = user.uid;
-            cart.cart_items = $firebaseArray(fireBaseData.refCart().child(uid));
-        }
-    });
-
-
-
-
-    //Add to Cart
-    cart.add = function(item) {
-        //check if item is already added or not
-        fireBaseData.refCart().child(uid).once("value", function(snapshot) {
-
-            if (snapshot.hasChild(item.$id) == true) {
-
-                //if item is already in the cart
-                var currentQty = snapshot.child(item.$id).val().item_qty;
-
-                fireBaseData.refCart().child(uid).child(item.$id).update({ // update
-                    item_qty: currentQty + 1
-                });
-
-            } else {
-
-                //if item is new in the cart
-                fireBaseData.refCart().child(uid).child(item.$id).set({ // set
-                    item_name: item.name,
-                    item_image: item.image,
-                    item_price: item.price,
-                    item_qty: 1
-                });
-            }
-        });
-    };
-
-    cart.drop = function(item_id) {
-        fireBaseData.refCart().child(uid).child(item_id).remove();
-    };
-
-    cart.increment = function(item_id) {
-
-        //check if item is exist in the cart or not
-        fireBaseData.refCart().child(uid).once("value", function(snapshot) {
-            if (snapshot.hasChild(item_id) == true) {
-
-                var currentQty = snapshot.child(item_id).val().item_qty;
-                //check if currentQty+1 is less than available stock
-                fireBaseData.refCart().child(uid).child(item_id).update({
-                    item_qty: currentQty + 1
-                });
-
-            } else {
-                //pop error
-            }
-        });
-
-    };
-
-    cart.decrement = function(item_id) {
-
-        //check if item is exist in the cart or not
-        fireBaseData.refCart().child(uid).once("value", function(snapshot) {
-            if (snapshot.hasChild(item_id) == true) {
-
-                var currentQty = snapshot.child(item_id).val().item_qty;
-
-                if (currentQty - 1 <= 0) {
-                    cart.drop(item_id);
-                } else {
-                    fireBaseData.refCart().child(uid).child(item_id).update({
-                        item_qty: currentQty - 1
-                    });
-                }
-
-            } else {
-                //pop error
-            }
-        });
-
-    };
-
-    return cart;
+		 if(cartObj.cart[cartObj.cart.find(id)].qty == 1){  // if the cart item was only 1 in qty
+			cartObj.cart.splice( cartObj.cart.find(id) , 1);  //edited
+		 }else{
+			cartObj.cart[cartObj.cart.find(id)].qty-=1;
+		 }
+	
+	};
+	
+	return cartObj;
 }])
 
 .factory('cate', function($resource) {
