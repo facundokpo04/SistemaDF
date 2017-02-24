@@ -1,0 +1,458 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.4.0.5125
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for deliverydb
+DROP DATABASE IF EXISTS `deliverydb`;
+CREATE DATABASE IF NOT EXISTS `deliverydb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `deliverydb`;
+
+-- Dumping structure for table deliverydb.categoria
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE IF NOT EXISTS `categoria` (
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_nombre` varchar(45) DEFAULT NULL,
+  `cat_descripcion` text,
+  `cat_idEstado` int(11) DEFAULT NULL,
+  `cat_imagen` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.categoria: ~4 rows (approximately)
+DELETE FROM `categoria`;
+/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+INSERT INTO `categoria` (`cat_id`, `cat_nombre`, `cat_descripcion`, `cat_idEstado`, `cat_imagen`) VALUES
+	(1, 'Hamburguesas', 'hamburguesas', 1, 'hamburgesas.png'),
+	(2, 'Empanadas', 'empanada', 1, 'empanadas.png'),
+	(3, 'Pizzas', 'pizzas', 2, 'pizzas.png'),
+	(4, 'Ensaladas', 'ensaladas', 2, 'ensaladas.png'),
+	(5, 'Calzones', 'calzones', 1, 'calzones.png');
+/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.componente
+DROP TABLE IF EXISTS `componente`;
+CREATE TABLE IF NOT EXISTS `componente` (
+  `com_id` int(11) NOT NULL AUTO_INCREMENT,
+  `com_precio` float NOT NULL,
+  `com_idEstado` int(11) NOT NULL,
+  `com_nombre` varchar(45) DEFAULT NULL,
+  `com_descripcion` text,
+  `com_imagen` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`com_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.componente: ~3 rows (approximately)
+DELETE FROM `componente`;
+/*!40000 ALTER TABLE `componente` DISABLE KEYS */;
+INSERT INTO `componente` (`com_id`, `com_precio`, `com_idEstado`, `com_nombre`, `com_descripcion`, `com_imagen`) VALUES
+	(1, 10, 1, 'papas fritas', 'papas fritas', NULL),
+	(2, 10, 1, 'ensaladas', 'ensaladas', NULL),
+	(3, 10, 1, 'ensaladas mixta', 'ensaladas', NULL);
+/*!40000 ALTER TABLE `componente` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.componenteppedido
+DROP TABLE IF EXISTS `componenteppedido`;
+CREATE TABLE IF NOT EXISTS `componenteppedido` (
+  `cpp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cpp_idProductoPedido` int(11) NOT NULL,
+  `cpp_idComponente` int(11) NOT NULL,
+  PRIMARY KEY (`cpp_id`),
+  KEY `fk_ComponentePPedido_ProductoPedido1_idx` (`cpp_idProductoPedido`),
+  KEY `fk_ComponentePPedido_Componente1_idx` (`cpp_idComponente`),
+  CONSTRAINT `fk_ComponentePPedido_Componente1` FOREIGN KEY (`cpp_idComponente`) REFERENCES `componente` (`com_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ComponentePPedido_ProductoPedido1` FOREIGN KEY (`cpp_idProductoPedido`) REFERENCES `productopedido` (`pp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.componenteppedido: ~0 rows (approximately)
+DELETE FROM `componenteppedido`;
+/*!40000 ALTER TABLE `componenteppedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `componenteppedido` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.componenteproducto
+DROP TABLE IF EXISTS `componenteproducto`;
+CREATE TABLE IF NOT EXISTS `componenteproducto` (
+  `cp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cp_idProducto` int(11) NOT NULL,
+  `cp_idComponente` int(11) NOT NULL,
+  PRIMARY KEY (`cp_id`),
+  KEY `fk_ComponenteProducto_Producto1_idx` (`cp_idProducto`),
+  KEY `fk_ComponenteProducto_Componente1_idx` (`cp_idComponente`),
+  CONSTRAINT `fk_ComponenteProducto_Componente1` FOREIGN KEY (`cp_idComponente`) REFERENCES `componente` (`com_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ComponenteProducto_Producto1` FOREIGN KEY (`cp_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.componenteproducto: ~2 rows (approximately)
+DELETE FROM `componenteproducto`;
+/*!40000 ALTER TABLE `componenteproducto` DISABLE KEYS */;
+INSERT INTO `componenteproducto` (`cp_id`, `cp_idProducto`, `cp_idComponente`) VALUES
+	(9, 1, 1),
+	(11, 1, 3),
+	(12, 2, 1),
+	(13, 2, 3);
+/*!40000 ALTER TABLE `componenteproducto` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.detallepedido
+DROP TABLE IF EXISTS `detallepedido`;
+CREATE TABLE IF NOT EXISTS `detallepedido` (
+  `dp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dp_Cantidad` int(11) NOT NULL,
+  `dp_PrecioUnitario` float DEFAULT NULL,
+  `dp_Total` float DEFAULT NULL,
+  `dp_idProductoPedido` int(11) NOT NULL,
+  `dp_idPedidoEncabezado` int(11) NOT NULL,
+  PRIMARY KEY (`dp_id`),
+  KEY `fk_DetallePedido_ProductoPedido1_idx` (`dp_idProductoPedido`),
+  KEY `fk_DetallePedido_PedidoEncabezado1_idx` (`dp_idPedidoEncabezado`),
+  CONSTRAINT `fk_DetallePedido_PedidoEncabezado1` FOREIGN KEY (`dp_idPedidoEncabezado`) REFERENCES `pedidoencabezado` (`pe_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DetallePedido_ProductoPedido1` FOREIGN KEY (`dp_idProductoPedido`) REFERENCES `productopedido` (`pp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.detallepedido: ~0 rows (approximately)
+DELETE FROM `detallepedido`;
+/*!40000 ALTER TABLE `detallepedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detallepedido` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.diahorario
+DROP TABLE IF EXISTS `diahorario`;
+CREATE TABLE IF NOT EXISTS `diahorario` (
+  `dh_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dh_diaSemana` varchar(45) DEFAULT NULL,
+  `dh_horaApertura` varchar(45) DEFAULT NULL,
+  `dh_horaCierre` varchar(45) DEFAULT NULL,
+  `dh_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`dh_id`),
+  KEY `fk_DiaHorario_Sucursal1_idx` (`dh_idSucursal`),
+  CONSTRAINT `FKdh_idSucursal` FOREIGN KEY (`dh_idSucursal`) REFERENCES `sucursal` (`suc_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.diahorario: ~10 rows (approximately)
+DELETE FROM `diahorario`;
+/*!40000 ALTER TABLE `diahorario` DISABLE KEYS */;
+INSERT INTO `diahorario` (`dh_id`, `dh_diaSemana`, `dh_horaApertura`, `dh_horaCierre`, `dh_idSucursal`) VALUES
+	(1, '1', '11:00', '21:00', 4),
+	(3, '2', '10:00', '21:00', 4),
+	(4, '3', '10:00', '21:00', 4),
+	(5, '4', '10:00', '21:00', 4),
+	(6, '5', '10:00', '21:00', 4),
+	(7, '6', '10:00', '21:00', 4),
+	(8, '0', '10:00', '21:00', 4),
+	(10, '2', '20:24', '20:24', 6),
+	(11, '2', '20:24', '20:24', 6),
+	(12, '2', '20:25', '20:25', 6);
+/*!40000 ALTER TABLE `diahorario` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.empleado
+DROP TABLE IF EXISTS `empleado`;
+CREATE TABLE IF NOT EXISTS `empleado` (
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_legajo` varchar(45) DEFAULT NULL,
+  `emp_idPersona` int(11) NOT NULL,
+  `emp_imagen` varchar(120) NOT NULL,
+  `emp_cargo` varchar(45) DEFAULT NULL,
+  `emp_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`emp_id`),
+  KEY `fk_Empleado_Persona1_idx` (`emp_idPersona`),
+  KEY `fk_Empleado_Sucursal1_idx` (`emp_idSucursal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.empleado: ~0 rows (approximately)
+DELETE FROM `empleado`;
+/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.empresa
+DROP TABLE IF EXISTS `empresa`;
+CREATE TABLE IF NOT EXISTS `empresa` (
+  `emp_id` int(11) NOT NULL DEFAULT '1',
+  `Rubro` varchar(50) NOT NULL,
+  `Domicilio` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `Pais` varchar(50) NOT NULL,
+  `cuilt` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `logo` varchar(120) DEFAULT NULL,
+  `razonSocial` varchar(45) DEFAULT NULL,
+  `Imagen` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`emp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.empresa: ~1 rows (approximately)
+DELETE FROM `empresa`;
+/*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
+INSERT INTO `empresa` (`emp_id`, `Rubro`, `Domicilio`, `Email`, `Pais`, `cuilt`, `telefono`, `logo`, `razonSocial`, `Imagen`) VALUES
+	(1, 'Gastronimico', 'jj valle 167', 'facundokpo04@gmail.com', 'AR', '20-30405963', '3757420769', 'logo10.jpg', 'Pizza Color', NULL);
+/*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.listaproductopromopedido
+DROP TABLE IF EXISTS `listaproductopromopedido`;
+CREATE TABLE IF NOT EXISTS `listaproductopromopedido` (
+  `ppp_id` int(11) NOT NULL,
+  `ppp_idProductoPedido` int(11) NOT NULL,
+  `ppp_promoPedido` int(11) NOT NULL,
+  PRIMARY KEY (`ppp_id`),
+  KEY `fk_ListaProductoPromoPedido_ProductoPedido1_idx` (`ppp_idProductoPedido`),
+  KEY `fk_ListaProductoPromoPedido_PromoPedido1_idx` (`ppp_promoPedido`),
+  CONSTRAINT `fk_ListaProductoPromoPedido_ProductoPedido1` FOREIGN KEY (`ppp_idProductoPedido`) REFERENCES `productopedido` (`pp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ListaProductoPromoPedido_PromoPedido1` FOREIGN KEY (`ppp_promoPedido`) REFERENCES `promopedido` (`ppro_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.listaproductopromopedido: ~0 rows (approximately)
+DELETE FROM `listaproductopromopedido`;
+/*!40000 ALTER TABLE `listaproductopromopedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `listaproductopromopedido` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.parametros
+DROP TABLE IF EXISTS `parametros`;
+CREATE TABLE IF NOT EXISTS `parametros` (
+  `par_id` int(11) NOT NULL AUTO_INCREMENT,
+  `par_zonaEntrega` varchar(45) DEFAULT NULL,
+  `par_pedidoMinimo` float DEFAULT NULL,
+  `par_tiempoEntrega` int(11) DEFAULT NULL,
+  `par_costoEnvio` float DEFAULT NULL,
+  `par_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`par_id`),
+  KEY `fk_Parametros_Sucursal1_idx` (`par_idSucursal`),
+  CONSTRAINT `FKpar_idSucursal ` FOREIGN KEY (`par_idSucursal`) REFERENCES `sucursal` (`suc_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.parametros: ~1 rows (approximately)
+DELETE FROM `parametros`;
+/*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
+INSERT INTO `parametros` (`par_id`, `par_zonaEntrega`, `par_pedidoMinimo`, `par_tiempoEntrega`, `par_costoEnvio`, `par_idSucursal`) VALUES
+	(1, 'Todo Iguazu', 250, 34, 0, 4);
+/*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.pedidoencabezado
+DROP TABLE IF EXISTS `pedidoencabezado`;
+CREATE TABLE IF NOT EXISTS `pedidoencabezado` (
+  `pe_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pe_idCliente` varchar(45) DEFAULT NULL,
+  `pe_idEmpleado` varchar(45) DEFAULT NULL,
+  `pe_aclaraciones` text,
+  `pe_comentarios` varchar(45) DEFAULT NULL,
+  `pe_idEstado` int(11) DEFAULT NULL,
+  `pe_Total` float DEFAULT NULL,
+  `Cliente_cli_idPersona` int(11) NOT NULL,
+  `Cliente_cli_tel` varchar(45) NOT NULL,
+  PRIMARY KEY (`pe_id`),
+  UNIQUE KEY `total_UNIQUE` (`pe_Total`),
+  KEY `fk_PedidoEncabezado_Cliente1_idx` (`Cliente_cli_idPersona`,`Cliente_cli_tel`),
+  CONSTRAINT `fk_PedidoEncabezado_Cliente1` FOREIGN KEY (`Cliente_cli_idPersona`, `Cliente_cli_tel`) REFERENCES `cliente` (`cli_idPersona`, `cli_tel`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.pedidoencabezado: ~0 rows (approximately)
+DELETE FROM `pedidoencabezado`;
+/*!40000 ALTER TABLE `pedidoencabezado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pedidoencabezado` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.persona
+DROP TABLE IF EXISTS `persona`;
+CREATE TABLE IF NOT EXISTS `persona` (
+  `per_id` int(11) NOT NULL AUTO_INCREMENT,
+  `per_nombre` varchar(45) NOT NULL,
+  `per_email` varchar(45) NOT NULL,
+  `per_documento` varchar(45) DEFAULT NULL,
+  `per_password` varchar(45) DEFAULT NULL,
+  `per_nacionalidad` varchar(45) DEFAULT NULL,
+  `per_perfilUsuario` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`per_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.persona: ~4 rows (approximately)
+DELETE FROM `persona`;
+/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
+INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `per_password`, `per_nacionalidad`, `per_perfilUsuario`) VALUES
+	(1, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', 'd9b1d7db4cd6e70935368a1efb10e377', 'Argentino', NULL),
+	(2, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
+	(3, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
+	(4, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
+	(5, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL);
+/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.producto
+DROP TABLE IF EXISTS `producto`;
+CREATE TABLE IF NOT EXISTS `producto` (
+  `prod_id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_idCategoria` int(11) NOT NULL,
+  `prod_codigoProducto` varchar(45) DEFAULT NULL,
+  `prod_nombre` varchar(45) DEFAULT NULL,
+  `prod_descripcionProducto` text,
+  `prod_precioBase` float DEFAULT NULL,
+  `prod_maxComponente` int(11) DEFAULT NULL,
+  `prod_minComponente` int(11) DEFAULT NULL,
+  `prod_idEstado` int(11) DEFAULT NULL,
+  `prod_idEstadoVisible` int(11) DEFAULT NULL,
+  `prod_idSucursal` int(11) NOT NULL,
+  `prod_imagen` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`prod_id`),
+  KEY `fk_Producto_Categoria_idx` (`prod_idCategoria`),
+  KEY `fk_Producto_Sucursal1_idx` (`prod_idSucursal`),
+  CONSTRAINT `FK_producto_sucursal` FOREIGN KEY (`prod_idSucursal`) REFERENCES `sucursal` (`suc_id`),
+  CONSTRAINT `fk_Producto_Categoria0` FOREIGN KEY (`prod_idCategoria`) REFERENCES `categoria` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.producto: ~3 rows (approximately)
+DELETE FROM `producto`;
+/*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_codigoProducto`, `prod_nombre`, `prod_descripcionProducto`, `prod_precioBase`, `prod_maxComponente`, `prod_minComponente`, `prod_idEstado`, `prod_idEstadoVisible`, `prod_idSucursal`, `prod_imagen`) VALUES
+	(1, 1, '01256', 'Milanesa Napolitana', 'Milanesa, salsa de tomate jamon y queso', 80, 3, 0, 1, 1, 4, 'promos1.PNG'),
+	(2, 3, '01256', 'Pizza Musarella', 'Musarella y tomate', 100, 3, 0, 1, 1, 4, 'pizzamusa.jpg'),
+	(3, 3, '01', 'Pizza Margarita', 'muzzarella salsa y morrones', 121, 0, 0, 1, 1, 4, 'pizzamargarita.png'),
+	(4, 3, '01256', 'Pizza Fugazeta', 'Pizza Fugazeta', 80, 3, 0, 1, 1, 4, 'pizzafuga.png'),
+	(5, 3, '01256', 'Pizza Calabresa', 'Pizza Calabresa', 130, 3, 0, 1, 1, 4, 'pizzacalabresa.png');
+/*!40000 ALTER TABLE `producto` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.productopedido
+DROP TABLE IF EXISTS `productopedido`;
+CREATE TABLE IF NOT EXISTS `productopedido` (
+  `pp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pp_precioBase` float DEFAULT NULL,
+  `pp_idProducto` int(11) NOT NULL,
+  `pp_idVariedad` int(11) NOT NULL,
+  `pp_precioCalc` float DEFAULT NULL,
+  PRIMARY KEY (`pp_id`),
+  KEY `fk_ProductoPedido_Producto1_idx` (`pp_idProducto`),
+  KEY `fk_ProductoPedido_Variedad1_idx` (`pp_idVariedad`),
+  CONSTRAINT `fk_ProductoPedido_Producto1` FOREIGN KEY (`pp_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ProductoPedido_Variedad1` FOREIGN KEY (`pp_idVariedad`) REFERENCES `variedad` (`var_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.productopedido: ~0 rows (approximately)
+DELETE FROM `productopedido`;
+/*!40000 ALTER TABLE `productopedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productopedido` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.productopromo
+DROP TABLE IF EXISTS `productopromo`;
+CREATE TABLE IF NOT EXISTS `productopromo` (
+  `ppro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ppro_idPromo` int(11) NOT NULL,
+  `ppro_idProducto` int(11) NOT NULL,
+  PRIMARY KEY (`ppro_id`),
+  KEY `fk_ProductoPromo_Promo1_idx` (`ppro_idPromo`),
+  KEY `fk_ProductoPromo_Producto1_idx` (`ppro_idProducto`),
+  CONSTRAINT `fk_ProductoPromo_Producto1` FOREIGN KEY (`ppro_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ProductoPromo_Promo1` FOREIGN KEY (`ppro_idPromo`) REFERENCES `promo` (`pro_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.productopromo: ~0 rows (approximately)
+DELETE FROM `productopromo`;
+/*!40000 ALTER TABLE `productopromo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productopromo` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.promo
+DROP TABLE IF EXISTS `promo`;
+CREATE TABLE IF NOT EXISTS `promo` (
+  `pro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_nombre` varchar(45) DEFAULT NULL,
+  `pro_descripcion` varchar(45) DEFAULT NULL,
+  `pro_precio` float DEFAULT NULL,
+  `pro_descuento` float DEFAULT NULL,
+  `pro_FechaInicio` date DEFAULT NULL,
+  `pro_FechaFin` date DEFAULT NULL,
+  `pro_imagen` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`pro_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.promo: ~1 rows (approximately)
+DELETE FROM `promo`;
+/*!40000 ALTER TABLE `promo` DISABLE KEYS */;
+INSERT INTO `promo` (`pro_id`, `pro_nombre`, `pro_descripcion`, `pro_precio`, `pro_descuento`, `pro_FechaInicio`, `pro_FechaFin`, `pro_imagen`) VALUES
+	(1, 'Promo1', NULL, NULL, NULL, '2017-02-23', '2017-02-23', 'promo1.jpg'),
+	(2, 'Promo2', NULL, NULL, NULL, '2017-02-23', '2017-02-23', 'promo2.jpg'),
+	(3, 'Promo3', NULL, NULL, NULL, '2017-02-23', '2017-02-23', 'promo3.jpg');
+/*!40000 ALTER TABLE `promo` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.promopedido
+DROP TABLE IF EXISTS `promopedido`;
+CREATE TABLE IF NOT EXISTS `promopedido` (
+  `ppro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ppro_Nombre` varchar(45) DEFAULT NULL,
+  `ppro_PrecioUnitario` float DEFAULT NULL,
+  `ppro_Cantidad` int(11) DEFAULT NULL,
+  `ppro_Total` float NOT NULL,
+  `ppro_PrecioBase` float DEFAULT NULL,
+  `PedidoEncabezado_pe_id` int(11) NOT NULL,
+  PRIMARY KEY (`ppro_id`),
+  KEY `fk_PromoPedido_PedidoEncabezado1_idx` (`PedidoEncabezado_pe_id`),
+  CONSTRAINT `fk_PromoPedido_PedidoEncabezado1` FOREIGN KEY (`PedidoEncabezado_pe_id`) REFERENCES `pedidoencabezado` (`pe_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.promopedido: ~0 rows (approximately)
+DELETE FROM `promopedido`;
+/*!40000 ALTER TABLE `promopedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promopedido` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.sucursal
+DROP TABLE IF EXISTS `sucursal`;
+CREATE TABLE IF NOT EXISTS `sucursal` (
+  `suc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `suc_nombre` varchar(45) DEFAULT NULL,
+  `suc_cuit` varchar(45) DEFAULT NULL,
+  `suc_razonSocial` varchar(45) DEFAULT NULL,
+  `suc_idEmpresa` int(11) NOT NULL,
+  `suc_direccion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`suc_id`),
+  KEY `fk_Sucursal_Empresa1_idx` (`suc_idEmpresa`),
+  CONSTRAINT `fk_Sucursal_Empresa1` FOREIGN KEY (`suc_idEmpresa`) REFERENCES `empresa` (`emp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.sucursal: ~2 rows (approximately)
+DELETE FROM `sucursal`;
+/*!40000 ALTER TABLE `sucursal` DISABLE KEYS */;
+INSERT INTO `sucursal` (`suc_id`, `suc_nombre`, `suc_cuit`, `suc_razonSocial`, `suc_idEmpresa`, `suc_direccion`) VALUES
+	(4, 'Centro Iguazu', '2035978', 'Pizza Color Delivery', 1, 'jj valle 167'),
+	(6, 'Las Leñas Fondo', '2035978', 'Pizza Color Delivery', 1, 'jj valle 167');
+/*!40000 ALTER TABLE `sucursal` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.tablasrelacion
+DROP TABLE IF EXISTS `tablasrelacion`;
+CREATE TABLE IF NOT EXISTS `tablasrelacion` (
+  `idEstado` int(11) NOT NULL,
+  `relacion` varchar(45) DEFAULT NULL,
+  `descripcion` text,
+  `orden` int(11) DEFAULT NULL,
+  `valor` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idEstado`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.tablasrelacion: ~0 rows (approximately)
+DELETE FROM `tablasrelacion`;
+/*!40000 ALTER TABLE `tablasrelacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tablasrelacion` ENABLE KEYS */;
+
+-- Dumping structure for table deliverydb.variedad
+DROP TABLE IF EXISTS `variedad`;
+CREATE TABLE IF NOT EXISTS `variedad` (
+  `var_id` int(11) NOT NULL AUTO_INCREMENT,
+  `var_idProducto` int(11) NOT NULL,
+  `var_nombre` varchar(45) DEFAULT NULL,
+  `var_descripcion` text,
+  `var_tipo` varchar(45) DEFAULT NULL,
+  `var_precio` float DEFAULT NULL,
+  PRIMARY KEY (`var_id`),
+  KEY `fk_Variedad_Producto1_idx` (`var_idProducto`),
+  CONSTRAINT `fk_Variedad_Producto1` FOREIGN KEY (`var_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.variedad: ~0 rows (approximately)
+DELETE FROM `variedad`;
+/*!40000 ALTER TABLE `variedad` DISABLE KEYS */;
+INSERT INTO `variedad` (`var_id`, `var_idProducto`, `var_nombre`, `var_descripcion`, `var_tipo`, `var_precio`) VALUES
+	(1, 2, 'Grande', NULL, 'Tamaño', 120),
+	(2, 2, 'Mediana', NULL, 'Tamaño', 80);
+/*!40000 ALTER TABLE `variedad` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
