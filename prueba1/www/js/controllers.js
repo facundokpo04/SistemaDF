@@ -216,8 +216,27 @@ angular.module('app.controllers', [])
     }
   });
 
+ loadPromos = function() {
+    
+       restApi.call({
+            method: 'get',
+            url: 'promo/listar',
+            response: function(r) {
+           
+                $scope.promos = r.data;
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+//    $scope.categorias=cate.get();  
+  }
 
 
+loadPromos();
   $scope.loadCategorias = function() {
     sharedUtils.showLoading();
        restApi.call({
@@ -234,12 +253,17 @@ angular.module('app.controllers', [])
 
             }
         });
+      
+        
 //    $scope.categorias=cate.get();  
     sharedUtils.hideLoading();
   }
+  
+  
+ 
 
   $scope.showProductInfo=function (item) {
-   debugger;
+ 
       $state.go("menucat", {"id": item.cat_id,"nombre":item.cat_nombre}); 
 
   };
@@ -253,7 +277,7 @@ angular.module('app.controllers', [])
                                   $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
 
  $scope.titulo = $stateParams.nombre;
- debugger;
+ 
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -317,10 +341,189 @@ angular.module('app.controllers', [])
   };
   
   $scope.addToCart=function(item){
-    sharedCartService.add(item);
+      
+    $state.go("productodet", {"id": item.prod_id}); 
+    
   };
 
 })
+
+.controller('productodetCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,restApi,$state,
+                                  $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
+
+// $scope.titulo = $stateParams.nombre;
+var cart = sharedCartService.cart;
+var item = {};       
+       
+       
+      $scope.selectedVariedad = {};
+      $scope.producto = {};
+      $scope.componentes = [];
+      $scope.variedades = [];
+      $scope.componentesSelected = [];
+      
+   loadProducto = function (){
+         restApi.call({
+            method: 'get',
+            url: 'producto/obtener/'+ $stateParams.id,
+            response: function(r) {
+            
+        
+                $scope.producto = r;
+               
+               
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+         
+     } 
+     
+   loadComponentes = function() {
+    
+          restApi.call({
+            method: 'get',
+            url: 'producto/listarComp/'+ $stateParams.id,
+            response: function(r) {
+         
+                $scope.componentes = r;
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+//    $scope.categorias=cate.get();  
+  }
+  
+  loadVariedades = function() {
+    
+       restApi.call({
+            method: 'get',
+            url: 'producto/listarVar/'+ $stateParams.id,
+            response: function(r) {
+         
+                $scope.variedades = r;
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+//    $scope.categorias=cate.get();  
+  }
+  getSelectedComponentes = function (componentes) {
+      debugger;
+      var salida = {};
+      salida.items = []
+      salida.price = 0;
+      
+      
+      angular.forEach(componentes , function(componente) {
+                if (componente.selected) {
+                salida.items.push(componente)
+                salida.price+=parseInt(componente.com_precio)
+                }
+            })
+            return salida;
+			
+		}
+                
+    loadProducto();
+    loadComponentes();
+    loadVariedades();
+ 
+  
+ 
+ 
+ 
+  //Check if user already logged in
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $scope.user_info=user; //Saves data to user_info
+    }else {
+
+      $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+      $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+      $ionicHistory.nextViewOptions({
+        historyRoot: true
+      });
+      $rootScope.extras = false;
+      sharedUtils.hideLoading();
+      $state.go('tabsController.login', {}, {location: "replace"});
+
+    }
+  });
+
+  // On Loggin in to menu page, the sideMenu drag state is set to true
+  $ionicSideMenuDelegate.canDragContent(true);
+  $rootScope.extras=true;
+
+  // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
+  $scope.$on('$ionicView.enter', function(ev) {
+    if(ev.targetScope !== $scope){
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+    }
+  });
+
+
+
+  $scope.loadDetalle = function() {
+    sharedUtils.showLoading();
+
+   
+ 
+    
+    
+    $scope.variedades
+
+      
+       
+//    $scope.categorias=cate.get();  
+    sharedUtils.hideLoading();
+  }
+
+  $scope.showProductInfo=function (id) {
+      
+      
+
+  };
+  
+  $scope.addToCart=function(){
+ 
+   
+     $scope.componentesSelected = getSelectedComponentes($scope.componentes);
+     
+     item.producto= $scope.producto;
+     item.variedad = $scope.selectedVariedad;
+     item.componentes = $scope.componentesSelected;
+     item.qty = 1;
+     item.price = parseFloat(componentes.price + variedad.var_precio)
+     
+     cart.add(item);
+     
+  };
+  $scope.SelectedVariedadChange=function(variedad){
+      
+      $scope.selectedVariedad=variedad;
+     
+  };
+ 
+  
+  
+   
+})
+
 
 .controller('offersCtrl', function($scope,$rootScope) {
 
@@ -340,11 +543,7 @@ angular.module('app.controllers', [])
         //Only when the user is logged in, the cart qty is shown
         //Else it will show unwanted console error till we get the user object
         $scope.get_total= function() {
-          var total_qty=0;
-          for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-            total_qty += sharedCartService.cart_items[i].item_qty;
-          }
-          return total_qty;
+          return sharedCartService.total_qty;
         };
 
       }else {

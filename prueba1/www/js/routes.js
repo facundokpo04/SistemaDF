@@ -54,6 +54,12 @@ angular.module('app.routes', [])
       controller: 'menucatCtrl'
     })
     
+    .state('productodet', {
+      url: '/page18/:id',
+      templateUrl: 'templates/productodetalle.html',     
+      controller: 'productodetCtrl'
+    })
+    
   .state('offers', {
     url: '/page8',
     templateUrl: 'templates/offers.html',
