@@ -157,7 +157,7 @@
 
                                     </div>
                                     <!-- Botón para agregar filas -->
-                                    <button type="button" class="btn btn-warning"  id="agregarVar"> Agregar Variedad</button>
+                                    <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalEditVariedad" id="agregarVar"  data-backdrop="static" data-keyboard="false"> Agregar Variedad</button>
 <!--                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />-->
 
 
@@ -186,7 +186,7 @@
 
                                 </div>
                                 <!-- Botón para agregar filas -->
-                                <button type="button" class="btn btn-warning"  id="agregarCom"> Agregar Componente</button>
+                                <button type="button" class="btn btn-warning"  id="agregarCom"  data-toggle="modal" data-target="#modalAgregarComp"> Agregar Componente</button>
 <!--                                <input type="button" class="btn btn-info" id="guardarCom" value="Guardar" />-->
 
 
@@ -241,11 +241,26 @@
 
     </div>  
 
-    <div class="panel-footer"><button type="button" class="btn btn-default"><a href="producto">Cancelar</button>
+    <div class="panel-footer"><button type="button" class="btn btn-default">Cancelar</button>
         <button type="button" class="btn btn-info" id="mbtnUpdProducto">Actualizar</button></div>
 </div> 
  <!-- modal agregar componente -->
-<div class="modal fade" id="modalAgregarComp" role="dialog"  style="overflow-y: scroll;" >
+ <style>
+    .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+    }
+
+    .example-modal .modal {
+        background: transparent !important;
+    }
+</style>
+<div class="example-modal modal fade" id="modalAgregarComp" role="dialog"  style="overflow-y: scroll;" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -286,12 +301,13 @@
   
  <!-- modal agregar variedad -->
 
-   <div class="modal fade" id="modalEditVariedad" role="dialog"  style="overflow-y: scroll;" >
+   <div class="example-modal modal fade" id="modalEditVariedad" tabindex="-1" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" id="mCerrarModalVar" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <h4 class="modal-title">Agregar/ Eliminar Variedad</h4>
                 </div>
                 <div class="modal-body">
@@ -336,7 +352,7 @@
                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModalVar" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info"  onclick="ActualizarComponentes($('#idProducto').val())" >Guardar</button>
+                    <button type="button" class="btn btn-info"  onclick="ActualizarVariedad($('#idProducto').val())" >Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

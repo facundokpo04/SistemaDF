@@ -15,8 +15,6 @@ class Producto extends CI_Controller {
 //
         $this->load->model('ProductoModel', 'pm');
         $this->load->model('VariedadModel', 'vm');
-         
-     
     }
 
     public function index($p = 0) {
@@ -42,10 +40,6 @@ class Producto extends CI_Controller {
         echo json_encode($data);
     }
 
-    
-    
-    
-
     public function get_productoById($idProducto) {
 
         try {
@@ -68,7 +62,7 @@ class Producto extends CI_Controller {
         echo json_encode($data);
     }
 
-        public function get_NotComponentesById($idProducto) {
+    public function get_NotComponentesById($idProducto) {
 
         try {
             $result = $this->pm->getAllNotComp($idProducto);
@@ -78,7 +72,8 @@ class Producto extends CI_Controller {
         }
         echo json_encode($data);
     }
-public function get_Categorias() {
+
+    public function get_Categorias() {
 
         try {
             $result = $this->pm->getAllCate();
@@ -88,8 +83,7 @@ public function get_Categorias() {
         }
         echo json_encode($data);
     }
-    
-    
+
     public function get_VariedadesById($idProducto) {
 
         try {
@@ -101,46 +95,42 @@ public function get_Categorias() {
         echo json_encode($data);
     }
 
-    
-    public function updImagen(){
-        
-        
-         $id = $this->input->post('prod_id');
-        
-          $config = [
-            "upload_path" => "./assets/imagenes/producto",
+    public function updImagen() {
+
+
+        $id = $this->input->post('prod_id');
+
+        $config = [
+            "upload_path" => "./assets/imagenes/promo",
             "allowed_types" => "png|jpg"
         ];
         $errors = array();
 
         $this->load->library("upload", $config);
-        
-            if ($this->upload->do_upload('prod_imagen')) {
+
+        if ($this->upload->do_upload('prod_imagen')) {
             $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['file_name'];           
+            $imagen = $archivo['upload_data']['file_name'];
             $data = [
-               'prod_Imagen' => $imagen
-              ];
-             try {          
-               $this->pm->actualizar($data, $id);
-               echo json_encode($data);
-            
-        } catch (Exception $e) {
-            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-                $errors = RestApi::getEntityValidationFieldsError();
+                'prod_Imagen' => $imagen
+            ];
+            try {
+                $this->pm->actualizar($data, $id);
+                echo json_encode($data);
+            } catch (Exception $e) {
+                if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                    $errors = RestApi::getEntityValidationFieldsError();
+                }
             }
-        }
-            
         } else {
             //echo  json_encode($this->upload->display_errors());
             //$imagen = $this->cm->obtener($id)->cat_imagen;
-          
         }
     }
 
-    public function updVariedad($idProducto) {
+    public function updVariedad() {
 //         $errors = array();
-
+        $errors = array();
         $id = $this->input->post('var_id');
 
 
@@ -172,27 +162,23 @@ public function get_Categorias() {
 
         $data = [
             'cp_idProducto' => $this->input->post('cp_idProducto'),
-            'cp_idComponente' => $this->input->post('cp_idComponente')   
+            'cp_idComponente' => $this->input->post('cp_idComponente')
         ];
 //
 //
 //
-       try {
-           
-                $response = $this->pm->registrarComp($data);
-                $respuesta = ($response->result);
-           
+        try {
+
+            $response = $this->pm->registrarComp($data);
+            $respuesta = ($response->result);
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-             
             }
         }
-       
     }
-    public function updProducto() 
-        
-        {
+
+    public function updProducto() {
 
         $errors = array();
 
@@ -213,8 +199,8 @@ public function get_Categorias() {
             'prod_idEstadoVisible' => $this->input->post('prod_idEstadoVisible'),
             'prod_idSucursal' => '4'
         ];
-        
-       
+
+
 
         try {
             if (empty($id)) {
@@ -245,63 +231,51 @@ public function get_Categorias() {
             $this->load->view('layout/footer');
         }
     }
-        
+
     public function eliminarComponente() {
-        
-         $idProducto = $this->input->post('idProducto');
-         $idComponente = $this->input->post('idComponente');   
-     
-       try {
-               $respuesta =  $this->pm->eliminarComp($idProducto,$idComponente);
-          
-        } catch (Exception $e) {
-            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-                $errors = RestApi::getEntityValidationFieldsError();
-             
-            }
-        }
-//           
-         
-           echo json_encode($respuesta);
-        
-        
-    }
- 
-    
-    public function eliminarVariedad($idVariedad){
-        
+
+        $idProducto = $this->input->post('idProducto');
+        $idComponente = $this->input->post('idComponente');
+
         try {
-               $respuesta =  $this->vm->eliminar($idVariedad);
-          
+            $respuesta = $this->pm->eliminarComp($idProducto, $idComponente);
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-             
             }
         }
 //           
-         
-           echo json_encode($respuesta);
-        
+
+        echo json_encode($respuesta);
+    }
+
+    public function eliminarVariedad($idVariedad) {
+
+        try {
+            $respuesta = $this->vm->eliminar($idVariedad);
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+            }
+        }
+//           
+
+        echo json_encode($respuesta);
     }
 
     public function eliminar($idProducto) {
-        
-        
-            try {
-               $respuesta =  $this->pm->eliminar($idProducto);
-          
+
+
+        try {
+            $respuesta = $this->pm->eliminar($idProducto);
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-             
             }
         }
 //           
-         
-           echo json_encode($respuesta);
-        
-        
+
+        echo json_encode($respuesta);
     }
 
 }

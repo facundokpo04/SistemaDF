@@ -30,7 +30,7 @@ function VerFormAgregar( ) {
 
 function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
     VerForm();
-    cargarCategorias();
+
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/promo/get_promoById/" + idPromo,
@@ -38,8 +38,8 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             $('#txtNombre').val(res.pro_nombre);
-            $('#txtDescripcion').val(res.pro_descripcionPromo);
-           
+            $('#txtDescripcion').val(res.pro_descripcion);
+
             //ajax para traer todos los estados
             $('#txtPrecio').val(res.pro_precio);
             $('#txtDescuento').val(res.pro_descuento);
@@ -51,8 +51,7 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
         }
     });
 
-    cargarComponentes(idPromo);
-    cargarVariedades(idPromo);
+
 //    CargarComponetesAgregar(idPromo);
 
 
@@ -70,7 +69,7 @@ function actualizarPromo() {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
             pro_nombre: $('#txtNombre').val(),
-            pro_descripcionPromo: $('#txtDescripcion').val(),
+            pro_descripcion: $('#txtDescripcion').val(),
             pro_descuento: $('#txtDescuento').val(),
             pro_precio: $('#txtPrecio').val(),
             pro_FechaInicio: $('#txtFechaInicio').val(),
@@ -81,7 +80,7 @@ function actualizarPromo() {
         },
         success: function (res) {
 
-
+            guardarImagen();
 
         }
     });
@@ -100,10 +99,10 @@ function guardarImagen() {
     // that would be sent to sever through ajax
     if (fileToUpload != 'undefined') {
         var formData = new FormData();
-      formData.append('pro_imagen', fileToUpload);
-       formData.append('pro_id', $('#idPromo').val());
-       
-       debugger;
+        formData.append('pro_imagen', fileToUpload);
+        formData.append('pro_id', $('#idPromo').val());
+
+
 
         // now upload the file using $.ajax
         $.ajax({
@@ -114,10 +113,9 @@ function guardarImagen() {
             processData: false,
             contentType: false,
             success: function (res) {
-                
-                debugger;
+
                 $('#imagen').attr('src', '../assets/imagenes/promo/' + res.pro_Imagen);
-              
+
             }
         });
     }
@@ -127,11 +125,11 @@ function guardarImagen() {
 $('#agregarCom').click(function () {
 
 
-   CargarComponetesAgregar($('#idPromo').val()) ;
-       
+    CargarComponetesAgregar($('#idPromo').val());
+
     $('#modalAgregarComp').modal('show');
-    
-    
+
+
 })
 
 
@@ -150,12 +148,11 @@ $('#tbPromos').DataTable({
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
-
     },
     'columns': [
         {data: 'pro_id', 'sClass': 'dt-body-center'},
         {data: 'pro_nombre'},
-        {data: 'pro_descripcionPromo'},
+        {data: 'pro_descripcion'},
         {data: 'pro_precio'},
         {data: 'pro_FechaInicio'},
         {data: 'pro_FechaFin'},
@@ -183,7 +180,6 @@ $('#tbPromos').DataTable({
 
     ],
     "columnDefs": [
-
         {
             "targets": [1],
             "data": "pro_nombre",
@@ -204,7 +200,6 @@ $('#tbPromos').DataTable({
         }
     ],
     "order": [[0, "asc"]],
-
 });
 $('#mbtnUpdPromo').click(function () {
 

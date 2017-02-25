@@ -163,6 +163,7 @@ function cargarVariedades(idProducto) {
     });
 
 }
+
 function CargarComponetesAgregar(idProducto) {
     
     $.ajax({
@@ -199,6 +200,9 @@ function CargarComponetesAgregar(idProducto) {
         }
     });
 }
+
+
+
 
 /**
  * funcion para agregar todos los componentes que selecciono
@@ -242,6 +246,7 @@ function ActualizarComponentes() {
      
 
     cargarComponentes($('#idProducto').val());
+    cargarVariedades($('#idProducto').val());
    
 
 
@@ -266,7 +271,7 @@ function ActualizarVariedad(idProducto) {
 
 
                   var a = 0;
-                $('#mbtnCerrarModal').click();
+                $('#mbtnCerrarModalVar').click();
 
                 
             }
@@ -316,7 +321,7 @@ function guardarImagen() {
       formData.append('prod_imagen', fileToUpload);
        formData.append('prod_id', $('#idProducto').val());
        
-       debugger;
+       
 
         // now upload the file using $.ajax
         $.ajax({
@@ -328,7 +333,7 @@ function guardarImagen() {
             contentType: false,
             success: function (res) {
                 
-                debugger;
+               
                 $('#imagen').attr('src', '../assets/imagenes/producto/' + res.prod_Imagen);
               
             }
@@ -342,20 +347,13 @@ $('#agregarCom').click(function () {
 
    CargarComponetesAgregar($('#idProducto').val()) ;
        
-    $('#modalAgregarComp').modal('show');
-    
-    
-})
-
-$('#agregarVar').click(function () {
-
-debugger;
   
-       
-    $('#modalEditVariedad').modal('show');
     
     
 })
+
+
+
 
 
 $(document).on("click", ".eliminarComp", function () {

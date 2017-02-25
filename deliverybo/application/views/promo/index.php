@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                              ?>
+<?php // var_dump($model);                                ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -73,6 +73,12 @@
                     </div>
                 </div>     
                 <div class="col-sm-6 form-group">
+                    <label for="">Descuento </label>
+                    <div class="input-group">
+                        <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtDescuento" id="txtDescuento" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
+                    </div>	
+                </div>  
+                <div class="col-sm-6 form-group">
                     <label for="">Precio </label>
                     <div class="input-group">
                         <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
@@ -93,16 +99,24 @@
 
 
                 <!-- /.paneles de Variedad/componente/imagen -->
-                <div class="col-sm-12">
-                    <ul class="nav nav-tabs" role="tablist" id="paneles">
-                        <li><a href="#tabImagen" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Imagen Promo</h4></a></li>
+                <div class="col-lg-12 form-group">
+                    <label for="">Imagen Producto</label>
+                    <span class="label label-primary">La imagen debe ser de 76 x 76</span>     
+                    <div class="input-group">
+                        <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
+                        <input class="form-control" type="file" name="pImagen" id="pImagen" tabindex="16">  
+                    </div>  
 
-                    </ul> 
-                   
-
-
-
-                </div> 
+                    <div class="form-group">    
+                        <br>	
+                        <div class="thumbnail">
+                            <!--Foto de 76 x 76 -->
+<!--									<img src="assets/img/Logo-impresion.png" alt="logo">-->
+                            <img id="imagen" src="" alt="logo">	
+                        </div>
+                    </div> 
+                    <input type="button" class="btn btn-info" id="btnGuardarImg" value="Guardar" />
+                </div>
 
 
             </div> 
