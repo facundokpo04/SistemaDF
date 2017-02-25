@@ -96,7 +96,7 @@ class Promo extends CI_Controller {
             'pro_nombre' => $this->input->post('pro_nombre'),
             'pro_descripcion' => $this->input->post('pro_descripcion'),
             'pro_precio' => $this->input->post('pro_precio'),
-            'pro_decuento' => $this->input->post('pro_descuento'),
+            'pro_descuento' => $this->input->post('pro_descuento'),
             'pro_FechaInicio' => $this->input->post('pro_FechaInicio'),
             'pro_FechaFin' => $this->input->post('pro_FechaFin')
         ];
