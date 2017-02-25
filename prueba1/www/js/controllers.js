@@ -277,6 +277,28 @@ loadPromos();
                                   $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
 
  $scope.titulo = $stateParams.nombre;
+ $scope.url = '';
+ 
+   loadUrl = function() {
+   
+       restApi.call({
+            method: 'get',
+            url: 'producto/url',
+            response: function(r) {
+             debugger;
+                $scope.url = decodeURIComponent(r);
+            },
+            error: function(r) {
+
+            },
+            validationError: function(r) {
+
+            }
+        });
+//    $scope.categorias=cate.get();  
+
+  }
+     loadUrl();
  
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
@@ -300,7 +322,7 @@ loadPromos();
   // On Loggin in to menu page, the sideMenu drag state is set to true
   $ionicSideMenuDelegate.canDragContent(true);
   $rootScope.extras=true;
-
+  
   // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
   $scope.$on('$ionicView.enter', function(ev) {
     if(ev.targetScope !== $scope){
@@ -309,7 +331,7 @@ loadPromos();
     }
   });
 
-
+ 
 
   $scope.loadProductos = function() {
     sharedUtils.showLoading();

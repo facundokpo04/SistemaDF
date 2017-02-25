@@ -298,6 +298,9 @@ function actualizarProducto() {
 
         },
         success: function (res) {
+            
+              location.reload();
+            
 
 
 
@@ -508,7 +511,6 @@ $('#btnAgregarProd').click(function () {
 
 
 })
-
 $('#btnGuardarImg').click(function () {
 
     guardarImagen();

@@ -8,6 +8,14 @@ use App\Lib\Auth,
 $app->group('/producto/', function () {
 
 
+     $this->get('url', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->producto->getUrl())
+        );
+    });
+
+    
     $this->get('listar', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(

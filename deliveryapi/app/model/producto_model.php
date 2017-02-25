@@ -9,12 +9,18 @@ class ProductoModel {
     private $db;
     private $table = 'producto';
     private $response;
+    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/producto" ;
 
     public function __CONSTRUCT($db) {
         $this->db = $db;
         $this->response = new Response();
     }
 
+    
+      public function getUrl() {
+            return urlencode($this->url);
+    }
+    
     public function getAll() {
         $data = $this->db->from($this->table)
                 ->orderBy('prod_id DESC')

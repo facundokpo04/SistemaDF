@@ -126,7 +126,7 @@
                     </div>
                 </div>
  <!-- /.paneles de Variedad/componente/imagen -->
-                <div class="col-sm-12">
+              <div class="col-sm-12">
                     <ul class="nav nav-tabs" role="tablist" id="paneles">
                         <li class="active"><a href="#tabVariedad" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Variedades</h4></a></li>
                         <li><a href="#tabComponentes" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Componentes</h4></a></li>
@@ -245,7 +245,7 @@
         <button type="button" class="btn btn-info" id="mbtnUpdProducto">Actualizar</button></div>
 </div> 
  <!-- modal agregar componente -->
- <style>
+<style>
     .example-modal .modal {
         position: relative;
         top: auto;

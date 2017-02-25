@@ -102,8 +102,11 @@ class Producto extends CI_Controller {
 
         $config = [
             "upload_path" => "./assets/imagenes/promo",
-            "allowed_types" => "png|jpg"
+            "allowed_types" => "png|jpg"          
         ];
+        
+       
+        
         $errors = array();
 
         $this->load->library("upload", $config);
