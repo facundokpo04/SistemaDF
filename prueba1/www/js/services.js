@@ -76,6 +76,8 @@ angular.module('app.services', ['ngResource'])
 	cartObj.total_qty=0;
 	
 	cartObj.cart.add=function(item){
+            
+            debugger;
 		if(cartObj.cart.find(item.producto.prod_id)!=-1 ){
 			var alertPopup = $ionicPopup.alert({
                 title: 'El Producto ya fue agregado',
@@ -93,9 +95,11 @@ angular.module('app.services', ['ngResource'])
 	};
 	
 	cartObj.cart.find=function(id){	
+            
+            debugger;
 		var result=-1;
 		for( var i = 0, len = cartObj.cart.length; i < len; i++ ) {
-			if( cartObj.cart[i].item.producto.prod_id === id ) {
+			if( cartObj.cart[i].producto.prod_id === id ) {
 				result = i;
 				break;
 			}
@@ -132,6 +136,13 @@ angular.module('app.services', ['ngResource'])
 	
 	};
 	
+        cartObj.getQty=function(){
+		
+		return  cartObj.total_qty;
+		 
+	
+	};
+        
 	return cartObj;
 }])
 

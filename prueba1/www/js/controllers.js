@@ -185,6 +185,7 @@ angular.module('app.controllers', [])
 .controller('categoriasCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,restApi,$state,
                                   $ionicHistory,sharedCartService,sharedUtils) {
 
+
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -285,7 +286,7 @@ loadPromos();
             method: 'get',
             url: 'producto/url',
             response: function(r) {
-             debugger;
+             
                 $scope.url = decodeURIComponent(r);
             },
             error: function(r) {
@@ -443,7 +444,7 @@ var item = {};
 //    $scope.categorias=cate.get();  
   }
   getSelectedComponentes = function (componentes) {
-      debugger;
+
       var salida = {};
       salida.items = []
       salida.price = 0;
@@ -465,8 +466,7 @@ var item = {};
  
   
  
- 
- 
+
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -530,9 +530,13 @@ var item = {};
      item.variedad = $scope.selectedVariedad;
      item.componentes = $scope.componentesSelected;
      item.qty = 1;
-     item.price = parseFloat(componentes.price + variedad.var_precio)
+     item.price = parseFloat( parseFloat(item.componentes.price )+  parseFloat(item.variedad.var_precio))
      
      cart.add(item);
+     debugger;
+     $rootScope.totalCart = sharedCartService.getQty();
+     
+     $state.go('categorias');
      
   };
   $scope.SelectedVariedadChange=function(variedad){
@@ -557,16 +561,20 @@ var item = {};
 
 .controller('indexCtrl', function($scope,$rootScope,sharedUtils,$ionicHistory,$state,$ionicSideMenuDelegate,sharedCartService) {
 
-    //Check if user already logged in
+     $rootScope.totalCart = sharedCartService.getQty();
+ 
+ 
     firebase.auth().onAuthStateChanged(function(user) {
+        
+       
+        
+        
       if (user) {
         $scope.user_info=user; //Saves data to user_info
 
         //Only when the user is logged in, the cart qty is shown
         //Else it will show unwanted console error till we get the user object
-        $scope.get_total= function() {
-          return sharedCartService.total_qty;
-        };
+        
 
       }else {
 
