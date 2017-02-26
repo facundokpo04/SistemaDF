@@ -91,14 +91,15 @@ class Promo extends CI_Controller {
         $respuesta;
 
 
-
+        $FI = date("Y-m-d", strtotime($this->input->post('pro_FechaInicio')));
+        $FF = date("Y-m-d", strtotime($this->input->post('pro_FechaFin')));
         $data = [
             'pro_nombre' => $this->input->post('pro_nombre'),
             'pro_descripcion' => $this->input->post('pro_descripcion'),
             'pro_precio' => $this->input->post('pro_precio'),
             'pro_descuento' => $this->input->post('pro_descuento'),
-            'pro_FechaInicio' => $this->input->post('pro_FechaInicio'),
-            'pro_FechaFin' => $this->input->post('pro_FechaFin')
+            'pro_FechaInicio' => $FI,
+            'pro_FechaFin' => $FF
         ];
 
 

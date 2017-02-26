@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                                ?>
+<?php // var_dump($model);                                 ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -86,15 +86,23 @@
                 </div>  
                 <div class="col-sm-6 form-group">
                     <label for="">Fecha Inicio</label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i></span><input class="form-control" placeholder="" name="txtFechaInicio" id="txtFechaInicio" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
-                    </div>	
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id='txtFechaInicio' id="txtFechaInicio">
+                    </div>
+
                 </div>   
                 <div class="col-sm-6 form-group">
                     <label for="">Fecha Fin</label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i></span><input class="form-control" placeholder="" name="txtFechaFin" id="txtFechaFin" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
-                    </div>	
+                    
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id='txtFechaFin' id="txtFechaFin">
+                    </div>
                 </div>   
 
 

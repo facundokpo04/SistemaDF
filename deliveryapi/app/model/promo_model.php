@@ -18,7 +18,7 @@ class PromoModel
     public function getAll()
     {
         $data = $this->db->from($this->table)
-                       
+                         ->select('pro_id,pro_nombre,pro_descripcion,pro_descuento,DATE_FORMAT(pro_FechaInicio, "%d/%m/%Y") as pro_FechaInicio,DATE_FORMAT(pro_FechaFin, "%d/%m/%Y") as pro_FechaFin,pro_imagen')
                          ->orderBy('pro_id DESC')
                          ->fetchAll();
         
@@ -44,6 +44,7 @@ class PromoModel
       public function get($id)
     {
         return $this->db->from($this->table)
+                        ->select('pro_id,pro_nombre,pro_descripcion,pro_descuento,DATE_FORMAT(pro_FechaInicio, "%d/%m/%Y") as pro_FechaInicio,DATE_FORMAT(pro_FechaFin, "%d/%m/%Y") as pro_FechaFin,pro_imagen')
                         ->where('pro_id', $id)
                         ->fetch();
         

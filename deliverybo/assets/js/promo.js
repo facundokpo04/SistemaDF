@@ -1,4 +1,14 @@
 
+$('#txtFechaInicio').datepicker({
+    autoclose: true,
+    format: 'dd/mm/yyyy'
+});
+$('#txtFechaFin').datepicker({
+    autoclose: true,
+    format: 'dd/mm/yyyy'
+});
+
+
 
 
 function VerForm() {
@@ -153,6 +163,7 @@ $('#tbPromos').DataTable({
         {data: 'pro_id', 'sClass': 'dt-body-center'},
         {data: 'pro_nombre'},
         {data: 'pro_descripcion'},
+        {data: 'pro_descuento'},
         {data: 'pro_precio'},
         {data: 'pro_FechaInicio'},
         {data: 'pro_FechaFin'},
@@ -210,7 +221,7 @@ $('#mbtnUpdPromo').click(function () {
 $('#btnAgregarPromo').click(function () {
 
     VerFormAgregar();
-    cargarCategorias();
+
 
 
 })
