@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);       ?>
+<?php // var_dump($model);         ?>
 <ol class="breadcrumb">
     <li class="active">Categoria</li>
 </ol>
@@ -86,24 +86,30 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nombre Categoria</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                        <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Descripci&oacute;n</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mDescripcion" id="mDescripcion" class="form-control" id="mtxtNombre" placeholder="">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                        <input type="text" name="mDescripcion" id="mDescripcion" class="form-control" id="mtxtNombre" placeholder="">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Estado</label>
                                 <div class="col-sm-9"> 
-                                <select name="mEstado" id="mEstado" class="form-control">                       
-                                    <option value="1">Habilitado</option>
-                                    <option value="2">Deshabilitado</option>
-                                </select>
-                                       </div>
+                                    <select name="mEstado" id="mEstado" class="form-control">                       
+                                        <option value="1">Habilitado</option>
+                                        <option value="2">Deshabilitado</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
 

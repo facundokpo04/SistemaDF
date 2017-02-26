@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                     ?>
+<?php // var_dump($model);                               ?>
 <ol class="breadcrumb">
     <li class="active">Empleado</li>
 </ol>
@@ -105,13 +105,17 @@
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Nombre Persona</label>
                                     <div class="col-sm-9"> 
-                                        <input  type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>  <input  type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Legajo</label>
                                     <div class="col-sm-9"> 
-                                        <input type="number" name="mLegajo" id="mLegajo" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>  <input type="number" name="mLegajo" id="mLegajo" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -119,27 +123,38 @@
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Documento</label>
                                     <div class="col-sm-9"> 
-                                        <input type="number" min="6" max="8" name="mDocumento" id="mDocumento" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon cajaParametro"><i class="fa  fa-plus-circle fa-fw"></i> </span> <input type="number" min="6" max="8" name="mDocumento" id="mDocumento" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Email</label>
                                     <div class="col-sm-9"> 
-                                        <input type="email" name="mEmail" id="mEmail" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                            <input type="email" name="mEmail" id="mEmail" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Password</label>
-                                    <div class="col-sm-9"> 
-                                        <input type="text" name="mPassword" id="mPassword" class="form-control" id="mtxtNombre" placeholder="">
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                            <input type="text" name="mPassword" id="mPassword" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Nacionalidad</label>
                                     <div class="col-sm-9"> 
-                                        <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                            <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,13 +162,19 @@
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Perfil Usuario</label>
                                     <div class="col-sm-9"> 
-                                        <input type="text" name="mPerfilUsuario" id="mPerfilUsuario" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                            <input type="text" name="mPerfilUsuario" id="mPerfilUsuario" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="col-sm-3 control-label">Cargo</label>
                                     <div class="col-sm-9"> 
-                                        <input type="text" name="mCargo" id="mCargo" class="form-control" id="mtxtNombre" placeholder="">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                            <input type="text" name="mCargo" id="mCargo" class="form-control" id="mtxtNombre" placeholder="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

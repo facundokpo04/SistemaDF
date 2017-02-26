@@ -63,25 +63,25 @@
                 <div class="col-sm-6 form-group">
                     <label for="">Nombre</label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
+                        <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
                     </div>	
                 </div>    
                 <div class="col-sm-6 form-group">
                     <label for="">Descripcion</label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
+                        <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
                     </div>
                 </div>     
                 <div class="col-sm-6 form-group">
                     <label for="">Descuento </label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtDescuento" id="txtDescuento" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
+                        <span class="input-group-addon"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtDescuento" id="txtDescuento" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div>  
                 <div class="col-sm-6 form-group">
                     <label for="">Precio </label>
                     <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
+                        <span class="input-group-addon"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div>  
                 <div class="col-sm-6 form-group">

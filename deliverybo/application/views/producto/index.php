@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                            ?>
+<?php // var_dump($model);                               ?>
 <ol class="breadcrumb">
     <li class="active">Productos</li>
 </ol>
@@ -50,7 +50,7 @@
         <!-- /.box -->
     </div>
 </div>
- <!--Detalle de producto -->
+<!--Detalle de producto -->
 <div id="producto" class="row" >   
     <div class="col-lg-12">     
         <div class="panel panel-bluedark">
@@ -117,7 +117,7 @@
                         </select>
                     </div>
                 </div>
-                 <div  class="col-sm-6 form-group">
+                <div  class="col-sm-6 form-group">
                     <label for="">Categoria</label>
                     <div class="input-group col-sm-12" > 
                         <select   name="Pcategoria" id="Pcategoria" class="form-control">                       
@@ -125,8 +125,8 @@
                         </select>
                     </div>
                 </div>
- <!-- /.paneles de Variedad/componente/imagen -->
-              <div class="col-sm-12">
+                <!-- /.paneles de Variedad/componente/imagen -->
+                <div class="col-sm-12">
                     <ul class="nav nav-tabs" role="tablist" id="paneles">
                         <li class="active"><a href="#tabVariedad" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Variedades</h4></a></li>
                         <li><a href="#tabComponentes" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Componentes</h4></a></li>
@@ -244,7 +244,7 @@
     <div class="panel-footer"><button type="button" class="btn btn-default">Cancelar</button>
         <button type="button" class="btn btn-info" id="mbtnUpdProducto">Actualizar</button></div>
 </div> 
- <!-- modal agregar componente -->
+<!-- modal agregar componente -->
 <style>
     .example-modal .modal {
         position: relative;
@@ -261,105 +261,115 @@
     }
 </style>
 <div class="example-modal modal fade" id="modalAgregarComp" role="dialog"  style="overflow-y: scroll;" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar Componentes</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="box-body table-responsive no-padding">
-                        <table  id="tblComponentes2" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>Precio</th>                                     
-                                    <th>Elegir</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Componentes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body table-responsive no-padding">
+                    <table  id="tblComponentes2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>                                     
+                                <th>Elegir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                            </tbody>
+                        </tbody>
 
-                        </table>
+                    </table>
 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
                 </div>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->  
-</div>
- 
-  
- <!-- modal agregar variedad -->
-
-   <div class="example-modal modal fade" id="modalEditVariedad" tabindex="-1" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" id="mCerrarModalVar" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Agregar/ Eliminar Variedad</h4>
-                </div>
-                <div class="modal-body">
-                    
-                   
-                    <form class="form-horizontal">
-                         
-                        <input type="hidden" id="mIdVariedad">   
-                        
-                        
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Nombre Variedad</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mvNombre" id="mvNombre" class="form-control" >
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Descripci&oacute;n</label>
-                                <div class="col-sm-9"> 
-                                    <input type="text" name="mvDescripcion" id="mvDescripcion" class="form-control"  >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Tipo</label>
-                                <div class="col-sm-9"> 
-                                   <input type="text" name="mvTipo" id="mvTipo" class="form-control"  >
-                               
-                                       </div>
-                            </div>
-                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Precio</label>
-                                <div class="col-sm-9"> 
-                                   <input type="text" name="mvPrecio" id="mvPrecio" class="form-control" >
-                               
-                                       </div>
-                            </div>
-                           
-                    </form>
-                </div>
-                           
-               
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="mbtnCerrarModalVar" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info"  onclick="ActualizarVariedad($('#idProducto').val())" >Guardar</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal -->
+    <!-- /.modal-dialog -->  
+</div>
+
+
+<!-- modal agregar variedad -->
+
+<div class="example-modal modal fade" id="modalEditVariedad" tabindex="-1" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="mCerrarModalVar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Agregar/ Eliminar Variedad</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+
+                    <input type="hidden" id="mIdVariedad">   
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nombre Variedad</label>
+                        <div class="col-sm-9"> 
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                <input type="text" name="mvNombre" id="mvNombre" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Descripci&oacute;n</label>
+                        <div class="col-sm-9"> 
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                <input type="text" name="mvDescripcion" id="mvDescripcion" class="form-control"  >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tipo</label>
+                        <div class="col-sm-9"> 
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
+                                <input type="text" name="mvTipo" id="mvTipo" class="form-control"  >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Precio</label>
+                        <div class="col-sm-9"> 
+                            <div class="input-group">
+                                <span class="input-group-addon cajaParametro"><i class="fa  fa-minus-circle fa-fw"></i> </span>
+                                <input type="number" name="mvPrecio" id="mvPrecio" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="mbtnCerrarModalVar" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info"  onclick="ActualizarVariedad($('#idProducto').val())" >Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 <script type="text/javascript">
