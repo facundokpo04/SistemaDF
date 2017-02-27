@@ -1,29 +1,27 @@
 
-
-<ion-view style="" class=" " id="page16" title="Menu">
+<ion-view id="page16" title="Menu">
     <ion-content class="has-header" padding="false"  ng-init="loadCategorias()"  >
 
-             <ion-slide-box auto-play ="+true" does-continue="true" show-pager="true"  >
+        <ion-slide-box auto-play ="true" does-continue="true" show-pager="true"  >
 
-                <!-- width: 100% height 50% to fill the slidder image according to the layout -->
-                <ion-slide class="swiper-slide swiper-slide-active" style="width:90%; height:50%;" >
-                    <div>
-                        <img  ng-src="{{'img/promos/promo1.jpg'}}" >
-                    </div>
-                </ion-slide>
-                      <ion-slide class="swiper-slide swiper-slide-active" style="width:90%; height:50%;" >
-                    <div>
-                        <img  ng-src="{{'img/promos/promo2.jpg'}}" >
-                    </div>
-                </ion-slide>
-                      <ion-slide class="swiper-slide swiper-slide-active" style="width:90%; height:50%;" >
-                    <div>
-                        <img  ng-src="{{'img/promos/promo3.jpg'}}" >
-                    </div>
-                </ion-slide>
-               
+            <!-- width: 100% height 50% to fill the slidder image according to the layout -->
+            <ion-slide class="swiper-slide swiper-slide-active" style="width:100%; height: 50%;"  >
+                <div>
+                    <img  ng-src="{{'img/promos/promo1.jpg'}}" >
+                </div>
+            </ion-slide >
+               <ion-slide class="swiper-slide swiper-slide-active" style="width:100%; height: 50%;"   >
+                <div>
+                    <img  ng-src="{{'img/promos/promo2.jpg'}}" >
+                </div>
+            </ion-slide >
 
-            </ion-slide-box>
+               <ion-slide class="swiper-slide swiper-slide-active" style="width:100%; height: 50%;"  >
+                <div>
+                    <img  ng-src="{{'img/promos/promo3.jpg'}}" >
+                </div>
+            </ion-slide>
+        </ion-slide-box>
 
 
         <div class="button-bar">
@@ -35,7 +33,7 @@
         <ul class="cate-lv1">
 
 
-       
+
 
             <li class="item-background cate-lv1-item" ng-repeat="item in categorias" ng-click="showProductInfo(item)"
                 style="background: url({{'img/categorias/' + item.cat_imagen}}) no-repeat; background-size: cover;" width="100%">
@@ -56,4 +54,5 @@
 
 
     </ion-content>
+    
 </ion-view>

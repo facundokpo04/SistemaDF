@@ -15,7 +15,6 @@ angular.module('app.routes', [])
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
-
   .state('tabsController.login', {
     url: '/page5',
     views: {
@@ -25,8 +24,7 @@ angular.module('app.routes', [])
       }
     }
   })
-
-  .state('tabsController.signup', {
+ .state('tabsController.signup', {
     url: '/page6',
     views: {
       'tab3': {
@@ -35,7 +33,6 @@ angular.module('app.routes', [])
       }
     }
   })
-
   .state('menu2', {
       url: '/page7',
       templateUrl: 'templates/menu2.html',
@@ -58,6 +55,12 @@ angular.module('app.routes', [])
       url: '/page18/:id',
       templateUrl: 'templates/productodetalle.html',     
       controller: 'productodetCtrl'
+    })
+    
+    .state('productodet', {
+      url: '/page19',
+      templateUrl: 'templates/shopping_cart.html',     
+      controller: 'myCartCtrl'
     })
     
   .state('offers', {

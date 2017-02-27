@@ -260,9 +260,6 @@ loadPromos();
     sharedUtils.hideLoading();
   }
   
-  
- 
-
   $scope.showProductInfo=function (item) {
  
       $state.go("menucat", {"id": item.cat_id,"nombre":item.cat_nombre}); 
@@ -278,6 +275,7 @@ loadPromos();
                                   $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
 
  $scope.titulo = $stateParams.nombre;
+ 
  $scope.url = '';
  
    loadUrl = function() {
@@ -297,8 +295,7 @@ loadPromos();
             }
         });
 //    $scope.categorias=cate.get();  
-
-  }
+        }
      loadUrl();
  
   //Check if user already logged in
@@ -375,9 +372,8 @@ loadPromos();
                                   $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
 
 // $scope.titulo = $stateParams.nombre;
-var cart = sharedCartService.cart;
-var item = {};       
-       
+    var cart = sharedCartService.cart;
+    var item = {};       
        
       $scope.selectedVariedad = {};
       $scope.producto = {};
@@ -389,9 +385,7 @@ var item = {};
          restApi.call({
             method: 'get',
             url: 'producto/obtener/'+ $stateParams.id,
-            response: function(r) {
-            
-        
+            response: function(r) {       
                 $scope.producto = r;
                
                
@@ -425,7 +419,7 @@ var item = {};
 //    $scope.categorias=cate.get();  
   }
   
-  loadVariedades = function() {
+   loadVariedades = function() {
     
        restApi.call({
             method: 'get',
@@ -443,7 +437,8 @@ var item = {};
         });
 //    $scope.categorias=cate.get();  
   }
-  getSelectedComponentes = function (componentes) {
+   
+   getSelectedComponentes = function (componentes) {
 
       var salida = {};
       salida.items = []
@@ -502,15 +497,7 @@ var item = {};
 
   $scope.loadDetalle = function() {
     sharedUtils.showLoading();
-
-   
- 
-    
-    
-    $scope.variedades
-
-      
-       
+    $scope.variedades      
 //    $scope.categorias=cate.get();  
     sharedUtils.hideLoading();
   }
@@ -539,6 +526,7 @@ var item = {};
      $state.go('categorias');
      
   };
+  
   $scope.SelectedVariedadChange=function(variedad){
       
       $scope.selectedVariedad=variedad;
@@ -625,9 +613,10 @@ var item = {};
 
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
+        
       if (user) {
 
-        $scope.cart=sharedCartService.cart_items;  // Loads users cart
+        $scope.cart=sharedCartService.cart;  // Loads users cart
 
         $scope.get_qty = function() {
           $scope.total_qty=0;
