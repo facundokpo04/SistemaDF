@@ -460,7 +460,7 @@ loadPromos();
     loadVariedades();
  
   
- 
+ // estaria bueno que los que tenga precio los amrque como extras y los que no como opciones
 
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
@@ -517,7 +517,9 @@ loadPromos();
      item.variedad = $scope.selectedVariedad;
      item.componentes = $scope.componentesSelected;
      item.qty = 1;
-     item.price = parseFloat( parseFloat(item.componentes.price )+  parseFloat(item.variedad.var_precio))
+     item.price = parseFloat( parseFloat(item.componentes.price )+parseFloat(item.variedad.var_precio)+parseFloat($scope.producto.prod_precioBase))// revisar como se va a palntear variada si como lista de precios o adicionar al precio base
+     
+     
      
      cart.add(item);
      
@@ -610,8 +612,8 @@ loadPromos();
 .controller('myCartCtrl', function($scope,$rootScope,$state,sharedCartService) {
 
     $rootScope.extras=true;
-$scope.subtotal = sharedCartService.total_amount;
-        $scope.total =  $scope.subtotal + 10;
+    $scope.subtotal = sharedCartService.total_amount;
+    $scope.total =  $scope.subtotal + 10;
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
         
