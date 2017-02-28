@@ -57,7 +57,7 @@ angular.module('app.routes', [])
       controller: 'productodetCtrl'
     })
     
-    .state('productodet', {
+    .state('shopingcart', {
       url: '/page19',
       templateUrl: 'templates/shopping_cart.html',     
       controller: 'myCartCtrl'

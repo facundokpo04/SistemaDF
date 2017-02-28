@@ -520,7 +520,7 @@ loadPromos();
      item.price = parseFloat( parseFloat(item.componentes.price )+  parseFloat(item.variedad.var_precio))
      
      cart.add(item);
-     debugger;
+     
      $rootScope.totalCart = sharedCartService.getQty();
      
      $state.go('categorias');
@@ -610,13 +610,16 @@ loadPromos();
 .controller('myCartCtrl', function($scope,$rootScope,$state,sharedCartService) {
 
     $rootScope.extras=true;
-
+$scope.subtotal = sharedCartService.total_amount;
+        $scope.total =  $scope.subtotal + 10;
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
         
       if (user) {
 
-        $scope.cart=sharedCartService.cart;  // Loads users cart
+        $scope.cart=sharedCartService.cart; 
+        /// Loads users cart
+        debugger;
 
         $scope.get_qty = function() {
           $scope.total_qty=0;
