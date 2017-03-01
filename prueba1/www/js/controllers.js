@@ -371,7 +371,7 @@ loadPromos();
 })
 
 .controller('productodetCtrl', function($scope,$rootScope,$ionicSideMenuDelegate,restApi,$state,
-                                  $ionicHistory,sharedCartService,sharedUtils,$stateParams) {
+                                  $ionicHistory,sharedCartService,$ionicPopup,sharedUtils,$stateParams) {
 
 // $scope.titulo = $stateParams.nombre;
     var cart = sharedCartService.cart;
@@ -379,6 +379,8 @@ loadPromos();
        
       $scope.selectedVariedad = {};
       $scope.producto = {};
+      $scope.cantidad= 0;
+      $scope.comentario='';
       $scope.componentes = [];
       $scope.variedades = [];
       $scope.componentesSelected = [];
@@ -509,29 +511,36 @@ loadPromos();
       
 
   };
+ showPopup = function() {
+      
+  
   var addressPopup = $ionicPopup.show({
-        template: '<input type="text"   placeholder="Nombre Domicilio"  ng-model="data.nickname"> <br/> ' +
-        '<input type="text"   placeholder="Direccion" ng-model="data.address"> <br/> ' +
-        '<input type="number" placeholder="Caracteristica" ng-model="data.pin"> <br/> ' +
-        '<input type="number" placeholder="Telefono Fijo" ng-model="data.phone">',
-        title: title,
-        subTitle: sub_title,
+        template: '<input type="number" pattern="[0-9]*" step="1" style="padding-left: 10px;" ng-model="cantidad" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-pattern"> ' +
+        '<a class="button button-light" style="margin-top: 5px; width: 45%" ng-click="cantidad = cantidad > 2 ? cantidad - 1 : 1"> ' +
+        '<i class="icon ion-minus"></i></a> ' +
+         '<a class="button button-light" style="margin-top: 5px; width: 45%; float: right" ng-click="cantidad  = cantidad + 1"> ' +
+         '<i class="icon ion-plus"></i></a> ' +
+        '<textarea style="padding-left: 10px; margin-top: 5px;" ng-model="comentario" placeholder="Add your comments" class="ng-pristine ng-untouched ng-valid ng-empty"></textarea></div>',
+        title: '',
+        subTitle: '',
         scope: $scope,
         buttons: [
-          { text: 'Close' },
+          { text: 'Cancelar' },
           {
-            text: '<b>Save</b>',
+            text: '<b>Agregar al Pedido</b>',
             type: 'button-positive',
             onTap: function(e) {
-              if (!$scope.data.nickname || !$scope.data.address || !$scope.data.pin || !$scope.data.phone ) {
+              if ($scope.cantidad < 1) {
                 e.preventDefault(); //don't allow the user to close unless he enters full details
               } else {
-                return $scope.data;
+                return $scope;
               }
             }
           }
         ]
       });
+  
+  }
   $scope.addToCart=function(){
  
    
@@ -543,6 +552,7 @@ loadPromos();
      item.qty = 1;
      item.price = parseFloat( parseFloat(item.componentes.price )+parseFloat(item.variedad.var_precio)+parseFloat($scope.producto.prod_precioBase))// revisar como se va a palntear variada si como lista de precios o adicionar al precio base
      
+      showPopup();
      
      
      cart.add(item);
