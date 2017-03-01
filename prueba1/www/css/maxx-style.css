@@ -53,7 +53,7 @@ a {
   #page-intro .slider {
     height: 100%; }
   #page-intro #slide-intro-1 {
-    background: url("../img/intro_bg1.jpg") no-repeat;
+    background: url("../img/logo/logo.jpg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -67,7 +67,7 @@ a {
       bottom: 0;
       background-color: rgba(0, 0, 0, 0.6); }
   #page-intro #slide-intro-2 {
-    background: url("../img/intro_bg2.jpg") no-repeat;
+    background: url("../img/logo/logo.jpg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

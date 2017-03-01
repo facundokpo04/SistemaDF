@@ -6,7 +6,9 @@ angular.module('app.controllers', [])
 //{
 //    $httpProvider.interceptors.push('Request');
 //})
+.controller('IntroCtrl', function ($scope,$rootScope,$ionicHistory,sharedUtils,$state,$ionicSideMenuDelegate) {
 
+    })
 
 .controller('loginCtrl', function($scope,$rootScope,$ionicHistory,sharedUtils,$state,$ionicSideMenuDelegate) {
     $rootScope.extras = false;  // For hiding the side bar and nav icon
@@ -507,7 +509,29 @@ loadPromos();
       
 
   };
-  
+  var addressPopup = $ionicPopup.show({
+        template: '<input type="text"   placeholder="Nombre Domicilio"  ng-model="data.nickname"> <br/> ' +
+        '<input type="text"   placeholder="Direccion" ng-model="data.address"> <br/> ' +
+        '<input type="number" placeholder="Caracteristica" ng-model="data.pin"> <br/> ' +
+        '<input type="number" placeholder="Telefono Fijo" ng-model="data.phone">',
+        title: title,
+        subTitle: sub_title,
+        scope: $scope,
+        buttons: [
+          { text: 'Close' },
+          {
+            text: '<b>Save</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.data.nickname || !$scope.data.address || !$scope.data.pin || !$scope.data.phone ) {
+                e.preventDefault(); //don't allow the user to close unless he enters full details
+              } else {
+                return $scope.data;
+              }
+            }
+          }
+        ]
+      });
   $scope.addToCart=function(){
  
    
@@ -868,9 +892,9 @@ loadPromos();
     });
 
     $scope.payments = [
-      {id: 'CREDIT', name: 'Credit Card'},
-      {id: 'NETBANK', name: 'Net Banking'},
-      {id: 'COD', name: 'COD'}
+      {id: 'CREDIT', name: 'Tarjeta Debito'},
+      {id: 'NETBANK', name: 'Pagar Ahora'},
+      {id: 'COD', name: 'Efectivo '}
     ];
 
     $scope.pay=function(address,payment){
@@ -924,20 +948,20 @@ loadPromos();
 
       if(edit_val!=null) {
         $scope.data = edit_val; // For editing address
-        var title="Edit Address";
-        var sub_title="Edit your address";
+        var title="Modificar Domicilio";
+        var sub_title="Modifique su  Domicilio";
       }
       else {
         $scope.data = {};    // For adding new address
-        var title="Add Address";
-        var sub_title="Add your new address";
+        var title="Agregar Domicilio";
+        var sub_title="Agregar un nuevo domicilio";
       }
       // An elaborate, custom popup
       var addressPopup = $ionicPopup.show({
-        template: '<input type="text"   placeholder="Nick Name"  ng-model="data.nickname"> <br/> ' +
-        '<input type="text"   placeholder="Address" ng-model="data.address"> <br/> ' +
-        '<input type="number" placeholder="Pincode" ng-model="data.pin"> <br/> ' +
-        '<input type="number" placeholder="Phone" ng-model="data.phone">',
+        template: '<input type="text"   placeholder="Nombre Domicilio"  ng-model="data.nickname"> <br/> ' +
+        '<input type="text"   placeholder="Direccion" ng-model="data.address"> <br/> ' +
+        '<input type="number" placeholder="Caracteristica" ng-model="data.pin"> <br/> ' +
+        '<input type="number" placeholder="Telefono Fijo" ng-model="data.phone">',
         title: title,
         subTitle: sub_title,
         scope: $scope,
