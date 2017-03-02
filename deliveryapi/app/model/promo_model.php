@@ -8,6 +8,7 @@ class PromoModel
     private $db;
     private $table = 'promo';
     private $response;
+    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/promos" ;
     
     public function __CONSTRUCT($db)
     {

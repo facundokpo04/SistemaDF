@@ -6,59 +6,66 @@ use App\Lib\Auth,
     App\Middleware\AuthMiddleware;
 
 $app->group('/componente/', function () {
+
+    $this->get('url', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->componente->getUrl())
+        );
+    });
     $this->get('listar/{l}/{p}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
-                     json_encode($this->model->componente->getAll($args['l'], $args['p']))
-                   );
+                        ->write(
+                                json_encode($this->model->componente->getAll($args['l'], $args['p']))
+        );
     });
-    
+
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
-                     json_encode($this->model->componente->get($args['id']))
-                   );
+                        ->write(
+                                json_encode($this->model->componente->get($args['id']))
+        );
     });
-    
+
     $this->post('insertar', function ($req, $res, $args) {
-       $r = ComponenteValidation::validate($req->getParsedBody());
-        
-        if(!$r->response){
+        $r = ComponenteValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
-                       ->withStatus(422)
-                       ->write(json_encode($r->errors));
+                            ->withStatus(422)
+                            ->write(json_encode($r->errors));
         }
 //        
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
-                     json_encode($this->model->componente->insert($req->getParsedBody()))
-                   ); 
+                        ->write(
+                                json_encode($this->model->componente->insert($req->getParsedBody()))
+        );
     });
-    
+
     $this->put('actualizar/{id}', function ($req, $res, $args) {
         $r = ComponenteValidation::validate($req->getParsedBody());
-        
-        if(!$r->response){
+
+        if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
-                       ->withStatus(422)
-                       ->write(json_encode($r->errors));
+                            ->withStatus(422)
+                            ->write(json_encode($r->errors));
         }
-   
+
 //        
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
-                     json_encode($this->model->componente->update($req->getParsedBody(), $args['id']))
-                   );   
+                        ->write(
+                                json_encode($this->model->componente->update($req->getParsedBody(), $args['id']))
+        );
     });
-    
+
     $this->delete('eliminar/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
-                     json_encode($this->model->componente->delete($args['id']))
-                   );   
+                        ->write(
+                                json_encode($this->model->componente->delete($args['id']))
+        );
     });
 });
-        //->add(new AuthMiddleware($app));
+//->add(new AuthMiddleware($app));
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

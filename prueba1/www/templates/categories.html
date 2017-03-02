@@ -36,7 +36,7 @@
 
 
             <li class="item-background cate-lv1-item" ng-repeat="item in categorias" ng-click="showProductInfo(item)"
-                style="background: url({{'img/categorias/' + item.cat_imagen}}) no-repeat; background-size: cover;" width="100%">
+                style="background: url({{url+'/'+ item.cat_imagen}}) no-repeat; background-size: cover;" width="100%">
                 <div class="item-wrapper">
                     <h2>{{item.cat_nombre}}</h2>
                     <p>{{item.cat_descripcion}}</p>

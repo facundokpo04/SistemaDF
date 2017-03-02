@@ -8,6 +8,7 @@ class ComponenteModel
     private $db;
     private $table = 'componente';
     private $response;
+    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/componentes" ;
     
     public function __CONSTRUCT($db)
     {
@@ -15,6 +16,10 @@ class ComponenteModel
         $this->response = new Response();
     }
     
+      
+      public function getUrl() {
+            return urlencode($this->url);
+    }
     public function getAll($l, $p)
     {
         $data = $this->db->from($this->table)

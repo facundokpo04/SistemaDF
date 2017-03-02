@@ -8,6 +8,7 @@ class EmpresaModel
     private $db;
     private $table = 'empresa';
     private $response;
+   private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/empresa" ;
     
     public function __CONSTRUCT($db)
     {
@@ -15,7 +16,10 @@ class EmpresaModel
         $this->response = new Response();
     }
     
-   
+     
+      public function getUrl() {
+            return urlencode($this->url);
+    }
     
     public function insert($data)
     {

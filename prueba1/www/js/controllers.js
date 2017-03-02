@@ -187,6 +187,8 @@ angular.module('app.controllers', [])
         .controller('categoriasCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
                 $ionicHistory, sharedCartService, sharedUtils) {
 
+            $scope.url = '';
+
 
             //Check if user already logged in
             firebase.auth().onAuthStateChanged(function (user) {
@@ -219,6 +221,27 @@ angular.module('app.controllers', [])
                 }
             });
 
+
+
+            loadUrl = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'categoria/url',
+                    response: function (r) {
+
+                        $scope.url = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+
             loadPromos = function () {
 
                 restApi.call({
@@ -238,8 +261,9 @@ angular.module('app.controllers', [])
 //    $scope.categorias=cate.get();  
             }
 
-
+            loadUrl();
             loadPromos();
+
             $scope.loadCategorias = function () {
                 sharedUtils.showLoading();
                 restApi.call({
@@ -268,9 +292,6 @@ angular.module('app.controllers', [])
 
             };
 
-            $scope.addToCart = function (item) {
-                sharedCartService.add(item);
-            };
 
         })
         .controller('menucatCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
@@ -375,15 +396,35 @@ angular.module('app.controllers', [])
 
 // $scope.titulo = $stateParams.nombre;
             var cart = sharedCartService.cart;
+            var cartComponent = sharedCartService.cartComponent;
             var item = {};
 
             $scope.selectedVariedad = {};
             $scope.producto = {};
 
-
+            $scope.urlpro = '';
             $scope.componentes = [];
             $scope.variedades = [];
             $scope.componentesSelected = [];
+
+            loadUrlpro = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/url',
+                    response: function (r) {
+
+                        $scope.urlpro = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
 
             loadProducto = function () {
                 restApi.call({
@@ -445,18 +486,22 @@ angular.module('app.controllers', [])
             getSelectedComponentes = function (componentes) {
 
                 var salida = {};
+             
                 salida.items = []
+                 
                 salida.totalcom = 0;
                 angular.forEach(componentes, function (componente) {
-                    
                     if (componente.selected) {
-                        salida.items.push(componente)
+                        itemcom = {};
+                        itemcom.componente=componente;
+                        itemcom.qty =1;
+                        salida.items.push(itemcom)                        
                         salida.totalcom += parseFloat(componente.com_precio);
                     }
                 })
                 return salida;
             }
-
+            loadUrlpro();
             loadProducto();
             loadComponentes();
             loadVariedades();
@@ -514,10 +559,10 @@ angular.module('app.controllers', [])
 
 
                 $scope.componentesSelected = getSelectedComponentes($scope.componentes);
-
                 item.producto = $scope.producto;
                 item.variedad = $scope.selectedVariedad;
                 item.componentes = $scope.componentesSelected;
+          
                 var preciov = 0;
 
                 if (item.variedad.var_precio)
@@ -562,8 +607,9 @@ angular.module('app.controllers', [])
                     item.qty = res.cantidad;
                     item.comentario = res.comentario;
                     cart.add(item);
-
-                    $rootScope.totalCart = sharedCartService.getQty();
+                    cartComponent.addAll(item.componentes.items);    
+                    
+                    $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 
                     $state.go('categorias');
 
@@ -664,37 +710,106 @@ angular.module('app.controllers', [])
 
         })
 
-        .controller('myCartCtrl', function ($scope, $rootScope, $state, sharedCartService) {
+        .controller('myCartCtrl', function ($scope, $rootScope, $state, sharedCartService, restApi) {
 
+          
             $rootScope.extras = true;
-            $scope.subtotal = sharedCartService.total_amount + sharedCartService.total_compAmount ;
+            $scope.subtotal = 0;
             $scope.total = $scope.subtotal + 10;
+            $scope.urlpro = '';
+            $scope.urlcom = '';
+            $scope.vacio=true;
+
+
+            loadUrlpro = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/url',
+                    response: function (r) {
+
+                        $scope.urlpro = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadUrlcom = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'componente/url',
+                    response: function (r) {
+
+                        $scope.urlcom = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            calcularSubtotal = function () {
+
+                var totalprod = sharedCartService.total_amount;
+                var totalcom = sharedCartService.total_compAmount;
+                $scope.subtotal = totalprod + totalcom;
+
+
+            };
+            loadUrlpro();
+            loadUrlcom();
+            calcularSubtotal();
+        
+            $scope.cart = sharedCartService.cart;
+                    /// Loads users cart
+            $scope.vacio=!(sharedCartService.total_qty>0);
             //Check if user already logged in
             firebase.auth().onAuthStateChanged(function (user) {
 
                 if (user) {
-
-                    $scope.cart = sharedCartService.cart;
-                    /// Loads users cart
                     
-
-                    $scope.get_qty = function () {
-                        $scope.total_qty = 0;
-                        $scope.total_amount = 0;
-
-                        for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-                            $scope.total_qty += sharedCartService.cart_items[i].item_qty;
-                            $scope.total_amount += (sharedCartService.cart_items[i].item_qty * sharedCartService.cart_items[i].item_price);
-                        }
-                        return $scope.total_qty;
-                    };
+       
+                    
+                    
+                        
+                        
                 }
                 //We dont need the else part because indexCtrl takes care of it
             });
 
-            $scope.removeFromCart = function (c_id) {
-                sharedCartService.drop(c_id);
+
+
+            $scope.removeFromCart = function (p_id) {                              
+                $scope.cart.drop(p_id);
+                calcularSubtotal();
+                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+                
+                
             };
+            
+            $scope.removeFromCartCom = function (c_id) {               
+                debugger;
+                sharedCartService.cartComponent.dropCom(c_id);
+                 calcularSubtotal();
+                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+            };
+            
+            $scope.changeCant= function (p_id,cant=0){
+                sharedCartService.cart;
+                
+                debugger;
+                
+            };
+            
 
             $scope.inc = function (c_id) {
                 sharedCartService.increment(c_id);
