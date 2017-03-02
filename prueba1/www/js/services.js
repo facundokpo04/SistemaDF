@@ -72,6 +72,7 @@ angular.module('app.services', ['ngResource'])
 	
 	var cartObj = {};
 	cartObj.cart=[];
+        cartObj.cartComponent=[];
 	cartObj.total_amount=0;
 	cartObj.total_qty=0;
 	

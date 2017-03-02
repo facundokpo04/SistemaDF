@@ -379,8 +379,8 @@ loadPromos();
        
       $scope.selectedVariedad = {};
       $scope.producto = {};
-      $scope.cantidad= 0;
-      $scope.comentario='';
+     
+   
       $scope.componentes = [];
       $scope.variedades = [];
       $scope.componentesSelected = [];
@@ -446,13 +446,15 @@ loadPromos();
 
       var salida = {};
       salida.items = []
-      salida.price = 0;
+      salida.totalcom = 0;
+     
       
       
       angular.forEach(componentes , function(componente) {
                 if (componente.selected) {
                 salida.items.push(componente)
-                salida.price+=parseInt(componente.com_precio)
+                salida.totalcom += parseFloat(componente.com_precio);
+               
                 }
             })
             return salida;
@@ -514,11 +516,11 @@ loadPromos();
  showPopup = function() {
       
   
-  var addressPopup = $ionicPopup.show({
-        template: '<input type="number" pattern="[0-9]*" step="1" style="padding-left: 10px;" ng-model="cantidad" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-pattern"> ' +
-        '<a class="button button-light" style="margin-top: 5px; width: 45%" ng-click="cantidad = cantidad > 2 ? cantidad - 1 : 1"> ' +
+  var cantPopup = $ionicPopup.show({
+        template: '<input type="number" pattern="[0-9]*" step="1" style="padding-left: 10px;" ng-model="item.qty" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-pattern"> ' +
+        '<a class="button button-light" style="margin-top: 5px; width: 45%" ng-click="item.qty = item.qty > 2 ? item.qty - 1 : 1"> ' +
         '<i class="icon ion-minus"></i></a> ' +
-         '<a class="button button-light" style="margin-top: 5px; width: 45%; float: right" ng-click="cantidad  = cantidad + 1"> ' +
+         '<a class="button button-light" style="margin-top: 5px; width: 45%; float: right" ng-click="item.qty  = item.qty + 1"> ' +
          '<i class="icon ion-plus"></i></a> ' +
         '<textarea style="padding-left: 10px; margin-top: 5px;" ng-model="comentario" placeholder="Add your comments" class="ng-pristine ng-untouched ng-valid ng-empty"></textarea></div>',
         title: '',
@@ -539,6 +541,17 @@ loadPromos();
           }
         ]
       });
+      
+      
+      
+  myPopup.then(function(res) {
+   
+  });
+
+ 
+  $timeout(function() {
+     myPopup.close(); //close the popup after 3 seconds for some reason
+  }, 3000);
   
   }
   $scope.addToCart=function(){
@@ -549,17 +562,69 @@ loadPromos();
      item.producto= $scope.producto;
      item.variedad = $scope.selectedVariedad;
      item.componentes = $scope.componentesSelected;
-     item.qty = 1;
-     item.price = parseFloat( parseFloat(item.componentes.price )+parseFloat(item.variedad.var_precio)+parseFloat($scope.producto.prod_precioBase))// revisar como se va a palntear variada si como lista de precios o adicionar al precio base
+     var preciov =0;
+   
+     if(item.variedad.var_precio)
+     preciov =(item.variedad.var_precio === "undefined")? 0:item.variedad.var_precio;
      
-      showPopup();
-     
-     
+//     item.qty = 1;
+
+     item.price =parseFloat( parseFloat(preciov) + parseFloat($scope.producto.prod_precioBase));// revisar como se va a palntear variada si como lista de precios o adicionar al precio base
+     $scope.data = {};
+     $scope.data.cantidad=1;
+           
+      var cantPopup = $ionicPopup.show({
+        template: '<input type="number" pattern="[0-9]*" step="1" style="padding-left: 10px;" ng-model="data.cantidad" class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-pattern"> ' +
+        '<a class="button button-light" style="margin-top: 5px; width: 45%" ng-click="data.cantidad = data.cantidad > 2 ? data.cantidad - 1 : 1"> ' +
+        '<i class="icon ion-minus"></i></a> ' +
+         '<a class="button button-light" style="margin-top: 5px; width: 45%; float: right" ng-click="data.cantidad  = data.cantidad + 1"> ' +
+         '<i class="icon ion-plus"></i></a> ' +
+        '<textarea style="padding-left: 10px; margin-top: 5px;" ng-model="data.comentario" placeholder="Add your comments" class="ng-pristine ng-untouched ng-valid ng-empty"></textarea></div>',
+        title: '',
+        subTitle: '',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancelar' },
+          {
+            text: '<b>Confirmar</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+               
+              if ($scope.cantidad < 1) {
+                e.preventDefault(); //don't allow the user to close unless he enters full details
+              } else {
+                return $scope.data;
+              }
+            }
+          }
+        ]
+      });
+      
+      
+      
+  cantPopup.then(function(res) {
+     item.qty= res.cantidad; 
+     item.comentario = res.comentario;      
      cart.add(item);
      
      $rootScope.totalCart = sharedCartService.getQty();
      
      $state.go('categorias');
+   
+  });
+
+
+  $timeout(function() {
+     myPopup.close(); //close the popup after 3 seconds for some reason
+  }, 3000);
+     
+    
+     
+//     cart.add(item);
+//     
+//     $rootScope.totalCart = sharedCartService.getQty();
+//     
+//     $state.go('categorias');
      
   };
   
