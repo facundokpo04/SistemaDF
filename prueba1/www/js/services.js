@@ -74,6 +74,7 @@ angular.module('app.services', ['ngResource'])
 	cartObj.cart=[];
         cartObj.cartComponent=[];
 	cartObj.total_amount=0;
+        cartObj.total_compAmount=0;
 	cartObj.total_qty=0;
 	
 	cartObj.cart.add=function(item){
@@ -83,14 +84,15 @@ angular.module('app.services', ['ngResource'])
                 title: 'El Producto ya fue agregado',
                 template: 'Incremente la cantidad en el pedido'
             });
-			//cartObj.cart[cartObj.cart.find(id)].cart_item_qty+=1;
-			//cartObj.total_qty+= 1;	
-			//cartObj.total_amount+= parseInt(cartObj.cart[cartObj.cart.find(id)].cart_item_price);
 		}
 		else{
-		    cartObj.cart.push( item);
+                  
+		        cartObj.cart.push( item);
 			cartObj.total_qty+=1;	
-			cartObj.total_amount+=parseInt(item.price);	
+			cartObj.total_amount+=parseInt(item.price);
+                        cartObj.total_compAmount+=item.componentes.totalcom;
+                        
+                        
 		}
 	};
 	
