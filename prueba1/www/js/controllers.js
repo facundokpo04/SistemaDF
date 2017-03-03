@@ -486,16 +486,16 @@ angular.module('app.controllers', [])
             getSelectedComponentes = function (componentes) {
 
                 var salida = {};
-             
+
                 salida.items = []
-                 
+
                 salida.totalcom = 0;
                 angular.forEach(componentes, function (componente) {
                     if (componente.selected) {
                         itemcom = {};
-                        itemcom.componente=componente;
-                        itemcom.qty =1;
-                        salida.items.push(itemcom)                        
+                        itemcom.componente = componente;
+                        itemcom.qty = 1;
+                        salida.items.push(itemcom)
                         salida.totalcom += parseFloat(componente.com_precio);
                     }
                 })
@@ -562,7 +562,7 @@ angular.module('app.controllers', [])
                 item.producto = $scope.producto;
                 item.variedad = $scope.selectedVariedad;
                 item.componentes = $scope.componentesSelected;
-          
+
                 var preciov = 0;
 
                 if (item.variedad.var_precio)
@@ -607,8 +607,8 @@ angular.module('app.controllers', [])
                     item.qty = res.cantidad;
                     item.comentario = res.comentario;
                     cart.add(item);
-                    cartComponent.addAll(item.componentes.items);    
-                    
+                    cartComponent.addAll(item.componentes.items);
+
                     $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 
                     $state.go('categorias');
@@ -712,13 +712,13 @@ angular.module('app.controllers', [])
 
         .controller('myCartCtrl', function ($scope, $rootScope, $state, sharedCartService, restApi) {
 
-          
+
             $rootScope.extras = true;
             $scope.subtotal = 0;
             $scope.total = $scope.subtotal + 10;
             $scope.urlpro = '';
             $scope.urlcom = '';
-            $scope.vacio=true;
+            $scope.vacio = true;
 
 
             loadUrlpro = function () {
@@ -768,56 +768,54 @@ angular.module('app.controllers', [])
             loadUrlpro();
             loadUrlcom();
             calcularSubtotal();
-        
+
             $scope.cart = sharedCartService.cart;
-                    /// Loads users cart
-            $scope.vacio=!(sharedCartService.total_qty>0);
-            //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
+            $scope.cartComp = sharedCartService.cartComponent;
+            /// Loads users cart
+            $scope.vacio = !(sharedCartService.total_qty > 0);
 
-                if (user) {
-                    
-       
-                    
-                    
-                        
-                        
-                }
-                //We dont need the else part because indexCtrl takes care of it
-            });
-
-
-
-            $scope.removeFromCart = function (p_id) {                              
+            $scope.removeFromCart = function (p_id) {
                 $scope.cart.drop(p_id);
                 calcularSubtotal();
-                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-                
-                
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+
+
             };
-            
-            $scope.removeFromCartCom = function (c_id) {               
+
+            $scope.removeFromCartCom = function (c_id) {
                 debugger;
-                sharedCartService.cartComponent.dropCom(c_id);
+                $scope.cartComp.dropCom(c_id);
+                calcularSubtotal();
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+            };
+
+            $scope.inc = function (p_id) {
+                 $scope.cart.increment(p_id);
+                calcularSubtotal();
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+            };
+
+            $scope.dec = function (p_id) {//avisa
+                $scope.cart.decrement(p_id);
                  calcularSubtotal();
-                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
             
-            $scope.changeCant= function (p_id,cant=0){
-                sharedCartService.cart;
-                
-                debugger;
-                
-            };
             
-
-            $scope.inc = function (c_id) {
-                sharedCartService.increment(c_id);
+            $scope.incComp = function (c_id) {
+                 $scope.cartComp.incrementComp(c_id);
+                calcularSubtotal();
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
 
-            $scope.dec = function (c_id) {
-                sharedCartService.decrement(c_id);
+            $scope.decComp = function (c_id) {//avisa
+                $scope.cartComp.decrementComp(c_id);
+                 calcularSubtotal();
+                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+
+
             };
+
 
             $scope.checkout = function () {
                 $state.go('checkout', {}, {location: "replace"});

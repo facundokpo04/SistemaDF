@@ -71,12 +71,14 @@ angular.module('app.services', ['ngResource'])
         .factory('sharedCartService', ['$ionicPopup', function ($ionicPopup) {
 
                 var cartObj = {};
-                cartObj.cart = [];
-                cartObj.cartComponent = [];
-                cartObj.total_amount = 0;
-                cartObj.total_compAmount = 0;
-                cartObj.total_qty = 0;
-                cartObj.total_compqty = 0;
+                cartObj.cart = []; //lista de productos  (producto, cantidad)
+                cartObj.cartComponent = [];//lista de componentes (copenente, cantidad)
+                cartObj.total_amount = 0; // total de productos
+                cartObj.total_compAmount = 0;// total de componentes
+                cartObj.total_qty = 0; // cant producto
+                cartObj.total_compqty = 0;// cantidad de componente
+                
+             
 
 
 
@@ -105,8 +107,6 @@ angular.module('app.services', ['ngResource'])
 
 
                 };
-
-
                 cartObj.cartComponent.add = function (itemcomp) {
 
                     if (cartObj.cartComponent.find(itemcomp.componente.com_id) != -1) {
@@ -124,7 +124,6 @@ angular.module('app.services', ['ngResource'])
 
 
                 };
-
                 cartObj.cartComponent.find = function (idcomp) {
 
 
@@ -166,7 +165,7 @@ angular.module('app.services', ['ngResource'])
 
                 cartObj.cart.drop = function (id) {
                   
-                    ind = cartObj.cart.find(id);
+                    var ind = cartObj.cart.find(id);
                     var temp = cartObj.cart[ind];
                     cartObj.total_qty -= parseInt(temp.qty);
                     cartObj.total_amount -= (parseInt(temp.qty) * parseInt(temp.price));
@@ -175,12 +174,15 @@ angular.module('app.services', ['ngResource'])
                 };
 
                 cartObj.cart.increment = function (id) {
-                    cartObj.cart[cartObj.cart.find(id)].qty += 1;
+                    
+                    var ind =cartObj.cart.find(id);
+                    cartObj.cart[ind].qty += 1;
                     cartObj.total_qty += 1;
-                    cartObj.total_amount += (parseInt(cartObj.cart[cartObj.cart.find(id)].price));
+                    cartObj.total_amount += (parseInt(cartObj.cart[ind].price));
                 };
 
                 cartObj.cart.decrement = function (id) {
+                    
 
                     cartObj.total_qty -= 1;
                     cartObj.total_amount -= parseInt(cartObj.cart[cartObj.cart.find(id)].price);
@@ -193,14 +195,33 @@ angular.module('app.services', ['ngResource'])
                     }
 
                 };
-
-                cartObj.getQty = function () {
-
-                    return  cartObj.total_qty;
-
-
+                
+                cartObj.cartComponent.incrementComp = function (idcomp) {  
+                    debugger;
+                    var ind =cartObj.cartComponent.find(idcomp);
+                    cartObj.cartComponent[ind].qty += 1;
+                    cartObj.total_compqty += 1;
+                    cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
+                    
+                  };
+                  
+                cartObj.cartComponent.decrementComp = function (idcomp) {
+                    debugger;
+                    cartObj.total_qty -= 1;
+                    var ind =cartObj.cartComponent.find(idcomp);
+                    
+                    cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
+                    if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
+                        cartObj.cartComponent.splice(ind, 1);  //edited
+                    } else {
+                        cartObj.cartComponent[ind].qty -= 1;
+                    }
                 };
-
+                
+                cartObj.getQty = function () {
+                    return  cartObj.total_qty;
+                };
+             
 
                 return cartObj;
             }])
@@ -270,7 +291,6 @@ angular.module('app.services', ['ngResource'])
 
                             }])
 
-
                         .factory("Request", function ()
                         {
                             var request = function request(config)
@@ -285,7 +305,7 @@ angular.module('app.services', ['ngResource'])
                                 request: request
                             }
                         })
-
+                        
                         .factory('BlankFactory', [function () {
 
                             }])

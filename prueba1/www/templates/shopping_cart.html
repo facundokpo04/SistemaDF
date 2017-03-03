@@ -3,11 +3,10 @@
     <ion-content class="has-header" padding="true">
 
         <div ng-if="!vacio">
-            <div  ng-repeat="item in cart">
-                <div class="cate-lv2">
+                 <div class="cate-lv2" ng-repeat="item in cart">
                     <div class="card cate-lv2-item">
                         <div class="item item-thumbnail-left item-text-wrap">
-                            <img ng-src="{{ urlpro +'/' + item.producto.prod_imagen}}" />
+                            <img ng-src="{{ urlpro + '/' + item.producto.prod_imagen}}" />
 
                             <h2>{{item.producto.prod_nombre}}</h2>                   
                             <p class="text-left">
@@ -20,19 +19,20 @@
                             <div class="product-info">
                                 <div class="price">{{item.price}}</div>
                                 <p>x</p>
-                                <input type="number" class="input-qty" placeholder="" value="{{item.qty}}" ng-model="item.qty" min="1" ng-change="changeCant(item.producto.prod_id,item.qty)" ng-Minlength="1" />
+                                <input type="number" class="input-qty" placeholder="" value="{{item.qty}}" ng-model="item.qty" min="1" ng-change="changeCant(item.producto.prod_id, item.qty)" ng-Minlength="1" />
                                 <a class="product-delete">
-                                 <i class="ion-android-add "  ng-click=""></i>   
-                                 <i class="ion-android-remove"  ng-click=""></i>                                 
-                                 <i class="ion-android-delete "  ng-click="removeFromCart(item.producto.prod_id)"></i>                                                               
+                                    <i class="ion-android-add "  ng-click="inc(item.producto.prod_id)"></i>   
+                                    <i class="ion-android-remove"  ng-click="dec(item.producto.prod_id)"></i>                                 
+                                    <i class="ion-android-delete "  ng-click="removeFromCart(item.producto.prod_id)"></i>                                                               
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="card cate-lv2-item" ng-repeat="item2 in item.componentes.items">
+                </div>
+                <div class="cate-lv2" ng-repeat="item2 in cartComp">
+                    <div class="card cate-lv2-item">
                         <div class="item item-thumbnail-left item-text-wrap" >
-                            <img ng-src="{{urlcom+'/' + item2.componente.com_imagen}}" />
+                            <img ng-src="{{urlcom + '/' + item2.componente.com_imagen}}" />
 
                             <h2>{{item2.componente.com_nombre}}</h2>                                     
                             <!--DADAD -->
@@ -45,15 +45,15 @@
                                 <p>x</p>
                                 <input type="number" class="input-qty" placeholder="" value="{{item2.qty}}" />
                                 <a class="product-delete">
-                                     <i class="ion-android-add "  ng-click=""></i>   
-                                     <i class="ion-android-remove"  ng-click=""></i>   
+                                    <i class="ion-android-add "  ng-click="incComp(item2.componente.com_id)"></i>   
+                                    <i class="ion-android-remove"  ng-click="decComp(item2.componente.com_id)"></i>   
                                     <i class="ion-android-delete" ng-click="removeFromCartCom(item2.componente.com_id)"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
+            
             <div class="total-prices">
                 <strong>Subtotal</strong>
                 <span>${{subtotal}}</span>
