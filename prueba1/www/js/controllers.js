@@ -427,11 +427,11 @@ angular.module('app.controllers', [])
 
         })
         .controller('menucatCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
-                $ionicHistory, sharedCartService, sharedUtils, $stateParams, variedades) {
+                $ionicHistory, sharedCartService, sharedUtils, $stateParams, varService) {
 
             $scope.titulo = $stateParams.nombre;
 
-            $scope.url = '';            
+            $scope.url = '';
             loadUrl = function () {
 
                 restApi.call({
@@ -516,12 +516,18 @@ angular.module('app.controllers', [])
             };
 
             $scope.addToCart = function (item) {
+
+          
                 
-              debugger;
+//                varService.get({id: item.prod_id}).$promise
+//                          .then(function (response) {                    
+//                                 response;                
+//                            })
+//                   .catch(function (response) { console.log(response); });
                  
-             
-                  $state.go("productodet", {"id": item.prod_id});
-           
+
+                $state.go("productodet", {"id": item.prod_id});
+
 //                
 //                if(true){
 //                    

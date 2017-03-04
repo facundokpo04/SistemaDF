@@ -46,15 +46,30 @@ CREATE TABLE IF NOT EXISTS `componente` (
   `com_descripcion` text,
   `com_imagen` varchar(120) DEFAULT NULL,
   PRIMARY KEY (`com_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.componente: ~3 rows (approximately)
+-- Dumping data for table deliverydb.componente: ~16 rows (approximately)
 DELETE FROM `componente`;
 /*!40000 ALTER TABLE `componente` DISABLE KEYS */;
 INSERT INTO `componente` (`com_id`, `com_precio`, `com_idEstado`, `com_nombre`, `com_descripcion`, `com_imagen`) VALUES
-	(1, 10, 1, 'papas fritas', 'papas fritas', NULL),
+	(1, 10, 1, 'Papas Fritas', 'papas fritas', 'papasfritas.jpg'),
 	(2, 10, 1, 'ensaladas', 'ensaladas', NULL),
-	(3, 10, 1, 'ensaladas mixta', 'ensaladas', NULL);
+	(3, 10, 1, 'ensaladas mixta', 'ensaladas', NULL),
+	(4, 10, 1, 'Huevo', 'ensaladas', NULL),
+	(5, 10, 1, 'AJo', 'ensaladas', NULL),
+	(6, 10, 1, 'Anchoas', 'ensaladas', NULL),
+	(7, 10, 1, 'Morrones', 'ensaladas', NULL),
+	(8, 10, 1, 'Cebolla', 'ensaladas', NULL),
+	(9, 10, 1, 'Jamon', 'ensaladas', NULL),
+	(10, 10, 1, 'Tomates', 'ensaladas', NULL),
+	(11, 10, 1, 'Calabresa', 'ensaladas', NULL),
+	(12, 10, 1, 'Roquefort', 'ensaladas', NULL),
+	(13, 10, 1, 'Anana', 'ensaladas', NULL),
+	(14, 10, 1, 'Palmitos', 'ensaladas', NULL),
+	(15, 10, 1, 'Albahaca', 'ensaladas', NULL),
+	(16, 10, 1, 'Champignones', 'ensaladas', NULL),
+	(17, 10, 1, 'Choclo en Granos', 'ensaladas', NULL),
+	(18, 10, 1, 'Muzarella doble', 'ensaladas', NULL);
 /*!40000 ALTER TABLE `componente` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.componenteppedido
@@ -84,16 +99,29 @@ CREATE TABLE IF NOT EXISTS `componenteproducto` (
   KEY `fk_ComponenteProducto_Componente1_idx` (`cp_idComponente`),
   CONSTRAINT `fk_ComponenteProducto_Componente1` FOREIGN KEY (`cp_idComponente`) REFERENCES `componente` (`com_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ComponenteProducto_Producto1` FOREIGN KEY (`cp_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.componenteproducto: ~4 rows (approximately)
+-- Dumping data for table deliverydb.componenteproducto: ~17 rows (approximately)
 DELETE FROM `componenteproducto`;
 /*!40000 ALTER TABLE `componenteproducto` DISABLE KEYS */;
 INSERT INTO `componenteproducto` (`cp_id`, `cp_idProducto`, `cp_idComponente`) VALUES
 	(9, 1, 1),
 	(11, 1, 3),
-	(12, 2, 1),
-	(13, 2, 3);
+	(14, 2, 4),
+	(15, 2, 6),
+	(16, 2, 7),
+	(17, 2, 5),
+	(18, 2, 8),
+	(19, 2, 9),
+	(20, 2, 10),
+	(21, 2, 11),
+	(22, 2, 12),
+	(23, 2, 13),
+	(24, 2, 14),
+	(25, 2, 15),
+	(26, 2, 16),
+	(27, 2, 17),
+	(28, 2, 18);
 /*!40000 ALTER TABLE `componenteproducto` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.detallepedido
@@ -184,23 +212,6 @@ INSERT INTO `empresa` (`emp_id`, `Rubro`, `Domicilio`, `Email`, `Pais`, `cuilt`,
 	(1, 'Gastronimico', 'jj valle 167', 'facundokpo04@gmail.com', 'AR', '20-30405963', '3757420769', 'logo10.jpg', 'Pizza Color', NULL);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 
--- Dumping structure for table deliverydb.listaproductopromopedido
-CREATE TABLE IF NOT EXISTS `listaproductopromopedido` (
-  `ppp_id` int(11) NOT NULL,
-  `ppp_idProductoPedido` int(11) NOT NULL,
-  `ppp_promoPedido` int(11) NOT NULL,
-  PRIMARY KEY (`ppp_id`),
-  KEY `fk_ListaProductoPromoPedido_ProductoPedido1_idx` (`ppp_idProductoPedido`),
-  KEY `fk_ListaProductoPromoPedido_PromoPedido1_idx` (`ppp_promoPedido`),
-  CONSTRAINT `fk_ListaProductoPromoPedido_ProductoPedido1` FOREIGN KEY (`ppp_idProductoPedido`) REFERENCES `productopedido` (`pp_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ListaProductoPromoPedido_PromoPedido1` FOREIGN KEY (`ppp_promoPedido`) REFERENCES `promopedido` (`ppro_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Dumping data for table deliverydb.listaproductopromopedido: ~0 rows (approximately)
-DELETE FROM `listaproductopromopedido`;
-/*!40000 ALTER TABLE `listaproductopromopedido` DISABLE KEYS */;
-/*!40000 ALTER TABLE `listaproductopromopedido` ENABLE KEYS */;
-
 -- Dumping structure for table deliverydb.parametros
 CREATE TABLE IF NOT EXISTS `parametros` (
   `par_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -230,12 +241,12 @@ CREATE TABLE IF NOT EXISTS `pedidoencabezado` (
   `pe_comentarios` varchar(45) DEFAULT NULL,
   `pe_idEstado` int(11) DEFAULT NULL,
   `pe_Total` float DEFAULT NULL,
-  `Cliente_cli_idPersona` int(11) NOT NULL,
-  `Cliente_cli_tel` varchar(45) NOT NULL,
+  `pe_idPersona` int(11) NOT NULL,
+  `pe_cli_tel` varchar(45) NOT NULL,
   PRIMARY KEY (`pe_id`),
   UNIQUE KEY `total_UNIQUE` (`pe_Total`),
-  KEY `fk_PedidoEncabezado_Cliente1_idx` (`Cliente_cli_idPersona`,`Cliente_cli_tel`),
-  CONSTRAINT `fk_PedidoEncabezado_Cliente1` FOREIGN KEY (`Cliente_cli_idPersona`, `Cliente_cli_tel`) REFERENCES `cliente` (`cli_idPersona`, `cli_tel`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_PedidoEncabezado_Cliente1_idx` (`pe_idPersona`,`pe_cli_tel`),
+  CONSTRAINT `fk_PedidoEncabezado_Cliente1` FOREIGN KEY (`pe_idPersona`, `pe_cli_tel`) REFERENCES `cliente` (`cli_idPersona`, `cli_tel`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table deliverydb.pedidoencabezado: ~0 rows (approximately)
@@ -255,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`per_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.persona: ~5 rows (approximately)
+-- Dumping data for table deliverydb.persona: ~4 rows (approximately)
 DELETE FROM `persona`;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `per_password`, `per_nacionalidad`, `per_perfilUsuario`) VALUES
@@ -270,8 +281,8 @@ INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `pe
 CREATE TABLE IF NOT EXISTS `producto` (
   `prod_id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_idCategoria` int(11) NOT NULL,
-  `prod_codigoProducto` varchar(45) DEFAULT NULL,
   `prod_nombre` varchar(45) DEFAULT NULL,
+  `prod_codigoProducto` varchar(45) DEFAULT NULL,
   `prod_descripcionProducto` text,
   `prod_precioBase` float DEFAULT NULL,
   `prod_maxComponente` int(11) DEFAULT NULL,
@@ -285,17 +296,22 @@ CREATE TABLE IF NOT EXISTS `producto` (
   KEY `fk_Producto_Sucursal1_idx` (`prod_idSucursal`),
   CONSTRAINT `FK_producto_sucursal` FOREIGN KEY (`prod_idSucursal`) REFERENCES `sucursal` (`suc_id`),
   CONSTRAINT `fk_Producto_Categoria0` FOREIGN KEY (`prod_idCategoria`) REFERENCES `categoria` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.producto: ~5 rows (approximately)
+-- Dumping data for table deliverydb.producto: ~9 rows (approximately)
 DELETE FROM `producto`;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_codigoProducto`, `prod_nombre`, `prod_descripcionProducto`, `prod_precioBase`, `prod_maxComponente`, `prod_minComponente`, `prod_idEstado`, `prod_idEstadoVisible`, `prod_idSucursal`, `prod_imagen`) VALUES
-	(1, 1, '01256', 'Milanesa Napolitana', 'Milanesa, salsa de tomate jamon y queso', 80, 3, 0, 1, 1, 4, 'promos1.PNG'),
-	(2, 3, '01256', 'Pizza Musarella', 'Musarella y tomate', 100, 3, 0, 1, 1, 4, 'pizzamusa.jpg'),
-	(3, 3, '01', 'Pizza Margarita', 'muzzarella salsa y morrones', 121, 0, 0, 1, 1, 4, 'pizzamargarita.png'),
-	(4, 3, '01256', 'Pizza Fugazeta', 'Pizza Fugazeta', 80, 3, 0, 1, 1, 4, 'pizzafuga.png'),
-	(5, 3, '01256', 'Pizza Calabresa', 'Pizza Calabresa', 130, 3, 0, 1, 1, 4, 'pizzacalabresa.png');
+INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_nombre`, `prod_codigoProducto`, `prod_descripcionProducto`, `prod_precioBase`, `prod_maxComponente`, `prod_minComponente`, `prod_idEstado`, `prod_idEstadoVisible`, `prod_idSucursal`, `prod_imagen`) VALUES
+	(1, 3, 'Napolitana', '01256', 'Muzzarela, salsa ajo y rodajas de tomate', 120, 0, 0, 1, 1, 4, 'pizzanapolitana.jpg'),
+	(2, 3, 'Muzzarella', '01256', 'Muzzarella, salsa y aceitunas', 98, 0, 0, 1, 1, 4, 'pizzamusa.jpg'),
+	(3, 3, 'Muzzarella, jamon y tomate', '01', 'Muzzarella, jamon y tomate', 136, 0, 0, 1, 1, 4, 'pizzamargarita.png'),
+	(4, 3, 'Fugazzeta', '01256', 'Muzzarella y cebolla', 115, 0, 0, 1, 1, 4, 'pizzafuga.png'),
+	(5, 3, 'Muzzarella con morrones', '01256', 'Muzzarella, salsa y morrones', 142, 0, 0, 1, 1, 4, 'pizzacalabresa.png'),
+	(6, 3, 'Muzzarella con jamon', '01256', 'Muzzarella, salsa y jamon', 121, 0, 0, 1, 1, 4, 'pizzamusa.jpg'),
+	(7, 2, 'Arabe', '01256', 'Muzzarela, salsa y aceitunas', 12.5, 0, 0, 1, 1, 4, 'pizzanapolitana.jpg'),
+	(8, 2, 'Carne ', '01256', 'Carne', 12.5, 0, 0, 1, 1, 4, 'empanadacarne.jpg'),
+	(9, 2, 'Carne Picante', '01256', 'Carne Picante', 12.5, 0, 0, 1, 1, 4, 'empanadacarne.jpg'),
+	(10, 2, 'Pollo', '01256', 'Pollo', 12.5, 0, 0, 1, 1, 4, 'empanadapollo.jpg');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.productopedido
@@ -364,10 +380,10 @@ CREATE TABLE IF NOT EXISTS `promopedido` (
   `ppro_Cantidad` int(11) DEFAULT NULL,
   `ppro_Total` float NOT NULL,
   `ppro_PrecioBase` float DEFAULT NULL,
-  `PedidoEncabezado_pe_id` int(11) NOT NULL,
+  `ppro_pe_id` int(11) NOT NULL,
   PRIMARY KEY (`ppro_id`),
-  KEY `fk_PromoPedido_PedidoEncabezado1_idx` (`PedidoEncabezado_pe_id`),
-  CONSTRAINT `fk_PromoPedido_PedidoEncabezado1` FOREIGN KEY (`PedidoEncabezado_pe_id`) REFERENCES `pedidoencabezado` (`pe_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_PromoPedido_PedidoEncabezado1_idx` (`ppro_pe_id`),
+  CONSTRAINT `fk_PromoPedido_PedidoEncabezado1` FOREIGN KEY (`ppro_pe_id`) REFERENCES `pedidoencabezado` (`pe_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table deliverydb.promopedido: ~0 rows (approximately)
@@ -422,14 +438,24 @@ CREATE TABLE IF NOT EXISTS `variedad` (
   PRIMARY KEY (`var_id`),
   KEY `fk_Variedad_Producto1_idx` (`var_idProducto`),
   CONSTRAINT `fk_Variedad_Producto1` FOREIGN KEY (`var_idProducto`) REFERENCES `producto` (`prod_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.variedad: ~2 rows (approximately)
+-- Dumping data for table deliverydb.variedad: ~12 rows (approximately)
 DELETE FROM `variedad`;
 /*!40000 ALTER TABLE `variedad` DISABLE KEYS */;
 INSERT INTO `variedad` (`var_id`, `var_idProducto`, `var_nombre`, `var_descripcion`, `var_tipo`, `var_precio`) VALUES
-	(1, 2, 'Grande', NULL, 'Tamaño', 120),
-	(2, 2, 'Mediana', NULL, 'Tamaño', 80);
+	(1, 2, 'Grande', NULL, 'Tamaño', 108),
+	(2, 2, 'Chica', NULL, 'Tamaño', 98),
+	(3, 1, 'Grande', NULL, 'Tamaño', 135),
+	(4, 1, 'Chica', NULL, 'Tamaño', 120),
+	(5, 3, 'Chica', NULL, 'Tamaño', 136),
+	(6, 3, 'Grande', NULL, 'Tamaño', 152),
+	(7, 4, 'Chica', NULL, 'Tamaño', 115),
+	(8, 4, 'Grande', NULL, 'Tamaño', 126),
+	(9, 5, 'Chica', NULL, 'Tamaño', 142),
+	(10, 5, 'Grande', NULL, 'Tamaño', 158),
+	(11, 6, 'Chica', NULL, 'Tamaño', 121),
+	(12, 6, 'Grande', NULL, 'Tamaño', 132);
 /*!40000 ALTER TABLE `variedad` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

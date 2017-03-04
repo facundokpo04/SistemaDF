@@ -324,14 +324,14 @@ angular.module('app.services', ['ngResource'])
                                     {get: {method: "GET", isArray: true}});
 
                         })
-        .factory('variedades', function ($resource) {
+        .factory('varService', function ($resource) {
                             // Might use a resource here that returns a JSON array
-
-                            // Some fake testing data
-                            return  $resource(API.base_url + "producto/listarVar/:id", {id: '@_id'}, //aquí podemos pasar variables que queramos pasar a la consulta
+              var resourceUrl =API.base_url + 'producto/listarVar/:id';
+                            return  $resource(resourceUrl, 
+                                               {id: '@id'}, //aquí podemos pasar variables que queramos pasar a la consulta
                                     //a la función get le decimos el método, y, si es un array lo que devuelve
                                             //ponemos isArray en true
-                                                    {get: {method: "GET", isArray: true}});
+                                              {get: {method: "GET", isArray: true}});
 
                                         })
         .factory('componentes', function ($resource) {
