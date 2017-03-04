@@ -135,7 +135,138 @@ angular.module('app.controllers', [])
         })
 
         .controller('menu2Ctrl', function ($scope, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state,
-                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils) {
+                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils,restApi) {
+
+           
+
+            $scope.url = '';
+            $scope.urlpro = '';
+            $scope.urlcat = '';
+            $scope.categorias= [];
+            
+            
+            loadPromos = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'promo/listar',
+                    response: function (r) {
+
+                        $scope.promos = r.data;
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadCategorias = function () {
+                sharedUtils.showLoading();
+                restApi.call({
+                    method: 'get',
+                    url: 'categoria/listar/5/0',
+                    response: function (r) {
+
+                        $scope.categorias = r.data;
+                        
+                        
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+
+
+//    $scope.categorias=cate.get();  
+                sharedUtils.hideLoading();
+            }
+            loadproUrl = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'promo/url',
+                    response: function (r) {
+
+                        $scope.urlpro = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadUrl = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/url',
+                    response: function (r) {
+
+                        $scope.url = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadcatUrl = function () {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'categoria/url',
+                    response: function (r) {
+
+                        $scope.urlcat = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadUrl();
+            loadcatUrl();
+       
+            loadPromos();
+            loadCategorias();
+           
+             $scope.loadProductos = function (itemcat) {                                         
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/listarCat/' + itemcat.cat_id,
+                    response: function (r) {
+                      
+
+                       itemcat.productos = r.data;
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+                
+                
+//    $scope.categorias=cate.get();  
+              
+            }
 
             //Check if user already logged in
             firebase.auth().onAuthStateChanged(function (user) {
@@ -170,17 +301,18 @@ angular.module('app.controllers', [])
 
 
 
-            $scope.loadMenu = function () {
-                sharedUtils.showLoading();
-                $scope.menu = $firebaseArray(fireBaseData.refMenu());
-                sharedUtils.hideLoading();
-            }
+           
 
             $scope.showProductInfo = function (id) {
 
+
+
             };
+
             $scope.addToCart = function (item) {
-                sharedCartService.add(item);
+
+                $state.go("productodet", {"id": item.prod_id});
+
             };
 
         })
@@ -406,6 +538,11 @@ angular.module('app.controllers', [])
             $scope.componentes = [];
             $scope.variedades = [];
             $scope.componentesSelected = [];
+            $scope.isvar=false;
+            $scope.iscomp=false;
+            $scope.opcionales = $scope.isvar | $scope.iscomp;
+            
+           
 
             loadUrlpro = function () {
 
@@ -451,8 +588,9 @@ angular.module('app.controllers', [])
                     method: 'get',
                     url: 'producto/listarComp/' + $stateParams.id,
                     response: function (r) {
-
                         $scope.componentes = r;
+                        $scope.iscomp=($scope.componentes.length>0);
+                        
                     },
                     error: function (r) {
 
@@ -470,8 +608,8 @@ angular.module('app.controllers', [])
                     method: 'get',
                     url: 'producto/listarVar/' + $stateParams.id,
                     response: function (r) {
-
                         $scope.variedades = r;
+                         $scope.isvar=($scope.variedades.length>0);
                     },
                     error: function (r) {
 

@@ -75,11 +75,11 @@ angular.module('app.routes', [])
                         controller: 'offersCtrl'
                     })
 
-                    .state('myCart', {
-                        url: '/page9',
-                        templateUrl: 'templates/myCart.html',
-                        controller: 'myCartCtrl'
-                    })
+//                    .state('myCart', {
+//                        url: '/page9',
+//                        templateUrl: 'templates/myCart.html',
+//                        controller: 'myCartCtrl'
+//                    })
 
                     .state('lastOrders', {
                         url: '/page10',
