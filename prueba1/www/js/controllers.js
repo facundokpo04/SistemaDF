@@ -135,16 +135,16 @@ angular.module('app.controllers', [])
         })
 
         .controller('menu2Ctrl', function ($scope, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state,
-                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils,restApi) {
+                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils, restApi) {
 
-           
+
 
             $scope.url = '';
             $scope.urlpro = '';
             $scope.urlcat = '';
-            $scope.categorias= [];
-            
-            
+            $scope.categorias = [];
+
+
             loadPromos = function () {
 
                 restApi.call({
@@ -171,8 +171,8 @@ angular.module('app.controllers', [])
                     response: function (r) {
 
                         $scope.categorias = r.data;
-                        
-                        
+
+
                     },
                     error: function (r) {
 
@@ -242,18 +242,18 @@ angular.module('app.controllers', [])
             }
             loadUrl();
             loadcatUrl();
-       
+
             loadPromos();
             loadCategorias();
-           
-             $scope.loadProductos = function (itemcat) {                                         
+
+            $scope.loadProductos = function (itemcat) {
                 restApi.call({
                     method: 'get',
                     url: 'producto/listarCat/' + itemcat.cat_id,
                     response: function (r) {
-                      
 
-                       itemcat.productos = r.data;
+
+                        itemcat.productos = r.data;
                     },
                     error: function (r) {
 
@@ -262,10 +262,10 @@ angular.module('app.controllers', [])
 
                     }
                 });
-                
-                
+
+
 //    $scope.categorias=cate.get();  
-              
+
             }
 
             //Check if user already logged in
@@ -301,7 +301,7 @@ angular.module('app.controllers', [])
 
 
 
-           
+
 
             $scope.showProductInfo = function (id) {
 
@@ -432,6 +432,12 @@ angular.module('app.controllers', [])
             $scope.titulo = $stateParams.nombre;
 
             $scope.url = '';
+            
+            $scope.prodSimple = false;
+
+
+              
+            
 
             loadUrl = function () {
 
@@ -441,6 +447,43 @@ angular.module('app.controllers', [])
                     response: function (r) {
 
                         $scope.url = decodeURIComponent(r);
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadComponentes = function (id) {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/listarComp/' + id,
+                    response: function (r) {
+                   
+                       $scope.prodSimple  = (r.length > 0);
+
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+//    $scope.categorias=cate.get();  
+            }
+            loadVariedades = function (id) {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'producto/listarVar/' + id,
+                    response: function (r) {
+                       
+                        $scope.prodSimple = (r.length > 0);
                     },
                     error: function (r) {
 
@@ -516,8 +559,27 @@ angular.module('app.controllers', [])
             };
 
             $scope.addToCart = function (item) {
+                
+                debugger;
+                loadComponentes(item.prod_id);
+                loadVariedades(item.prod_id);
+                 
+            
+//               
+                debugger;
+                
+                if($scope.prodSimple){
+                    
+                    
+                    
+                 
+                }
+                else{
+                    
+                      $state.go("productodet", {"id": item.prod_id});
+                }
+              
 
-                $state.go("productodet", {"id": item.prod_id});
 
             };
 
@@ -538,11 +600,11 @@ angular.module('app.controllers', [])
             $scope.componentes = [];
             $scope.variedades = [];
             $scope.componentesSelected = [];
-            $scope.isvar=false;
-            $scope.iscomp=false;
-            $scope.opcionales = $scope.isvar | $scope.iscomp;
-            
-           
+            $scope.isvar = false;
+            $scope.iscomp = false;
+
+
+
 
             loadUrlpro = function () {
 
@@ -589,8 +651,8 @@ angular.module('app.controllers', [])
                     url: 'producto/listarComp/' + $stateParams.id,
                     response: function (r) {
                         $scope.componentes = r;
-                        $scope.iscomp=($scope.componentes.length>0);
-                        
+                        $scope.iscomp = ($scope.componentes.length > 0);
+
                     },
                     error: function (r) {
 
@@ -609,7 +671,7 @@ angular.module('app.controllers', [])
                     url: 'producto/listarVar/' + $stateParams.id,
                     response: function (r) {
                         $scope.variedades = r;
-                         $scope.isvar=($scope.variedades.length>0);
+                        $scope.isvar = ($scope.variedades.length > 0);
                     },
                     error: function (r) {
 
@@ -928,27 +990,27 @@ angular.module('app.controllers', [])
             };
 
             $scope.inc = function (p_id) {
-                 $scope.cart.increment(p_id);
+                $scope.cart.increment(p_id);
                 calcularSubtotal();
                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
 
             $scope.dec = function (p_id) {//avisa
                 $scope.cart.decrement(p_id);
-                 calcularSubtotal();
+                calcularSubtotal();
                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
-            
-            
+
+
             $scope.incComp = function (c_id) {
-                 $scope.cartComp.incrementComp(c_id);
+                $scope.cartComp.incrementComp(c_id);
                 calcularSubtotal();
                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
 
             $scope.decComp = function (c_id) {//avisa
                 $scope.cartComp.decrementComp(c_id);
-                 calcularSubtotal();
+                calcularSubtotal();
                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 
 
@@ -1285,6 +1347,19 @@ angular.module('app.controllers', [])
                 });
 
             };
+
+
+        })
+
+        .controller('checkoutCtrl2', function ($scope, $rootScope, sharedUtils, $state, $firebaseArray,
+                $ionicHistory, fireBaseData, $ionicPopup, sharedCartService) {
+
+
+
+
+
+
+
 
 
         })

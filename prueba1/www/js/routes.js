@@ -68,6 +68,13 @@ angular.module('app.routes', [])
                         templateUrl: 'templates/intro.html',
                         controller: 'IntroCtrl'
                     })
+                    
+                      .state('checkout2', {
+                        url: '/page21',
+                        templateUrl: 'templates/checkout2.html',
+                        controller: 'checkoutCtrl2'
+                    })
+
 
                     .state('offers', {
                         url: '/page8',

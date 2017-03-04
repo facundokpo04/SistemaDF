@@ -65,6 +65,94 @@ angular.module('app.services', ['ngResource'])
 
             }])
 
+        .service('CheckoutValidation', function () {
+            
+            this.validateName = function (name) {
+                if (typeof name == 'undefined' || name == '') {
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            this.validateEmail = function (email) {
+                if (typeof email == 'undefined' || email == '') {
+                    return false;
+                }
+                var emailReg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return emailReg.test(email);
+            };
+            this.validateZipcode = function (zipcode) {
+                if (typeof zipcode == 'undefined' || zipcode == '') {
+                    return false;
+                }
+                var zipReg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+                return zipReg.test(zipcode);
+            };
+            this.checkLoggedInputs = function (checkoutDetails) {
+                if (Object.keys(checkoutDetails).length === 0) {
+                    return false;
+                }
+                for (var input in checkoutDetails) {
+                    if (!this.validateName(checkoutDetails['firstName'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['lastName'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['addressLineOne'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['city'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['state'])) {
+                        return false;
+                    }
+                    if (!this.validateZipcode(checkoutDetails['zipcode'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['country'])) {
+                        return false;
+                    }
+                }
+                return true;
+            }.bind(this);
+            this.checkAll = function (checkoutDetails) {
+                if (Object.keys(checkoutDetails).length === 0) {
+                    return false;
+                }
+                for (var input in checkoutDetails) {
+                    if (!this.validateName(checkoutDetails['firstName'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['lastName'])) {
+                        return false;
+                    }
+                    if (!this.validateEmail(checkoutDetails['email'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['password'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['addressLineOne'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['city'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['state'])) {
+                        return false;
+                    }
+                    if (!this.validateZipcode(checkoutDetails['zipcode'])) {
+                        return false;
+                    }
+                    if (!this.validateName(checkoutDetails['country'])) {
+                        return false;
+                    }
+                }
+                return true;
+            }.bind(this);
+        })
 
 
 
@@ -77,8 +165,8 @@ angular.module('app.services', ['ngResource'])
                 cartObj.total_compAmount = 0;// total de componentes
                 cartObj.total_qty = 0; // cant producto
                 cartObj.total_compqty = 0;// cantidad de componente
-                
-             
+
+
 
 
 
@@ -130,7 +218,7 @@ angular.module('app.services', ['ngResource'])
                     var result = -1
 
                     for (var i = 0, len = cartObj.cartComponent.length; i < len; i++) {
-                  
+
                         if (cartObj.cartComponent[i].componente.com_id === idcomp) {
                             result = i;
                             break;
@@ -143,7 +231,7 @@ angular.module('app.services', ['ngResource'])
 
                 };
                 cartObj.cartComponent.dropCom = function (id) {
-                    
+
                     ind = cartObj.cartComponent.find(id);
                     var temp = cartObj.cartComponent[ind];
                     cartObj.total_compqty -= parseInt(temp.qty);
@@ -164,7 +252,7 @@ angular.module('app.services', ['ngResource'])
                 };
 
                 cartObj.cart.drop = function (id) {
-                  
+
                     var ind = cartObj.cart.find(id);
                     var temp = cartObj.cart[ind];
                     cartObj.total_qty -= parseInt(temp.qty);
@@ -174,15 +262,15 @@ angular.module('app.services', ['ngResource'])
                 };
 
                 cartObj.cart.increment = function (id) {
-                    
-                    var ind =cartObj.cart.find(id);
+
+                    var ind = cartObj.cart.find(id);
                     cartObj.cart[ind].qty += 1;
                     cartObj.total_qty += 1;
                     cartObj.total_amount += (parseInt(cartObj.cart[ind].price));
                 };
 
                 cartObj.cart.decrement = function (id) {
-                    
+
 
                     cartObj.total_qty -= 1;
                     cartObj.total_amount -= parseInt(cartObj.cart[cartObj.cart.find(id)].price);
@@ -195,21 +283,21 @@ angular.module('app.services', ['ngResource'])
                     }
 
                 };
-                
-                cartObj.cartComponent.incrementComp = function (idcomp) {  
+
+                cartObj.cartComponent.incrementComp = function (idcomp) {
                     debugger;
-                    var ind =cartObj.cartComponent.find(idcomp);
+                    var ind = cartObj.cartComponent.find(idcomp);
                     cartObj.cartComponent[ind].qty += 1;
                     cartObj.total_compqty += 1;
                     cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
-                    
-                  };
-                  
+
+                };
+
                 cartObj.cartComponent.decrementComp = function (idcomp) {
                     debugger;
                     cartObj.total_qty -= 1;
-                    var ind =cartObj.cartComponent.find(idcomp);
-                    
+                    var ind = cartObj.cartComponent.find(idcomp);
+
                     cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
                     if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
                         cartObj.cartComponent.splice(ind, 1);  //edited
@@ -217,11 +305,11 @@ angular.module('app.services', ['ngResource'])
                         cartObj.cartComponent[ind].qty -= 1;
                     }
                 };
-                
+
                 cartObj.getQty = function () {
                     return  cartObj.total_qty;
                 };
-             
+
 
                 return cartObj;
             }])
@@ -235,20 +323,9 @@ angular.module('app.services', ['ngResource'])
                             //ponemos isArray en true
                                     {get: {method: "GET", isArray: true}});
 
-//  return {
-//    all: function() {
-//      return cates.query();
-//    },
-//    get: function(cateId) {
-//      for (var i = 0; i < cates.length; i++) {
-//        if (cates[i].id === parseInt(cateId)) {
-//          return cates[i];
-//        }
-//      }
-//      return null;
-//    }
-//  };
                         })
+  
+                
 
                         .factory('auth', ['$location', '$state', function ($location, $state) {
                                 var auth = {
@@ -305,7 +382,7 @@ angular.module('app.services', ['ngResource'])
                                 request: request
                             }
                         })
-                        
+
                         .factory('BlankFactory', [function () {
 
                             }])
@@ -351,3 +428,6 @@ angular.module('app.services', ['ngResource'])
                         .service('BlankService', [function () {
 
                             }]);
+
+
+                
