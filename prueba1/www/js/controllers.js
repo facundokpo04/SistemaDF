@@ -427,18 +427,11 @@ angular.module('app.controllers', [])
 
         })
         .controller('menucatCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
-                $ionicHistory, sharedCartService, sharedUtils, $stateParams) {
+                $ionicHistory, sharedCartService, sharedUtils, $stateParams, variedades) {
 
             $scope.titulo = $stateParams.nombre;
 
-            $scope.url = '';
-            
-            $scope.prodSimple = false;
-
-
-              
-            
-
+            $scope.url = '';            
             loadUrl = function () {
 
                 restApi.call({
@@ -457,43 +450,7 @@ angular.module('app.controllers', [])
                 });
 //    $scope.categorias=cate.get();  
             }
-            loadComponentes = function (id) {
 
-                restApi.call({
-                    method: 'get',
-                    url: 'producto/listarComp/' + id,
-                    response: function (r) {
-                   
-                       $scope.prodSimple  = (r.length > 0);
-
-                    },
-                    error: function (r) {
-
-                    },
-                    validationError: function (r) {
-
-                    }
-                });
-//    $scope.categorias=cate.get();  
-            }
-            loadVariedades = function (id) {
-
-                restApi.call({
-                    method: 'get',
-                    url: 'producto/listarVar/' + id,
-                    response: function (r) {
-                       
-                        $scope.prodSimple = (r.length > 0);
-                    },
-                    error: function (r) {
-
-                    },
-                    validationError: function (r) {
-
-                    }
-                });
-//    $scope.categorias=cate.get();  
-            }
             loadUrl();
 
             //Check if user already logged in
@@ -560,25 +517,23 @@ angular.module('app.controllers', [])
 
             $scope.addToCart = function (item) {
                 
-                debugger;
-                loadComponentes(item.prod_id);
-                loadVariedades(item.prod_id);
+              debugger;
                  
-            
-//               
-                debugger;
-                
-                if($scope.prodSimple){
-                    
-                    
-                    
-                 
-                }
-                else{
-                    
-                      $state.go("productodet", {"id": item.prod_id});
-                }
-              
+             
+                  $state.go("productodet", {"id": item.prod_id});
+           
+//                
+//                if(true){
+//                    
+//                    
+//                    
+//                 
+//                }
+//                else{
+//                    
+//                      $state.go("productodet", {"id": item.prod_id});
+//                }
+//              
 
 
             };
