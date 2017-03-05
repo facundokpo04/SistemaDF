@@ -15,4 +15,3 @@ class DetallePedidoValidation {
         return $response;
     }
 }
-/* 

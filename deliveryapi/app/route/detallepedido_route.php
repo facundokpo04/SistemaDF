@@ -40,7 +40,7 @@ $app->group('/detallepedido/', function () {
     });
 
     $this->put('actualizar/{id}', function ($req, $res, $args) {
-        $r = PedidoEncabezadoValidation::validate($req->getParsedBody());
+        $r = DetallePedidoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
