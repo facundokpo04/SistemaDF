@@ -41,6 +41,8 @@ class PedidoEncabezadoModel
     public function insert($data)
     {
         
+        
+        echo($data);
         $query = $this->db->insertInto($this->table, $data)
                  ->execute();
                

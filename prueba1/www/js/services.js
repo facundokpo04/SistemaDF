@@ -156,7 +156,7 @@ angular.module('app.services', ['ngResource'])
 
 
 
-        .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup,restApi) {
+        .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
 
                 var cartObj = {};
                 cartObj.cart = []; //lista de productos  (producto, cantidad)
@@ -165,55 +165,56 @@ angular.module('app.services', ['ngResource'])
                 cartObj.total_compAmount = 0;// total de componentes
                 cartObj.total_qty = 0; // cant producto
                 cartObj.total_compqty = 0;// cantidad de componente
-                cartObj.idPE=-1 ;
-                cartObj.comentariosP='';
-                
+                cartObj.idPE = -1;
+                cartObj.comentariosP = '';
 
 
 
 
 
-                cartObj.generarPedido= function(data){
-                    
-                    var data2={};
-                    data2.pe_idCliente =data.idCliente;
-                    data2.pe_comentarios=cartObj.comentariosP;
-                    data2.pe_idPersona=1;
-                    data2.pe_cli_tel="3757-420769";
+
+                cartObj.generarPedido = function (data) {
+
+                    var data2 = {};
+                    data2.pe_idCliente = data.idCliente;
+                    data2.pe_comentarios = cartObj.comentariosP;
+                    data2.pe_idPersona = 1;
+                    data2.pe_cli_tel = "3757420769";
                     data2.pe_idEstado = 1;
+                    var jsonString = JSON.stringify(data2);
                     debugger;
-                    
-                   restApi.call({
-                    method: 'post',
-                    url: 'pedidoencabezado/insertar',
-                    data: data2,
-                    response: function (r) {
-                        debugger;
 
-                         cartObj.idPE = r.result;
-                    },
-                    error: function (r) {
+                    restApi.call({
+                        method: 'post',
+                        url: 'pedidoencabezado/insertar',
+                        data: {data : jsonString},
+                        response: function (r) {
+                            debugger;
 
-                    },
-                    validationError: function (r) {
+                            cartObj.idPE = r.response.result;
+                        },
+                        error: function (r) {
 
-                    }
-                });
-                    
-                    
-                    
-                    
-                }
-                
-                cartObj.cargarComentarios = function(){
-                    
-                    angular.forEach(cartObj.cart, function (value,key){
-                        debugger;
-                         cartObj.comentariosP = cartObj.comentariosP + ' Producto: ' +value.producto.prod_nombre +' comentario:' + value.comentario + '\n';
-                        
+                        },
+                        validationError: function (r) {
+
+                        }
                     });
-                    
-                    
+
+
+
+
+                }
+
+                cartObj.cargarComentarios = function () {
+
+                    angular.forEach(cartObj.cart, function (value, key) {
+
+                        cartObj.comentariosP = cartObj.comentariosP + ' Producto = ' + value.producto.prod_nombre + ' comentario =' + value.comentario + '\n';
+
+                    });
+
+
                 }
                 cartObj.cart.add = function (item) {
 
@@ -353,7 +354,7 @@ angular.module('app.services', ['ngResource'])
                 cartObj.getQty = function () {
                     return  cartObj.total_qty;
                 };
-                
+
 
 
                 return cartObj;
@@ -369,27 +370,27 @@ angular.module('app.services', ['ngResource'])
                                     {get: {method: "GET", isArray: true}});
 
                         })
-        .factory('varService', function ($resource) {
+                        .factory('varService', function ($resource) {
                             // Might use a resource here that returns a JSON array
-              var resourceUrl =API.base_url + 'producto/listarVar/:id';
-                            return  $resource(resourceUrl, 
-                                               {id: '@id'}, //aquí podemos pasar variables que queramos pasar a la consulta
+                            var resourceUrl = API.base_url + 'producto/listarVar/:id';
+                            return  $resource(resourceUrl,
+                                    {id: '@id'}, //aquí podemos pasar variables que queramos pasar a la consulta
                                     //a la función get le decimos el método, y, si es un array lo que devuelve
                                             //ponemos isArray en true
-                                              {get: {method: "GET", isArray: true}});
+                                                    {get: {method: "GET", isArray: true}});
 
                                         })
-        .factory('componentes', function ($resource) {
+                                        .factory('componentes', function ($resource) {
                                             // Might use a resource here that returns a JSON array
 
                                             // Some fake testing data
                                             return  $resource(API.base_url + "producto/listarComp/:id", {id: '@_id'}, //aquí podemos pasar variables que queramos pasar a la consulta
                                                     //a la función get le decimos el método, y, si es un array lo que devuelve
                                                             //ponemos isArray en true
-                                                  {get: {method: "GET", isArray: true}});
+                                                                    {get: {method: "GET", isArray: true}});
 
                                                         })
-        .factory('auth', ['$location', '$state', function ($location, $state) {
+                                                        .factory('auth', ['$location', '$state', function ($location, $state) {
                                                                 var auth = {
                                                                     setToken: function (token) {
                                                                         localStorage[API.token_name] = token;
@@ -429,7 +430,7 @@ angular.module('app.services', ['ngResource'])
 
 
                                                             }])
-         .factory("Request", function (){
+                                                        .factory("Request", function () {
                                                             var request = function request(config)
                                                             {
                                                                 config.headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -442,10 +443,10 @@ angular.module('app.services', ['ngResource'])
                                                                 request: request
                                                             }
                                                         })
-         .factory('BlankFactory', [function () {
+                                                        .factory('BlankFactory', [function () {
 
                                                             }])
-       .service('restApi', ['$http', 'auth', function ($http, auth) {
+                                                        .service('restApi', ['$http', 'auth', function ($http, auth) {
 
 
                                                                 this.call = function (config) {
@@ -484,7 +485,7 @@ angular.module('app.services', ['ngResource'])
                                                                 };
                                                             }])
 
-        .service('BlankService', [function () {
+    .service('BlankService', [function () {
 
                                                             }]);
 
