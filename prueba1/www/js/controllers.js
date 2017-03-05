@@ -880,6 +880,7 @@ angular.module('app.controllers', [])
             $scope.urlpro = '';
             $scope.urlcom = '';
             $scope.vacio = true;
+            comentarios = '';
 
 
             loadUrlpro = function () {
@@ -979,7 +980,13 @@ angular.module('app.controllers', [])
 
 
             $scope.checkout = function () {
-                $state.go('checkout', {}, {location: "replace"});
+                var data={};
+                data.idCliente=1;
+                sharedCartService.cargarComentarios();
+                sharedCartService.generarPedido(data);
+                
+                
+//                $state.go('checkout', {}, {location: "replace"});
             };
 
 

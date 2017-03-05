@@ -156,7 +156,7 @@ angular.module('app.services', ['ngResource'])
 
 
 
-        .factory('sharedCartService', ['$ionicPopup', function ($ionicPopup) {
+        .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup,restApi) {
 
                 var cartObj = {};
                 cartObj.cart = []; //lista de productos  (producto, cantidad)
@@ -165,12 +165,56 @@ angular.module('app.services', ['ngResource'])
                 cartObj.total_compAmount = 0;// total de componentes
                 cartObj.total_qty = 0; // cant producto
                 cartObj.total_compqty = 0;// cantidad de componente
+                cartObj.idPE=-1 ;
+                cartObj.comentariosP='';
+                
 
 
 
 
 
+                cartObj.generarPedido= function(data){
+                    
+                    var data2={};
+                    data2.pe_idCliente =data.idCliente;
+                    data2.pe_comentarios=cartObj.comentariosP;
+                    data2.pe_idPersona=1;
+                    data2.pe_cli_tel="3757-420769";
+                    data2.pe_idEstado = 1;
+                    debugger;
+                    
+                   restApi.call({
+                    method: 'post',
+                    url: 'pedidoencabezado/insertar',
+                    data: data2,
+                    response: function (r) {
+                        debugger;
 
+                         cartObj.idPE = r.result;
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+                    
+                    
+                    
+                    
+                }
+                
+                cartObj.cargarComentarios = function(){
+                    
+                    angular.forEach(cartObj.cart, function (value,key){
+                        debugger;
+                         cartObj.comentariosP = cartObj.comentariosP + ' Producto: ' +value.producto.prod_nombre +' comentario:' + value.comentario + '\n';
+                        
+                    });
+                    
+                    
+                }
                 cartObj.cart.add = function (item) {
 
                     if (cartObj.cart.find(item.producto.prod_id) != -1) {
@@ -309,6 +353,7 @@ angular.module('app.services', ['ngResource'])
                 cartObj.getQty = function () {
                     return  cartObj.total_qty;
                 };
+                
 
 
                 return cartObj;
