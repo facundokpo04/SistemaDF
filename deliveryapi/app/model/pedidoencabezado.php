@@ -42,7 +42,7 @@ class PedidoEncabezadoModel
     {
         
         
-        echo($data);
+//        var_dump($data);
         $query = $this->db->insertInto($this->table, $data)
                  ->execute();
                

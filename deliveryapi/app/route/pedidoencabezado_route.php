@@ -8,6 +8,7 @@ use App\Lib\Auth,
 $app->group('/pedidoencabezado/', function () {
 
     $this->get('url', function ($req, $res, $args) {
+        
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->pedidoencabezado->getUrl())
@@ -29,6 +30,7 @@ $app->group('/pedidoencabezado/', function () {
     });
 
     $this->post('insertar', function ($req, $res, $args) {
+        var_dump($req);
         $r = PedidoEncabezadoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
