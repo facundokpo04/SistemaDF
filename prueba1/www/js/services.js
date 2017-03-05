@@ -159,19 +159,13 @@ angular.module('app.services', ['ngResource'])
         .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
 
                 var cartObj = {};
-                cartObj.cart = []; //lista de productos  (producto, cantidad)
-                cartObj.cartComponent = [];//lista de componentes (copenente, cantidad)
+                cartObj.cart = []; //lista de productos  (producto, cantidad)         
                 cartObj.total_amount = 0; // total de productos
                 cartObj.total_compAmount = 0;// total de componentes
                 cartObj.total_qty = 0; // cant producto
                 cartObj.total_compqty = 0;// cantidad de componente
                 cartObj.idPE = -1;
                 cartObj.comentariosP = '';
-
-
-
-
-
 
                 cartObj.generarPedido = function (data) {
                     var data2 = {};
@@ -180,6 +174,7 @@ angular.module('app.services', ['ngResource'])
                     data2.Cliente_cli_idPersona = 1;
                     data2.Cliente_cli_tel = "3757420769";
                     data2.pe_idEstado = 1;
+                    debugger;
 
                     restApi.call({
                         method: 'post',
@@ -199,8 +194,75 @@ angular.module('app.services', ['ngResource'])
                     });
 
 
+                }
+                
+                cartObj.generarDetalle = function (){
+                    
+                    
+                  angular.forEach(cartObj.cart, function (value, key) {
+                      var prodPedido = {};
+                      prodPedido.precioBase = value.producto.prod_precioBase;
+                      prodPedido.idProducto = value.producto.prod_id;
+                      prodPedido.idVariedad = value.variedad.var_id;
+                      prodPedido.precioCalc = value.price + value.compAmout;
+                      prodPedido.componentes = value.componentes;
+                     
+                      var detallePedido = {};
+                      detallePedido.dp_cantidad = parseInt(value.qty);
+                      detallePedido.dp_PrecioUnitario = value.price + value.compAmout;                      
+                      detallePedido.dp_idProductoPedido=-1;
+                      detallePedido.dp_idPedidoEncabezado=cartObj.idPE;
+                      
+                      
+                   restApi.call({
+                        method: 'post',
+                        url: 'productopedido/insertar',
+                        data: prodPedido,
+                        response: function (r) {
+                            debugger;
 
+                            detallePedido.dp_idProductoPedido = r.response.result;
+                        },
+                        error: function (r) {
 
+                        },
+                        validationError: function (r) {
+
+                        }
+                    });
+                   if(detallePedido.dp_idProductoPedido != -1){                            
+                            restApi.call({
+                                method: 'post',
+                                url: 'detallepedido/insertar',
+                                data: detallePedido,
+                                response: function (r) {
+                                    debugger;
+                                 
+                                },
+                                error: function (r) {
+                                    
+                                    //abria que limpiar el carro si guardo
+
+                                },
+                                validationError: function (r) {
+
+                                }
+                            });
+                          
+                          
+                      }
+                      
+                     
+                      
+                      
+                      
+                      
+
+                       
+
+                    });
+                    
+                    
                 }
 
                 cartObj.cargarComentarios = function () {
@@ -224,63 +286,14 @@ angular.module('app.services', ['ngResource'])
 
                         cartObj.cart.push(item);
                         cartObj.total_qty += item.qty;
+                        cartObj.total_comqty += item.comqty;
                         cartObj.total_amount += parseFloat(parseInt(item.qty) * parseFloat(item.price));
+                        cartObj.total_compAmount += item.compAmount;
 
                     }
                 };
 
-                cartObj.cartComponent.addAll = function (componentes) {
-
-                    angular.forEach(componentes, function (value, key) {
-                        cartObj.cartComponent.add(value);
-                    });
-
-
-                };
-                cartObj.cartComponent.add = function (itemcomp) {
-
-                    if (cartObj.cartComponent.find(itemcomp.componente.com_id) != -1) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Este Opcional ya fue agregado',
-                            template: 'Incremente la cantidad en el pedido'
-                        });
-                    } else {
-
-                        cartObj.cartComponent.push(itemcomp);
-                        cartObj.total_compqty += itemcomp.qty;
-                        cartObj.total_compAmount += parseFloat(itemcomp.componente.com_precio);
-
-                    }
-
-
-                };
-                cartObj.cartComponent.find = function (idcomp) {
-
-
-                    var result = -1
-
-                    for (var i = 0, len = cartObj.cartComponent.length; i < len; i++) {
-
-                        if (cartObj.cartComponent[i].componente.com_id === idcomp) {
-                            result = i;
-                            break;
-                        }
-                    }
-
-                    return result;
-
-
-
-                };
-                cartObj.cartComponent.dropCom = function (id) {
-
-                    ind = cartObj.cartComponent.find(id);
-                    var temp = cartObj.cartComponent[ind];
-                    cartObj.total_compqty -= parseInt(temp.qty);
-                    cartObj.total_compAmount -= (parseInt(temp.qty) * parseInt(temp.componente.com_precio));
-                    cartObj.cartComponent.splice(ind, 1);
-
-                };
+             
                 cartObj.cart.find = function (id) {
                     var result = -1;
                     for (var i = 0, len = cartObj.cart.length; i < len; i++) {
@@ -298,7 +311,9 @@ angular.module('app.services', ['ngResource'])
                     var ind = cartObj.cart.find(id);
                     var temp = cartObj.cart[ind];
                     cartObj.total_qty -= parseInt(temp.qty);
+                    cartObj.total_compqty -= parseInt(temp.comqty);
                     cartObj.total_amount -= (parseInt(temp.qty) * parseInt(temp.price));
+                    cartObj.total_compAmount -= parseFloat(temp.compAmount);
                     cartObj.cart.splice(ind, 1);
 
                 };
@@ -306,47 +321,108 @@ angular.module('app.services', ['ngResource'])
                 cartObj.cart.increment = function (id) {
 
                     var ind = cartObj.cart.find(id);
-                    cartObj.cart[ind].qty += 1;
+                    var temp = cartObj.cart[ind];
+                    temp.qty += 1;
+                    cartObj.total_compqty += parseInt(temp.comqty);//preguntar si aumenta la cant del prooducto aumenta los componentes tambien
                     cartObj.total_qty += 1;
                     cartObj.total_amount += (parseInt(cartObj.cart[ind].price));
+                    cartObj.total_compAmount += parseFloat(temp.compAmount);
+                    
                 };
 
                 cartObj.cart.decrement = function (id) {
-
+                      var ind = cartObj.cart.find(id);
+                      var temp = cartObj.cart[ind];
 
                     cartObj.total_qty -= 1;
-                    cartObj.total_amount -= parseInt(cartObj.cart[cartObj.cart.find(id)].price);
-
-
-                    if (cartObj.cart[cartObj.cart.find(id)].qty == 1) {  // if the cart item was only 1 in qty
+                    cartObj.total_amount -= parseInt(temp.price);
+                    cartObj.total_compqty -= parseInt(temp.comqty);
+                    cartObj.total_compAmount -= parseFloat(temp.compAmount);
+           
+                     if (cartObj.cart[cartObj.cart.find(id)].qty == 1) {  // if the cart item was only 1 in qty
                         cartObj.cart.splice(cartObj.cart.find(id), 1);  //edited
-                    } else {
+                    } 
+                    
+                    else {
                         cartObj.cart[cartObj.cart.find(id)].qty -= 1;
                     }
 
                 };
 
-                cartObj.cartComponent.incrementComp = function (idcomp) {
-                    debugger;
-                    var ind = cartObj.cartComponent.find(idcomp);
-                    cartObj.cartComponent[ind].qty += 1;
-                    cartObj.total_compqty += 1;
-                    cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
-
-                };
-
-                cartObj.cartComponent.decrementComp = function (idcomp) {
-                    debugger;
-                    cartObj.total_qty -= 1;
-                    var ind = cartObj.cartComponent.find(idcomp);
-
-                    cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
-                    if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
-                        cartObj.cartComponent.splice(ind, 1);  //edited
-                    } else {
-                        cartObj.cartComponent[ind].qty -= 1;
-                    }
-                };
+//                cartObj.cartComponent.incrementComp = function (idcomp) {
+//                    debugger;
+//                    var ind = cartObj.cartComponent.find(idcomp);
+//                    cartObj.cartComponent[ind].qty += 1;
+//                    cartObj.total_compqty += 1;
+//                    cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
+//
+//                };
+//
+//                cartObj.cartComponent.decrementComp = function (idcomp) {
+//                    debugger;
+//                    cartObj.total_qty -= 1;
+//                    var ind = cartObj.cartComponent.find(idcomp);
+//
+//                    cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
+//                    if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
+//                        cartObj.cartComponent.splice(ind, 1);  //edited
+//                    } else {
+//                        cartObj.cartComponent[ind].qty -= 1;
+//                    }
+//                };
+//                
+//                cartObj.cartComponent.addAll = function (componentes) {
+//
+//                    angular.forEach(componentes, function (value, key) {
+//                        cartObj.cartComponent.add(value);
+//                    });
+//
+//
+//                };
+//                cartObj.cartComponent.add = function (itemcomp) {
+//
+//                    if (cartObj.cartComponent.find(itemcomp.componente.com_id) != -1) {
+//                        var alertPopup = $ionicPopup.alert({
+//                            title: 'Este Opcional ya fue agregado',
+//                            template: 'Incremente la cantidad en el pedido'
+//                        });
+//                    } else {
+//
+//                        cartObj.cartComponent.push(itemcomp);
+//                        cartObj.total_compqty += itemcomp.qty;
+//                        cartObj.total_compAmount += parseFloat(itemcomp.componente.com_precio);
+//
+//                    }
+//
+//
+//                };
+//                cartObj.cartComponent.find = function (idcomp) {
+//
+//
+//                    var result = -1
+//
+//                    for (var i = 0, len = cartObj.cartComponent.length; i < len; i++) {
+//
+//                        if (cartObj.cartComponent[i].componente.com_id === idcomp) {
+//                            result = i;
+//                            break;
+//                        }
+//                    }
+//
+//                    return result;
+//
+//
+//
+//                };
+//                cartObj.cartComponent.dropCom = function (id) {
+//
+//                    ind = cartObj.cartComponent.find(id);
+//                    var temp = cartObj.cartComponent[ind];
+//                    cartObj.total_compqty -= parseInt(temp.qty);
+//                    cartObj.total_compAmount -= (parseInt(temp.qty) * parseInt(temp.componente.com_precio));
+//                    cartObj.cartComponent.splice(ind, 1);
+//
+//                };
 
                 cartObj.getQty = function () {
                     return  cartObj.total_qty;
