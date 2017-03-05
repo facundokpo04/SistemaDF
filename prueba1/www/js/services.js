@@ -174,20 +174,17 @@ angular.module('app.services', ['ngResource'])
 
 
                 cartObj.generarPedido = function (data) {
-
                     var data2 = {};
                     data2.pe_idCliente = data.idCliente;
                     data2.pe_comentarios = cartObj.comentariosP;
-                    data2.pe_idPersona = 1;
-                    data2.pe_cli_tel = "3757420769";
+                    data2.Cliente_cli_idPersona = 1;
+                    data2.Cliente_cli_tel = "3757420769";
                     data2.pe_idEstado = 1;
-                    var jsonString = JSON.stringify(data2);
-                    debugger;
 
                     restApi.call({
                         method: 'post',
                         url: 'pedidoencabezado/insertar',
-                        data: {data : jsonString},
+                        data: data2,
                         response: function (r) {
                             debugger;
 
@@ -375,119 +372,119 @@ angular.module('app.services', ['ngResource'])
                             var resourceUrl = API.base_url + 'producto/listarVar/:id';
                             return  $resource(resourceUrl,
                                     {id: '@id'}, //aquí podemos pasar variables que queramos pasar a la consulta
-                                    //a la función get le decimos el método, y, si es un array lo que devuelve
-                                            //ponemos isArray en true
-                                                    {get: {method: "GET", isArray: true}});
+                            //a la función get le decimos el método, y, si es un array lo que devuelve
+                            //ponemos isArray en true
+                                    {get: {method: "GET", isArray: true}});
 
-                                        })
-                                        .factory('componentes', function ($resource) {
-                                            // Might use a resource here that returns a JSON array
+                        })
+                        .factory('componentes', function ($resource) {
+                            // Might use a resource here that returns a JSON array
 
-                                            // Some fake testing data
-                                            return  $resource(API.base_url + "producto/listarComp/:id", {id: '@_id'}, //aquí podemos pasar variables que queramos pasar a la consulta
-                                                    //a la función get le decimos el método, y, si es un array lo que devuelve
-                                                            //ponemos isArray en true
-                                                                    {get: {method: "GET", isArray: true}});
+                            // Some fake testing data
+                            return  $resource(API.base_url + "producto/listarComp/:id", {id: '@_id'}, //aquí podemos pasar variables que queramos pasar a la consulta
+                            //a la función get le decimos el método, y, si es un array lo que devuelve
+                            //ponemos isArray en true
+                                    {get: {method: "GET", isArray: true}});
 
-                                                        })
-                                                        .factory('auth', ['$location', '$state', function ($location, $state) {
-                                                                var auth = {
-                                                                    setToken: function (token) {
-                                                                        localStorage[API.token_name] = token;
-                                                                    },
-                                                                    getToken: function () {
-                                                                        return localStorage[API.token_name];
-                                                                    },
-                                                                    getUserData: function () {
-                                                                        try {
-                                                                            var token = localStorage[API.token_name];
-                                                                            if (token === '')
-                                                                                return;
+                        })
+                        .factory('auth', ['$location', '$state', function ($location, $state) {
+                                var auth = {
+                                    setToken: function (token) {
+                                        localStorage[API.token_name] = token;
+                                    },
+                                    getToken: function () {
+                                        return localStorage[API.token_name];
+                                    },
+                                    getUserData: function () {
+                                        try {
+                                            var token = localStorage[API.token_name];
+                                            if (token === '')
+                                                return;
 
-                                                                            var base64Url = token.split('.')[1];
-                                                                            var base64 = base64Url.replace('-', '+').replace('_', '/');
+                                            var base64Url = token.split('.')[1];
+                                            var base64 = base64Url.replace('-', '+').replace('_', '/');
 
-                                                                            return JSON.parse(window.atob(base64)).data;
-                                                                        } catch (err) {
-                                                                            $location.path('/');
-                                                                        }
-                                                                    },
-                                                                    logout: function () {
-                                                                        localStorage[API.token_name] = '';
-                                                                        $state.go('login');
-                                                                    },
-                                                                    hasToken: function () {
-                                                                        return (localStorage[API.token_name] !== '');
-                                                                    },
-                                                                    redirectIfNotExists: function () {
-                                                                        if (!auth.hasToken()) {
-                                                                            $state.go('login');
-                                                                        }
-                                                                    }
-                                                                };
+                                            return JSON.parse(window.atob(base64)).data;
+                                        } catch (err) {
+                                            $location.path('/');
+                                        }
+                                    },
+                                    logout: function () {
+                                        localStorage[API.token_name] = '';
+                                        $state.go('login');
+                                    },
+                                    hasToken: function () {
+                                        return (localStorage[API.token_name] !== '');
+                                    },
+                                    redirectIfNotExists: function () {
+                                        if (!auth.hasToken()) {
+                                            $state.go('login');
+                                        }
+                                    }
+                                };
 
-                                                                return auth;
-
-
-                                                            }])
-                                                        .factory("Request", function () {
-                                                            var request = function request(config)
-                                                            {
-                                                                config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+                                return auth;
 
 
-                                                                return config;
-                                                            }
-
-                                                            return {
-                                                                request: request
-                                                            }
-                                                        })
-                                                        .factory('BlankFactory', [function () {
-
-                                                            }])
-                                                        .service('restApi', ['$http', 'auth', function ($http, auth) {
+                            }])
+                        .factory("Request", function () {
+                            var request = function request(config)
+                            {
+                                config.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
 
-                                                                this.call = function (config) {
-                                                                    var headers = {};
+                                return config;
+                            }
+
+                            return {
+                                request: request
+                            }
+                        })
+                        .factory('BlankFactory', [function () {
+
+                            }])
+                        .service('restApi', ['$http', 'auth', function ($http, auth) {
+
+
+                                this.call = function (config) {
+                                    var headers = {};
 //        headers[API.token_name] = auth.getToken();
-                                                                    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+//                                    headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
 
-                                                                    var http_config = {
-                                                                        method: config.method,
-                                                                        url: API.base_url + config.url,
-                                                                        data: typeof (config.data) === 'undefined' ? null : config.data,
-                                                                        headers: headers
-                                                                    };
+                                    var http_config = {
+                                        method: config.method,
+                                        url: API.base_url + config.url,
+                                        data: typeof (config.data) === 'undefined' ? null : config.data,
+                                        headers: headers
+                                    };
 
-                                                                    $http(http_config).then(function successCallback(response) {
+                                    $http(http_config).then(function successCallback(response) {
 
-                                                                        config.response(response.data);
-                                                                    }, function errorCallback(response) {
+                                        config.response(response.data);
+                                    }, function errorCallback(response) {
 
 
-                                                                        switch (response.status) {
-                                                                            case 401: // No autorizado
-                                                                                auth.logout();
-                                                                                break;
-                                                                            case 422: // Validación
-                                                                                config.validationError(response.data);
-                                                                                break;
-                                                                            default:
-                                                                                config.error(response);
-                                                                                console.log(response.statusText);
-                                                                                break;
-                                                                        }
-                                                                    });
-                                                                };
-                                                            }])
+                                        switch (response.status) {
+                                            case 401: // No autorizado
+                                                auth.logout();
+                                                break;
+                                            case 422: // Validación
+                                                config.validationError(response.data);
+                                                break;
+                                            default:
+                                                config.error(response);
+                                                console.log(response.statusText);
+                                                break;
+                                        }
+                                    });
+                                };
+                            }])
 
-    .service('BlankService', [function () {
+                        .service('BlankService', [function () {
 
-                                                            }]);
+                            }]);
 
 
                 
