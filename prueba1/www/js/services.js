@@ -157,7 +157,7 @@ angular.module('app.services', ['ngResource'])
 
 
          .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
-                debugger;
+          
 
                 var cartObj = {};
                 cartObj.cart = []; //lista de productos  (producto, cantidad)         

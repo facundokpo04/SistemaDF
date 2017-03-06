@@ -777,8 +777,8 @@ angular.module('app.controllers', [])
 //                    cartComponent.addAll(item.componentes.items); se comento por que por ahora no vamos a separa los comp de los productos
                     $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 
-                    $state.go('categorias');
-
+                    $state.go('categorias', {}, {location: "replace", reload: true});
+		
                 });
 
 

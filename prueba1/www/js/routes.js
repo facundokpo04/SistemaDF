@@ -62,14 +62,10 @@ angular.module('app.routes', [])
                         templateUrl: 'templates/shopping_cart.html',
                         controller: 'myCartCtrl'
                     })
-                    
-                    .state('intro', {
-                        url: '/page20',
-                        templateUrl: 'templates/intro.html',
-                        controller: 'IntroCtrl'
-                    })
-                    
-                      .state('checkout2', {
+
+
+
+                    .state('checkout2', {
                         url: '/page21',
                         templateUrl: 'templates/checkout2.html',
                         controller: 'checkoutCtrl2'
@@ -128,7 +124,7 @@ angular.module('app.routes', [])
                         }
                     })
 
-            $urlRouterProvider.otherwise('/page20')
+            $urlRouterProvider.otherwise('/page7')
 
 
 
