@@ -727,9 +727,8 @@ angular.module('app.controllers', [])
                 item.variedad = $scope.selectedVariedad;
                 item.componentes = $scope.componentesSelected.items;
                 item.compAmount = $scope.componentesSelected.totalcom;
-                item.comqty = $scope.componentesSelected.totalqty;
-
-                 var preciov = 0;
+                item.comqty = $scope.componentesSelected.totalqty;                                                               
+                var preciov = 0;
 
                 if (item.variedad.var_precio)
                     preciov = (item.variedad.var_precio === "undefined") ? 0 : item.variedad.var_precio;
@@ -990,6 +989,7 @@ angular.module('app.controllers', [])
                 data.idCliente=1;
                 sharedCartService.cargarComentarios();
                 sharedCartService.generarPedido(data);
+                sharedCartService.generarDetalle();
                 
                 
 //                $state.go('checkout', {}, {location: "replace"});

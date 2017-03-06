@@ -41,10 +41,7 @@ class PedidoEncabezadoModel
     public function insert($data)
     {
         
-        
-        
-        
-//        var_dump($data);
+       
         $query = $this->db->insertInto($this->table, $data)
                  ->execute();
                
