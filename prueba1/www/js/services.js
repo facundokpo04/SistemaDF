@@ -181,13 +181,13 @@ angular.module('app.services', ['ngResource'])
                     data2.pe_idPersona = 1;
                     data2.pe_cli_tel = "3757420769";
                     data2.pe_idEstado = 1;
-                    var jsonString = JSON.stringify(data2);
+                   
                     debugger;
 
                     restApi.call({
                         method: 'post',
                         url: 'pedidoencabezado/insertar',
-                        data: {data : jsonString},
+                        data: data2,
                         response: function (r) {
                             debugger;
 

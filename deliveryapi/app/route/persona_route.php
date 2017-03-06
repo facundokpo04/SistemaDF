@@ -13,6 +13,14 @@ $app->group('/persona/', function () {
                    );
     });
     
+    
+    $this->get('listardir/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                   ->write(
+                     json_encode($this->model->persona->getAlldir($args['id']))
+                   );
+    });
+    
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
