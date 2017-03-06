@@ -7,15 +7,9 @@ use App\Lib\Auth,
 
 $app->group('/pedidoencabezado/', function () {
 
-    $this->get('url', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-                        ->write(
-                                json_encode($this->model->pedidoencabezado->getUrl())
-        );
-    });
-
+  
     $this->get('listar', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
+        return $res->withHeader('Content-type','application/json')
                         ->write(
                                 json_encode($this->model->pedidoencabezado->getAll())
         );
@@ -29,6 +23,7 @@ $app->group('/pedidoencabezado/', function () {
     });
 
     $this->post('insertar', function ($req, $res, $args) {
+      
         $r = PedidoEncabezadoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {

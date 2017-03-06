@@ -156,42 +156,35 @@ angular.module('app.services', ['ngResource'])
 
 
 
-        .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
+         .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
+                debugger;
 
                 var cartObj = {};
-                cartObj.cart = []; //lista de productos  (producto, cantidad)
-                cartObj.cartComponent = [];//lista de componentes (copenente, cantidad)
+                cartObj.cart = []; //lista de productos  (producto, cantidad)         
                 cartObj.total_amount = 0; // total de productos
                 cartObj.total_compAmount = 0;// total de componentes
                 cartObj.total_qty = 0; // cant producto
                 cartObj.total_compqty = 0;// cantidad de componente
                 cartObj.idPE = -1;
                 cartObj.comentariosP = '';
-
-
-
-
-
-
+                
+                
+                
                 cartObj.generarPedido = function (data) {
 
                     var data2 = {};
-                    data2.pe_idCliente = data.idCliente;
+                    data2.pe_idCliente = 1;
                     data2.pe_comentarios = cartObj.comentariosP;
                     data2.pe_idPersona = 1;
                     data2.pe_cli_tel = "3757420769";
                     data2.pe_idEstado = 1;
-                   
-                    debugger;
 
                     restApi.call({
                         method: 'post',
                         url: 'pedidoencabezado/insertar',
                         data: data2,
                         response: function (r) {
-                            debugger;
-
-                            cartObj.idPE = r.response.result;
+                            cartObj.idPE = r.result;
                         },
                         error: function (r) {
 
@@ -202,9 +195,68 @@ angular.module('app.services', ['ngResource'])
                     });
 
 
-
-
                 }
+                
+               cartObj.generarDetalle = function () {
+                  
+                    angular.forEach(cartObj.cart, function (value, key) {
+                        var prodPedido = {};
+                        prodPedido.precioBase = value.producto.prod_precioBase;
+                        prodPedido.idProducto = value.producto.prod_id;
+                        prodPedido.idVariedad = value.variedad.var_id;
+                        prodPedido.precioCalc = value.price + value.compAmount;
+                        prodPedido.componentes = value.componentes;
+                    restApi.call({
+                            method: 'post',
+                            url: 'productopedido/insertar',
+                            data: prodPedido,
+                            response: function (r) {
+                                debugger;
+                               cartObj.registrarDetalle(value,r.result);
+                            },
+                            error: function (r) {
+
+                            },
+                            validationError: function (r) {
+
+                            }
+                        });
+
+
+                    });
+                }
+
+                cartObj.registrarDetalle = function (value,idpp) {
+                    debugger;
+
+                    var detallePedido = {};
+                    detallePedido.dp_cantidad = parseInt(value.qty);
+                    detallePedido.dp_PrecioUnitario = value.price + value.compAmount;
+                    detallePedido.dp_idProductoPedido = idpp;
+                    detallePedido.dp_idPedidoEncabezado = cartObj.idPE;
+
+                    restApi.call({
+                        method: 'post',
+                        url: 'detallepedido/insertar',
+                        data: detallePedido,
+                        response: function (r) {
+                            debugger;
+
+                        },
+                        error: function (r) {
+
+
+
+                            //abria que limpiar el carro si guardo
+
+                        },
+                        validationError: function (r) {
+
+                        }
+                    });
+                }
+
+             
 
                 cartObj.cargarComentarios = function () {
 
@@ -227,63 +279,14 @@ angular.module('app.services', ['ngResource'])
 
                         cartObj.cart.push(item);
                         cartObj.total_qty += item.qty;
+                        cartObj.total_comqty += item.comqty;
                         cartObj.total_amount += parseFloat(parseInt(item.qty) * parseFloat(item.price));
+                        cartObj.total_compAmount += item.compAmount;
 
                     }
                 };
 
-                cartObj.cartComponent.addAll = function (componentes) {
 
-                    angular.forEach(componentes, function (value, key) {
-                        cartObj.cartComponent.add(value);
-                    });
-
-
-                };
-                cartObj.cartComponent.add = function (itemcomp) {
-
-                    if (cartObj.cartComponent.find(itemcomp.componente.com_id) != -1) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Este Opcional ya fue agregado',
-                            template: 'Incremente la cantidad en el pedido'
-                        });
-                    } else {
-
-                        cartObj.cartComponent.push(itemcomp);
-                        cartObj.total_compqty += itemcomp.qty;
-                        cartObj.total_compAmount += parseFloat(itemcomp.componente.com_precio);
-
-                    }
-
-
-                };
-                cartObj.cartComponent.find = function (idcomp) {
-
-
-                    var result = -1
-
-                    for (var i = 0, len = cartObj.cartComponent.length; i < len; i++) {
-
-                        if (cartObj.cartComponent[i].componente.com_id === idcomp) {
-                            result = i;
-                            break;
-                        }
-                    }
-
-                    return result;
-
-
-
-                };
-                cartObj.cartComponent.dropCom = function (id) {
-
-                    ind = cartObj.cartComponent.find(id);
-                    var temp = cartObj.cartComponent[ind];
-                    cartObj.total_compqty -= parseInt(temp.qty);
-                    cartObj.total_compAmount -= (parseInt(temp.qty) * parseInt(temp.componente.com_precio));
-                    cartObj.cartComponent.splice(ind, 1);
-
-                };
                 cartObj.cart.find = function (id) {
                     var result = -1;
                     for (var i = 0, len = cartObj.cart.length; i < len; i++) {
@@ -301,7 +304,9 @@ angular.module('app.services', ['ngResource'])
                     var ind = cartObj.cart.find(id);
                     var temp = cartObj.cart[ind];
                     cartObj.total_qty -= parseInt(temp.qty);
+                    cartObj.total_compqty -= parseInt(temp.comqty);
                     cartObj.total_amount -= (parseInt(temp.qty) * parseInt(temp.price));
+                    cartObj.total_compAmount -= parseFloat(temp.compAmount);
                     cartObj.cart.splice(ind, 1);
 
                 };
@@ -309,17 +314,23 @@ angular.module('app.services', ['ngResource'])
                 cartObj.cart.increment = function (id) {
 
                     var ind = cartObj.cart.find(id);
-                    cartObj.cart[ind].qty += 1;
+                    var temp = cartObj.cart[ind];
+                    temp.qty += 1;
+                    cartObj.total_compqty += parseInt(temp.comqty);//preguntar si aumenta la cant del prooducto aumenta los componentes tambien
                     cartObj.total_qty += 1;
                     cartObj.total_amount += (parseInt(cartObj.cart[ind].price));
+                    cartObj.total_compAmount += parseFloat(temp.compAmount);
+
                 };
 
                 cartObj.cart.decrement = function (id) {
-
+                    var ind = cartObj.cart.find(id);
+                    var temp = cartObj.cart[ind];
 
                     cartObj.total_qty -= 1;
-                    cartObj.total_amount -= parseInt(cartObj.cart[cartObj.cart.find(id)].price);
-
+                    cartObj.total_amount -= parseInt(temp.price);
+                    cartObj.total_compqty -= parseInt(temp.comqty);
+                    cartObj.total_compAmount -= parseFloat(temp.compAmount);
 
                     if (cartObj.cart[cartObj.cart.find(id)].qty == 1) {  // if the cart item was only 1 in qty
                         cartObj.cart.splice(cartObj.cart.find(id), 1);  //edited
@@ -329,27 +340,80 @@ angular.module('app.services', ['ngResource'])
 
                 };
 
-                cartObj.cartComponent.incrementComp = function (idcomp) {
-                    debugger;
-                    var ind = cartObj.cartComponent.find(idcomp);
-                    cartObj.cartComponent[ind].qty += 1;
-                    cartObj.total_compqty += 1;
-                    cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
-
-                };
-
-                cartObj.cartComponent.decrementComp = function (idcomp) {
-                    debugger;
-                    cartObj.total_qty -= 1;
-                    var ind = cartObj.cartComponent.find(idcomp);
-
-                    cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
-                    if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
-                        cartObj.cartComponent.splice(ind, 1);  //edited
-                    } else {
-                        cartObj.cartComponent[ind].qty -= 1;
-                    }
-                };
+//                cartObj.cartComponent.incrementComp = function (idcomp) {
+//                    debugger;
+//                    var ind = cartObj.cartComponent.find(idcomp);
+//                    cartObj.cartComponent[ind].qty += 1;
+//                    cartObj.total_compqty += 1;
+//                    cartObj.total_compAmount += (parseInt(cartObj.cartComponent[ind].componente.com_precio));
+//
+//                };
+//
+//                cartObj.cartComponent.decrementComp = function (idcomp) {
+//                    debugger;
+//                    cartObj.total_qty -= 1;
+//                    var ind = cartObj.cartComponent.find(idcomp);
+//
+//                    cartObj.total_amount -= parseInt(cartObj.cartComponent[ind].componente.com_precio);
+//                    if (cartObj.cartComponent[ind].qty == 1) {  // if the cart item was only 1 in qty
+//                        cartObj.cartComponent.splice(ind, 1);  //edited
+//                    } else {
+//                        cartObj.cartComponent[ind].qty -= 1;
+//                    }
+//                };
+//                
+//                cartObj.cartComponent.addAll = function (componentes) {
+//
+//                    angular.forEach(componentes, function (value, key) {
+//                        cartObj.cartComponent.add(value);
+//                    });
+//
+//
+//                };
+//                cartObj.cartComponent.add = function (itemcomp) {
+//
+//                    if (cartObj.cartComponent.find(itemcomp.componente.com_id) != -1) {
+//                        var alertPopup = $ionicPopup.alert({
+//                            title: 'Este Opcional ya fue agregado',
+//                            template: 'Incremente la cantidad en el pedido'
+//                        });
+//                    } else {
+//
+//                        cartObj.cartComponent.push(itemcomp);
+//                        cartObj.total_compqty += itemcomp.qty;
+//                        cartObj.total_compAmount += parseFloat(itemcomp.componente.com_precio);
+//
+//                    }
+//
+//
+//                };
+//                cartObj.cartComponent.find = function (idcomp) {
+//
+//
+//                    var result = -1
+//
+//                    for (var i = 0, len = cartObj.cartComponent.length; i < len; i++) {
+//
+//                        if (cartObj.cartComponent[i].componente.com_id === idcomp) {
+//                            result = i;
+//                            break;
+//                        }
+//                    }
+//
+//                    return result;
+//
+//
+//
+//                };
+//                cartObj.cartComponent.dropCom = function (id) {
+//
+//                    ind = cartObj.cartComponent.find(id);
+//                    var temp = cartObj.cartComponent[ind];
+//                    cartObj.total_compqty -= parseInt(temp.qty);
+//                    cartObj.total_compAmount -= (parseInt(temp.qty) * parseInt(temp.componente.com_precio));
+//                    cartObj.cartComponent.splice(ind, 1);
+//
+//                };
 
                 cartObj.getQty = function () {
                     return  cartObj.total_qty;
@@ -360,7 +424,7 @@ angular.module('app.services', ['ngResource'])
                 return cartObj;
             }])
 
-        .factory('cate', function ($resource) {
+         .factory('cate', function ($resource) {
             // Might use a resource here that returns a JSON array
 
             // Some fake testing data
@@ -370,7 +434,7 @@ angular.module('app.services', ['ngResource'])
                                     {get: {method: "GET", isArray: true}});
 
                         })
-                        .factory('varService', function ($resource) {
+         .factory('varService', function ($resource) {
                             // Might use a resource here that returns a JSON array
                             var resourceUrl = API.base_url + 'producto/listarVar/:id';
                             return  $resource(resourceUrl,
@@ -380,7 +444,7 @@ angular.module('app.services', ['ngResource'])
                                                     {get: {method: "GET", isArray: true}});
 
                                         })
-                                        .factory('componentes', function ($resource) {
+         .factory('componentes', function ($resource) {
                                             // Might use a resource here that returns a JSON array
 
                                             // Some fake testing data
@@ -390,7 +454,7 @@ angular.module('app.services', ['ngResource'])
                                                                     {get: {method: "GET", isArray: true}});
 
                                                         })
-                                                        .factory('auth', ['$location', '$state', function ($location, $state) {
+         .factory('auth', ['$location', '$state', function ($location, $state) {
                                                                 var auth = {
                                                                     setToken: function (token) {
                                                                         localStorage[API.token_name] = token;
@@ -430,7 +494,7 @@ angular.module('app.services', ['ngResource'])
 
 
                                                             }])
-                                                        .factory("Request", function () {
+         .factory("Request", function () {
                                                             var request = function request(config)
                                                             {
                                                                 config.headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -443,16 +507,16 @@ angular.module('app.services', ['ngResource'])
                                                                 request: request
                                                             }
                                                         })
-                                                        .factory('BlankFactory', [function () {
+         .factory('BlankFactory', [function () {
 
                                                             }])
-                                                        .service('restApi', ['$http', 'auth', function ($http, auth) {
+         .service('restApi', ['$http', 'auth', function ($http, auth) {
 
 
                                                                 this.call = function (config) {
                                                                     var headers = {};
 //        headers[API.token_name] = auth.getToken();
-                                                                    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+//                                    headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
 
@@ -466,10 +530,9 @@ angular.module('app.services', ['ngResource'])
                                                                     $http(http_config).then(function successCallback(response) {
 
                                                                         config.response(response.data);
-                                                                    }, function errorCallback(response) {
 
-
-                                                                        switch (response.status) {
+                                                                    }, function errorCallback(response) {                                                                   
+                                                                       switch (response.status) {
                                                                             case 401: // No autorizado
                                                                                 auth.logout();
                                                                                 break;
@@ -484,8 +547,7 @@ angular.module('app.services', ['ngResource'])
                                                                     });
                                                                 };
                                                             }])
-
-    .service('BlankService', [function () {
+         .service('BlankService', [function () {
 
                                                             }]);
 

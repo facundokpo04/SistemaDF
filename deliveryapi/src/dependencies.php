@@ -51,5 +51,6 @@ $container['model'] = function($c) {
                 'pedidoencabezado' => new App\Model\PedidoEncabezadoModel($c->db),
                 'productopromo' => new App\Model\ProductoPromoModel($c->db),
                 'direccion' => new App\Model\DireccionModel($c->db)
+                'detallepedido' => new App\Model\DetallePedidoModel($c->db)
     ];
 };

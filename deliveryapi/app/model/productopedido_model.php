@@ -41,10 +41,25 @@ class ProductoPedidoModel
     public function insert($data)
     {
         
-        $this->db->insertInto($this->table, $data)
-                 ->execute();
+       // insertar un productoPedido
+       $productop_id = $this->db->insertInto($this->table, [           
+            'pp_precioBase' => $data['precioBase'],
+            'pp_idProducto' => $data['idProducto'],
+            'pp_idVariedad' => $data['idVariedad'], // No podemos asumir que esta data enviada desde el cliente es CORRECTA,
+            'pp_precioCalc' => $data['precioCalc']
+             ])->execute();
+       //insertar los componentes del Ppedido
+       foreach($data['componentes'] as $d){
+            $this->db->insertInto('componenteppedido', [
+                'cpp_idProductoPedido' => $productop_id,
+                'cpp_idComponente' => $d['id_comp']                
+            ])->execute();
+        }
+       
         
-        return $this->response->SetResponse(true);
+        return $this->response->SetResponse(true,'Exito',$productop_id);
+        
+        
     }
       public function get($id)
     {

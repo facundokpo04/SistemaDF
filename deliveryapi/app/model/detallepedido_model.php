@@ -3,10 +3,10 @@ namespace App\Model;
 
 use App\Lib\Response;
 
-class PedidoEncabezadoModel
+class DetallePedidoModel
 {
     private $db;
-    private $table = 'pedidoencabezado';
+    private $table = 'detallepedido';
     private $response;
    // private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/pedidoencabezado" ;
      
@@ -22,9 +22,8 @@ class PedidoEncabezadoModel
 //    }
     public function getAll()
     {
-        $data = $this->db->from($this->table)
-                         
-                         ->orderBy('pe_id DESC')
+        $data = $this->db->from($this->table)                       
+                         ->orderBy('dp_id DESC')
                          ->fetchAll();
         
         $total = $this->db->from($this->table)
@@ -41,7 +40,10 @@ class PedidoEncabezadoModel
     public function insert($data)
     {
         
-       
+        
+        
+        
+//        var_dump($data);
         $query = $this->db->insertInto($this->table, $data)
                  ->execute();
                
@@ -50,7 +52,7 @@ class PedidoEncabezadoModel
       public function get($id)
     {
         return $this->db->from($this->table)
-                        ->where('pe_id', $id)
+                        ->where('dp_id', $id)
                         ->fetch();
         
     }
@@ -59,16 +61,15 @@ class PedidoEncabezadoModel
         
         $this->db->update($this->table)
                  ->set($data)
-                 ->where('pe_id', $id)
+                 ->where('dp_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);
     }
-    
      public function delete($id)
     {
         $this->db->deleteFrom($this->table)
-                ->where('pe_id', $id)
+                ->where('dp_id', $id)
                  ->execute();
         
         return $this->response->SetResponse(true);

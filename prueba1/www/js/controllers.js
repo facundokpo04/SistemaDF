@@ -647,17 +647,20 @@ angular.module('app.controllers', [])
             getSelectedComponentes = function (componentes) {
 
                 var salida = {};
-
                 salida.items = []
-
                 salida.totalcom = 0;
+                salida.totalqty;
+                
+                
                 angular.forEach(componentes, function (componente) {
                     if (componente.selected) {
                         itemcom = {};
                         itemcom.componente = componente;
                         itemcom.qty = 1;
-                        salida.items.push(itemcom)
+                        itemcom.id_comp= componente.com_id;
+                        salida.items.push(itemcom);
                         salida.totalcom += parseFloat(componente.com_precio);
+                        salida.totalqty += 1;
                     }
                 })
                 return salida;
@@ -722,8 +725,9 @@ angular.module('app.controllers', [])
                 $scope.componentesSelected = getSelectedComponentes($scope.componentes);
                 item.producto = $scope.producto;
                 item.variedad = $scope.selectedVariedad;
-                item.componentes = $scope.componentesSelected;
-
+                item.componentes = $scope.componentesSelected.items;
+                item.compAmount = $scope.componentesSelected.totalcom;
+                item.comqty = $scope.componentesSelected.totalqty;                                                               
                 var preciov = 0;
 
                 if (item.variedad.var_precio)
@@ -731,7 +735,9 @@ angular.module('app.controllers', [])
 
 //     item.qty = 1;
 
-                item.price = parseFloat(parseFloat(preciov) + parseFloat($scope.producto.prod_precioBase));// revisar como se va a palntear variada si como lista de precios o adicionar al precio base
+                item.price = parseFloat(parseFloat(preciov) + parseFloat($scope.producto.prod_precioBase));
+                item.precioVar=preciov;
+                // revisar como se va a palntear variada si como lista de precios o adicionar al precio base
                 $scope.data = {};
                 $scope.data.cantidad = 1;
 
@@ -768,8 +774,7 @@ angular.module('app.controllers', [])
                     item.qty = res.cantidad;
                     item.comentario = res.comentario;
                     cart.add(item);
-                    cartComponent.addAll(item.componentes.items);
-
+//                    cartComponent.addAll(item.componentes.items); se comento por que por ahora no vamos a separa los comp de los productos
                     $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 
                     $state.go('categorias');
@@ -984,6 +989,7 @@ angular.module('app.controllers', [])
                 data.idCliente=1;
                 sharedCartService.cargarComentarios();
                 sharedCartService.generarPedido(data);
+                sharedCartService.generarDetalle();
                 
                 
 //                $state.go('checkout', {}, {location: "replace"});
