@@ -463,7 +463,8 @@ angular.module('app.services', ['ngResource'])
                                                                         return localStorage[API.token_name];
                                                                     },
                                                                     getUserData: function () {
-                                                                        try {
+                                                                        try 
+                                                                       {
                                                                             var token = localStorage[API.token_name];
                                                                             if (token === '')
                                                                                 return;

@@ -6,12 +6,46 @@ angular.module('app.controllers', [])
 //{
 //    $httpProvider.interceptors.push('Request');
 //})
-        .controller('IntroCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
-
-        })
+//        .controller('IntroCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
+//
+//        })
 
         .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
-            $rootScope.extras = false;  // For hiding the side bar and nav icon
+            $rootScope.extras = false;
+
+            // For hiding the side bar and nav icon
+            $scope.login = function () {
+                restApi.call({
+                    method: 'post',
+                    url: 'auth/autenticar',
+                    data: {
+                        Correo: $scope.user.email,
+                        Password: $scope.user.password
+                    },
+                    response: function (r) {
+
+                        if (r.response) {
+                            auth.setToken(r.result);
+                            $ionicHistory.nextViewOptions({
+                                historyRoot: true
+                            });
+                            $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
+                            $rootScope.extras = true;
+                            sharedUtils.hideLoading();
+                            $state.go('menu2', {}, {location: "replace"});
+                        } else {
+                            alert(r.message);
+
+                        }
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+            }
 
             // When the user logs out and reaches login page,
             // we clear all the history and cache to prevent back link
@@ -22,7 +56,10 @@ angular.module('app.controllers', [])
                 }
             });
 
-            //Check if user already logged in
+
+
+            //chekear si ya esta logeado
+//            Check if user already logged in
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
                     $ionicHistory.nextViewOptions({
@@ -40,12 +77,14 @@ angular.module('app.controllers', [])
             $scope.loginEmail = function (formName, cred) {
 
 
-                if (formName.$valid) {  // Check if the form data is valid or not
+                if (formName.$valid)
+                {  // Check if the form data is valid or not
 
                     sharedUtils.showLoading();
 
                     //Email
-                    firebase.auth().signInWithEmailAndPassword(cred.email, cred.password).then(function (result) {
+                    firebase.auth().signInWithEmailAndPassword(cred.email, cred.password).then(function (result)
+                    {
 
                         // You dont need to save the users session as firebase handles it
                         // You only need to :
@@ -54,15 +93,17 @@ angular.module('app.controllers', [])
                         // 3. Turn off the loading
                         // 4. Got to menu page
 
-                        $ionicHistory.nextViewOptions({
-                            historyRoot: true
-                        });
+                        $ionicHistory.nextViewOptions(
+                                {
+                                    historyRoot: true
+                                });
                         $rootScope.extras = true;
                         sharedUtils.hideLoading();
                         $state.go('menu2', {}, {location: "replace"});
 
                     },
-                            function (error) {
+                            function (error)
+                            {
                                 sharedUtils.hideLoading();
                                 sharedUtils.showAlert("Please note", "Authentication Error");
                             }
@@ -92,20 +133,70 @@ angular.module('app.controllers', [])
                 $state, fireBaseData, $ionicHistory) {
             $rootScope.extras = false; // For hiding the side bar and nav icon
 
+
+            $scope.registrar = function (formName, cred) {
+                if (formName.$valid)
+                {
+                    data2 = {}
+                    data2.per_nombre = cred.name;
+                    data2.per_email = cred.email;
+                    data2.per_password = cred.password;
+                    data2.per_celular = cred.phone;
+
+
+                    restApi.call({
+                        method: 'post',
+                        url: 'persona/insertar',
+                        data: data2,
+                        response: function (r) {
+
+                            if (r.response) {
+                                //Registered OK
+                                $ionicHistory.nextViewOptions({
+                                    historyRoot: true
+                                });
+                                $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
+                                $rootScope.extras = true;
+                                sharedUtils.hideLoading();
+                                $state.go('menu2', {}, {location: "replace"});
+
+                            } else {
+                                alert(r.message);
+
+                            }
+                        },
+                        error: function (r) {
+
+                        },
+                        validationError: function (r) {
+
+                        }
+                    });
+                } else {
+                    sharedUtils.showAlert("Please note", "Alguno de los datos no es valido");
+                }
+
+
+            }
+
             $scope.signupEmail = function (formName, cred) {
 
-                if (formName.$valid) {  // Check if the form data is valid or not
+                if (formName.$valid)
+                {  // Check if the form data is valid or not
 
                     sharedUtils.showLoading();
 
                     //Main Firebase Authentication part
-                    firebase.auth().createUserWithEmailAndPassword(cred.email, cred.password).then(function (result) {
+                    firebase.auth().createUserWithEmailAndPassword(cred.email, cred.password).then(function (result)
+                    {
 
                         //Add name and default dp to the Autherisation table
-                        result.updateProfile({
-                            displayName: cred.name,
-                            photoURL: "default_dp"
-                        }).then(function () {}, function (error) {});
+                        result.updateProfile(
+                                {
+                                    displayName: cred.name,
+                                    photoURL: "default_dp"
+                                }).then(function ()
+                        {}, function (error) {});
 
                         //Add phone number to the user table
                         fireBaseData.refUser().child(result.uid).set({
@@ -517,14 +608,14 @@ angular.module('app.controllers', [])
 
             $scope.addToCart = function (item) {
 
-          
-                
+
+
 //                varService.get({id: item.prod_id}).$promise
 //                          .then(function (response) {                    
 //                                 response;                
 //                            })
 //                   .catch(function (response) { console.log(response); });
-                 
+
 
                 $state.go("productodet", {"id": item.prod_id});
 
@@ -650,14 +741,14 @@ angular.module('app.controllers', [])
                 salida.items = []
                 salida.totalcom = 0;
                 salida.totalqty;
-                
-                
+
+
                 angular.forEach(componentes, function (componente) {
                     if (componente.selected) {
                         itemcom = {};
                         itemcom.componente = componente;
                         itemcom.qty = 1;
-                        itemcom.id_comp= componente.com_id;
+                        itemcom.id_comp = componente.com_id;
                         salida.items.push(itemcom);
                         salida.totalcom += parseFloat(componente.com_precio);
                         salida.totalqty += 1;
@@ -695,6 +786,7 @@ angular.module('app.controllers', [])
             // On Loggin in to menu page, the sideMenu drag state is set to true
             $ionicSideMenuDelegate.canDragContent(true);
             $rootScope.extras = true;
+            
 
             // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
             $scope.$on('$ionicView.enter', function (ev) {
@@ -727,7 +819,7 @@ angular.module('app.controllers', [])
                 item.variedad = $scope.selectedVariedad;
                 item.componentes = $scope.componentesSelected.items;
                 item.compAmount = $scope.componentesSelected.totalcom;
-                item.comqty = $scope.componentesSelected.totalqty;                                                               
+                item.comqty = $scope.componentesSelected.totalqty;
                 var preciov = 0;
 
                 if (item.variedad.var_precio)
@@ -736,7 +828,7 @@ angular.module('app.controllers', [])
 //     item.qty = 1;
 
                 item.price = parseFloat(parseFloat(preciov) + parseFloat($scope.producto.prod_precioBase));
-                item.precioVar=preciov;
+                item.precioVar = preciov;
                 // revisar como se va a palntear variada si como lista de precios o adicionar al precio base
                 $scope.data = {};
                 $scope.data.cantidad = 1;
@@ -776,9 +868,16 @@ angular.module('app.controllers', [])
                     cart.add(item);
 //                    cartComponent.addAll(item.componentes.items); se comento por que por ahora no vamos a separa los comp de los productos
                     $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+//                    $ionicHistory.clearHistory();
+                        $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
 
                     $state.go('categorias', {}, {location: "replace", reload: true});
-		
+
                 });
 
 
@@ -826,7 +925,8 @@ angular.module('app.controllers', [])
 
 
 
-                if (user) {
+                if (user) 
+                {
                     $scope.user_info = user; //Saves data to user_info
 
                     //Only when the user is logged in, the cart qty is shown
@@ -985,13 +1085,13 @@ angular.module('app.controllers', [])
 
 
             $scope.checkout = function () {
-                var data={};
-                data.idCliente=1;
+                var data = {};
+                data.idCliente = 1;
                 sharedCartService.cargarComentarios();
                 sharedCartService.generarPedido(data);
                 sharedCartService.generarDetalle();
-                
-                
+
+
 //                $state.go('checkout', {}, {location: "replace"});
             };
 
@@ -1201,6 +1301,18 @@ angular.module('app.controllers', [])
                 $ionicHistory, fireBaseData, $ionicPopup, sharedCartService) {
 
             $rootScope.extras = true;
+
+            $scope.loggedin = function () {
+//		if(sessionStorage.getItem('loggedin_id')==null){return 1;}
+//		else{
+//			$scope.loggedin_name= sessionStorage.getItem('loggedin_name');
+//			$scope.loggedin_id= sessionStorage.getItem('loggedin_id');
+//			$scope.loggedin_phone= sessionStorage.getItem('loggedin_phone');
+//			$scope.loggedin_address= sessionStorage.getItem('loggedin_address');
+//			$scope.loggedin_pincode= sessionStorage.getItem('loggedin_pincode');
+//			return 0;
+//		}
+            };
 
             //Check if user already logged in
             firebase.auth().onAuthStateChanged(function (user) {

@@ -31,7 +31,8 @@ class AuthModel {
                         'Nombre' => $nombre,
                         'NombreCompleto' => $persona->per_nombre,
                         //'Imagen' => $empleado->Imagen, LO DEJAMOS COMENTADO PORQUE HACE GENERAR UN TOKEN DEMASIADO GRANDE
-                        'Perfil' => $persona->per_perfilUsuario
+                        'Perfil' => $persona->per_perfilUsuario,
+                        'Celular' =>$persona->per_celular
             ]);
 //var_dump($token);
             $this->response->result = $token;
