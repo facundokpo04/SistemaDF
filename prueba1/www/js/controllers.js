@@ -906,24 +906,24 @@ angular.module('app.controllers', [])
                 });
 //    $scope.categorias=cate.get();  
             }
-            loadUrlcom = function () {
-
-                restApi.call({
-                    method: 'get',
-                    url: 'componente/url',
-                    response: function (r) {
-
-                        $scope.urlcom = decodeURIComponent(r);
-                    },
-                    error: function (r) {
-
-                    },
-                    validationError: function (r) {
-
-                    }
-                });
-//    $scope.categorias=cate.get();  
-            }
+//            loadUrlcom = function () {
+//
+//                restApi.call({
+//                    method: 'get',
+//                    url: 'componente/url',
+//                    response: function (r) {
+//
+//                        $scope.urlcom = decodeURIComponent(r);
+//                    },
+//                    error: function (r) {
+//
+//                    },
+//                    validationError: function (r) {
+//
+//                    }
+//                });
+//                $scope.categorias = cate.get();
+//            }
             calcularSubtotal = function () {
 
                 var totalprod = sharedCartService.total_amount;
@@ -933,7 +933,7 @@ angular.module('app.controllers', [])
 
             };
             loadUrlpro();
-            loadUrlcom();
+//            loadUrlcom();
             calcularSubtotal();
 
             $scope.cart = sharedCartService.cart;
@@ -948,13 +948,13 @@ angular.module('app.controllers', [])
 
 
             };
-
-            $scope.removeFromCartCom = function (c_id) {
-                debugger;
-                $scope.cartComp.dropCom(c_id);
-                calcularSubtotal();
-                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-            };
+//
+//            $scope.removeFromCartCom = function (c_id) {
+//                debugger;
+//                $scope.cartComp.dropCom(c_id);
+//                calcularSubtotal();
+//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+//            };
 
             $scope.inc = function (p_id) {
                 $scope.cart.increment(p_id);
@@ -969,19 +969,19 @@ angular.module('app.controllers', [])
             };
 
 
-            $scope.incComp = function (c_id) {
-                $scope.cartComp.incrementComp(c_id);
-                calcularSubtotal();
-                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-            };
-
-            $scope.decComp = function (c_id) {//avisa
-                $scope.cartComp.decrementComp(c_id);
-                calcularSubtotal();
-                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-
-
-            };
+//            $scope.incComp = function (c_id) {
+//                $scope.cartComp.incrementComp(c_id);
+//                calcularSubtotal();
+//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+//            };
+//
+//            $scope.decComp = function (c_id) {//avisa
+//                $scope.cartComp.decrementComp(c_id);
+//                calcularSubtotal();
+//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
+//
+//
+//            };
 
 
             $scope.checkout = function () {
