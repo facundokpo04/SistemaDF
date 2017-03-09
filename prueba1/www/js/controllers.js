@@ -1,51 +1,10 @@
 angular.module('app.controllers', [])
 
-
-
-//.config(function($httpProvider)
-//{
-//    $httpProvider.interceptors.push('Request');
-//})
-//        .controller('IntroCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
-//
-//        })
-
-        .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate) {
+        .controller('loginCtrl', function ($scope, $rootScope, $ionicHistory, sharedUtils, $state, $ionicSideMenuDelegate, auth, restApi) {
             $rootScope.extras = false;
 
             // For hiding the side bar and nav icon
-            $scope.login = function () {
-                restApi.call({
-                    method: 'post',
-                    url: 'auth/autenticar',
-                    data: {
-                        Correo: $scope.user.email,
-                        Password: $scope.user.password
-                    },
-                    response: function (r) {
 
-                        if (r.response) {
-                            auth.setToken(r.result);
-                            $ionicHistory.nextViewOptions({
-                                historyRoot: true
-                            });
-                            $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
-                            $rootScope.extras = true;
-                            sharedUtils.hideLoading();
-                            $state.go('menu2', {}, {location: "replace"});
-                        } else {
-                            alert(r.message);
-
-                        }
-                    },
-                    error: function (r) {
-
-                    },
-                    validationError: function (r) {
-
-                    }
-                });
-            }
 
             // When the user logs out and reaches login page,
             // we clear all the history and cache to prevent back link
@@ -56,22 +15,85 @@ angular.module('app.controllers', [])
                 }
             });
 
+            if (auth.hasToken()) {
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
+                $rootScope.extras = true;
+                sharedUtils.hideLoading();
+                $state.go('menu2', {}, {location: "replace"});
+
+            }
+
 
 
             //chekear si ya esta logeado
 //            Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
-                    $rootScope.extras = true;
-                    sharedUtils.hideLoading();
-                    $state.go('menu2', {}, {location: "replace"});
+//            firebase.auth().onAuthStateChanged(function (user) {
+//                if (user) {
+//                    $ionicHistory.nextViewOptions({
+//                        historyRoot: true
+//                    });
+//                    $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
+//                    $rootScope.extras = true;
+//                    sharedUtils.hideLoading();
+//                    $state.go('menu2', {}, {location: "replace"});
+//
+//                }
+//            });
+            $scope.login = function (formName, cred) {
+                debugger;
+                auth.getToken();
 
+                if (formName.$valid)
+                {  // Check if the form data is valid or not
+
+                    sharedUtils.showLoading();
+
+                    restApi.call({
+                        method: 'post',
+                        url: 'auth/autenticar',
+                        data: {
+                            Correo: cred.email,
+                            Password: cred.password
+                        },
+                        response: function (r) {
+
+                            if (r.response) {
+                                debugger;
+                                auth.setToken(r.result);
+                                $ionicHistory.nextViewOptions({
+                                    historyRoot: true
+                                });
+                                $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
+                                $rootScope.extras = true;
+                                sharedUtils.hideLoading();
+                                $state.go('menu2', {}, {location: "replace"});
+                            } else {
+                                sharedUtils.hideLoading();
+                                sharedUtils.showAlert("Please note", "Authentication Error");
+                                alert(r.message);
+
+                            }
+                        },
+                        error: function (r) {
+
+                        },
+                        validationError: function (r) {
+
+                        }
+                    });
+
+
+
+                } else {
+                    sharedUtils.showAlert("Please note", "Entered data is not valid");
                 }
-            });
+
+
+
+            }
 
 
             $scope.loginEmail = function (formName, cred) {
@@ -130,17 +152,18 @@ angular.module('app.controllers', [])
         })
 
         .controller('signupCtrl', function ($scope, $rootScope, sharedUtils, $ionicSideMenuDelegate,
-                $state, fireBaseData, $ionicHistory) {
+                $state, fireBaseData, $ionicHistory, restApi, auth) {
             $rootScope.extras = false; // For hiding the side bar and nav icon
 
 
             $scope.registrar = function (formName, cred) {
                 if (formName.$valid)
                 {
+                    debugger;
                     data2 = {}
                     data2.per_nombre = cred.name;
                     data2.per_email = cred.email;
-                    data2.per_password = cred.password;
+                    data2.per_password = md5(cred.password);
                     data2.per_celular = cred.phone;
 
 
@@ -149,6 +172,7 @@ angular.module('app.controllers', [])
                         url: 'persona/insertar',
                         data: data2,
                         response: function (r) {
+                            debugger;
 
                             if (r.response) {
                                 //Registered OK
@@ -226,13 +250,23 @@ angular.module('app.controllers', [])
         })
 
         .controller('menu2Ctrl', function ($scope, $rootScope, $ionicSideMenuDelegate, fireBaseData, $state,
-                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils, restApi) {
+                $ionicHistory, $firebaseArray, sharedCartService, sharedUtils, restApi, auth) {
+//
 
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData(); //Saves data to user_info
 
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
 
-            $scope.url = '';
-            $scope.urlpro = '';
-            $scope.urlcat = '';
+            }
             $scope.categorias = [];
 
 
@@ -333,7 +367,6 @@ angular.module('app.controllers', [])
             }
             loadUrl();
             loadcatUrl();
-
             loadPromos();
             loadCategorias();
 
@@ -342,8 +375,6 @@ angular.module('app.controllers', [])
                     method: 'get',
                     url: 'producto/listarCat/' + itemcat.cat_id,
                     response: function (r) {
-
-
                         itemcat.productos = r.data;
                     },
                     error: function (r) {
@@ -360,23 +391,23 @@ angular.module('app.controllers', [])
             }
 
             //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.user_info = user; //Saves data to user_info
-                } else {
-
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }
-            });
+//            firebase.auth().onAuthStateChanged(function (user) {
+//                if (user) {
+//                    $scope.user_info = user; //Saves data to user_info
+//                } else {
+//
+//                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+//                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+//
+//                    $ionicHistory.nextViewOptions({
+//                        historyRoot: true
+//                    });
+//                    $rootScope.extras = false;
+//                    sharedUtils.hideLoading();
+//                    $state.go('tabsController.login', {}, {location: "replace"});
+//
+//                }
+//            });
 
             // On Loggin in to menu page, the sideMenu drag state is set to true
             $ionicSideMenuDelegate.canDragContent(true);
@@ -408,29 +439,27 @@ angular.module('app.controllers', [])
 
         })
         .controller('categoriasCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
-                $ionicHistory, sharedCartService, sharedUtils) {
+                $ionicHistory, sharedCartService, sharedUtils, auth) {
+
+            debugger;
+
+
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData(); //Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
 
             $scope.url = '';
-
-
-            //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.user_info = user; //Saves data to user_info
-                } else {
-
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }
-            });
 
             // On Loggin in to menu page, the sideMenu drag state is set to true
             $ionicSideMenuDelegate.canDragContent(true);
@@ -518,7 +547,25 @@ angular.module('app.controllers', [])
 
         })
         .controller('menucatCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
-                $ionicHistory, sharedCartService, sharedUtils, $stateParams, varService) {
+                $ionicHistory, sharedCartService, sharedUtils, $stateParams, varService, auth) {
+
+
+            //Check if user already logged in
+
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData(); //Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
 
             $scope.titulo = $stateParams.nombre;
 
@@ -544,24 +591,7 @@ angular.module('app.controllers', [])
 
             loadUrl();
 
-            //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.user_info = user; //Saves data to user_info
-                } else {
 
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }
-            });
 
             // On Loggin in to menu page, the sideMenu drag state is set to true
             $ionicSideMenuDelegate.canDragContent(true);
@@ -638,9 +668,34 @@ angular.module('app.controllers', [])
         })
 
         .controller('productodetCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
-                $ionicHistory, sharedCartService, $ionicPopup, sharedUtils, $stateParams) {
+                $ionicHistory, sharedCartService, $ionicPopup, sharedUtils, $stateParams, auth) {
 
 // $scope.titulo = $stateParams.nombre;
+
+//valida si esta logeado
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData(); //Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
+            // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
+            $scope.$on('$ionicView.enter', function (ev) {
+                if (ev.targetScope !== $scope) {
+                    $ionicHistory.clearHistory();
+                    $ionicHistory.clearCache();
+                }
+            });
+
+
             var cart = sharedCartService.cart;
             var cartComponent = sharedCartService.cartComponent;
             var item = {};
@@ -765,39 +820,10 @@ angular.module('app.controllers', [])
             // estaria bueno que los que tenga precio los amrque como extras y los que no como opciones
 
             //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.user_info = user; //Saves data to user_info
-                } else {
-
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }
-            });
 
             // On Loggin in to menu page, the sideMenu drag state is set to true
             $ionicSideMenuDelegate.canDragContent(true);
             $rootScope.extras = true;
-            
-
-            // When user visits A-> B -> C -> A and clicks back, he will close the app instead of back linking
-            $scope.$on('$ionicView.enter', function (ev) {
-                if (ev.targetScope !== $scope) {
-                    $ionicHistory.clearHistory();
-                    $ionicHistory.clearCache();
-                }
-            });
-
-
-
             $scope.loadDetalle = function () {
                 sharedUtils.showLoading();
                 $scope.variedades
@@ -869,7 +895,7 @@ angular.module('app.controllers', [])
 //                    cartComponent.addAll(item.componentes.items); se comento por que por ahora no vamos a separa los comp de los productos
                     $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
 //                    $ionicHistory.clearHistory();
-                        $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
                     $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
 
                     $ionicHistory.nextViewOptions({
@@ -915,62 +941,44 @@ angular.module('app.controllers', [])
             $rootScope.extras = true;
         })
 
-        .controller('indexCtrl', function ($scope, $rootScope, sharedUtils, $ionicHistory, $state, $ionicSideMenuDelegate, sharedCartService) {
+        .controller('indexCtrl', function ($scope, $rootScope, sharedUtils, $ionicHistory, $state, $ionicSideMenuDelegate, sharedCartService, auth) {
 
             $rootScope.totalCart = sharedCartService.getQty();
 
 
-            firebase.auth().onAuthStateChanged(function (user) {
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData(); //Saves data to user_info
 
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
 
-
-
-                if (user) 
-                {
-                    $scope.user_info = user; //Saves data to user_info
-
-                    //Only when the user is logged in, the cart qty is shown
-                    //Else it will show unwanted console error till we get the user object
-
-
-                } else {
-
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }
-            });
+            }
 
             $scope.logout = function () {
 
                 sharedUtils.showLoading();
+                auth.logout();
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
 
-                // Main Firebase logout
-                firebase.auth().signOut().then(function () {
-
-
-                    $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
-                    $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
-
-
-                    $rootScope.extras = false;
-                    sharedUtils.hideLoading();
-                    $state.go('tabsController.login', {}, {location: "replace"});
-
-                }, function (error) {
-                    sharedUtils.showAlert("Error", "Logout Failed")
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
                 });
+
+
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+
+
 
             }
 
@@ -1099,26 +1107,28 @@ angular.module('app.controllers', [])
 
         })
 
-        .controller('lastOrdersCtrl', function ($scope, $rootScope, fireBaseData, sharedUtils) {
+        .controller('lastOrdersCtrl', function ($scope, $rootScope, fireBaseData, sharedUtils,auth) {
 
             $rootScope.extras = true;
             sharedUtils.showLoading();
-
+            debugger;
             //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.user_info = user;
 
-                    fireBaseData.refOrder()
-                            .orderByChild('user_id')
-                            .startAt($scope.user_info.uid).endAt($scope.user_info.uid)
-                            .once('value', function (snapshot) {
-                                $scope.orders = snapshot.val();
-                                $scope.$apply();
-                            });
-                    sharedUtils.hideLoading();
-                }
-            });
+            if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData();
+                sharedUtils.hideLoading();//Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
 
 
 
@@ -1132,58 +1142,116 @@ angular.module('app.controllers', [])
         })
 
         .controller('settingsCtrl', function ($scope, $rootScope, fireBaseData, $firebaseObject,
-                $ionicPopup, $state, $window, $firebaseArray,
-                sharedUtils) {
+                $ionicPopup, $state, $window, $firebaseArray, sharedUtils,auth,restApi) {
             //Bugs are most prevailing here
             $rootScope.extras = true;
+            $scope.usuario = {};
+            $scope.addresses = [];
+            
 
             //Shows loading bar
-            sharedUtils.showLoading();
+//            sharedUtils.showLoading();
 
-            //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
 
-                    //Accessing an array of objects using firebaseObject, does not give you the $id , so use firebase array to get $id
-                    $scope.addresses = $firebaseArray(fireBaseData.refUser().child(user.uid).child("address"));
 
-                    // firebaseObject is good for accessing single objects for eg:- telephone. Don't use it for array of objects
-                    $scope.user_extras = $firebaseObject(fireBaseData.refUser().child(user.uid));
 
-                    $scope.user_info = user; //Saves data to user_info
-                    //NOTE: $scope.user_info is not writable ie you can't use it inside ng-model of <input>
-
+            datosUsuario = function () {
+                debugger;
+                $scope.usuario.id = auth.getUserData().id;
+                $scope.usuario.nombre = auth.getUserData().nombre;
+                $scope.usuario.celular = auth.getUserData().Celular;
+                $scope.usuario.email = auth.getUserData().email;
                     //You have to create a local variable for storing emails
                     $scope.data_editable = {};
-                    $scope.data_editable.email = $scope.user_info.email;  // For editing store it in local variable
+                    $scope.data_editable.email = $scope.usuario.email;  // For editing store it in local variable
                     $scope.data_editable.password = "";
 
-                    $scope.$apply();
+            }
+            getDirecciones = function (id) {
 
-                    sharedUtils.hideLoading();
+                restApi.call({
+                    method: 'get',
+                    url: 'persona/listardir/' + id,
+                    response: function (r) {
+                        debugger;
+                        $scope.addresses = r;
+                    },
+                    error: function (r) {
 
-                }
+                    },
+                    validationError: function (r) {
 
-            });
+                    }
+                });
+
+
+            }
+            
+            
+             if (auth.hasToken()) {
+                $scope.user_info = auth.getUserData();
+                datosUsuario();
+                getDirecciones($scope.usuario.id);
+//                sharedUtils.hideLoading();//Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
+
+
+
+            //Check if user already logged in
+//            firebase.auth().onAuthStateChanged(function (user) {
+//                if (user) {
+//
+//                    //Accessing an array of objects using firebaseObject, does not give you the $id , so use firebase array to get $id
+//                    $scope.addresses = $firebaseArray(fireBaseData.refUser().child(user.uid).child("address"));
+//
+//                    // firebaseObject is good for accessing single objects for eg:- telephone. Don't use it for array of objects
+//                    $scope.user_extras = $firebaseObject(fireBaseData.refUser().child(user.uid));
+//
+//                    $scope.user_info = user; //Saves data to user_info
+//                    //NOTE: $scope.user_info is not writable ie you can't use it inside ng-model of <input>
+//
+//                    //You have to create a local variable for storing emails
+//                    $scope.data_editable = {};
+//                    $scope.data_editable.email = $scope.user_info.email;  // For editing store it in local variable
+//                    $scope.data_editable.password = "";
+//
+//                    $scope.$apply();
+//
+//                    sharedUtils.hideLoading();
+//
+//                }
+//
+//            });
 
             $scope.addManipulation = function (edit_val) {  // Takes care of address add and edit ie Address Manipulator
 
 
                 if (edit_val != null) {
                     $scope.data = edit_val; // For editing address
-                    var title = "Edit Address";
-                    var sub_title = "Edit your address";
+                    var title = "Editar Direccion";
+                    var sub_title = "Editar su Domicilio";
                 } else {
                     $scope.data = {};    // For adding new address
-                    var title = "Add Address";
-                    var sub_title = "Add your new address";
+                    var title = "Agregar Domicilio";
+                    var sub_title = "Agregar un nuevo Domicilio";
                 }
                 // An elaborate, custom popup
                 var addressPopup = $ionicPopup.show({
-                    template: '<input type="text"   placeholder="Nick Name"  ng-model="data.nickname"> <br/> ' +
-                            '<input type="text"   placeholder="Address" ng-model="data.address"> <br/> ' +
-                            '<input type="number" placeholder="Pincode" ng-model="data.pin"> <br/> ' +
-                            '<input type="number" placeholder="Phone" ng-model="data.phone">',
+                    template:'<input type="text"   placeholder="Nombre Lugar"  ng-model="data.dir_nombre"> <br/> ' +
+                             '<input type="text"   placeholder="Direccion" ng-model="data.dir_direccion"> <br/> ' +
+                             '<input type="number" placeholder="Cod. Area" ng-model="data.pin"> <br/> ' +
+                             '<input type="number" placeholder="Telefono Fijo" ng-model="data.dir_telefonoFijo">',
                     title: title,
                     subTitle: sub_title,
                     scope: $scope,
@@ -1193,7 +1261,7 @@ angular.module('app.controllers', [])
                             text: '<b>Save</b>',
                             type: 'button-positive',
                             onTap: function (e) {
-                                if (!$scope.data.nickname || !$scope.data.address || !$scope.data.pin || !$scope.data.phone) {
+                                if (!$scope.data.dir_nombre || !$scope.data.direccion || !$scope.data.pin || !$scope.data.telefonoFijo) {
                                     e.preventDefault(); //don't allow the user to close unless he enters full details
                                 } else {
                                     return $scope.data;
@@ -1204,25 +1272,22 @@ angular.module('app.controllers', [])
                 });
 
                 addressPopup.then(function (res) {
+                    
+                    debugger;
 
-                    if (edit_val != null) {
+                    if (edit_val != null)
+                    {
                         //Update  address
-                        if (res != null) { // res ==null  => close 
-                            fireBaseData.refUser().child($scope.user_info.uid).child("address").child(edit_val.$id).update({// set
-                                nickname: res.nickname,
-                                address: res.address,
-                                pin: res.pin,
-                                phone: res.phone
-                            });
+                        if (res != null) {
+                            // res ==null  => close 
+                            //editar una direccion del cliente
+                         
                         }
                     } else {
                         //Add new address
-                        fireBaseData.refUser().child($scope.user_info.uid).child("address").push({// set
-                            nickname: res.nickname,
-                            address: res.address,
-                            pin: res.pin,
-                            phone: res.phone
-                        });
+
+                        //agregar nueva direccion al cliente
+                        
                     }
 
                 });
@@ -1232,11 +1297,11 @@ angular.module('app.controllers', [])
             // A confirm dialog for deleting address
             $scope.deleteAddress = function (del_id) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Delete Address',
+                    title: 'Eliminar Domicilio',
                     template: 'Are you sure you want to delete this address',
                     buttons: [
                         {text: 'No', type: 'button-stable'},
-                        {text: 'Yes', type: 'button-assertive', onTap: function () {
+                        {text: 'Si', type: 'button-assertive', onTap: function () {
                                 return del_id;
                             }}
                     ]
@@ -1244,7 +1309,9 @@ angular.module('app.controllers', [])
 
                 confirmPopup.then(function (res) {
                     if (res) {
-                        fireBaseData.refUser().child($scope.user_info.uid).child("address").child(res).remove();
+                        debugger;
+                        //eliminar direccion de la base
+                       
                     }
                 });
             };

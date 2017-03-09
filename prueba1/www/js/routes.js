@@ -33,6 +33,7 @@ angular.module('app.routes', [])
                             }
                         }
                     })
+                    
                     .state('menu2', {
                         url: '/page7',
                         templateUrl: 'templates/menu2.html',

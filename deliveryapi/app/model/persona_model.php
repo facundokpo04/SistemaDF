@@ -40,8 +40,8 @@ class PersonaModel {
                         ->fetchAll();
     }
 
-    public function insert($data) {
-
+    public function insert($data) {     
+    
         $query = $this->db->insertInto($this->table, $data)
                 ->execute();
 

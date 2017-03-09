@@ -29,16 +29,16 @@ class PersonaValidation {
 //            }
 //        }
         
-        $key = 'per_documento';
-        if(!isset($data[$key])) {
-            $response->errors[$key][] = 'Este campo es obligatorio';
-        } else {
-            $value = $data[$key];
-            
-           if(strlen($value) < 2) {
-                $response->errors[$key][] = 'Debe contener como mínimo 2  caracteres';
-            }
-        }
+//        $key = 'per_documento';
+//        if(!isset($data[$key])) {
+//            $response->errors[$key][] = 'Este campo es obligatorio';
+//        } else {
+//            $value = $data[$key];
+//            
+//           if(strlen($value) < 2) {
+//                $response->errors[$key][] = 'Debe contener como mínimo 2  caracteres';
+//            }
+//        }
         
         $key = 'per_password';
         if(!isset($data[$key])) {
@@ -50,17 +50,17 @@ class PersonaValidation {
                 $response->errors[$key][] = 'Debe contener como mínimo 2 caracteres';
             }
         }
-        
-        $key = 'per_nacionalidad';
-        if(!isset($data[$key])) {
-            $response->errors[$key][] = 'Este campo es obligatorio';
-        } else {
-            $value = $data[$key];
-            
-           if(strlen($value) < 2) {
-                $response->errors[$key][] = 'Debe contener como mínimo 2 caracteres';
-            }
-        }
+//        
+//        $key = 'per_nacionalidad';
+//        if(!isset($data[$key])) {
+//            $response->errors[$key][] = 'Este campo es obligatorio';
+//        } else {
+//            $value = $data[$key];
+//            
+//           if(strlen($value) < 2) {
+//                $response->errors[$key][] = 'Debe contener como mínimo 2 caracteres';
+//            }
+//        }
 
 
         $response->setResponse(count($response->errors) === 0);

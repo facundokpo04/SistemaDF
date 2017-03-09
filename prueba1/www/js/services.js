@@ -156,8 +156,8 @@ angular.module('app.services', ['ngResource'])
 
 
 
-         .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
-          
+        .factory('sharedCartService', ['$ionicPopup', 'restApi', function ($ionicPopup, restApi) {
+
 
                 var cartObj = {};
                 cartObj.cart = []; //lista de productos  (producto, cantidad)         
@@ -167,9 +167,9 @@ angular.module('app.services', ['ngResource'])
                 cartObj.total_compqty = 0;// cantidad de componente
                 cartObj.idPE = -1;
                 cartObj.comentariosP = '';
-                
-                
-                
+
+
+
                 cartObj.generarPedido = function (data) {
 
                     var data2 = {};
@@ -196,9 +196,9 @@ angular.module('app.services', ['ngResource'])
 
 
                 }
-                
-               cartObj.generarDetalle = function () {
-                  
+
+                cartObj.generarDetalle = function () {
+
                     angular.forEach(cartObj.cart, function (value, key) {
                         var prodPedido = {};
                         prodPedido.precioBase = value.producto.prod_precioBase;
@@ -206,13 +206,13 @@ angular.module('app.services', ['ngResource'])
                         prodPedido.idVariedad = value.variedad.var_id;
                         prodPedido.precioCalc = value.price + value.compAmount;
                         prodPedido.componentes = value.componentes;
-                    restApi.call({
+                        restApi.call({
                             method: 'post',
                             url: 'productopedido/insertar',
                             data: prodPedido,
                             response: function (r) {
                                 debugger;
-                               cartObj.registrarDetalle(value,r.result);
+                                cartObj.registrarDetalle(value, r.result);
                             },
                             error: function (r) {
 
@@ -226,7 +226,7 @@ angular.module('app.services', ['ngResource'])
                     });
                 }
 
-                cartObj.registrarDetalle = function (value,idpp) {
+                cartObj.registrarDetalle = function (value, idpp) {
                     debugger;
 
                     var detallePedido = {};
@@ -256,7 +256,7 @@ angular.module('app.services', ['ngResource'])
                     });
                 }
 
-             
+
 
                 cartObj.cargarComentarios = function () {
 
@@ -424,7 +424,7 @@ angular.module('app.services', ['ngResource'])
                 return cartObj;
             }])
 
-         .factory('cate', function ($resource) {
+        .factory('cate', function ($resource) {
             // Might use a resource here that returns a JSON array
 
             // Some fake testing data
@@ -434,7 +434,7 @@ angular.module('app.services', ['ngResource'])
                                     {get: {method: "GET", isArray: true}});
 
                         })
-         .factory('varService', function ($resource) {
+        .factory('varService', function ($resource) {
                             // Might use a resource here that returns a JSON array
                             var resourceUrl = API.base_url + 'producto/listarVar/:id';
                             return  $resource(resourceUrl,
@@ -444,7 +444,7 @@ angular.module('app.services', ['ngResource'])
                                                     {get: {method: "GET", isArray: true}});
 
                                         })
-         .factory('componentes', function ($resource) {
+        .factory('componentes', function ($resource) {
                                             // Might use a resource here that returns a JSON array
 
                                             // Some fake testing data
@@ -454,7 +454,7 @@ angular.module('app.services', ['ngResource'])
                                                                     {get: {method: "GET", isArray: true}});
 
                                                         })
-         .factory('auth', ['$location', '$state', function ($location, $state) {
+        .factory('auth', ['$location', '$state', function ($location, $state) {
                                                                 var auth = {
                                                                     setToken: function (token) {
                                                                         localStorage[API.token_name] = token;
@@ -463,8 +463,8 @@ angular.module('app.services', ['ngResource'])
                                                                         return localStorage[API.token_name];
                                                                     },
                                                                     getUserData: function () {
-                                                                        try 
-                                                                       {
+                                                                        try
+                                                                        {
                                                                             var token = localStorage[API.token_name];
                                                                             if (token === '')
                                                                                 return;
@@ -479,7 +479,7 @@ angular.module('app.services', ['ngResource'])
                                                                     },
                                                                     logout: function () {
                                                                         localStorage[API.token_name] = '';
-                                                                        $state.go('login');
+//                                                                        $state.go('login');
                                                                     },
                                                                     hasToken: function () {
                                                                         return (localStorage[API.token_name] !== '');
@@ -495,7 +495,7 @@ angular.module('app.services', ['ngResource'])
 
 
                                                             }])
-         .factory("Request", function () {
+                                                        .factory("Request", function () {
                                                             var request = function request(config)
                                                             {
                                                                 config.headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -508,10 +508,10 @@ angular.module('app.services', ['ngResource'])
                                                                 request: request
                                                             }
                                                         })
-         .factory('BlankFactory', [function () {
+                                                        .factory('BlankFactory', [function () {
 
                                                             }])
-         .service('restApi', ['$http', 'auth', function ($http, auth) {
+                                                        .service('restApi', ['$http', 'auth', function ($http, auth) {
 
 
                                                                 this.call = function (config) {
@@ -532,8 +532,8 @@ angular.module('app.services', ['ngResource'])
 
                                                                         config.response(response.data);
 
-                                                                    }, function errorCallback(response) {                                                                   
-                                                                       switch (response.status) {
+                                                                    }, function errorCallback(response) {
+                                                                        switch (response.status) {
                                                                             case 401: // No autorizado
                                                                                 auth.logout();
                                                                                 break;
@@ -548,9 +548,9 @@ angular.module('app.services', ['ngResource'])
                                                                     });
                                                                 };
                                                             }])
-         .service('BlankService', [function () {
+                                                        .service('BlankService', [function () {
 
                                                             }]);
 
 
-                
+
