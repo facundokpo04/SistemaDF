@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `componente` (
   PRIMARY KEY (`com_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.componente: ~16 rows (approximately)
+-- Dumping data for table deliverydb.componente: ~18 rows (approximately)
 DELETE FROM `componente`;
 /*!40000 ALTER TABLE `componente` DISABLE KEYS */;
 INSERT INTO `componente` (`com_id`, `com_precio`, `com_idEstado`, `com_nombre`, `com_descripcion`, `com_imagen`) VALUES
@@ -172,6 +172,26 @@ INSERT INTO `diahorario` (`dh_id`, `dh_diaSemana`, `dh_horaApertura`, `dh_horaCi
 	(12, '2', '20:25', '20:25', 6);
 /*!40000 ALTER TABLE `diahorario` ENABLE KEYS */;
 
+-- Dumping structure for table deliverydb.direccion
+CREATE TABLE IF NOT EXISTS `direccion` (
+  `dir_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dir_nombre` varchar(50) DEFAULT NULL,
+  `dir_telefonoFijo` varchar(50) DEFAULT NULL,
+  `dir_latitud` varchar(50) DEFAULT NULL,
+  `dir_longitud` varchar(50) DEFAULT NULL,
+  `dir_idPersona` int(11) DEFAULT NULL,
+  PRIMARY KEY (`dir_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table deliverydb.direccion: ~3 rows (approximately)
+DELETE FROM `direccion`;
+/*!40000 ALTER TABLE `direccion` DISABLE KEYS */;
+INSERT INTO `direccion` (`dir_id`, `dir_nombre`, `dir_telefonoFijo`, `dir_latitud`, `dir_longitud`, `dir_idPersona`) VALUES
+	(1, 'casa', '420769', '1231', '456456', 1),
+	(2, 'depto', '420769', '13254', '45645', 1),
+	(3, 'depto', '420769', '13254', '45645', 1);
+/*!40000 ALTER TABLE `direccion` ENABLE KEYS */;
+
 -- Dumping structure for table deliverydb.empleado
 CREATE TABLE IF NOT EXISTS `empleado` (
   `emp_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -238,20 +258,21 @@ CREATE TABLE IF NOT EXISTS `pedidoencabezado` (
   `pe_idCliente` varchar(45) DEFAULT NULL,
   `pe_idEmpleado` varchar(45) DEFAULT NULL,
   `pe_aclaraciones` text,
-  `pe_comentarios` varchar(45) DEFAULT NULL,
+  `pe_comentarios` text,
   `pe_idEstado` int(11) DEFAULT NULL,
   `pe_Total` float DEFAULT NULL,
   `pe_idPersona` int(11) NOT NULL,
   `pe_cli_tel` varchar(45) NOT NULL,
-  PRIMARY KEY (`pe_id`),
-  UNIQUE KEY `total_UNIQUE` (`pe_Total`),
-  KEY `fk_PedidoEncabezado_Cliente1_idx` (`pe_idPersona`,`pe_cli_tel`),
-  CONSTRAINT `fk_PedidoEncabezado_Cliente1` FOREIGN KEY (`pe_idPersona`, `pe_cli_tel`) REFERENCES `cliente` (`cli_idPersona`, `cli_tel`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`pe_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.pedidoencabezado: ~0 rows (approximately)
+-- Dumping data for table deliverydb.pedidoencabezado: ~3 rows (approximately)
 DELETE FROM `pedidoencabezado`;
 /*!40000 ALTER TABLE `pedidoencabezado` DISABLE KEYS */;
+INSERT INTO `pedidoencabezado` (`pe_id`, `pe_idCliente`, `pe_idEmpleado`, `pe_aclaraciones`, `pe_comentarios`, `pe_idEstado`, `pe_Total`, `pe_idPersona`, `pe_cli_tel`) VALUES
+	(4, '1', NULL, NULL, 'hola', 1, NULL, 1, '37-57420769'),
+	(5, '1', NULL, NULL, 'hola9\\n', 1, NULL, 1, '37-57420769'),
+	(6, '1', NULL, NULL, 'hola9\\n', 1, NULL, 1, '37-57420769---');
 /*!40000 ALTER TABLE `pedidoencabezado` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.persona
@@ -262,19 +283,20 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `per_documento` varchar(45) DEFAULT NULL,
   `per_password` varchar(45) DEFAULT NULL,
   `per_nacionalidad` varchar(45) DEFAULT NULL,
+  `per_celular` varchar(45) DEFAULT NULL,
   `per_perfilUsuario` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`per_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.persona: ~4 rows (approximately)
+-- Dumping data for table deliverydb.persona: ~5 rows (approximately)
 DELETE FROM `persona`;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `per_password`, `per_nacionalidad`, `per_perfilUsuario`) VALUES
-	(1, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', 'd9b1d7db4cd6e70935368a1efb10e377', 'Argentino', NULL),
-	(2, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
-	(3, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
-	(4, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL),
-	(5, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL);
+INSERT INTO `persona` (`per_id`, `per_nombre`, `per_email`, `per_documento`, `per_password`, `per_nacionalidad`, `per_celular`, `per_perfilUsuario`) VALUES
+	(1, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', 'd9b1d7db4cd6e70935368a1efb10e377', 'Argentino', NULL, NULL),
+	(2, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL, NULL),
+	(3, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL, NULL),
+	(4, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL, NULL),
+	(5, 'danilo bustos', 'facundokpo04@gmail.com', '34060319', '123', 'Argentino', NULL, NULL);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 
 -- Dumping structure for table deliverydb.producto
@@ -298,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   CONSTRAINT `fk_Producto_Categoria0` FOREIGN KEY (`prod_idCategoria`) REFERENCES `categoria` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Dumping data for table deliverydb.producto: ~9 rows (approximately)
+-- Dumping data for table deliverydb.producto: ~10 rows (approximately)
 DELETE FROM `producto`;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`prod_id`, `prod_idCategoria`, `prod_nombre`, `prod_codigoProducto`, `prod_descripcionProducto`, `prod_precioBase`, `prod_maxComponente`, `prod_minComponente`, `prod_idEstado`, `prod_idEstadoVisible`, `prod_idSucursal`, `prod_imagen`) VALUES
