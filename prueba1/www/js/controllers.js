@@ -1107,11 +1107,11 @@ angular.module('app.controllers', [])
 
         })
 
-        .controller('lastOrdersCtrl', function ($scope, $rootScope, fireBaseData, sharedUtils,auth) {
+        .controller('lastOrdersCtrl', function ($scope, $rootScope, fireBaseData, sharedUtils, auth) {
 
             $rootScope.extras = true;
             sharedUtils.showLoading();
-            debugger;
+
             //Check if user already logged in
 
             if (auth.hasToken()) {
@@ -1142,12 +1142,12 @@ angular.module('app.controllers', [])
         })
 
         .controller('settingsCtrl', function ($scope, $rootScope, fireBaseData, $firebaseObject,
-                $ionicPopup, $state, $window, $firebaseArray, sharedUtils,auth,restApi) {
+                $ionicPopup, $state, $window, $firebaseArray, sharedUtils, auth, restApi) {
             //Bugs are most prevailing here
             $rootScope.extras = true;
             $scope.usuario = {};
             $scope.addresses = [];
-            
+
 
             //Shows loading bar
 //            sharedUtils.showLoading();
@@ -1156,15 +1156,15 @@ angular.module('app.controllers', [])
 
 
             datosUsuario = function () {
-                debugger;
+
                 $scope.usuario.id = auth.getUserData().id;
                 $scope.usuario.nombre = auth.getUserData().nombre;
                 $scope.usuario.celular = auth.getUserData().Celular;
                 $scope.usuario.email = auth.getUserData().email;
-                    //You have to create a local variable for storing emails
-                    $scope.data_editable = {};
-                    $scope.data_editable.email = $scope.usuario.email;  // For editing store it in local variable
-                    $scope.data_editable.password = "";
+                //You have to create a local variable for storing emails
+                $scope.data_editable = {};
+                $scope.data_editable.email = $scope.usuario.email;  // For editing store it in local variable
+                $scope.data_editable.password = "";
 
             }
             getDirecciones = function (id) {
@@ -1173,7 +1173,7 @@ angular.module('app.controllers', [])
                     method: 'get',
                     url: 'persona/listardir/' + id,
                     response: function (r) {
-                        debugger;
+
                         $scope.addresses = r;
                     },
                     error: function (r) {
@@ -1186,9 +1186,11 @@ angular.module('app.controllers', [])
 
 
             }
+
+
+            if (auth.hasToken())
             
-            
-             if (auth.hasToken()) {
+            {
                 $scope.user_info = auth.getUserData();
                 datosUsuario();
                 getDirecciones($scope.usuario.id);
@@ -1206,39 +1208,13 @@ angular.module('app.controllers', [])
 
             }
 
-
-
-            //Check if user already logged in
-//            firebase.auth().onAuthStateChanged(function (user) {
-//                if (user) {
-//
-//                    //Accessing an array of objects using firebaseObject, does not give you the $id , so use firebase array to get $id
-//                    $scope.addresses = $firebaseArray(fireBaseData.refUser().child(user.uid).child("address"));
-//
-//                    // firebaseObject is good for accessing single objects for eg:- telephone. Don't use it for array of objects
-//                    $scope.user_extras = $firebaseObject(fireBaseData.refUser().child(user.uid));
-//
-//                    $scope.user_info = user; //Saves data to user_info
-//                    //NOTE: $scope.user_info is not writable ie you can't use it inside ng-model of <input>
-//
-//                    //You have to create a local variable for storing emails
-//                    $scope.data_editable = {};
-//                    $scope.data_editable.email = $scope.user_info.email;  // For editing store it in local variable
-//                    $scope.data_editable.password = "";
-//
-//                    $scope.$apply();
-//
-//                    sharedUtils.hideLoading();
-//
-//                }
-//
-//            });
-
             $scope.addManipulation = function (edit_val) {  // Takes care of address add and edit ie Address Manipulator
 
 
                 if (edit_val != null) {
-                    $scope.data = edit_val; // For editing address
+                  
+                    $scope.data = edit_val; // For editing address 
+                    // poner al telefono como un numero.
                     var title = "Editar Direccion";
                     var sub_title = "Editar su Domicilio";
                 } else {
@@ -1248,10 +1224,10 @@ angular.module('app.controllers', [])
                 }
                 // An elaborate, custom popup
                 var addressPopup = $ionicPopup.show({
-                    template:'<input type="text"   placeholder="Nombre Lugar"  ng-model="data.dir_nombre"> <br/> ' +
-                             '<input type="text"   placeholder="Direccion" ng-model="data.dir_direccion"> <br/> ' +
-                             '<input type="number" placeholder="Cod. Area" ng-model="data.pin"> <br/> ' +
-                             '<input type="number" placeholder="Telefono Fijo" ng-model="data.dir_telefonoFijo">',
+                    template: '<input type="text"   placeholder="Nombre Lugar"  ng-model="data.dir_nombre"> <br/> ' +
+                            '<input type="text"   placeholder="Direccion" ng-model="data.dir_direccion"> <br/> ' +
+//                             '<input type="number" placeholder="Cod. Area" ng-model="data.pin"> <br/> ' +
+                            '<input type="number" placeholder="Telefono Fijo" ng-model="data.dir_telefonoFijo">',
                     title: title,
                     subTitle: sub_title,
                     scope: $scope,
@@ -1261,7 +1237,8 @@ angular.module('app.controllers', [])
                             text: '<b>Save</b>',
                             type: 'button-positive',
                             onTap: function (e) {
-                                if (!$scope.data.dir_nombre || !$scope.data.direccion || !$scope.data.pin || !$scope.data.telefonoFijo) {
+
+                                if (!$scope.data.dir_nombre || !$scope.data.dir_direccion || !$scope.data.dir_telefonoFijo) {
                                     e.preventDefault(); //don't allow the user to close unless he enters full details
                                 } else {
                                     return $scope.data;
@@ -1272,22 +1249,83 @@ angular.module('app.controllers', [])
                 });
 
                 addressPopup.then(function (res) {
-                    
-                    debugger;
+
+
+                    var direccion = {};
 
                     if (edit_val != null)
+                    
                     {
                         //Update  address
-                        if (res != null) {
+                        if (res != null) 
+                        {
+
+                            direccion.dir_nombre = res.dir_nombre;
+                            direccion.dir_telefonoFijo = res.dir_direccion;
+                            direccion.dir_direccion = res.dir_telefonoFijo;
+                            restApi.call(
+                                    {
+                                method: 'put',
+                                url: 'direccion/actualizar',
+                                data: direccion,
+                                response: function (r) {
+                                      if (r.response) {
+                                        $window.location.reload(true);
+                                    }
+
+
+                                },
+                                error: function (r) {
+
+                                },
+                                validationError: function (r) {
+
+                                }
+                            });
+
                             // res ==null  => close 
                             //editar una direccion del cliente
-                         
+
                         }
-                    } else {
+                    } 
+                    else {
+
+                        if (res != null) {
+
+                            direccion.dir_nombre = res.dir_nombre;
+                            direccion.dir_telefonoFijo = res.dir_direccion;
+                            direccion.dir_direccion = res.dir_telefonoFijo;
+                            direccion.dir_idPersona = $scope.usuario.id;
+
+                            restApi.call({
+                                method: 'post',
+                                url: 'direccion/insertar',
+                                data: direccion,
+                                response: function (r) {
+                                  
+                                    if (r.response) {
+                                        $window.location.reload(true);
+                                    }
+
+
+                                },
+                                error: function (r) {
+
+                                },
+                                validationError: function (r) {
+
+                                }
+                            });
+
+
+                            // res ==null  => close 
+                            //editar una direccion del cliente
+
+                        }
                         //Add new address
 
                         //agregar nueva direccion al cliente
-                        
+
                     }
 
                 });
@@ -1310,8 +1348,30 @@ angular.module('app.controllers', [])
                 confirmPopup.then(function (res) {
                     if (res) {
                         debugger;
+                         restApi.call({
+                                method: 'delete',
+                                url: 'direccion/eliminar/' + res,
+                               
+                                response: function (r) {
+                                  
+                                    if (r.response) {
+                                        debugger;
+                                        $window.location.reload(true);
+                                    }
+
+
+                                },
+                                error: function (r) {
+
+                                },
+                                validationError: function (r) {
+
+                                }
+                            });
+
+
                         //eliminar direccion de la base
-                       
+
                     }
                 });
             };
@@ -1456,7 +1516,6 @@ angular.module('app.controllers', [])
                 var addressPopup = $ionicPopup.show({
                     template: '<input type="text"   placeholder="Nombre Domicilio"  ng-model="data.nickname"> <br/> ' +
                             '<input type="text"   placeholder="Direccion" ng-model="data.address"> <br/> ' +
-                            '<input type="number" placeholder="Caracteristica" ng-model="data.pin"> <br/> ' +
                             '<input type="number" placeholder="Telefono Fijo" ng-model="data.phone">',
                     title: title,
                     subTitle: sub_title,
@@ -1467,7 +1526,7 @@ angular.module('app.controllers', [])
                             text: '<b>Save</b>',
                             type: 'button-positive',
                             onTap: function (e) {
-                                if (!$scope.data.nickname || !$scope.data.address || !$scope.data.pin || !$scope.data.phone) {
+                                if (!$scope.data.nickname || !$scope.data.address || !$scope.data.phone) {
                                     e.preventDefault(); //don't allow the user to close unless he enters full details
                                 } else {
                                     return $scope.data;
@@ -1506,14 +1565,6 @@ angular.module('app.controllers', [])
 
         .controller('checkoutCtrl2', function ($scope, $rootScope, sharedUtils, $state, $firebaseArray,
                 $ionicHistory, fireBaseData, $ionicPopup, sharedCartService) {
-
-
-
-
-
-
-
-
 
         })
 
