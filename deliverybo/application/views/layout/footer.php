@@ -90,6 +90,9 @@
 <?php if($this->uri->segment(1)=='promo'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/promo.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(1)=='pedido'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/pedidos.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 

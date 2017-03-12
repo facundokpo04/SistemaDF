@@ -22,10 +22,19 @@ class PedidoEncabezadoModel
 //    }
     public function getAll()
     {
-        $data = $this->db->from($this->table)
-                         
-                         ->orderBy('pe_id DESC')
-                         ->fetchAll();
+//        $data = $this->db->from($this->table)
+//                         
+//                         ->orderBy('pe_id DESC')
+//                         ->fetchAll();
+        
+         
+        $data = $this->db->from("pedidoencabezado pe")
+                        ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion")
+                        ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
+                         ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion') 
+                         ->orderBy('pe.pe_id ASC')
+                        ->fetchAll();
+        
         
         $total = $this->db->from($this->table)
                           ->select('COUNT(*) Total')
