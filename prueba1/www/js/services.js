@@ -173,10 +173,12 @@ angular.module('app.services', ['ngResource'])
                 cartObj.generarPedido = function (data) {
 
                     var data2 = {};
-                    data2.pe_idCliente = 1;
+                    data2.pe_idCliente = data.idCliente;
+                    data2.pe_idDireccion = data.idDireccion;
+                    data2.pe_medioPago = data.medioPago;
                     data2.pe_comentarios = cartObj.comentariosP;
-                    data2.pe_idPersona = 1;
-                    data2.pe_cli_tel = "3757420769";
+                    data2.pe_idPersona = data.idCliente;
+                    data2.pe_cli_tel = data.tel;
                     data2.pe_idEstado = 1;
 
                     restApi.call({
@@ -255,6 +257,17 @@ angular.module('app.services', ['ngResource'])
                         }
                     });
                 }
+
+                cartObj.vaciarCarro = function () {
+                    cartObj.cart = []; //lista de productos  (producto, cantidad)         
+                    cartObj.total_amount = 0; // total de productos
+                    cartObj.total_compAmount = 0;// total de componentes
+                    cartObj.total_qty = 0; // cant producto
+                    cartObj.total_compqty = 0;// cantidad de componente
+                    cartObj.idPE = -1;
+                    cartObj.comentariosP = '';
+
+                };
 
 
 
@@ -434,7 +447,7 @@ angular.module('app.services', ['ngResource'])
                                     {get: {method: "GET", isArray: true}});
 
                         })
-        .factory('varService', function ($resource) {
+                        .factory('varService', function ($resource) {
                             // Might use a resource here that returns a JSON array
                             var resourceUrl = API.base_url + 'producto/listarVar/:id';
                             return  $resource(resourceUrl,
@@ -444,7 +457,7 @@ angular.module('app.services', ['ngResource'])
                                                     {get: {method: "GET", isArray: true}});
 
                                         })
-        .factory('componentes', function ($resource) {
+                                        .factory('componentes', function ($resource) {
                                             // Might use a resource here that returns a JSON array
 
                                             // Some fake testing data
@@ -454,7 +467,7 @@ angular.module('app.services', ['ngResource'])
                                                                     {get: {method: "GET", isArray: true}});
 
                                                         })
-        .factory('auth', ['$location', '$state', function ($location, $state) {
+                                                        .factory('auth', ['$location', '$state', function ($location, $state) {
                                                                 var auth = {
                                                                     setToken: function (token) {
                                                                         localStorage[API.token_name] = token;

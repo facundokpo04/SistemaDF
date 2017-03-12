@@ -43,7 +43,7 @@ angular.module('app.controllers', [])
 //                }
 //            });
             $scope.login = function (formName, cred) {
-                debugger;
+
                 auth.getToken();
 
                 if (formName.$valid)
@@ -61,7 +61,7 @@ angular.module('app.controllers', [])
                         response: function (r) {
 
                             if (r.response) {
-                                debugger;
+
                                 auth.setToken(r.result);
                                 $ionicHistory.nextViewOptions({
                                     historyRoot: true
@@ -159,7 +159,7 @@ angular.module('app.controllers', [])
             $scope.registrar = function (formName, cred) {
                 if (formName.$valid)
                 {
-                    debugger;
+
                     data2 = {}
                     data2.per_nombre = cred.name;
                     data2.per_email = cred.email;
@@ -172,7 +172,7 @@ angular.module('app.controllers', [])
                         url: 'persona/insertar',
                         data: data2,
                         response: function (r) {
-                            debugger;
+
 
                             if (r.response) {
                                 //Registered OK
@@ -253,7 +253,8 @@ angular.module('app.controllers', [])
                 $ionicHistory, $firebaseArray, sharedCartService, sharedUtils, restApi, auth) {
 //
 
-            if (auth.hasToken()) {
+            if (auth.hasToken())
+            {
                 $scope.user_info = auth.getUserData(); //Saves data to user_info
 
             } else {
@@ -441,7 +442,7 @@ angular.module('app.controllers', [])
         .controller('categoriasCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, restApi, $state,
                 $ionicHistory, sharedCartService, sharedUtils, auth) {
 
-            debugger;
+
 
 
             if (auth.hasToken()) {
@@ -673,7 +674,8 @@ angular.module('app.controllers', [])
 // $scope.titulo = $stateParams.nombre;
 
 //valida si esta logeado
-            if (auth.hasToken()) {
+            if (auth.hasToken())
+            {
                 $scope.user_info = auth.getUserData(); //Saves data to user_info
 
             } else {
@@ -897,19 +899,17 @@ angular.module('app.controllers', [])
 //                    $ionicHistory.clearHistory();
                     $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
                     $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
-
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     });
+                    
 
                     $state.go('categorias', {}, {location: "replace", reload: true});
 
                 });
 
 
-                $timeout(function () {
-                    cantPopup.close(); //close the popup after 3 seconds for some reason
-                }, 3000);
+            
 
 
 
@@ -984,18 +984,31 @@ angular.module('app.controllers', [])
 
         })
 
-        .controller('myCartCtrl', function ($scope, $rootScope, $state, sharedCartService, restApi) {
+        .controller('myCartCtrl', function ($scope, $rootScope, $state, sharedCartService, auth,restApi) {
 
 
+
+            if (auth.hasToken())
+            {
+                $scope.user_info = auth.getUserData(); 
+                $scope.vacio = !(sharedCartService.total_qty > 0);
+                //Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+            }
             $rootScope.extras = true;
             $scope.subtotal = 0;
             $scope.total = $scope.subtotal + 10;
             $scope.urlpro = '';
-            $scope.urlcom = '';
-            $scope.vacio = true;
-            comentarios = '';
-
-
+            $scope.urlcom = '';             
             loadUrlpro = function () {
 
                 restApi.call({
@@ -1014,24 +1027,6 @@ angular.module('app.controllers', [])
                 });
 //    $scope.categorias=cate.get();  
             }
-//            loadUrlcom = function () {
-//
-//                restApi.call({
-//                    method: 'get',
-//                    url: 'componente/url',
-//                    response: function (r) {
-//
-//                        $scope.urlcom = decodeURIComponent(r);
-//                    },
-//                    error: function (r) {
-//
-//                    },
-//                    validationError: function (r) {
-//
-//                    }
-//                });
-//                $scope.categorias = cate.get();
-//            }
             calcularSubtotal = function () {
 
                 var totalprod = sharedCartService.total_amount;
@@ -1041,13 +1036,11 @@ angular.module('app.controllers', [])
 
             };
             loadUrlpro();
-//            loadUrlcom();
             calcularSubtotal();
-
             $scope.cart = sharedCartService.cart;
             $scope.cartComp = sharedCartService.cartComponent;
             /// Loads users cart
-            $scope.vacio = !(sharedCartService.total_qty > 0);
+           
 
             $scope.removeFromCart = function (p_id) {
                 $scope.cart.drop(p_id);
@@ -1056,13 +1049,6 @@ angular.module('app.controllers', [])
 
 
             };
-//
-//            $scope.removeFromCartCom = function (c_id) {
-//                debugger;
-//                $scope.cartComp.dropCom(c_id);
-//                calcularSubtotal();
-//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-//            };
 
             $scope.inc = function (p_id) {
                 $scope.cart.increment(p_id);
@@ -1075,32 +1061,15 @@ angular.module('app.controllers', [])
                 calcularSubtotal();
                 $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
             };
-
-
-//            $scope.incComp = function (c_id) {
-//                $scope.cartComp.incrementComp(c_id);
-//                calcularSubtotal();
-//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-//            };
-//
-//            $scope.decComp = function (c_id) {//avisa
-//                $scope.cartComp.decrementComp(c_id);
-//                calcularSubtotal();
-//                $rootScope.totalCart = sharedCartService.total_qty + sharedCartService.total_compqty;
-//
-//
-//            };
-
-
             $scope.checkout = function () {
-                var data = {};
-                data.idCliente = 1;
-                sharedCartService.cargarComentarios();
-                sharedCartService.generarPedido(data);
-                sharedCartService.generarDetalle();
+//                var data = {};
+//                data.idCliente = 1;
+//                sharedCartService.cargarComentarios();
+//                sharedCartService.generarPedido(data);
+//                sharedCartService.generarDetalle();
 
 
-//                $state.go('checkout', {}, {location: "replace"});
+                $state.go('checkout', {}, {location: "replace"});
             };
 
 
@@ -1114,7 +1083,8 @@ angular.module('app.controllers', [])
 
             //Check if user already logged in
 
-            if (auth.hasToken()) {
+            if (auth.hasToken()) 
+            {
                 $scope.user_info = auth.getUserData();
                 sharedUtils.hideLoading();//Saves data to user_info
 
@@ -1189,7 +1159,7 @@ angular.module('app.controllers', [])
 
 
             if (auth.hasToken())
-            
+
             {
                 $scope.user_info = auth.getUserData();
                 datosUsuario();
@@ -1212,7 +1182,7 @@ angular.module('app.controllers', [])
 
 
                 if (edit_val != null) {
-                  
+
                     $scope.data = edit_val; // For editing address 
                     // poner al telefono como un numero.
                     var title = "Editar Direccion";
@@ -1254,10 +1224,10 @@ angular.module('app.controllers', [])
                     var direccion = {};
 
                     if (edit_val != null)
-                    
+
                     {
                         //Update  address
-                        if (res != null) 
+                        if (res != null)
                         {
 
                             direccion.dir_nombre = res.dir_nombre;
@@ -1265,30 +1235,29 @@ angular.module('app.controllers', [])
                             direccion.dir_direccion = res.dir_telefonoFijo;
                             restApi.call(
                                     {
-                                method: 'put',
-                                url: 'direccion/actualizar',
-                                data: direccion,
-                                response: function (r) {
-                                      if (r.response) {
-                                        $window.location.reload(true);
-                                    }
+                                        method: 'put',
+                                        url: 'direccion/actualizar',
+                                        data: direccion,
+                                        response: function (r) {
+                                            if (r.response) {
+                                                $window.location.reload(true);
+                                            }
 
 
-                                },
-                                error: function (r) {
+                                        },
+                                        error: function (r) {
 
-                                },
-                                validationError: function (r) {
+                                        },
+                                        validationError: function (r) {
 
-                                }
-                            });
+                                        }
+                                    });
 
                             // res ==null  => close 
                             //editar una direccion del cliente
 
                         }
-                    } 
-                    else {
+                    } else {
 
                         if (res != null) {
 
@@ -1302,7 +1271,7 @@ angular.module('app.controllers', [])
                                 url: 'direccion/insertar',
                                 data: direccion,
                                 response: function (r) {
-                                  
+
                                     if (r.response) {
                                         $window.location.reload(true);
                                     }
@@ -1347,27 +1316,27 @@ angular.module('app.controllers', [])
 
                 confirmPopup.then(function (res) {
                     if (res) {
-                        debugger;
-                         restApi.call({
-                                method: 'delete',
-                                url: 'direccion/eliminar/' + res,
-                               
-                                response: function (r) {
-                                  
-                                    if (r.response) {
-                                        debugger;
-                                        $window.location.reload(true);
-                                    }
 
+                        restApi.call({
+                            method: 'delete',
+                            url: 'direccion/eliminar/' + res,
 
-                                },
-                                error: function (r) {
+                            response: function (r) {
 
-                                },
-                                validationError: function (r) {
+                                if (r.response) {
 
+                                    $window.location.reload(true);
                                 }
-                            });
+
+
+                            },
+                            error: function (r) {
+
+                            },
+                            validationError: function (r) {
+
+                            }
+                        });
 
 
                         //eliminar direccion de la base
@@ -1380,28 +1349,20 @@ angular.module('app.controllers', [])
                 //1. Edit Telephone doesnt show popup 2. Using extras and editable  // Bugs
                 if (extras.telephone != "" && extras.telephone != null) {
                     //Update  Telephone
-                    fireBaseData.refUser().child($scope.user_info.uid).update({// set
-                        telephone: extras.telephone
-                    });
+
                 }
 
                 //Edit Password
                 if (editable.password != "" && editable.password != null) {
                     //Update Password in UserAuthentication Table
-                    firebase.auth().currentUser.updatePassword(editable.password).then(function (ok) {}, function (error) {});
-                    sharedUtils.showAlert("Account", "Password Updated");
+
                 }
 
                 //Edit Email
                 if (editable.email != "" && editable.email != null && editable.email != $scope.user_info.email) {
 
                     //Update Email/Username in UserAuthentication Table
-                    firebase.auth().currentUser.updateEmail(editable.email).then(function (ok) {
-                        $window.location.reload(true);
-                        //sharedUtils.showAlert("Account","Email Updated");
-                    }, function (error) {
-                        sharedUtils.showAlert("ERROR", error);
-                    });
+
                 }
 
             };
@@ -1425,98 +1386,164 @@ angular.module('app.controllers', [])
         })
 
         .controller('checkoutCtrl', function ($scope, $rootScope, sharedUtils, $state, $firebaseArray,
-                $ionicHistory, fireBaseData, $ionicPopup, sharedCartService) {
+                $ionicHistory, fireBaseData, $ionicPopup, auth, restApi, sharedCartService) {
 
             $rootScope.extras = true;
+            $scope.usuario = {};
+            $scope.addresses = [];
+
+            datosUsuario = function () {
+
+                $scope.usuario.id = auth.getUserData().id;
+                $scope.usuario.nombre = auth.getUserData().nombre;
+                $scope.usuario.celular = auth.getUserData().Celular;
+                $scope.usuario.email = auth.getUserData().email;
+
+
+
+            }
+            getDirecciones = function (id) {
+
+                restApi.call({
+                    method: 'get',
+                    url: 'persona/listardir/' + id,
+                    response: function (r) {
+
+                        $scope.addresses = r;
+                    },
+                    error: function (r) {
+
+                    },
+                    validationError: function (r) {
+
+                    }
+                });
+
+
+            }
+
+
+            if (auth.hasToken())
+
+            {
+                $scope.user_info = auth.getUserData();
+                datosUsuario();
+                getDirecciones($scope.usuario.id);
+//                sharedUtils.hideLoading();//Saves data to user_info
+
+            } else {
+                $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
+                $ionicSideMenuDelegate.canDragContent(false);  // To remove the sidemenu white space
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
+                $rootScope.extras = false;
+                sharedUtils.hideLoading();
+                $state.go('tabsController.login', {}, {location: "replace"});
+
+            }
 
             $scope.loggedin = function () {
-//		if(sessionStorage.getItem('loggedin_id')==null){return 1;}
-//		else{
-//			$scope.loggedin_name= sessionStorage.getItem('loggedin_name');
-//			$scope.loggedin_id= sessionStorage.getItem('loggedin_id');
-//			$scope.loggedin_phone= sessionStorage.getItem('loggedin_phone');
-//			$scope.loggedin_address= sessionStorage.getItem('loggedin_address');
-//			$scope.loggedin_pincode= sessionStorage.getItem('loggedin_pincode');
-//			return 0;
-//		}
+                return false;
             };
 
             //Check if user already logged in
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    $scope.addresses = $firebaseArray(fireBaseData.refUser().child(user.uid).child("address"));
-                    $scope.user_info = user;
-                }
-            });
+
 
             $scope.payments = [
                 {id: 'CREDIT', name: 'Tarjeta Debito'},
-                {id: 'NETBANK', name: 'Pagar Ahora'},
                 {id: 'COD', name: 'Efectivo '}
             ];
 
             $scope.pay = function (address, payment) {
 
-                if (address == null || payment == null) {
+                if (address == null || payment == null)
+                {
                     //Check if the checkboxes are selected ?
-                    sharedUtils.showAlert("Error", "Please choose from the Address and Payment Modes.")
-                } else {
-                    // Loop throw all the cart item
-                    for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-                        //Add cart item to order table
-                        fireBaseData.refOrder().push({
+                    sharedUtils.showAlert("Error", "Eliga una Direccion y un Modo de Pago.")
+                } else
+                {
 
-                            //Product data is hardcoded for simplicity
-                            product_name: sharedCartService.cart_items[i].item_name,
-                            product_price: sharedCartService.cart_items[i].item_price,
-                            product_image: sharedCartService.cart_items[i].item_image,
-                            product_id: sharedCartService.cart_items[i].$id,
 
-                            //item data
-                            item_qty: sharedCartService.cart_items[i].item_qty,
+                    var data = {};
+                    data.idCliente = $scope.usuario.id;
+                    data.tel = $scope.usuario.celular;
+                    data.idDireccion = address;
+                    data.medioPago = payment;
+                    sharedCartService.cargarComentarios();
+                    sharedCartService.generarPedido(data);
+                    sharedCartService.generarDetalle();
+                    sharedCartService.vaciarCarro();
+                    $rootScope.totalCart = 0;
 
-                            //Order data
-                            user_id: $scope.user_info.uid,
-                            user_name: $scope.user_info.displayName,
-                            address_id: address,
-                            payment_id: payment,
-                            status: "Queued"
-                        });
-
-                    }
-
-                    //Remove users cart
-                    fireBaseData.refCart().child($scope.user_info.uid).remove();
-
-                    sharedUtils.showAlert("Info", "Order Successfull");
-
-                    // Go to past order page
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true
-                    });
+                    //preguntar como ahcer las llamadas asincronicas
+//                  sharedUtils.showAlert("Info", "El Pedido se realizo con Exito");
                     $state.go('lastOrders', {}, {location: "replace", reload: true});
+
+
+                    //                    // Go to past order page
+//                    $ionicHistory.nextViewOptions({
+//                        historyRoot: true
+//                    });
+//                    
+                    //cargar item al carrito
+                    // Loop throw all the cart item
+//                    for (var i = 0; i < sharedCartService.cart_items.length; i++) {
+//                        //Add cart item to order table
+//                        fireBaseData.refOrder().push({
+//
+//                            //Product data is hardcoded for simplicity
+//                            product_name: sharedCartService.cart_items[i].item_name,
+//                            product_price: sharedCartService.cart_items[i].item_price,
+//                            product_image: sharedCartService.cart_items[i].item_image,
+//                            product_id: sharedCartService.cart_items[i].$id,
+//
+//                            //item data
+//                            item_qty: sharedCartService.cart_items[i].item_qty,
+//
+//                            //Order data
+//                            user_id: $scope.user_info.uid,
+//                            user_name: $scope.user_info.displayName,
+//                            address_id: address,
+//                            payment_id: payment,
+//                            status: "Queued"
+//                        });
+//
+//                    }
+//
+//                    //Remove users cart
+//                    fireBaseData.refCart().child($scope.user_info.uid).remove();
+//
+//                    sharedUtils.showAlert("Info", "Order Successfull");
+//
+//                    // Go to past order page
+//                    $ionicHistory.nextViewOptions({
+//                        historyRoot: true
+//                    });
+//                    $state.go('lastOrders', {}, {location: "replace", reload: true});
                 }
             }
-
-
 
             $scope.addManipulation = function (edit_val) {  // Takes care of address add and edit ie Address Manipulator
 
 
                 if (edit_val != null) {
-                    $scope.data = edit_val; // For editing address
-                    var title = "Modificar Domicilio";
-                    var sub_title = "Modifique su  Domicilio";
+
+                    $scope.data = edit_val; // For editing address 
+                    // poner al telefono como un numero.
+                    var title = "Editar Direccion";
+                    var sub_title = "Editar su Domicilio";
                 } else {
                     $scope.data = {};    // For adding new address
                     var title = "Agregar Domicilio";
-                    var sub_title = "Agregar un nuevo domicilio";
+                    var sub_title = "Agregar un nuevo Domicilio";
                 }
                 // An elaborate, custom popup
                 var addressPopup = $ionicPopup.show({
-                    template: '<input type="text"   placeholder="Nombre Domicilio"  ng-model="data.nickname"> <br/> ' +
-                            '<input type="text"   placeholder="Direccion" ng-model="data.address"> <br/> ' +
-                            '<input type="number" placeholder="Telefono Fijo" ng-model="data.phone">',
+                    template: '<input type="text"   placeholder="Nombre Lugar"  ng-model="data.dir_nombre"> <br/> ' +
+                            '<input type="text"   placeholder="Direccion" ng-model="data.dir_direccion"> <br/> ' +
+//                             '<input type="number" placeholder="Cod. Area" ng-model="data.pin"> <br/> ' +
+                            '<input type="number" placeholder="Telefono Fijo" ng-model="data.dir_telefonoFijo">',
                     title: title,
                     subTitle: sub_title,
                     scope: $scope,
@@ -1526,7 +1553,8 @@ angular.module('app.controllers', [])
                             text: '<b>Save</b>',
                             type: 'button-positive',
                             onTap: function (e) {
-                                if (!$scope.data.nickname || !$scope.data.address || !$scope.data.phone) {
+
+                                if (!$scope.data.dir_nombre || !$scope.data.dir_direccion || !$scope.data.dir_telefonoFijo) {
                                     e.preventDefault(); //don't allow the user to close unless he enters full details
                                 } else {
                                     return $scope.data;
@@ -1538,28 +1566,88 @@ angular.module('app.controllers', [])
 
                 addressPopup.then(function (res) {
 
-                    if (edit_val != null) {
+
+                    var direccion = {};
+
+                    if (edit_val != null)
+
+                    {
                         //Update  address
-                        fireBaseData.refUser().child($scope.user_info.uid).child("address").child(edit_val.$id).update({// set
-                            nickname: res.nickname,
-                            address: res.address,
-                            pin: res.pin,
-                            phone: res.phone
-                        });
+                        if (res != null)
+                        {
+
+                            direccion.dir_nombre = res.dir_nombre;
+                            direccion.dir_telefonoFijo = res.dir_direccion;
+                            direccion.dir_direccion = res.dir_telefonoFijo;
+                            restApi.call(
+                                    {
+                                        method: 'put',
+                                        url: 'direccion/actualizar',
+                                        data: direccion,
+                                        response: function (r) {
+                                            if (r.response) {
+                                                $window.location.reload(true);
+                                            }
+
+
+                                        },
+                                        error: function (r) {
+
+                                        },
+                                        validationError: function (r) {
+
+                                        }
+                                    });
+
+                            // res ==null  => close 
+                            //editar una direccion del cliente
+
+                        }
                     } else {
+
+                        if (res != null) {
+
+                            direccion.dir_nombre = res.dir_nombre;
+                            direccion.dir_telefonoFijo = res.dir_direccion;
+                            direccion.dir_direccion = res.dir_telefonoFijo;
+                            direccion.dir_idPersona = $scope.usuario.id;
+
+                            restApi.call({
+                                method: 'post',
+                                url: 'direccion/insertar',
+                                data: direccion,
+                                response: function (r) {
+
+                                    if (r.response) {
+                                        $window.location.reload(true);
+                                    }
+
+
+                                },
+                                error: function (r) {
+
+                                },
+                                validationError: function (r) {
+
+                                }
+                            });
+
+
+                            // res ==null  => close 
+                            //editar una direccion del cliente
+
+                        }
                         //Add new address
-                        fireBaseData.refUser().child($scope.user_info.uid).child("address").push({// set
-                            nickname: res.nickname,
-                            address: res.address,
-                            pin: res.pin,
-                            phone: res.phone
-                        });
+
+                        //agregar nueva direccion al cliente
+
                     }
 
                 });
 
             };
 
+//         
 
         })
 

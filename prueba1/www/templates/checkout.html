@@ -16,20 +16,18 @@
 
       <!--Address Header-->
       <label ng-click="addManipulation()" class="item item-input  item ic-selected" >
-        <a class="icon icon-right ion-ios-location" style="margin-right: 10px;" ></a>
-        Address
+        <a class="icon icon-right ion-ios-navigate-outline" style="margin-right: 10px;" ></a>
+        Direccion
         <i  class="icon icon-right ion-android-add-circle" style="font-size: larger ;margin-left: 10px;"></i>
       </label>
 
 
       <!-- Address -->
       <ion-list ng-repeat="item in addresses" >
-          <ion-radio name="addr_group" ng-value="item.$id" ng-model="$parent.address_choice">
+          <ion-radio name="addr_group" ng-value="item.dir_id" ng-model="$parent.address_choice">
             <a class="icon icon-right ion-ios-location"></a>
-            {{item.nickname}} <br/>
-            {{item.address}} <br/>
-            Pin : {{item.pin}}<br/>
-            Phone : {{item.phone}}
+            <span> {{item.dir_nombre }} : {{item.dir_direccion}} </span>         
+            <span>Tel: {{item.dir_telefonoFijo}}</span>
           </ion-radio>
       </ion-list>
 
@@ -39,13 +37,13 @@
       <!--Payment Header-->
       <label class="item item-input  item ic-selected" >
         <a class="icon icon-right ion-cash" style="margin-right: 10px;" ></a>
-        Mode of Pay
+        Modo de Pago
       </label>
 
 
       <!-- Payment Options -->
       <ion-list  ng-repeat="item in payments">
-          <ion-radio name="pay_group" ng-value="item.id" ng-model="$parent.pay_choice" > {{item.name}} </ion-radio>
+          <ion-radio name="pay_group" ng-value="item.name" ng-model="$parent.pay_choice" > {{item.name}} </ion-radio>
       </ion-list>
 
 
