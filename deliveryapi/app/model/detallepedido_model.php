@@ -37,6 +37,11 @@ class DetallePedidoModel
         ];
     }
     
+  public function getAllped($idPedido)
+    {
+       
+    }
+    
     public function insert($data)
     {
         
