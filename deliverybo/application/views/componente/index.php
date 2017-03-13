@@ -26,7 +26,7 @@
                 <h3 class="box-title">Componentes</h3>
             </div>
             <!-- /.box-header -->
-            <table class="table table-bordered" id="tablacomponentes">
+            <table class="table table-bordered table-striped" id="tblComponentes">
                 <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
@@ -34,6 +34,7 @@
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Precio</th>
+                        <th>Estado</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
