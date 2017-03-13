@@ -30,7 +30,7 @@ $('#tblPedidos').DataTable({
                         '  </button>' +
                         '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick="selPedido(\'' + row.pe_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i>Estado</a></li>' +
-                        '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +                     
+                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\')><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +                     
                         '    </ul>' +
                         '</div>' +
                         '</span>';
@@ -61,7 +61,7 @@ $('#tblPedidos').DataTable({
             "data": "pe_id",
             "orderData": [1, 0],
             "render": function (data, type, row) {
-                return '<a href="#">PED ' + data +'</a>'
+                return '<a href="pedido/verDetalle/'+ data +'">PED' + data +'</a>'
 
             }
         },
@@ -73,25 +73,34 @@ $('#tblPedidos').DataTable({
 
 selPedido = function (idPedido) {
 
+$('#cliente').empty();
+$('#cliente').append('<strong>Admin, Inc.</strong><br>'+
+                     '795 Folsom Ave, Suite 600<br>'+
+                     'San Francisco, CA 94107<br>'+
+                     'Telefono: (804) 123-5432<br>'+
+                     'Email: info@almasaeedstudio.com');
+                     
 
-    $.ajax({
-        type: "POST",
-        url: baseurl + "index.php/persona/get_personaById/" + idPersonas,
-        dataType: 'json',
-        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
-        success: function (res) {
 
-
-            $('#mNombre').val(res.per_nombre);
-            $('#mEmail').val(res.per_email);
-            $('#mDocumento').val(res.per_documento);//select
-            //ajax para traer todos los estados
-            $('#mNacionalidad').val(res.per_nacionalidad);
-            $('#mPassword').val(res.per_password);
-            $('#mPerfilUsuario').val(res.per_perfilUsuario);
-            $('#mIdPersona').val(res.per_id);
-//            $('#mImagen').val(res.cat_imagen);
-        }
-    });
+      
+//    $.ajax({
+//        type: "POST",
+//        url: baseurl + "index.php/persona/get_personaById/" + idPersonas,
+//        dataType: 'json',
+//        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+//        success: function (res) {
+//
+//
+//            $('#mNombre').val(res.per_nombre);
+//            $('#mEmail').val(res.per_email);
+//            $('#mDocumento').val(res.per_documento);//select
+//            //ajax para traer todos los estados
+//            $('#mNacionalidad').val(res.per_nacionalidad);
+//            $('#mPassword').val(res.per_password);
+//            $('#mPerfilUsuario').val(res.per_perfilUsuario);
+//            $('#mIdPersona').val(res.per_id);
+////            $('#mImagen').val(res.cat_imagen);
+//        }
+//    });
 
 };

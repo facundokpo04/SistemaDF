@@ -89,9 +89,24 @@ class Pedido extends CI_Controller {
     public function guardar() {
         
     }
+    
+    public function verDetalle($id) {
+          $this->load->view('layout/header');
+        $this->load->view('layout/menu');
+        //definimos variable para traer la data y mantner la logica de paginacion
+        //inicializacion de paginacion
 
+
+        $this->load->view('pedido/detalle.php',$id);
+
+        //footer
+        $this->load->view('layout/footer');
+        
+    }
     public function eliminar($id) {
         
+        
+      
     }
 
 }

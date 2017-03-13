@@ -93,6 +93,9 @@
 <?php if($this->uri->segment(1)=='pedido'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/pedidos.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(2)=='verDetalle'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/pedidodetalle.js') ?>"></script>
+<?php }?>
 </body>
 </html>
 

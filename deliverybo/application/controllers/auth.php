@@ -32,7 +32,7 @@ class Auth extends CI_Controller {
             $user = RestApi::getUserData();
             
             if($user->Perfil == 'Admin') {
-                redirect('categoria');
+                redirect('pedido');
             } else {
                 RestApi::destroyToken();
                 $error = 'Usted no tiene privlegios de administrador';
