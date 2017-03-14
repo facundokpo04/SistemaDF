@@ -38,6 +38,8 @@ class DetallePedidoModel {
 
     public function getAllped($idPedido) {
         
+        
+        $resultado = array();
 
         $data = $this->db->from("detallepedido dp")
                 ->select("dp_id,dp_Cantidad,dp_PrecioUnitario,dp_idPedidoEncabezado,p.prod_nombre,p.prod_codigoProducto,p.prod_precioBase,v.var_nombre,v.var_precio")
@@ -48,23 +50,30 @@ class DetallePedidoModel {
                 ->fetchAll();
         
         foreach($data as $d){
+            
            $componentes = $this->db->from("componenteppedido cp")
                 ->select("cpp_id,cpp_idProductoPedido,c.com_precio,c.com_nombre")
                 ->leftJoin('componente c ON cp.cpp_idComponente=c.com_id')              
                 ->where('cpp_idProductoPedido', $d->dp_idProductoPedido)
                 ->fetchAll();
+//           
+           $item = [
+               'producto' => $d,
+               'componentes'=>$componentes
+           ];
+           array_push($resultado,$item);
            
 //           
 //select cpp_id,cpp_idProductoPedido,c.com_precio,c.com_nombre from componenteppedido cp
 //left join componente c ON cp.cpp_idComponente=c.com_id
 //where cp.cpp_idProductoPedido = 6
         }        
-//        return $data;
+        return $resultado;
         
-         return [
-            'data' => $data,
-            'componentes' => $componentes
-        ];
+//         return [
+//            'data' => $data,
+//            'componentes' => $componentes
+//        ];
 
 
 //select dp_id,dp_Cantidad,dp_PrecioUnitario,dp_idPedidoEncabezado,p.prod_nombre,p.prod_codigoProducto,p.prod_precioBase,v.var_nombre,v.var_precio from
@@ -77,10 +86,6 @@ class DetallePedidoModel {
 
     public function insert($data) {
 
-
-
-
-//        var_dump($data);
         $query = $this->db->insertInto($this->table, $data)
                 ->execute();
 

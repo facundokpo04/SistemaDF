@@ -232,7 +232,7 @@ angular.module('app.services', ['ngResource'])
                     debugger;
 
                     var detallePedido = {};
-                    detallePedido.dp_cantidad = parseInt(value.qty);
+                    detallePedido.dp_Cantidad = parseInt(value.qty);
                     detallePedido.dp_PrecioUnitario = value.price + value.compAmount;
                     detallePedido.dp_idProductoPedido = idpp;
                     detallePedido.dp_idPedidoEncabezado = cartObj.idPE;
@@ -246,6 +246,7 @@ angular.module('app.services', ['ngResource'])
 
                         },
                         error: function (r) {
+                            debugger;
 
 
 

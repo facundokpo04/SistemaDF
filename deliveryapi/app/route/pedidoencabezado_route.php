@@ -22,6 +22,13 @@ $app->group('/pedidoencabezado/', function () {
         );
     });
 
+    
+    $this->get('obtenercli/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->pedidoencabezado->getCliente($args['id']))
+        );
+    });
     $this->post('insertar', function ($req, $res, $args) {
       
         $r = PedidoEncabezadoValidation::validate($req->getParsedBody());

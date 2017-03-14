@@ -70,6 +70,12 @@ $('#tblPedidos').DataTable({
     "order": [[0, "asc"]],
 });
 
+getCliente = function (idPedido){
+    
+    
+    
+}
+
 
 selPedido = function (idPedido) {
 
