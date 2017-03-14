@@ -14,6 +14,13 @@ $app->group('/detallepedido/', function () {
                                 json_encode($this->model->detallepedido->getAll())
         );
     });
+    
+     $this->get('listarPed/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->detallepedido->getAllped($args['id']))
+        );
+    });
 
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
