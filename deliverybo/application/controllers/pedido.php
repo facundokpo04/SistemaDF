@@ -14,6 +14,7 @@ class Pedido extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('PedidoModel', 'pm');
+           $this->load->model('PedidoDetalleModel', 'dm');
     }
 
     public function index($p = 0) {
@@ -53,6 +54,18 @@ class Pedido extends CI_Controller {
 
         try {
             $result = $this->pm->obtener($idPedido);
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+    public function get_detalleById($idPedido) {
+
+
+
+        try {
+            $result = $this->dm->obtenerPed($idPedido);
             $data = $result;
         } catch (Exception $e) {
             var_dump($e);

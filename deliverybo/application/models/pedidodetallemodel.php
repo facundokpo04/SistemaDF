@@ -4,29 +4,20 @@ class PedidoDetalleModel extends CI_Model {
 
     public function getAll($l = 5, $p = 0) {
         return RestApi::call(
-                        RestApiMethod::GET, "pedidoencabezado/listar"
+                        RestApiMethod::GET, "detallepedido/listar"
         );
     }
 
     public function obtener($id) {
         return RestApi::call(
-                        RestApiMethod::GET, "pedidoencabezado/obtener/$id"
+                        RestApiMethod::GET, "detallepedido/obtener/$id"
         );
     }
 
- 
-    public function actualizar($data, $id) {
+  public function obtenerPed($id) {
         return RestApi::call(
-                        RestApiMethod::PUT, "pedidoencabezado/actualizar/$id", $data
+                        RestApiMethod::GET, "detallepedido/listarPed/$id"
         );
     }
-
-    public function eliminar($id) {
-        return RestApi::call(
-                        RestApiMethod::DELETE, "pedidoencabezado/eliminar/$id"
-        );
-    }
-    
-    
 
 }

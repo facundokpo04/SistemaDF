@@ -5,7 +5,7 @@
 </ol>
 
 <br/>
-<div class="row">
+<div id="pedidos" class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
@@ -89,9 +89,10 @@
     <!-- /.row -->
 
     <!-- Table row -->
-    <div class="row">
+      <div id="pedidoD">
+    <div  id="pedidoD2" class="row">
       <div class="col-xs-12 table-responsive">
-        <table class="table table-striped">
+        <table id="tbProductos" class="table table-striped">
           <thead>
           <tr>
             <th>Cant</th>
@@ -102,13 +103,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>Call of Duty</td>
-            <td>455-981-221</td>
-            <td>El snort testosterone trophy driving gloves handsome</td>
-            <td>$64.50</td>
-          </tr>
+         
         
           </tbody>
         </table>
@@ -120,7 +115,7 @@
     <div class="row">
       <!-- accepted payments column -->
       <div class="col-xs-6">
-       
+       <p class="lead">Aclaracion Pedido</p>
       </div>
       <!-- /.col -->
       <div class="col-xs-6">
@@ -145,11 +140,25 @@
       </div>
       <!-- /.col -->
     </div>
+        </div>
     <!-- /.row -->
+    <div class="row no-print">
+        <div class="col-xs-12">
+          <a  href="javascript:imprSelec('pedidoD')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>  
+          <a  href="javascript:window.print()" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir2</a>
+          <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir3</a> 
+          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+            <i class="fa fa-download"></i> Generate PDF
+          </button>
+        </div>
+      </div>
   </section>
 </div>
 
-
+<script type="text/javascript">
+function imprSelec(muestra)
+{var ficha=document.getElementById(muestra);var ventimp=window.open(' ','popimpr');ventimp.document.write(ficha.innerHTML);ventimp.document.close();ventimp.print();ventimp.close();}
+</script>
 <script type="text/javascript">
     var baseurl = "<?php echo base_url(); ?>";
 </script>

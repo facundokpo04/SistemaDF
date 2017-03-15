@@ -71,7 +71,7 @@ class PedidoEncabezadoModel {
     public function getCliente($id) {
         
         return $this->db->from('persona p')
-                        ->select('p.per_id,p.per_nombre,p.per_email,p.per_documento,p.per_celular,p.per_nacionalidad,d.dir_direccion')
+                        ->select('p.per_id,p.per_nombre,p.per_email,p.per_documento,p.per_celular,p.per_nacionalidad,d.dir_direccion,d.dir_telefonoFijo')
                         ->leftJoin('pedidoencabezado pe ON p.per_id = pe.pe_idPersona')
                         ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
                         ->where('pe_id', $id)
