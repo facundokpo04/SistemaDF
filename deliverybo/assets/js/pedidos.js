@@ -70,43 +70,57 @@ $('#tblPedidos').DataTable({
     "order": [[0, "asc"]],
 });
 
-getCliente = function (idPedido){
-    
-    
+getCliente = function (idpedido){
+    $('#cliente').empty();
+     $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/getCliente/" + idpedido,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            
+            $('#cliente').append('<strong>'+res.per_nombre+'</strong><br>'+
+                            res.dir_direccion+
+                          '<br>Telefono: '+
+                          res.per_celular+
+                          '<br>'+
+                          'Email: '+
+                          res.per_email );
+
+        }
+    });
     
 }
+getPedido = function (idpedido){
+    
+//        <b>Pedido #007612</b><br>
+//        <br>
+//        <b>Pedido ID:</b> 4F3S8J<br>
+//        <b>Fecha Pedido:</b> 2/22/2014<br>
+//        <b>Estado:</b> Pendiente<br>
+//        <b>Metodo Pago:</b> Efectivo
+  $('#pedidoE').empty();
+     $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/getPedido/" + idpedido,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+                 $('#pedidoE').append(' <b>Pedido #PED'+res.pe_id+'</b><br>'+
+                     '<b>Pedido ID:</b>'+ res.pe_id+'<br>'+
+                     '<b>Fecha Pedido:</b> 2/22/2014<br>'+
+                      '<b>Estado:</b>'+res.descripcion+'<br>'+
+                       '<b>Metodo Pago:</b>'+ res.pe_medioPago );
+     
+        }
+    });
+    
+}
+cargarDetalle = function (){}
 
+selPedido = function (idpedido) {
 
-selPedido = function (idPedido) {
-
-$('#cliente').empty();
-$('#cliente').append('<strong>Admin, Inc.</strong><br>'+
-                     '795 Folsom Ave, Suite 600<br>'+
-                     'San Francisco, CA 94107<br>'+
-                     'Telefono: (804) 123-5432<br>'+
-                     'Email: info@almasaeedstudio.com');
-                     
-
-
-      
-//    $.ajax({
-//        type: "POST",
-//        url: baseurl + "index.php/persona/get_personaById/" + idPersonas,
-//        dataType: 'json',
-//        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
-//        success: function (res) {
-//
-//
-//            $('#mNombre').val(res.per_nombre);
-//            $('#mEmail').val(res.per_email);
-//            $('#mDocumento').val(res.per_documento);//select
-//            //ajax para traer todos los estados
-//            $('#mNacionalidad').val(res.per_nacionalidad);
-//            $('#mPassword').val(res.per_password);
-//            $('#mPerfilUsuario').val(res.per_perfilUsuario);
-//            $('#mIdPersona').val(res.per_id);
-////            $('#mImagen').val(res.cat_imagen);
-//        }
-//    });
+getCliente(idpedido);
+getPedido(idpedido);
 
 };

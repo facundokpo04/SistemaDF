@@ -90,6 +90,26 @@ class Pedido extends CI_Controller {
         
     }
     
+    public function getCliente($idPedido){               
+        try {
+            $result = $this->pm->obtenerCliente($idPedido);
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+    
+     public function getPedido($idPedido){               
+        try {
+            $result = $this->pm->obtener($idPedido);
+            $data = $result;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+    
     public function verDetalle($id) {
           $this->load->view('layout/header');
         $this->load->view('layout/menu');

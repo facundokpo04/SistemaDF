@@ -80,13 +80,8 @@
       <!-- /.col -->
     
       <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        <b>Pedido #007612</b><br>
-        <br>
-        <b>Pedido ID:</b> 4F3S8J<br>
-        <b>Fecha Pedido:</b> 2/22/2014<br>
-        <b>Estado:</b> Pendiente<br>
-        <b>Metodo Pago:</b> Efectivo
+      <div id="pedidoE" class="col-sm-4 invoice-col">
+        
         
       </div>
       <!-- /.col -->

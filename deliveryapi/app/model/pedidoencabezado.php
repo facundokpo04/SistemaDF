@@ -28,9 +28,12 @@ class PedidoEncabezadoModel {
 
 
         $data = $this->db->from("pedidoencabezado pe")
-                ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion")
+                ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion,tr.relacion,tr.descripcion")
                 ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
                 ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
+                ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
+                ->where("tr.relacion='pedidoestado'")
+                
                 ->orderBy('pe.pe_id ASC')
                 ->fetchAll();
 
@@ -56,16 +59,21 @@ class PedidoEncabezadoModel {
     }
 
     public function get($id) {
-        return $this->db->from($this->table)
-                        ->where('pe_id', $id)
-                        ->fetch();
+        return $this->db->from("pedidoencabezado pe")
+                ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion,tr.relacion,tr.descripcion")
+                ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
+                ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
+                ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
+               ->where('pe_id', $id)
+                ->fetch();
     }
 
     public function getCliente($id) {
         
         return $this->db->from('persona p')
-                        ->select('p.per_id,p.per_nombre,p.per_email,p.per_documento,p.per_celular,p.per_nacionalidad')
+                        ->select('p.per_id,p.per_nombre,p.per_email,p.per_documento,p.per_celular,p.per_nacionalidad,d.dir_direccion')
                         ->leftJoin('pedidoencabezado pe ON p.per_id = pe.pe_idPersona')
+                        ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
                         ->where('pe_id', $id)
                         ->fetch();
     }

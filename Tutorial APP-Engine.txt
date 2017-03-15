@@ -1,0 +1,42 @@
+TUTORIALDIR=~/src/api-project-337428292270/php_gae_quickstart-2017-02-23-11-11
+
+git clone https://github.com/GoogleCloudPlatform/appengine-try-php.git $TUTORIALDIR
+
+cd $TUTORIALDIR
+
+git checkout gcloud
+
+"probar la app, abrir navegador 8080"
+
+dev_appserver.py --php_executable_path=/usr/bin/php-cgi $PWD
+
+"implementar la aplicacion"
+
+gcloud app deploy app.yaml --project rest-160914
+
+
+"CONECTAR A LA BD"
+
+"descargar el proxy"
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+
+"Renombrara el proxy"
+mv cloud_sql_proxy.linux.amd64 cloud_sql_proxy
+
+"hacer el proxy ejecutable"
+chmod +x cloud_sql_proxy
+
+"Setear el nombre de la instancia"
+gcloud sql instances describe [INSTANCE_NAME]
+
+"Connection name:" abi-distrbuidora:us-central1:bd-abi-01
+
+connectionName: rest-160914:us-central1:server-api
+etag: '"YRdOeF1rByGUq_JBlT24pu2UM3Q/MQ"'
+instance: server-api
+instanceType: CLOUDSQL_INSTANCE
+ipAddresses:
+- ipAddress: 35.184.2.54
+kind: sql#instance
+project: rest-160914
+region: us-central1
