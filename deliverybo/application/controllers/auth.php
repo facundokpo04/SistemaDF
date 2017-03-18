@@ -26,6 +26,7 @@ class Auth extends CI_Controller {
         
         if($r->response){
             // Seteamos el token
+            
             RestApi::setToken($r->result);
             
             // User

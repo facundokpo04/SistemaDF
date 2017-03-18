@@ -91,7 +91,7 @@ getCliente = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
-            $('#cliente').append('<strong>' + res.per_nombre + '</strong><br>' +
+            $('#cliente').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
                     res.dir_direccion +
                     '<br>Telefono: ' +
                     res.per_celular +

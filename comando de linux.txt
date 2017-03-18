@@ -1,0 +1,6 @@
+sudo rm -R directorio_que_quieres_borrar
+
+permisos recursivos
+chmod -R 777 delBo
+2.- chmod -R rwx Prueba
+a2enmod rewrite

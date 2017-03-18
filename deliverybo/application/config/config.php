@@ -1,4 +1,4 @@
-<?php
+wq<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/proyecto2/SistemaDF/deliverybo/';
+$config['base_url'] = 'http://localhost/';
 
 /*
 |--------------------------------------------------------------------------
