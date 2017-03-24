@@ -4,3 +4,13 @@ permisos recursivos
 chmod -R 777 delBo
 2.- chmod -R rwx Prueba
 a2enmod rewrite
+
+
+Deliveri BO
+
+sudo rm -R delBo
+git clone https://github.com/facundokpo04/delBo.git
+chmod -R 777 delBo
+service apache2 restart
+
+

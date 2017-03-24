@@ -139,7 +139,7 @@ class RestApi{
 }
 
 RestApi::initialize(
-    'http://localhost/proyecto2/SistemaDF/deliveryapi/public/',
+    'http://35.184.187.29/delApi/public/',
     'APP-TOKEN'
 );
 
