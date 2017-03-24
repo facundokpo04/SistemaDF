@@ -2,22 +2,21 @@
 
 
 function VerForm() {
-    $("#producto").show();// Mostramos el formulario
-    $("#herramientas").hide();// ocultamos el boton nuevo
+    $("#producto").show(); // Mostramos el formulario
+    $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#productos").hide();
 }
 
 
 function OcultarForm() {
-    $("#producto").hide();// Mostramos el formulario
-    $("#herramientas").show();// ocultamos el boton nuevo
+    $("#producto").hide(); // Mostramos el formulario
+    $("#herramientas").show(); // ocultamos el boton nuevo
     $("#productos").show();
 }
 
 
 function cargarCategorias() {
     $("#Pcategoria option").remove();
-
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_categorias",
@@ -26,30 +25,22 @@ function cargarCategorias() {
         success: function (res) {
             $.each(res, function (key, data) {
                 ;
-
                 $("#Pcategoria").append("<option value=" + data.cat_id + ">" + data.cat_nombre + "</option>");
-
             });
-
-
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
         }
+
     });
-
-
-
-
-
-
 }
-function VerFormAgregar( ) {
-    $("#producto").show();// Mostramos el formulario
+function VerFormAgregar() {
+    $("#producto").show(); // Mostramos el formulario
     $("#paneles").hide();
     $("#panelCont").hide();
-    $("#herramientas").hide();// ocultamos el boton nuevo
+    $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#productos").hide();
-
-
 }
 
 
@@ -65,20 +56,18 @@ function cargarDataProducto(idProducto) {// funcion que llamamos del archivo aja
         success: function (res) {
             $('#txtNombre').val(res.prod_nombre);
             $('#txtDescripcion').val(res.prod_descripcionProducto);
-            $('#txtCodigo').val(res.prod_codigoProducto);//select
+            $('#txtCodigo').val(res.prod_codigoProducto); //select
             //ajax para traer todos los estados
             $('#txtPrecio').val(res.prod_precioBase);
-            $('#txtMaxCompo').val(res.prod_maxComponente);//select
-            $('#txtMinCompo').val(res.prod_maxComponente);//select
-            $('#PEstado').val(res.prod_idEstado);//selec
-            $('#VEstado').val(res.prod_idEstadoVisible);//selec
-            $('#imagen').attr('src', '../assets/imagenes/producto/' + res.prod_imagen);
+            $('#txtMaxCompo').val(res.prod_maxComponente); //select
+            $('#txtMinCompo').val(res.prod_maxComponente); //select
+            $('#PEstado').val(res.prod_idEstado); //selec
+            $('#VEstado').val(res.prod_idEstadoVisible); //selec
+            $('#imagen').attr('src', './assets/imagenes/producto/' + res.prod_imagen);
             $('#idProducto').val(res.prod_id);
             $('#Pcategoria').val(res.prod_idCategoria);
-
         }
     });
-
     cargarComponentes(idProducto);
     cargarVariedades(idProducto);
 //    CargarComponetesAgregar(idProducto);
@@ -96,9 +85,8 @@ function cargarComponentes(idProducto) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            
-           $('#tblComponentes tbody tr').remove();
 
+            $('#tblComponentes tbody tr').remove();
             $.each(res, function (key, data) {
 
 
@@ -119,12 +107,12 @@ function cargarComponentes(idProducto) {
                         '</tr>'
                         );
             });
-
-
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
         }
     });
-
 }
 
 function cargarVariedades(idProducto) {
@@ -156,16 +144,16 @@ function cargarVariedades(idProducto) {
                         '</tr>'
                         );
             });
-
-
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
         }
     });
-
 }
 
 function CargarComponetesAgregar(idProducto) {
-    
+
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_NotComponentesById/" + idProducto,
@@ -173,10 +161,9 @@ function CargarComponetesAgregar(idProducto) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
-           $('#tblComponentes2 tbody tr').remove();
-
+            $('#tblComponentes2 tbody tr').remove();
             $.each(res, function (key, data) {
-                             
+
                 $('#tblComponentes2 tbody').append('<tr>' +
                         ' <td>' +
                         data.com_id +
@@ -194,8 +181,9 @@ function CargarComponetesAgregar(idProducto) {
                         '</tr>'
                         );
             });
-
-
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
         }
     });
@@ -211,13 +199,12 @@ function ActualizarComponentes() {
 
 //  $('#tblComponentes2 tbody tr').remove();
 
-  
-    $('#tblComponentes2 tbody tr').each(function () {
-       
-        if ($(this).find('td').length > 0) {
-           
-            var comp_id = $(this).find('td').eq(0).html();
 
+    $('#tblComponentes2 tbody tr').each(function () {
+
+        if ($(this).find('td').length > 0) {
+
+            var comp_id = $(this).find('td').eq(0).html();
             var comp_check = $(this).find('td').eq(4).find("input").eq(0);
             if (comp_check.is(':checked')) {
                 $.ajax({
@@ -232,50 +219,47 @@ function ActualizarComponentes() {
                     success: function (res) {
 
 
+                    },
+                    error: function (request, status, error) {
+                        console.log(error.message);
+
                     }
                 });
             }
 
 
         }
-        
-       
+
+
 
     });
-    
-     
-
     cargarComponentes($('#idProducto').val());
     cargarVariedades($('#idProducto').val());
-   
-
-
-
 }
 
 function ActualizarVariedad(idProducto) {
-    
- $.ajax({
-            type: "POST",
-            url: baseurl + "index.php/producto/updVariedad",
-            dataType: 'json',
-            data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-                var_nombre: $('#mvNombre').val(),
-                var_descripcion: $('#mvDescripcion').val(),
-                var_tipo: $('#mvTipo').val(),
-                var_precio: $('#mvPrecio').val(),
-                var_idProducto: $('#idProducto').val(),
-                var_id: $('#mIdVariedad').val()
-            },
-            success: function (res) {
 
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/updVariedad",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            var_nombre: $('#mvNombre').val(),
+            var_descripcion: $('#mvDescripcion').val(),
+            var_tipo: $('#mvTipo').val(),
+            var_precio: $('#mvPrecio').val(),
+            var_idProducto: $('#idProducto').val(),
+            var_id: $('#mIdVariedad').val()
+        },
+        success: function (res) {
+            var a = 0;
+            $('#mbtnCerrarModalVar').click();
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
-                  var a = 0;
-                $('#mbtnCerrarModalVar').click();
-
-                
-            }
-        });
+        }
+    });
 }
 
 function actualizarProducto() {
@@ -298,11 +282,11 @@ function actualizarProducto() {
 
         },
         success: function (res) {
-            
-              location.reload();
-            
 
-
+            location.reload();
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
 
         }
     });
@@ -313,7 +297,6 @@ function actualizarProducto() {
  */
 function guardarImagen() {
     var inputFile = $('input#pImagen');
-
     var fileToUpload = inputFile[0].files[0];
     // make sure there is file to upload
 
@@ -321,11 +304,8 @@ function guardarImagen() {
     // that would be sent to sever through ajax
     if (fileToUpload != 'undefined') {
         var formData = new FormData();
-      formData.append('prod_imagen', fileToUpload);
-       formData.append('prod_id', $('#idProducto').val());
-       
-       
-
+        formData.append('prod_imagen', fileToUpload);
+        formData.append('prod_id', $('#idProducto').val());
         // now upload the file using $.ajax
         $.ajax({
             url: baseurl + "index.php/producto/updImagen",
@@ -336,9 +316,19 @@ function guardarImagen() {
             contentType: false,
             success: function (res) {
                 
-               
-                $('#imagen').attr('src', '../assets/imagenes/producto/' + res.prod_Imagen);
-              
+                if(res.estado){
+
+                $('#imagen').attr('src', './assets/imagenes/producto/' + res.response.prod_Imagen);
+            }
+            else{
+                console.log(res.response);
+               window.alert(res.response);
+                
+            }
+            },
+            error: function (request, status, error) {
+                console.log(error.message);
+
             }
         });
     }
@@ -348,11 +338,7 @@ function guardarImagen() {
 $('#agregarCom').click(function () {
 
 
-   CargarComponetesAgregar($('#idProducto').val()) ;
-       
-  
-    
-    
+    CargarComponetesAgregar($('#idProducto').val());
 })
 
 
@@ -360,50 +346,46 @@ $('#agregarCom').click(function () {
 
 
 $(document).on("click", ".eliminarComp", function () {
- 
+
     var parent = $(this).parents().get(0);
     var comp_id = $(parent).find('td').eq(0).html();
-        $.ajax({
-                    type: "POST",
-                    url: baseurl + "index.php/producto/eliminarComponente",
-                    dataType: 'json',
-                    data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-                        idProducto: $('#idProducto').val(),
-                        idComponente: comp_id
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/eliminarComponente",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            idProducto: $('#idProducto').val(),
+            idComponente: comp_id
 
-                    },
-                    success: function (res) {
-                        
+        },
+        success: function (res) {
 
 
-                    }
-                });
-    
+
+        }
+    });
     $(parent).remove();
 });
 $(document).on("click", ".eliminarVar", function () {
- 
+
     var parent = $(this).parents().get(0);
     var var_id = $(parent).find('td').eq(0).html();
     debugger;
-        $.ajax({
-                    type: "POST",
-                    url: baseurl + "index.php/producto/eliminarVariedad/"+ var_id,
-                    dataType: 'json',
-                    data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-                    },
-                    success: function (res) {
-                        
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/eliminarVariedad/" + var_id,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+        },
+        success: function (res) {
 
 
-                    }
-                });
-    
+
+        }
+    });
     $(parent).remove();
 });
-
 OcultarForm();
-
 $('#tbProductos').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
@@ -415,7 +397,6 @@ $('#tbProductos').DataTable({
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
-
     },
     'columns': [
         {data: 'prod_id', 'sClass': 'dt-body-center'},
@@ -496,23 +477,17 @@ $('#tbProductos').DataTable({
         },
     ],
     "order": [[0, "asc"]],
-
 });
 $('#mbtnUpdProducto').click(function () {
 
     actualizarProducto();
-
-
 });
 $('#btnAgregarProd').click(function () {
 
     VerFormAgregar();
     cargarCategorias();
-
-
 })
 $('#btnGuardarImg').click(function () {
 
     guardarImagen();
-
 })

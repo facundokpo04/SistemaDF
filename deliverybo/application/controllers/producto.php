@@ -101,12 +101,12 @@ class Producto extends CI_Controller {
         $id = $this->input->post('prod_id');
 
         $config = [
-            "upload_path" => "./assets/imagenes/promo",
-            "allowed_types" => "png|jpg"          
+            "upload_path" => "./assets/imagenes/producto",
+            "allowed_types" => "png|jpg"
         ];
-        
-       
-        
+
+
+
         $errors = array();
 
         $this->load->library("upload", $config);
@@ -119,14 +119,33 @@ class Producto extends CI_Controller {
             ];
             try {
                 $this->pm->actualizar($data, $id);
-                echo json_encode($data);
+
+                echo json_encode(
+                        [
+                            'estado' => true,
+                            'response' => $data
+                        ]
+                );
             } catch (Exception $e) {
                 if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                     $errors = RestApi::getEntityValidationFieldsError();
+
+                    echo json_encode(
+                            [
+                                'estado' => false,
+                                'response' => $errors
+                            ]
+                    );
                 }
             }
         } else {
-            //echo  json_encode($this->upload->display_errors());
+
+            echo json_encode(
+                    [
+                        'estado' => false,
+                        'response' => $this->upload->display_errors()
+                    ]
+            );
             //$imagen = $this->cm->obtener($id)->cat_imagen;
         }
     }
