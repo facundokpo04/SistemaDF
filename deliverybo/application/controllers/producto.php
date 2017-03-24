@@ -236,7 +236,7 @@ class Producto extends CI_Controller {
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-                var_dump($errors);
+               
             }
         }
 
@@ -244,6 +244,7 @@ class Producto extends CI_Controller {
         if (count($errors) === 0) //redirect('sucursal')
             //
          echo json_encode($respuesta);
+        
         else {
             $this->load->view('layout/header');
             $this->load->view('layout/menu');
