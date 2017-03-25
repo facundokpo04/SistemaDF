@@ -30,7 +30,7 @@
     <a href="../../index.html"><b>App</b>DELIVERY</a>
   </div>
   <!-- /.login-logo -->
-  <?php echo form_open('auth/autenticar'); ?>
+  <?php echo form_open('Auth/autenticar'); ?>
   
     <?php if(isset($error)): ?>
         <div class="alert alert-danger">

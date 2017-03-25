@@ -60,8 +60,7 @@ class ProductoModel extends CI_Model{
       
         return RestApi::call(
             RestApiMethod::POST,
-            'producto/insertar',
-            $data
+            'producto/insertar',$data
         );
     }
 

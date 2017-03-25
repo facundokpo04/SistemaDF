@@ -205,7 +205,7 @@ class Producto extends CI_Controller {
         $errors = array();
 
         $id = $this->input->post('prod_id');
-        $respuesta;
+        $respuesta=[];
 
 
 
@@ -234,14 +234,16 @@ class Producto extends CI_Controller {
                         ];
                 
             } else {
-                $this->pm->actualizar($data, $id);
+               $response= $this->pm->actualizar($data, $id);
                 $respuesta = 
                            [
                             'estado' => true,
-                            'response' => $id
+                            'response' => $response
                         ];
             }
         } catch (Exception $e) {
+         
+            
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
                 
@@ -249,6 +251,14 @@ class Producto extends CI_Controller {
                            [
                             'estado' => false,
                             'response' => $errors
+                        ];
+               
+            }
+            else{
+                    $respuesta = 
+                           [
+                            'estado' => false,
+                            'response' => $e->getMessage()
                         ];
                
             }

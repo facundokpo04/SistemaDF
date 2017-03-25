@@ -275,7 +275,7 @@ function actualizarProducto() {
             prod_maxComponente: $('#txtMaxCompo').val(),
             prod_minComponente: $('#txtMinCompo').val(),
             prod_idEstado: $('#PEstado').val(),
-            prod_idCategoria: $('#Pcategoria').val(),
+//            prod_idCategoria: $('#Pcategoria').val(),
             prod_idEstadoVisible: $('#VEstado').val(),
             prod_id: $('#idProducto').val()
 
