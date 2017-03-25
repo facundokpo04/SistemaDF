@@ -23,10 +23,18 @@ function cargarCategorias() {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            $.each(res, function (key, data) {
+            if(res.estado){
+                 $.each(res.response, function (key, data) {
                 ;
                 $("#Pcategoria").append("<option value=" + data.cat_id + ">" + data.cat_nombre + "</option>");
             });
+            }
+            else{
+                
+                console.log(res.response)
+            }
+            
+           
         },
         error: function (request, status, error) {
             console.log(error.message);
@@ -275,7 +283,7 @@ function actualizarProducto() {
             prod_maxComponente: $('#txtMaxCompo').val(),
             prod_minComponente: $('#txtMinCompo').val(),
             prod_idEstado: $('#PEstado').val(),
-//            prod_idCategoria: $('#Pcategoria').val(),
+            prod_idCategoria: $('#Pcategoria').val(),
             prod_idEstadoVisible: $('#VEstado').val(),
             prod_id: $('#idProducto').val()
 

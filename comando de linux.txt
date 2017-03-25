@@ -14,3 +14,7 @@ chmod -R 777 delBo
 service apache2 restart
 
 
+sudo rm -R delApi
+git clone https://github.com/facundokpo04/delApi.git
+chmod -R 777 delBo
+service apache2 restart

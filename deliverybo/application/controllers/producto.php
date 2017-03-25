@@ -77,11 +77,21 @@ class Producto extends CI_Controller {
 
         try {
             $result = $this->pm->getAllCate();
-            $data = $result;
+          
+              $respuesta = 
+                           [
+                            'estado' => true,
+                            'response' => $result
+                        ];
+            
         } catch (Exception $e) {
-            var_dump($e);
+              $respuesta = 
+                           [
+                            'estado' => false,
+                            'response' => $e->getMessage()
+                        ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
 
     public function get_VariedadesById($idProducto) {
