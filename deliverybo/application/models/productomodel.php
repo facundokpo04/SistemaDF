@@ -1,4 +1,4 @@
-pro<?php
+<?php
 class ProductoModel extends CI_Model{
     
     public function getAll(){
