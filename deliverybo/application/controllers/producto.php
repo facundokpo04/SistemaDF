@@ -227,32 +227,37 @@ class Producto extends CI_Controller {
         try {
             if (empty($id)) {
                 $response = $this->pm->registrar($data);
-
-                $respuesta = ($response->result);
+                $respuesta = 
+                           [
+                            'estado' => true,
+                            'response' => $response->result
+                        ];
+                
             } else {
                 $this->pm->actualizar($data, $id);
-                $respuesta = $id;
+                $respuesta = 
+                           [
+                            'estado' => true,
+                            'response' => $id
+                        ];
             }
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                
+                 $respuesta = 
+                           [
+                            'estado' => false,
+                            'response' => $errors
+                        ];
                
             }
         }
 
-
-        if (count($errors) === 0) //redirect('sucursal')
             //
          echo json_encode($respuesta);
         
-        else {
-            $this->load->view('layout/header');
-            $this->load->view('layout/menu');
-            $this->load->view('producto/validation', [
-                'errors' => $errors
-            ]);
-            $this->load->view('layout/footer');
-        }
+       
     }
 
     public function eliminarComponente() {

@@ -282,8 +282,12 @@ function actualizarProducto() {
 
         },
         success: function (res) {
+            if(res.estado){ location.reload();}
+            else{
+               console.log(res.response); 
+            }
 
-            location.reload();
+           
         },
         error: function (request, status, error) {
             console.log(error.message);
