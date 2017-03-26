@@ -69,37 +69,13 @@ class Categoria extends CI_Controller {
 
     
     public function updCategoria() {
-
-        $config = [
-            "upload_path" => "./assets/imagenes/categoria",
-            "allowed_types" => "png|jpg"
-        ];
         $errors = array();
-
-        $this->load->library("upload", $config);
-
         $id = $this->input->post('cat_id');
-
-
-
-        if ($this->upload->do_upload('cat_imagen')) {
-            $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['file_name'];
-        } else {
-            //echo  json_encode($this->upload->display_errors());
-//             $respuesta = [
-//                            'estado' => true,
-//                            'response' => $this->upload->display_errors()
-//                ];
-            $imagen = $this->cm->obtener($id)->cat_imagen;
-          
-        }
-
+          $respuesta = [];
         $data = [
             'cat_nombre' => $this->input->post('cat_nombre'),
             'cat_descripcion' => $this->input->post('cat_descripcion'),
-            'cat_idEstado' => $this->input->post('cat_idEstado'),
-            'cat_Imagen' => $imagen
+            'cat_idEstado' => $this->input->post('cat_idEstado'),        
         ];
         try {
 

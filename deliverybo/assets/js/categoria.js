@@ -87,21 +87,55 @@ selCategoria = function (idCategorias) {
                 $('#mNombre').val(res.response.cat_nombre);
                 $('#mEstado').val(res.response.cat_idEstado);//select
                 //ajax para traer todos los estados
+                $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
                 $('#mIdCategoria').val(res.response.cat_id);
             } else {
                 console.log(res.response);
 
             }
-
-
-
-
         },
         error: function (request, status, error) {
             console.log(error.message);
         }
     });
 
+};
+function guardarImagen() {
+    var inputFile = $('input#cImagen');
+    var fileToUpload = inputFile[0].files[0];
+    // make sure there is file to upload
+
+    // provide the form data
+    // that would be sent to sever through ajax
+    if (fileToUpload != 'undefined') {
+        var formData = new FormData();
+        formData.append('cat_imagen', fileToUpload);
+        formData.append('cat_id', $('#mIdCategoria').val());
+        // now upload the file using $.ajax
+        $.ajax({
+            url: baseurl + "index.php/categoria/updImagen",
+            type: 'post',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+
+                if (res.estado) {
+
+                    $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
+                } else {
+                    console.log(res.response);
+                    window.alert(res.response);
+
+                }
+            },
+            error: function (request, status, error) {
+                console.log(error.message);
+
+            }
+        });
+    }
 };
 $('#mbtnCerrarModal').click(function () {
 
@@ -120,47 +154,7 @@ $('#mCerrarModal').click(function () {
     $('#mIdCategoria').val('');
 })
 
-$('#mbtnUpdCategoria').click(function () {
-    var inputFile = $('input#pImagen');
-
-    var fileToUpload = inputFile[0].files[0];
-    // make sure there is file to upload
-
-    // provide the form data
-    // that would be sent to sever through ajax
-    if (fileToUpload != 'undefined') {
-        var formData = new FormData();
-        formData.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
-        formData.append('cat_nombre', $('#mNombre').val());
-        formData.append('cat_descripcion', $('#mDescripcion').val());
-        formData.append('cat_idEstado', $('#mEstado').val());
-        formData.append('cat_id', $('#mIdCategoria').val());
-        formData.append('cat_imagen', fileToUpload);
-
-        // now upload the file using $.ajax
-        $.ajax({
-            url: baseurl + "index.php/categoria/updCategoria",
-            type: 'post',
-            dataType: 'json',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-               if (res.estado) {
-                    var a = 0;
-                    $('#mbtnCerrarModal').click();
-
-                    location.reload();
-                } else {
-                    console.log(res.response);
-
-                }
-            },
-            error: function (request, status, error) {
-                console.log(error.message);
-            }
-        });
-    } else {
+$('#mbtnUpdCategoria').click(function () { 
         $.ajax({
             type: "POST",
             url: baseurl + "index.php/categoria/updCategoria",
@@ -186,14 +180,15 @@ $('#mbtnUpdCategoria').click(function () {
             error: function (request, status, error) {
                 console.log(error.message);
             }
-        });
-
-
-    }
-
-
-
+        });  
 });
 
 
+
+
+
+$('#btnGuardarImg').click(function () {
+
+    guardarImagen();
+})
          
