@@ -137,6 +137,53 @@ class Categoria extends CI_Controller {
                echo json_encode($respuesta);
     }
 
-   
+    public function updImagen() {
+        
+        $id = $this->input->post('cat_id');
+        $config = [
+            "upload_path" => "./assets/imagenes/categoria",
+            "allowed_types" => "png|jpg"
+        ];
+        $errors = array();
+
+        $this->load->library("upload", $config);
+
+        if ($this->upload->do_upload('cat_imagen')) {
+            $archivo = array("upload_data" => $this->upload->data());
+            $imagen = $archivo['upload_data']['file_name'];
+            $data = [
+                'cat_Imagen' => $imagen
+            ];
+            try {
+                $this->cm->actualizar($data, $id);
+
+                echo json_encode(
+                        [
+                            'estado' => true,
+                            'response' => $data
+                        ]
+                );
+            } catch (Exception $e) {
+                if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                    $errors = RestApi::getEntityValidationFieldsError();
+
+                    echo json_encode(
+                            [
+                                'estado' => false,
+                                'response' => $errors
+                            ]
+                    );
+                }
+            }
+        } else {
+            echo json_encode(
+                    [
+                        'estado' => false,
+                        'response' => $this->upload->display_errors()
+                    ]
+            );
+            //$imagen = $this->cm->obtener($id)->cat_imagen;
+        }
+    }
 
 }

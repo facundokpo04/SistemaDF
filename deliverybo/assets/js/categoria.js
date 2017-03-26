@@ -146,10 +146,18 @@ $('#mbtnUpdCategoria').click(function () {
             processData: false,
             contentType: false,
             success: function (res) {
-                var a = 0;
-                $('#mbtnCerrarModal').click();
+               if (res.estado) {
+                    var a = 0;
+                    $('#mbtnCerrarModal').click();
 
-                location.reload();
+                    location.reload();
+                } else {
+                    console.log(res.response);
+
+                }
+            },
+            error: function (request, status, error) {
+                console.log(error.message);
             }
         });
     } else {
