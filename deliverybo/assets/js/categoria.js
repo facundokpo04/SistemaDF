@@ -82,12 +82,19 @@ selCategoria = function (idCategorias) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
+            if (res.estado) {
+                $('#mDescripcion').val(res.response.cat_descripcion);
+                $('#mNombre').val(res.response.cat_nombre);
+                $('#mEstado').val(res.response.cat_idEstado);//select
+                //ajax para traer todos los estados
+                $('#mIdCategoria').val(res.response.cat_id);
+            } else {
+                console.log(res.response);
 
-            $('#mDescripcion').val(res.cat_descripcion);
-            $('#mNombre').val(res.cat_nombre);
-            $('#mEstado').val(res.cat_idEstado);//select
-            //ajax para traer todos los estados
-            $('#mIdCategoria').val(res.cat_id);
+            }
+
+
+
 
         },
         error: function (request, status, error) {
@@ -158,11 +165,15 @@ $('#mbtnUpdCategoria').click(function () {
             },
             success: function (res) {
 
+                if (res.estado) {
+                    var a = 0;
+                    $('#mbtnCerrarModal').click();
 
-                var a = 0;
-                $('#mbtnCerrarModal').click();
+                    location.reload();
+                } else {
+                    console.log(res.response);
 
-                location.reload();
+                }
             },
             error: function (request, status, error) {
                 console.log(error.message);
