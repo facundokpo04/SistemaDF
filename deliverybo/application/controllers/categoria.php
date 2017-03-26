@@ -54,11 +54,17 @@ class Categoria extends CI_Controller {
 
         try {
             $result = $this->cm->obtener($idCategoria);
-            $data = $result;
+             $respuesta = [
+                        'estado' => true,
+                        'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                        'estado' => false,
+                        'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
 
     
@@ -81,6 +87,10 @@ class Categoria extends CI_Controller {
             $imagen = $archivo['upload_data']['file_name'];
         } else {
             //echo  json_encode($this->upload->display_errors());
+//             $respuesta = [
+//                            'estado' => true,
+//                            'response' => $this->upload->display_errors()
+//                ];
             $imagen = $this->cm->obtener($id)->cat_imagen;
           
         }
@@ -94,25 +104,39 @@ class Categoria extends CI_Controller {
         try {
 
             if (empty($id)) {
-                $this->cm->registrar($data);
+               $response = $this->cm->registrar($data);
+                $respuesta = [
+                            'estado' => true,
+                            'response' => $response
+                ];
             } else {
-                $this->cm->actualizar($data, $id);
+                $response = $this->cm->actualizar($data, $id);
+                $respuesta = [
+                            'estado' => true,
+                            'response' => $response
+                ];
             }
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                  $respuesta = [
+                            'estado' => false,
+                            'validator' => true,
+                            'response' => $errors
+                ];
+            }
+            else {
+                $respuesta = [
+                            'estado' => false,
+                            'validator' => false,
+                            'response' => $e->getMessage()
+                ];
             }
         }
 
-               echo json_encode($errors);
+               echo json_encode($respuesta);
     }
 
-    public function guardar() {
-        
-    }
-
-    public function eliminar($id) {
-        
-    }
+   
 
 }
