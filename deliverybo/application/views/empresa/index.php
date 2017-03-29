@@ -83,7 +83,12 @@
                         </div>	
                     </div>
 
-                </div>                            
+                </div>
+                <div class="panel-footer clearfix">
+                    <a class="btn btn-default pull-left" href="#"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</a>  	
+                    <button type="button" class="btn btn-danger pull-right" id="btnUpdEmpresa" tabindex="17"><i class="fa fa-floppy-o" aria-hidden="true"></i>  Guardar</button>    
+                </div> 
+                
             </div>  
         </div>   
     </div>		
@@ -114,7 +119,7 @@
                 </div>
                 <div class="panel-footer clearfix">
                     <a class="btn btn-default pull-left" href="#"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</a>  	
-                    <button type="button" class="btn btn-danger pull-right" id="btnUpdEmpresa" tabindex="17"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>    
+                    <button type="button" class="btn btn-danger pull-right" id="btnGuardarImg" tabindex="17"><i class="fa fa-floppy-o" aria-hidden="true"></i>  Guardar</button>    
                 </div> 
             </div>    
         </div>

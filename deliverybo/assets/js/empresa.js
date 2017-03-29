@@ -58,8 +58,7 @@ iniciar = function (idEmpresa) {
             {data: 'suc_razonSocial'},
             {data: 'suc_direccion'},
             {"orderable": true,
-                render: function (data, type, row) {
-                    debugger;
+                render: function (data, type, row) {                 
                     return '<span class="pull-right" >' +
                             '<div class="dropdown">' +
                             '  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
@@ -103,7 +102,7 @@ function guardarImagen() {
     var inputFile = $('input#txtLogo');
     var fileToUpload = inputFile[0].files[0];
 
-    if (fileToUpload != 'undefined') {
+    if (!("undefined" === typeof fileToUpload)) {
         var formData = new FormData();
         formData.append('logo', fileToUpload);
         formData.append('emp_id', $('#idEmpresa').val());
@@ -131,6 +130,8 @@ function guardarImagen() {
 
             }
         });
+    }else{
+          window.alert("Seleccione una Imagen");
     }
 };
 $('#btnUpdEmpresa').click(function () {

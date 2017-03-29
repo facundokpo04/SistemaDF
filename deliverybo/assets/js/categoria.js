@@ -107,7 +107,8 @@ function guardarImagen() {
 
     // provide the form data
     // that would be sent to sever through ajax
-    if (fileToUpload != 'undefined') {
+    if (!("undefined" === typeof fileToUpload)) {
+        
         var formData = new FormData();
         formData.append('cat_imagen', fileToUpload);
         formData.append('cat_id', $('#mIdCategoria').val());
@@ -135,6 +136,8 @@ function guardarImagen() {
 
             }
         });
+    }else{
+          window.alert("Seleccione una Imagen");
     }
 };
 $('#mbtnCerrarModal').click(function () {

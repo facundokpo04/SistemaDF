@@ -347,7 +347,7 @@ function guardarImagen() {
 
     // provide the form data
     // that would be sent to sever through ajax
-    if (fileToUpload != 'undefined') {
+    if (!("undefined" === typeof fileToUpload)) {
         var formData = new FormData();
         formData.append('prod_imagen', fileToUpload);
         formData.append('prod_id', $('#idProducto').val());
@@ -375,6 +375,8 @@ function guardarImagen() {
 
             }
         });
+    }else{
+          window.alert("Seleccione una Imagen");
     }
 }
 
