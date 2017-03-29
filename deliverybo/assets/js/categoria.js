@@ -155,7 +155,7 @@ $('#mCerrarModal').click(function () {
 })
 
 $('#mbtnUpdCategoria').click(function () { 
-        $.ajax({
+       $.ajax({
             type: "POST",
             url: baseurl + "index.php/categoria/updCategoria",
             dataType: 'json',
@@ -166,7 +166,6 @@ $('#mbtnUpdCategoria').click(function () {
                 cat_id: $('#mIdCategoria').val()
             },
             success: function (res) {
-
                 if (res.estado) {
                     var a = 0;
                     $('#mbtnCerrarModal').click();
@@ -174,7 +173,6 @@ $('#mbtnUpdCategoria').click(function () {
                     location.reload();
                 } else {
                     console.log(res.response);
-
                 }
             },
             error: function (request, status, error) {

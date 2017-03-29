@@ -232,9 +232,6 @@ function CargarComponetesAgregar(idProducto) {
  */
 function ActualizarComponentes() {
 
-//  $('#tblComponentes2 tbody tr').remove();
-
-
     $('#tblComponentes2 tbody tr').each(function () {
 
         if ($(this).find('td').length > 0) {

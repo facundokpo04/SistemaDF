@@ -20,13 +20,7 @@ class Variedad extends CI_Controller {
         //header
         $this->load->view('layout/header');
         $this->load->view('layout/menu');
-        //definimos variable para traer la data y mantner la logica de paginacion
-        //inicializacion de paginacion
-
-
-        $this->load->view('variedad/index.php');
-
-        //footer
+         $this->load->view('variedad/index.php');
         $this->load->view('layout/footer');
     }
 
