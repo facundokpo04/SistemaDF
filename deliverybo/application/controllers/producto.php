@@ -39,6 +39,19 @@ class Producto extends CI_Controller {
         }
         echo json_encode($data);
     }
+    public function get_ProductosCat($idCategoria) {
+
+        $data = [];
+        $data = new stdClass();
+        try {
+            $result = $this->pm->getAllCat($idCategoria);
+            $total = $result->total;
+            $data->data = $result->data;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
 
     public function get_productoById($idProducto) {
 
