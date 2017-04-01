@@ -35,7 +35,7 @@ class Categoria extends CI_Controller {
 
         $data = [];
         $total = 0;
-        $limite = 10;
+        $limite = 20;
         $data = new stdClass();
         try {
             $result = $this->cm->getAll($limite, $p);
