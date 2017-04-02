@@ -12,7 +12,7 @@ $app->group('/datocontacto/', function () {
     $this->get('listartelsuc/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->datocontacto->getAll($args['id']))
+                                json_encode($this->model->datocontacto->getAllTelCon($args['id']))
         );
     });
 
