@@ -8,7 +8,7 @@ class ComponenteModel
     private $db;
     private $table = 'componente';
     private $response;
-    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/componentes" ;
+    private $url ="http://35.184.187.29/delBo/assets/imagenes/componentes" ;
     
     public function __CONSTRUCT($db)
     {

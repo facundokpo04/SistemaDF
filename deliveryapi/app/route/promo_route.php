@@ -13,6 +13,13 @@ $app->group('/promo/', function () {
                    );
     });
     
+    $this->get('listarprod/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                   ->write(
+                     json_encode($this->model->promo->getAllProd($args['id']))
+                   );
+    });
+    
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
@@ -56,6 +63,28 @@ $app->group('/promo/', function () {
                    ->write(
                      json_encode($this->model->promo->delete($args['id']))
                    );   
+    });
+    
+    $this->post('insertarprod', function ($req, $res, $args) {
+        $r = ProductoValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                            ->withStatus(422)
+                            ->write(json_encode($r->errors));
+        }
+//        
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->producto->insertProd($req->getParsedBody()))
+        );
+    });
+    
+    $this->delete('eliminarprod/{idPromo}/{idProducto}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->producto->deleteProd($args['idPromo'], $args['idProducto']))
+        );
     });
 });
         //->add(new AuthMiddleware($app));

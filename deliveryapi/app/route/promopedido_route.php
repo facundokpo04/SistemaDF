@@ -2,34 +2,36 @@
 
 use App\Lib\Auth,
     App\Lib\Response,
-    App\Validation\ListaProductoPromoPedidoValidation,
+    App\Validation\PromoPedidoValidation,
     App\Middleware\AuthMiddleware;
 
-$app->group('/listaproductopromopedido/', function () {
-
-    $this->get('url', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-                        ->write(
-                                json_encode($this->model->listaproductopromopedido->getUrl())
-        );
-    });
+$app->group('/promopedido/', function () {
 
     $this->get('listar', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->listaproductopromopedido->getAll())
+                                json_encode($this->model->promopedido->getAll())
+        );
+    });
+    
+     $this->get('listarPed/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->promopedido->getAllped($args['id']))
         );
     });
 
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->listaproductopromopedido->get($args['id']))
+                                json_encode($this->model->promopedido->get($args['id']))
         );
     });
 
     $this->post('insertar', function ($req, $res, $args) {
-        $r = ListaProductoPromoPedidoValidation::validate($req->getParsedBody());
+        
+        
+        $r = PromoPedidoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -39,37 +41,28 @@ $app->group('/listaproductopromopedido/', function () {
 //        
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->listaproductopromopedido->insert($req->getParsedBody()))
+                                json_encode($this->model->promopedido->insert($req->getParsedBody()))
         );
     });
 
     $this->put('actualizar/{id}', function ($req, $res, $args) {
-        $r = ListaProductoPromoPedidoValidation::validate($req->getParsedBody());
+        $r = PromoPedidoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
                             ->withStatus(422)
                             ->write(json_encode($r->errors));
-        }
-
-//        
+        }//        
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->listaproductopromopedido->update($req->getParsedBody(), $args['id']))
+                                json_encode($this->model->promopedido->update($req->getParsedBody(), $args['id']))
         );
     });
 
     $this->delete('eliminar/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->listaproductopromopedido->delete($args['id']))
+                                json_encode($this->model->promopedido->delete($args['id']))
         );
     });
 });
-//->add(new AuthMiddleware($app));
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-

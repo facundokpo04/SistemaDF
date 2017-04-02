@@ -8,7 +8,7 @@ class CategoriaModel
     private $db;
     private $table = 'categoria';
     private $response;
-    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/categoria" ;
+    private $url ="http://35.184.187.29/delBo/assets/imagenes/categoria" ;
      
     public function __CONSTRUCT($db)
     {

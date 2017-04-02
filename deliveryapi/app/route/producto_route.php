@@ -8,14 +8,14 @@ use App\Lib\Auth,
 $app->group('/producto/', function () {
 
 
-     $this->get('url', function ($req, $res, $args) {
+    $this->get('url', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getUrl())
         );
     });
 
-    
+
     $this->get('listar', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
@@ -30,35 +30,33 @@ $app->group('/producto/', function () {
                                 json_encode($this->model->producto->getAllCat($args['idCategoria']))
         );
     });
-    
     $this->get('listarComp/{idProducto}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getAllComp($args['idProducto']))
         );
     });
-    
-     $this->get('listarCate', function ($req, $res, $args) {
+    $this->get('listarCate', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getAllCate())
         );
     });
-     $this->get('listarNotComp/{idProducto}', function ($req, $res, $args) {
+    $this->get('listarNotComp/{idProducto}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getAllNotComp($args['idProducto']))
         );
     });
-    
-     $this->get('listarVar/{idProducto}', function ($req, $res, $args) {
+
+    $this->get('listarVar/{idProducto}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getAllVar($args['idProducto']))
         );
     });
-    
-     $this->get('listarSuc/{idSucursal}', function ($req, $res, $args) {
+
+    $this->get('listarSuc/{idSucursal}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->producto->getAllSuc($args['idSucursal']))
@@ -109,8 +107,8 @@ $app->group('/producto/', function () {
                                 json_encode($this->model->producto->delete($args['id']))
         );
     });
-    
-   $this->post('insertarcomp', function ($req, $res, $args) {
+
+    $this->post('insertarcomp', function ($req, $res, $args) {
         $r = ProductoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
@@ -124,13 +122,13 @@ $app->group('/producto/', function () {
                                 json_encode($this->model->producto->insertComp($req->getParsedBody()))
         );
     });
-       $this->delete('eliminarcomp/{idProd}/{idComp}', function ($req, $res, $args) {
+    
+    $this->delete('eliminarcomp/{idProd}/{idComp}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->producto->deleteComp($args['idProd'],$args['idComp']))
+                                json_encode($this->model->producto->deleteComp($args['idProd'], $args['idComp']))
         );
     });
-    
 });
 //->add(new AuthMiddleware($app));
 /* 

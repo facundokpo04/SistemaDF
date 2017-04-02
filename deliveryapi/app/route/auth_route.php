@@ -9,7 +9,9 @@ $app->group('/auth/', function () {
       
       //  var_dump($parametros);
         return $res->withHeader('Content-type', 'application/json')
-                   ->write(
+                   ->withHeader('Access-Control-Allow-Origin', '*')  
+                   ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                    ->write(
                      json_encode($this->model->auth->autenticar($parametros['Correo'], $parametros['Password']))
                    );
     });

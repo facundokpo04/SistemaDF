@@ -9,7 +9,7 @@ class ProductoModel {
     private $db;
     private $table = 'producto';
     private $response;
-    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/producto" ;
+    private $url ="http://35.184.187.29/delBo/assets/imagenes/producto" ;
 
     public function __CONSTRUCT($db) {
         $this->db = $db;
@@ -72,6 +72,8 @@ class ProductoModel {
             'total' => $total
         ];
     }
+    
+    
 
     public function insert($data) {
 
@@ -141,7 +143,7 @@ class ProductoModel {
     public function getAllCate() {
 
 
-        return $this->db->from("Categoria")
+        return $this->db->from("categoria")
                         ->orderBy('cat_nombre')
                         ->fetchAll();
     }

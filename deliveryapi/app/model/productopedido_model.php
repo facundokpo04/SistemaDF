@@ -47,6 +47,8 @@ class ProductoPedidoModel
             'pp_idProducto' => $data['idProducto'],
             'pp_idVariedad' => $data['idVariedad'], // No podemos asumir que esta data enviada desde el cliente es CORRECTA,
             'pp_precioCalc' => $data['precioCalc']
+             //FALTA ACLARACION
+             //ID PROMO EN 0 ESTE CASO
              ])->execute();
        //insertar los componentes del Ppedido
        foreach($data['componentes'] as $d){
@@ -58,6 +60,16 @@ class ProductoPedidoModel
        
         
         return $this->response->SetResponse(true,'Exito',$productop_id);
+        
+        
+    }
+    
+     public function insertprom($data)
+    {
+        
+       // insertar un productoPedido
+       $productop_id = $this->db->insertInto($this->table,$data)->execute();
+         return $this->response->SetResponse(true,'Exito',$productop_id);
         
         
     }

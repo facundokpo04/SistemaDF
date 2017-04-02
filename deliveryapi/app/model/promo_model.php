@@ -8,12 +8,16 @@ class PromoModel
     private $db;
     private $table = 'promo';
     private $response;
-    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/promos" ;
+    private $url ="http://35.184.187.29/delBo/assets/assets/imagenes/promos" ;
     
     public function __CONSTRUCT($db)
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+    
+     public function getUrl() {
+            return urlencode($this->url);
     }
     
     public function getAll()
@@ -37,10 +41,10 @@ class PromoModel
     public function insert($data)
     {
         
-        $this->db->insertInto($this->table, $data)
+        $query = $this->db->insertInto($this->table, $data)
                  ->execute();
         
-        return $this->response->SetResponse(true);
+          return $this->response->SetResponse(true, 'Exito', $query);
     }
       public function get($id)
     {
@@ -51,9 +55,7 @@ class PromoModel
         
     }
       public function update($data,$id)
-    {
-        
-        $this->db->update($this->table)
+    {      $this->db->update($this->table)
                  ->set($data)
                  ->where('pro_id', $id)
                  ->execute();
@@ -70,5 +72,32 @@ class PromoModel
         return $this->response->SetResponse(true);
     } 
     
+    public function insertProd($data) {
+
+
+        $query = $this->db->insertInto('productopromo', $data)
+                ->execute();
+
+        return $this->response->SetResponse(true, 'Exito', $query);
+    }
     
+    public function deleteProd($idPromo, $idProducto) {
+
+       $query =  $this->db->deleteFrom('productopromo')
+                ->where(array('ppro_idPromo' => $idPromo, 'ppro_idProducto' => $idProducto))
+                ->execute();
+
+       return $this->response->SetResponse(true, 'Exito', $query);
+    }
+    
+   public function getAllProd($idPromo) {
+
+//revisar la query
+        return $this->db->from("productopromo pp")
+                        ->select("p.prod_id,p.prod_nombre,p.prod_descripcionProducto,p.prod_precioBase,p.prod_imagen")
+                        ->leftJoin('producto p ON pp.ppro_idProducto = p.prod_id')
+                        ->where('pp.ppro_idPromo', $idPromo)
+                        ->fetchAll();
+    }
+
 }

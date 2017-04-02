@@ -8,7 +8,7 @@ class EmpresaModel
     private $db;
     private $table = 'empresa';
     private $response;
-   private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/empresa" ;
+   private $url ="http://35.184.187.29/delBo/assets/imagenes/empresa" ;
     
     public function __CONSTRUCT($db)
     {
