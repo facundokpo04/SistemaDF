@@ -72,5 +72,32 @@ class PromoPedidoModel {
 
         return $this->response->SetResponse(true);
     }
+    public function insertProdP($data) {
 
+
+        $query = $this->db->insertInto('productopromopedido', $data)
+                ->execute();
+
+        return $this->response->SetResponse(true, 'Exito', $query);
+    }
+
+    public function deleteProdPId($id) {
+
+        $query = $this->db->deleteFrom('productopromopedido')
+                ->where('ppp_id', $id)
+                ->execute();
+
+        return $this->response->SetResponse(true, 'Exito', $query);
+    }
+
+    public function getAllProd($idPromop) {
+
+        return $this->db->from("productopromopedido ppp")
+                        ->select("ppp.ppp_idPromoP,pp.pp_id,pp.pp_idVariedad,v.var_nombre,pp.pp_aclaracion,p.prod_id,p.prod_nombre,p.prod_descripcionProducto,p.prod_precioBase,p.prod_idCategoria")
+                        ->leftJoin('productopedido pp ON ppp.ppp_idProductoP = pp.pp_id')
+                        ->leftJoin('producto p  ON pp.pp_idProducto = p.prod_id')
+                        ->leftJoin('variedad v ON v.var_id=pp.pp_idVariedad')
+                        ->where('ppp.ppp_idPromoP', $idPromop)
+                        ->fetchAll();
+    }
 }

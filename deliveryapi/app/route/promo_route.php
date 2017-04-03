@@ -66,7 +66,7 @@ $app->group('/promo/', function () {
     });
     
     $this->post('insertarprod', function ($req, $res, $args) {
-        $r = ProductoValidation::validate($req->getParsedBody());
+        $r = PromoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -76,14 +76,20 @@ $app->group('/promo/', function () {
 //        
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->producto->insertProd($req->getParsedBody()))
+                                json_encode($this->model->promo->insertProd($req->getParsedBody()))
         );
     });
     
     $this->delete('eliminarprod/{idPromo}/{idProducto}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
-                                json_encode($this->model->producto->deleteProd($args['idPromo'], $args['idProducto']))
+                                json_encode($this->model->promo->deleteProd($args['idPromo'], $args['idProducto']))
+        );
+    });
+      $this->delete('eliminarprodid/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->promo->deleteProdId($args['id']))
         );
     });
 });

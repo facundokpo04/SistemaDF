@@ -13,11 +13,17 @@ $app->group('/promopedido/', function () {
                                 json_encode($this->model->promopedido->getAll())
         );
     });
-    
-     $this->get('listarPed/{id}', function ($req, $res, $args) {
+
+    $this->get('listarPed/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->promopedido->getAllped($args['id']))
+        );
+    });
+    $this->get('listarprod/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->promopedido->getAllProd($args['id']))
         );
     });
 
@@ -29,8 +35,8 @@ $app->group('/promopedido/', function () {
     });
 
     $this->post('insertar', function ($req, $res, $args) {
-        
-        
+
+
         $r = PromoPedidoValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
@@ -63,6 +69,28 @@ $app->group('/promopedido/', function () {
         return $res->withHeader('Content-type', 'application/json')
                         ->write(
                                 json_encode($this->model->promopedido->delete($args['id']))
+        );
+    });
+
+    $this->post('insertarprodp', function ($req, $res, $args) {
+        $r = PromoPedidoValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                            ->withStatus(422)
+                            ->write(json_encode($r->errors));
+        }
+//        
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->promopedido->insertProdP($req->getParsedBody()))
+        );
+    });
+
+    $this->delete('eliminarprodp/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->promopedido->deleteProdPId($args['id']))
         );
     });
 });

@@ -90,6 +90,15 @@ class PromoModel
        return $this->response->SetResponse(true, 'Exito', $query);
     }
     
+     public function deleteProdId($idPPromo) {
+
+       $query =  $this->db->deleteFrom('productopromo')
+                 ->where('ppro_id', $idPPromo)
+                ->execute();
+
+       return $this->response->SetResponse(true, 'Exito', $query);
+    }
+    
    public function getAllProd($idPromo) {
 
 //revisar la query

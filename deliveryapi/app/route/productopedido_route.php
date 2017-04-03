@@ -42,21 +42,8 @@ $app->group('/productopedido/', function () {
                                 json_encode($this->model->productopedido->insert($req->getParsedBody()))
         );
     });
-    
-      $this->post('insertarprom', function ($req, $res, $args) {
-        $r = ProductoPedidoValidation::validate($req->getParsedBody());
 
-        if (!$r->response) {
-            return $res->withHeader('Content-type', 'application/json')
-                            ->withStatus(422)
-                            ->write(json_encode($r->errors));
-        }
-//        
-        return $res->withHeader('Content-type', 'application/json')
-                        ->write(
-                                json_encode($this->model->productopedido->insertprom($req->getParsedBody()))
-        );
-    });
+
 
     $this->put('actualizar/{id}', function ($req, $res, $args) {
         $r = ProductoPedidoValidation::validate($req->getParsedBody());
@@ -80,6 +67,7 @@ $app->group('/productopedido/', function () {
                                 json_encode($this->model->productopedido->delete($args['id']))
         );
     });
+ 
 });
 //->add(new AuthMiddleware($app));
 /* 
