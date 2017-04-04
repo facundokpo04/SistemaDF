@@ -4,6 +4,30 @@ use App\Lib\Auth,
     App\Middleware\AuthMiddleware;
 
 $app->group('/auth/', function () {
+
+   /**
+ * @api {post} auth/autenticar/ Autenticar el usuario
+ * @apiName autenticar
+ * @apiGroup auth
+ *
+ * @apiParam {String} Correo  Direccion de correo del Usuario.
+ * @apiParam {String} Password    Password del Usuario.
+ *
+ * @apiSuccess {String} result datos de interes.
+ * @apiSuccess {Boolean} response   resultado del llamado.
+ * @apiSuccess {String} message     mesaje informativo.
+ * @apiSuccess {String[]} errors   errores de validacion.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "result": token,
+ *       "response": "true"
+ *       "message": "Credenciales Validas"
+ *       "errors": []
+ *     }
+ *
+ */    
     $this->post('autenticar', function ($req, $res, $args) {
         $parametros = $req->getParsedBody();        
       
