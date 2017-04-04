@@ -5,7 +5,7 @@ use App\Lib\Auth,
 
 $app->group('/auth/', function () {
 
-   /**
+ /**
  * @api {post} auth/autenticar/ Autenticar el usuario
  * @apiName autenticar
  * @apiGroup auth

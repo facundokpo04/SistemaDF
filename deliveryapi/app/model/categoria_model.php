@@ -20,6 +20,7 @@ class CategoriaModel
       public function getUrl() {
             return urlencode($this->url);
     }
+    
     public function getAll($l, $p)
     {
         $data = $this->db->from($this->table)
@@ -36,7 +37,7 @@ class CategoriaModel
         return [
             'data'  => $data,
             'total' => $total
-        ];
+        ];              
     }
     
     public function insert($data)
