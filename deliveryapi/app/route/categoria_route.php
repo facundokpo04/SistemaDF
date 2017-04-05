@@ -17,7 +17,7 @@ $app->group('/categoria/', function () {
  /**
  * @api {get} categoria/listar/{l}/{p} Listar Categorias
  * @apiName Listar Categorias
- * @apiGroup categoria
+ * @apiGroup Categoria
  *
  * @apiParam {number} l  Cantidad de registros a listar
  * @apiParam {number} p  Indice para listar
@@ -51,7 +51,7 @@ $app->group('/categoria/', function () {
  /**
  * @api {get} categoria/obtener/{id} Obtener Categoria
  * @apiName Obtener Categoria
- * @apiGroup categoria
+ * @apiGroup Categoria
  *
  * @apiParam {number} id  Id de la Categoria
  * 
@@ -84,7 +84,7 @@ $app->group('/categoria/', function () {
  /**
  * @api {post} categoria/insertar Insertar una  Categoria
  * @apiName Insertar Categoria
- * @apiGroup categoria
+ * @apiGroup Categoria
  *
  * @apiParam {number} cat_nombre  Nombre de la categoria
  * @apiParam {number} cat_descripcion  Breve descripcion de la categoria
