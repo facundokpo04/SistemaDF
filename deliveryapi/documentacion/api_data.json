@@ -214,6 +214,425 @@
   },
   {
     "type": "put",
+    "url": "pedidoencabezado/actualizar",
+    "title": "Actualizar un detalle Pedido",
+    "name": "Actualizar_Detalle_Pedido",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_Cantidad",
+            "description": "<p>cantidad de productos del detalle</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_PrecioUnitario",
+            "description": "<p>precio unitario del producto</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "dp_Total",
+            "description": "<p>Precio unitario x cantidad</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "dp_idProductoPedido",
+            "description": "<p>id del producto pedido</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_idPedidoEncabezado",
+            "description": "<p>id del encabezado del pedido</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result",
+            "description": "<p>id del Pedido.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "response",
+            "description": "<p>resultado del llamado.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>mesaje informativo.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>errores de validacion.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"result\": 1\n  \"response\": \"true\"\n  \"message\": \"\"\n  \"errors\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/detallepedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "post",
+    "url": "pedidoencabezado/insertar",
+    "title": "Insertar un Detalle Pedido",
+    "name": "Insertar_Detalle_Pedido",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_Cantidad",
+            "description": "<p>cantidad de productos del detalle</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_PrecioUnitario",
+            "description": "<p>precio unitario del producto</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "dp_Total",
+            "description": "<p>Precio unitario x cantidad</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "dp_idProductoPedido",
+            "description": "<p>id del producto pedido</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "dp_idPedidoEncabezado",
+            "description": "<p>id del encabezado del pedido</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result",
+            "description": "<p>id del Pedido.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "response",
+            "description": "<p>resultado del llamado.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>mesaje informativo.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>errores de validacion.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"result\": 1\n  \"response\": \"true\"\n  \"message\": \"\"\n  \"errors\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/detallepedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "post",
+    "url": "productopedido/insertar",
+    "title": "Insertar un Producto Pedido",
+    "name": "Insertar_Producto_Pedido",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "pp_precioBase",
+            "description": "<p>precio del producto</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "pp_idProducto",
+            "description": "<p>id del producto</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "pp_idVariedad",
+            "description": "<p>id de la variedad si es que tiene</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "pp_precioCalc",
+            "description": "<p>precio de la variedad + los componentes</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "pp_aclaracion",
+            "description": "<p>aclaracion del producto elegido</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result",
+            "description": "<p>id del Producto Pedido.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "response",
+            "description": "<p>resultado del llamado.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>mesaje informativo.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>errores de validacion.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"result\": 1\n  \"response\": \"true\"\n  \"message\": \"\"\n  \"errors\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/productopedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "get",
+    "url": "detallepedido/listarPed/{id}",
+    "title": "Listar los detalles de un pedido",
+    "name": "Listar_Detalle_Pedido",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id del Pedido Encabezado que se desea listar el detalle</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>lista de detalles del pedido</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data.producto",
+            "description": "<p>producto del detalle.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data.componentes",
+            "description": "<p>componentes del detalle.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n -0:{\n    \"producto\": {\n         \"dp_id\": \"4\",\n         \"dp_Cantidad\": \"1\",\n         \"dp_PrecioUnitario\": \"216\",\n         \"dp_Total\": null,\n         \"dp_idProductoPedido\": \"7\",\n         \"dp_idPedidoEncabezado\": \"14\",\n         \"prod_nombre\": \"Muzzarella\",\n         \"prod_codigoProducto\": \"01256\",\n         \"prod_precioBase\": \"98\",\n         \"var_nombre\": \"Grande\",\n         \"var_precio\": \"108\"\n        },\n     \"componentes\": [\n        - 0:{\n             \"cpp_id\": \"3\",\n             \"cpp_idProductoPedido\": \"7\",\n             \"cpp_idComponente\": \"4\",\n             \"com_precio\": \"10\",\n             \"com_nombre\": \"Huevo\"\n         }\n     ],\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/detallepedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "get",
+    "url": "detallepedido/obtener/{id}",
+    "title": "Obtener Detalle",
+    "name": "Obtener_Detalle",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del detalle</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>detalle Pedido.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n      \"dp_id\": \"3\",\n      \"dp_Cantidad\": \"1\",\n      \"dp_PrecioUnitario\": \"50\",\n      \"dp_Total\": 250,\n      \"dp_idProductoPedido\": \"5\",\n      \"dp_idPedidoEncabezado\": \"13\"\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/detallepedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "get",
+    "url": "productopedido/obtener/{id}",
+    "title": "Obtener Producto Pedido",
+    "name": "Obtener_Producto_Pedido",
+    "group": "Detalle_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del Producto Pedido</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "Producto",
+            "description": "<p>Pedido.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n     \"pp_id\": \"5\",\n     \"pp_precioBase\": \"120\",\n     \"pp_idProducto\": \"1\",\n     \"pp_idVariedad\": \"3\",\n     \"pp_precioCalc\": \"255\",\n     \"pp_aclaracion\": \"sin queso\"  \n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/productopedido_route.php",
+    "groupTitle": "Detalle_Pedido"
+  },
+  {
+    "type": "put",
     "url": "direccion/actualizar/{id}",
     "title": "Actualizar una  Direccion",
     "name": "Actualizar_Direccion",
@@ -663,7 +1082,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n  {\n     \n         \"per_id\": \"8\",\n         \"per_nombre\": \"facundo Andres Dominguez\",\n         \"per_email\": \"facundokpo04@gmail.com\",\n         \"per_documento\": null,\n         \"per_password\": \"b9249ee15900c72b3938d6b8e3909103\",\n         \"per_nacionalidad\": \"Argentino\",\n         \"per_celular\": \"3758483058\",\n         \"per_perfilUsuario\": \"Cliente\",\n         \"dir_direccion\": \"jj valle 167\",\n         \"dir_telefonoFijo\": \"420769\"\n   \n   }",
+          "content": "HTTP/1.1 200 OK\n  {\n     \n         \"per_id\": \"8\",\n         \"per_nombre\": \"facundo Andres Dominguez\",\n         \"per_email\": \"facundokpo04@gmail.com\",\n         \"per_documento\": 34060319,\n         \"per_password\": \"b9249ee15900c72b3938d6b8e3909103\",\n         \"per_nacionalidad\": \"Argentino\",\n         \"per_celular\": \"3758483058\",\n         \"per_perfilUsuario\": \"Cliente\",\n         \"dir_direccion\": \"jj valle 167\",\n         \"dir_telefonoFijo\": \"420769\"\n   \n   }",
           "type": "json"
         }
       ]
@@ -706,7 +1125,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n  {\n     \n         \"pe_id\": \"13\",\n          \"pe_idCliente\": \"8\",\n          \"pe_idEmpleado\": null,\n          \"pe_aclaraciones\": \"Facturar a nombre de .. \",\n          \"pe_comentarios\": \"Exelente llego muy rapido \",\n          \"pe_idEstado\": \"1\",\n          \"pe_Total\": 250,\n          \"pe_idPersona\": \"8\",\n          \"pe_cli_tel\": \"3758483058\",\n          \"pe_idDireccion\": \"3\",\n          \"pe_medioPago\": \"Tarjeta Debito\",\n          \"pe_fechaPedido\": null,\n          \"per_nombre\": \"facundo Andres Dominguez\",\n          \"per_documento\": 34060319,\n          \"dir_telefonoFijo\": \"420769\",\n          \"dir_direccion\": \"jj valle 167\",\n          \"relacion\": \"pedidoestado\",\n          \"descripcion\": \"Pendiente\"\n   \n   }",
+          "content": "HTTP/1.1 200 OK\n  {\n     \n         \"pe_id\": \"13\",\n          \"pe_idCliente\": \"8\",\n          \"pe_idEmpleado\": 12,\n          \"pe_aclaraciones\": \"Facturar a nombre de .. \",\n          \"pe_comentarios\": \"Exelente llego muy rapido \",\n          \"pe_idEstado\": \"1\",\n          \"pe_Total\": 250,\n          \"pe_idPersona\": \"8\",\n          \"pe_cli_tel\": \"3758483058\",\n          \"pe_idDireccion\": \"3\",\n          \"pe_medioPago\": \"Tarjeta Debito\",\n          \"pe_fechaPedido\": 12/04/17,\n          \"per_nombre\": \"facundo Andres Dominguez\",\n          \"per_documento\": 34060319,\n          \"dir_telefonoFijo\": \"420769\",\n          \"dir_direccion\": \"jj valle 167\",\n          \"relacion\": \"pedidoestado\",\n          \"descripcion\": \"Pendiente\"\n   \n   }",
           "type": "json"
         }
       ]
@@ -1134,6 +1553,544 @@
     "version": "0.0.0",
     "filename": "app/route/producto_route.php",
     "groupTitle": "Producto"
+  },
+  {
+    "type": "get",
+    "url": "promo/listarprod/{id}",
+    "title": "Listar todas los Productos de una promo",
+    "name": "Listar_Productos_Promo",
+    "group": "Promo",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "array",
+            "description": "<p>registros consultados.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n        -0: {\n               \"ppro_id\": \"1\",\n               \"ppro_idPromo\": \"1\",\n               \"ppro_idProducto\": \"7\",\n               \"prod_id\": \"7\",\n               \"prod_nombre\": \"Arabe\",\n               \"prod_descripcionProducto\": \"Muzzarela, salsa y aceitunas\",\n               \"prod_precioBase\": \"12.5\",\n               \"prod_imagen\": \"pizzanapolitana.jpg\"\n         },\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promo_route.php",
+    "groupTitle": "Promo"
+  },
+  {
+    "type": "get",
+    "url": "promos/listar",
+    "title": "Listar Promos",
+    "name": "Listar_Promos",
+    "group": "Promo",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>registros consultados.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "total",
+            "description": "<p>cantidad de registros.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n      \"data\": [\n       {\n        \"pro_id\": \"3\",\n        \"pro_nombre\": \"Promo3\",\n        \"pro_descripcion\": \"2 pizzas + 1 gaseosa\",\n        \"pro_precio\": 250,\n        \"pro_descuento\": 40,\n        \"pro_FechaInicio\": \"23/02/2017\",\n        \"pro_FechaFin\": \"23/02/2017\",\n        \"pro_imagen\": \"promo3.jpg\",\n        \"pro_idEstado\": 1\n       }\n      ],\n      \"total\": \"10\"\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promo_route.php",
+    "groupTitle": "Promo"
+  },
+  {
+    "type": "get",
+    "url": "promo/obtener/{idPromo}",
+    "title": "Obtener Promo",
+    "name": "Obtener_Promo",
+    "group": "Promo",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "idPromo",
+            "description": "<p>id de la promo que se quiere obtener</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>registro consultado.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n     \n          \"pro_id\": \"1\",\n          \"pro_nombre\": \"Promo1\",\n          \"pro_descripcion\": \"\",\n          \"pro_precio\": \"0\",\n          \"pro_descuento\": \"0\",\n          \"pro_FechaInicio\": \"01/01/1970\",\n          \"pro_FechaFin\": \"01/01/1970\",\n          \"pro_imagen\": \"promo1.jpg\",\n          \"pro_idEstado\": 1\n   \n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promo_route.php",
+    "groupTitle": "Promo"
+  },
+  {
+    "type": "get",
+    "url": "promo/url/",
+    "title": "Obtener Url",
+    "name": "Obtener_Url",
+    "group": "Promo",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>url de la ubicacion de las imagenes de las promos.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n      \"http%3A%2F%2F35.184.187.29%2FdelBo%2Fassets%2Fimagenes%2Fproducto\"\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promo_route.php",
+    "groupTitle": "Promo"
+  },
+  {
+    "type": "post",
+    "url": "promopedido/insertarprodp",
+    "title": "Insertar ProductoPedio a una PromoPedido",
+    "name": "Insertar_ProductoPedio_a_PromoPedido",
+    "group": "Promo_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "ppp_idProductoP",
+            "description": "<p>id  del ProductoP elegido</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "ppp_idPromoP",
+            "description": "<p>id de la PromoP elegida</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result",
+            "description": "<p>id del  ProductoPromoPedido.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "response",
+            "description": "<p>resultado del llamado.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>mesaje informativo.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>errores de validacion.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"result\": 1\n  \"response\": \"true\"\n  \"message\": \"Exito\"\n  \"errors\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promopedido_route.php",
+    "groupTitle": "Promo_Pedido"
+  },
+  {
+    "type": "post",
+    "url": "promopedido/insertar",
+    "title": "Insertar una Promo Pedido",
+    "name": "Insertar_Promo_Pedido",
+    "group": "Promo_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_nombre",
+            "description": "<p>nombre de la promo elegida</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "ppro_precioUnitario",
+            "description": "<p>precio unitario de la promo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "ppro_cantidad",
+            "description": "<p>cantidad de la promo elegida</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "ppro_idPromo",
+            "description": "<p>id de la promo elegida</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_idPedidoEncabezado",
+            "description": "<p>id del pedido encabezado</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_detallePp",
+            "description": "<p>detalle de lo elegido por producto de promo algo descriptivo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_total",
+            "description": "<p>precio total de la promo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_precioBase",
+            "description": "<p>precio base de los productos de la promo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ppro_aclaracion",
+            "description": "<p>aclaracion sobre la promo elegida</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result",
+            "description": "<p>id de la Promo Pedido.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "response",
+            "description": "<p>resultado del llamado.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>mesaje informativo.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>errores de validacion.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"result\": 1\n  \"response\": \"true\"\n  \"message\": \"Exito\"\n  \"errors\": []\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promopedido_route.php",
+    "groupTitle": "Promo_Pedido"
+  },
+  {
+    "type": "get",
+    "url": "promopedido/listarprod/{idPromoPedido}",
+    "title": "Listar los productos de una promopedido",
+    "name": "Listar_ProductosP_PromoPedido",
+    "group": "Promo_Pedido",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "idPromoPedido",
+            "description": "<p>id de la PromoPedido que se quiere listar los productos</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "arrat",
+            "description": "<p>lista de ProductosPedido de la PromoPedido</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n -0:{       \n     \"ppp_id\": \"1\",\n     \"ppp_idProductoP\": \"5\",\n     \"ppp_idPromoP\": \"1\",\n     \"pp_id\": \"5\",\n     \"pp_idVariedad\": \"3\",\n     \"var_nombre\": \"Grande\",\n     \"pp_aclaracion\": \"Alguna Aclaracion\",\n     \"prod_id\": \"1\",\n     \"prod_nombre\": \"Napolitana\",\n     \"prod_descripcionProducto\": \"Muzzarela, salsa ajo y rodajas de tomate\",\n     \"prod_precioBase\": \"120\",\n     \"prod_idCategoria\": \"3\"\n     }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/promopedido_route.php",
+    "groupTitle": "Promo_Pedido"
+  },
+  {
+    "type": "get",
+    "url": "diahorario/obtener/{id}",
+    "title": "Obtener DiaHorario",
+    "name": "Obtener_DiaHorario",
+    "group": "Sucursal",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id del diahorario</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "dh_id",
+            "description": "<p>id del DH.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "dh_diaSemana",
+            "description": "<p>dia de la semana 1-lunes.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dh_horaApertura",
+            "description": "<p>hora de apertura del delivery.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dh_horaCierre",
+            "description": "<p>hora del cierre del delivery.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "dh_idSucursal",
+            "description": "<p>id de la sucursal.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n    \"dh_id\": \"1\",\n    \"dh_diaSemana\": \"1\",\n    \"dh_horaApertura\": \"11:00\",\n    \"dh_horaCierre\": \"21:00\",\n    \"dh_idSucursal\": \"4\"\n      \n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/diahorario_route.php",
+    "groupTitle": "Sucursal"
+  },
+  {
+    "type": "get",
+    "url": "sucursal/obtener/{idSucursal}",
+    "title": "Obtener Horarios",
+    "name": "Obtener_Horarios",
+    "group": "Sucursal",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "idSucursal",
+            "description": "<p>Id de la sucursal</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": "<p>registros consultados.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "total",
+            "description": "<p>cantidad de registros.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n \"data\": [\n  -0:{\n         \"dh_id\": \"1\",\n         \"dh_diaSemana\": \"1\",\n         \"dh_horaApertura\": \"11:00\",\n         \"dh_horaCierre\": \"21:00\",\n         \"dh_idSucursal\": \"4\"\n     },\n  -1:{\n         \"dh_id\": \"3\",\n         \"dh_diaSemana\": \"2\",\n         \"dh_horaApertura\": \"10:00\",\n         \"dh_horaCierre\": \"21:00\",\n         \"dh_idSucursal\": \"4\"\n      }\n          ],\n \"total\": \"7\"\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/diahorario_route.php",
+    "groupTitle": "Sucursal"
+  },
+  {
+    "type": "get",
+    "url": "sucursal/obtener/{idSucursal}",
+    "title": "Obtener Sucursal",
+    "name": "Obtener_Sucursal",
+    "group": "Sucursal",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "idSucursal",
+            "description": "<p>Id de la sucursal</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>objecto consultado.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n     \"suc_id\": \"4\",\n     \"suc_nombre\": \"Centro Iguazu\",\n     \"suc_cuit\": \"2035978\",\n     \"suc_razonSocial\": \"Pizza Color Delivery\",\n     \"suc_idEmpresa\": \"1\",\n     \"suc_direccion\": \"jj valle 167\"\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/sucursal_route.php",
+    "groupTitle": "Sucursal"
   },
   {
     "type": "post",

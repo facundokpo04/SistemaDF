@@ -10,7 +10,7 @@ class ProductoPedidoModel {
     private $table = 'productopedido';
     private $response;
 
-    // private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/productopedido" ;
+    private $url ="http://localhost/proyecto2/SistemaDF/deliverybo/assets/imagenes/productopedido" ;
 
     public function __CONSTRUCT($db) {
         $this->db = $db;

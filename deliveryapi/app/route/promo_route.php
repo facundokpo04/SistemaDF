@@ -6,12 +6,93 @@ use App\Lib\Auth,
     App\Middleware\AuthMiddleware;
 
 $app->group('/promo/', function () {
+    
+ /**
+ * @api {get} promo/url/ Obtener Url
+ * @apiName Obtener Url
+ * @apiGroup Promo
+ *
+ *
+ * @apiSuccess {String} data url de la ubicacion de las imagenes de las promos.
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *       {
+ *           "http%3A%2F%2F35.184.187.29%2FdelBo%2Fassets%2Fimagenes%2Fproducto"
+ *        }
+ *
+ */    
+
+    $this->get('url', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+                        ->write(
+                                json_encode($this->model->producto->getUrl())
+        );
+    });
+    /**
+ * @api {get} promos/listar Listar Promos
+ * @apiName Listar Promos
+ * @apiGroup Promo
+ *
+ *
+ * @apiSuccess {Object[]} data registros consultados.
+ * @apiSuccess {number} total cantidad de registros.
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *       {
+ *           "data": [
+ *            {
+ *             "pro_id": "3",
+ *             "pro_nombre": "Promo3",
+ *             "pro_descripcion": "2 pizzas + 1 gaseosa",
+ *             "pro_precio": 250,
+ *             "pro_descuento": 40,
+ *             "pro_FechaInicio": "23/02/2017",
+ *             "pro_FechaFin": "23/02/2017",
+ *             "pro_imagen": "promo3.jpg",
+ *             "pro_idEstado": 1
+ *            }
+ *           ],
+ *           "total": "10"
+ *        }
+ *
+ */  
     $this->get('listar', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
                      json_encode($this->model->promo->getAll())
                    );
     });
+ /**
+ * @api {get} promo/listarprod/{id}  Listar todas los Productos de una promo
+ * @apiName Listar Productos Promo
+ * @apiGroup Promo
+ *
+ *
+ * @apiSuccess {Object[]} array registros consultados.
+ *
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *       {
+ *             -0: {
+ *                    "ppro_id": "1",
+ *                    "ppro_idPromo": "1",
+ *                    "ppro_idProducto": "7",
+ *                    "prod_id": "7",
+ *                    "prod_nombre": "Arabe",
+ *                    "prod_descripcionProducto": "Muzzarela, salsa y aceitunas",
+ *                    "prod_precioBase": "12.5",
+ *                    "prod_imagen": "pizzanapolitana.jpg"
+ *              },
+ *        }
+ *
+ */   
+    
     
     $this->get('listarprod/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
@@ -19,7 +100,33 @@ $app->group('/promo/', function () {
                      json_encode($this->model->promo->getAllProd($args['id']))
                    );
     });
-    
+    /**
+ * @api {get} promo/obtener/{idPromo} Obtener Promo
+ * @apiName Obtener Promo
+ * @apiGroup Promo
+ *
+ * @apiParam {number} idPromo  id de la promo que se quiere obtener 
+ *
+ * @apiSuccess {Object[]} data registro consultado.
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *       {
+ *          
+ *               "pro_id": "1",
+ *               "pro_nombre": "Promo1",
+ *               "pro_descripcion": "",
+ *               "pro_precio": "0",
+ *               "pro_descuento": "0",
+ *               "pro_FechaInicio": "01/01/1970",
+ *               "pro_FechaFin": "01/01/1970",
+ *               "pro_imagen": "promo1.jpg",
+ *               "pro_idEstado": 1
+ *        
+ *        }
+ *
+ */   
     $this->get('obtener/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
