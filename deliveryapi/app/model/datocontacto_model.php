@@ -49,9 +49,9 @@ class DatoContactoModel {
     }
 
     public function getAllTelCon($idSucursal) {
-        return $this->db->from("datocontacto dc")
+        return $this->db->from("telefonocontacto tc")
                         ->select("dc.dcon_idSucursal,tc.tcon_id,tc.tcon_numero,tc.tcon_descripcion,tc.tcon_tipo,tc.tcon_idDatoContacto")
-                        ->leftJoin('telefonocontacto tc ON dc.dcon_id = tc.tcon_idDatoContacto')
+                        ->leftJoin('datocontacto dc  ON dc.dcon_id = tc.tcon_idDatoContacto')
                         ->where('dc.dcon_idSucursal', $idSucursal)
                         ->fetchAll();
     }

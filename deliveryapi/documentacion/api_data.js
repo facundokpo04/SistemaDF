@@ -1930,6 +1930,91 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "datocontacto/obtenersuc/{idSuc}",
+    "title": "Obtener DatoContacto Sucursal",
+    "name": "Obtener_DatoContacto",
+    "group": "Sucursal",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id de la Categoria</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "dcon_id",
+            "description": "<p>id del datocontacto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dcon_facebook",
+            "description": "<p>facebook de la sucursal.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dcon_website",
+            "description": "<p>website de la sucursal.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dcon_twitter",
+            "description": "<p>twitter de la sucursal.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dcon_direccion",
+            "description": "<p>direccion de la sucursal.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "dcon_idSucursal",
+            "description": "<p>id de la sucursal.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dcon_email",
+            "description": "<p>email de la sucursal.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n     \"dcon_id\": \"3\",\n     \"dcon_facebook\": \"facebook.com/pizzacolordelivery\",\n     \"dcon_website\": \"www.pizzacolordelivery.com\",\n     \"dcon_twitter\": \"\",\n     \"dcon_direccion\": \"Cordoba 255 \",\n     \"dcon_idSucursal\": \"4\",\n     \"dcon_email\": \"delivey@gmail.com\"\n      \n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/datocontacto_route.php",
+    "groupTitle": "Sucursal"
+  },
+  {
+    "type": "get",
     "url": "diahorario/obtener/{id}",
     "title": "Obtener DiaHorario",
     "name": "Obtener_DiaHorario",
@@ -2090,6 +2175,49 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "app/route/sucursal_route.php",
+    "groupTitle": "Sucursal"
+  },
+  {
+    "type": "get",
+    "url": "datocontacto/listartelsuc/{idSucursal}",
+    "title": "Obtener Telefonos Sucursal",
+    "name": "Obtener_Telefonos_Sucursal",
+    "group": "Sucursal",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "idSucursal",
+            "description": "<p>Id de la sucursal</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "[]Object",
+            "optional": false,
+            "field": "lista",
+            "description": "<p>de telefonos de la sucursal.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n  {\n     -0:{\n         \"tcon_id\": \"2\",\n         \"tcon_numero\": \"3757589635\",\n         \"tcon_descripcion\": \"WattApp\",\n         \"tcon_tipo\": \"1\",\n         \"tcon_idDatoContacto\": \"3\",\n         \"dcon_idSucursal\": \"4\"\n        },\n     -1:{\n         \"tcon_id\": \"3\",\n         \"tcon_numero\": \"3757589636\",\n         \"tcon_descripcion\": \"WattApp\",\n         \"tcon_tipo\": \"1\",\n         \"tcon_idDatoContacto\": \"3\",\n         \"dcon_idSucursal\": \"4\"\n       }\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/route/datocontacto_route.php",
     "groupTitle": "Sucursal"
   },
   {
