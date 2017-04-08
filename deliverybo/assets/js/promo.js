@@ -15,6 +15,9 @@ function VerForm() {
     $("#promo").show();// Mostramos el formulario
     $("#herramientas").hide();// ocultamos el boton nuevo
     $("#promos").hide();
+    $("#estadodiv").show();
+    
+    
 }
 
 
@@ -32,6 +35,7 @@ function VerFormAgregar( ) {
     $("#panelCont").hide();
     $("#herramientas").hide();// ocultamos el boton nuevo
     $("#promos").hide();
+     $("#estadodiv").hide();
 
 
 }
@@ -47,23 +51,32 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            $('#txtNombre').val(res.pro_nombre);
-            $('#txtDescripcion').val(res.pro_descripcion);
+            if (res.estado) {
+                $('#txtNombre').val(res.response.pro_nombre);
+                $('#txtDescripcion').val(res.response.pro_descripcion);
 
-            //ajax para traer todos los estados
-            $('#txtPrecio').val(res.pro_precio);
-            $('#txtDescuento').val(res.pro_descuento);
-            $('#txtFechaInicio').val(res.pro_FechaInicio);
-            $('#txtFechaFin').val(res.pro_FechaFin);
-            $('#imagen').attr('src', './assets/imagenes/promo/' + res.pro_imagen);
-            $('#idPromo').val(res.pro_id);
+                //ajax para traer todos los estados
+                $('#txtPrecio').val(res.response.pro_precio);
+                $('#txtDescuento').val(res.response.pro_descuento);
+                $('#txtFechaInicio').val(res.response.pro_FechaInicio);
+                $('#txtFechaFin').val(res.response.pro_FechaFin);
+                $('#imagen').attr('src', './assets/imagenes/promo/' + res.response.pro_imagen);
+                $('#idPromo').val(res.response.pro_id);
+                 $('#PEstado').val(res.response.pro_idEstado);
+            } else {
 
+                console.log(res.response)
+
+            }
         },
         error: function (request, status, error) {
             console.log(error.message);
 
         }
     });
+    
+                    cargarProductos(idPromo)
+
 
 
 //    CargarComponetesAgregar(idPromo);
@@ -73,7 +86,48 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
 
 }
 
+function cargarProductos(idPromo) {
+debugger;
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/promo/get_ProductosById/" + idPromo,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {         
+            if (res.estado) {
+                
 
+                $('#tblProductos tbody tr').remove();
+                $.each(res.response, function (key, data) {
+
+
+                    $('#tblProductos tbody').append('<tr>' +
+                            ' <td>' +
+                            data.ppro_id +
+                            ' </td>' +
+                            ' <td>' +
+                            data.prod_nombre +
+                            ' </td>' +
+                            ' <td>' +
+                            data.prod_descripcionProducto +
+                            ' </td>' +
+                            ' <td>' + '$&nbsp;' +
+                            data.prod_precioBase +
+                            ' </td>' +
+                            ' <td class="eliminarComp"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
+                            '</tr>'
+                            );
+                });
+            } else {
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+    });
+}
 
 
 function actualizarPromo() {
@@ -175,10 +229,11 @@ $('#tbPromos').DataTable({
         {data: 'pro_id', 'sClass': 'dt-body-center'},
         {data: 'pro_nombre'},
         {data: 'pro_descripcion'},
-        {data: 'pro_descuento'},
         {data: 'pro_precio'},
         {data: 'pro_FechaInicio'},
         {data: 'pro_FechaFin'},
+        {data: 'pro_idEstado'},
+
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -213,7 +268,20 @@ $('#tbPromos').DataTable({
             }
         },
         {
-            "targets": [4],
+            "targets": [6],
+            "data": "pro_idEstado",
+            "render": function (data, type, row) {
+
+                if (data == 1) {
+                    return "<span class='label label-success'>Habilitada</span>";
+                } else if (data == 2) {
+                    return "<span class='label label-danger'>Deshabilitada</span>";
+                }
+
+            }
+        },
+        {
+            "targets": [3],
             "data": "pro_precio",
             "orderData": [1, 0],
             "render": function (data, type, row) {
@@ -221,6 +289,7 @@ $('#tbPromos').DataTable({
 
             }
         }
+
     ],
     "order": [[0, "asc"]],
 });

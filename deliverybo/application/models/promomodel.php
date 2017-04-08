@@ -11,7 +11,7 @@ class PromoModel extends CI_Model {
       public function getAllProd($idPromo){
         return RestApi::call(
             RestApiMethod::GET,
-            "producto/listarprod/$idPromo"
+            "promo/listarprod/$idPromo"
         );   
         }
 

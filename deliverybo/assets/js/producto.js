@@ -96,6 +96,7 @@ var table = $('#tbProductos').DataTable({
 function VerForm() {
     $("#producto").show(); // Mostramos el formulario
     $("#herramientas").hide(); // ocultamos el boton nuevo
+     $("#filtros").hide();//ocultamos los filtros
     $("#productos").hide();
 }
 
@@ -103,7 +104,9 @@ function VerForm() {
 function OcultarForm() {
     $("#producto").hide(); // Mostramos el formulario
     $("#herramientas").show(); // ocultamos el boton nuevo
+    $("#filtros").show();//ocultamos los filtros
     $("#productos").show();
+    
 }
 
 function cargarFCategorias() {
