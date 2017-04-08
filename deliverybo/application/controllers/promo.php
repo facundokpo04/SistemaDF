@@ -133,34 +133,85 @@ class Promo extends CI_Controller {
         }
     }
 
-    public function eliminarComponente() {
+    public function updProducto() {
+        $errors = array();
 
-        $idPromo = $this->input->post('idPromo');
-        $idComponente = $this->input->post('idComponente');
-
+        $data = [
+            'cp_idProducto' => $this->input->post('cp_idProducto'),
+            'cp_idComponente' => $this->input->post('cp_idComponente')
+        ];
+//
+//
+//
         try {
-            $respuesta = $this->pm->eliminarComp($idPromo, $idComponente);
+
+            $response = $this->pm->registrarComp($data);
+            $respuesta = ($response->result);
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
+                ];
+            } else {
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e . getMessage()
+                ];
+            }
+        }
+        echo json_encode($respuesta);
+    }
+
+    public function eliminarProducto() {
+
+        $idProducto = $this->input->post('idProducto');
+        $idComponente = $this->input->post('idComponente');
+
+        try {
+            $response = $this->pm->eliminarComp($idProducto, $idComponente);
+            $respuesta = [
+                'estado' => true,
+                'response' => $response
+            ];
+        } catch (Exception $e) {
+            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                $errors = RestApi::getEntityValidationFieldsError();
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
+                ];
+            } else {
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e->getMessage()
+                ];
             }
         }
 //           
 
         echo json_encode($respuesta);
     }
-
-    public function eliminarVariedad($idVariedad) {
+    
+    public function get_ProductosById($idPromo) {
 
         try {
-            $respuesta = $this->vm->eliminar($idVariedad);
+            $result = $this->pm->getAllComp($idProducto);
+            $respuesta = [
+                        'estado' => true,
+                        'response' => $result
+            ];
         } catch (Exception $e) {
-            if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
-                $errors = RestApi::getEntityValidationFieldsError();
-            }
+            $respuesta = [
+                        'estado' => false,
+                        'response' => $e->getMessage()
+            ];
         }
-//           
-
         echo json_encode($respuesta);
     }
 
