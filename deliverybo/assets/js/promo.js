@@ -87,7 +87,6 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
 }
 
 function cargarProductos(idPromo) {
-debugger;
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/promo/get_ProductosById/" + idPromo,
