@@ -21,14 +21,11 @@ function VerForm() {
 
 }
 
-
 function OcultarForm() {
     $("#promo").hide();// Mostramos el formulario
     $("#herramientas").show();// ocultamos el boton nuevo
     $("#promos").show();
 }
-
-
 
 function VerFormAgregar( ) {
     $("#promo").show();// Mostramos el formulario
@@ -40,7 +37,7 @@ function VerFormAgregar( ) {
 
 
 }
-
+//modal productos
 function limpiarModal() {
     $("#msj p").empty();
     $("#msj").hide();
@@ -48,11 +45,17 @@ function limpiarModal() {
 
 
 }
+function AbrirModalProductos() {
+    $("#modalAgregarProductos").modal("show");
+}
+function cerrarModalProductos() {
+    $("#modalAgregarProductos").modal("hide");
+    cargarProductos($('#idPromo').val());
 
+}
 
 function agregarProd(idProd) {
     var idPromo = $('#idPromo').val();
-    debugger;
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/promo/updProducto",
@@ -62,15 +65,15 @@ function agregarProd(idProd) {
             ppro_idProducto: idProd
         },
         success: function (res) {
-            if(res.estado){
-            swal("El Producto fue Agregado!", "haga click!", "success")
-            cantpromodal++;
-            $("#msj p").html("<strong>" + cantpromodal + " Producto Agregado</strong>")
-            $("#msj").show();
-            
-        
-            }else{
-                sweetAlert("Oops...", "Ocurrio Algun Error!","error");
+            if (res.estado) {
+                swal("El Producto fue Agregado!", "haga click!", "success")
+                cantpromodal++;
+                $("#msj p").html("<strong>" + cantpromodal + " Producto Agregado</strong>")
+                $("#msj").show();
+
+
+            } else {
+                sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
             }
 
 
@@ -105,7 +108,7 @@ function agregarFilaProducto(id, nombre, descripcion, precio) {
             ' <td>' + '$&nbsp;' +
             precio +
             ' </td>' +
-            ' <td class="eliminarComp"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
+            ' <td class="eliminarProd"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
             '</tr>'
             );
 
@@ -148,10 +151,10 @@ function actualizarTablaCat(idCat) {
 
 
 }
-function AbrirModalProductos() {
-    $("#modalAgregarProductos").modal("show");
-}
 
+function actualizarTablaProd(idpromo) {
+    table.ajax.url(baseurl + "index.php/promo/get_Promos/" + idpromo).load()
+}
 function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
     VerForm();
 
@@ -204,12 +207,12 @@ function cargarProductos(idPromo) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-
+                debugger;
 
                 $('#tblProductos tbody tr').remove();
                 $.each(res.response, function (key, data) {
 
-                    agregarFilaProducto(data.prod_id, data.prod_nombre, data.prod_descripcionProducto, data.prod_precioBase);
+                    agregarFilaProducto(data.ppro_id, data.prod_nombre, data.prod_descripcionProducto, data.prod_precioBase);
 
 
                 });
@@ -308,7 +311,7 @@ $('#agregarProd').click(function () {
 
 OcultarForm();
 cargarFCategorias();
-$('#tbPromos').DataTable({
+var table = $('#tbPromos').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
     'info': true,
@@ -457,7 +460,63 @@ $('#tblProductos2').DataTable({
 
 var table2 = $('#tblProductos2').DataTable();
 
+$(document).on("click", ".eliminarProd", function () {
+    
+    var parent = $(this).parents().get(0);
+     var pprod = $(parent).find('td').eq(0).html();
+    swal({
+        title: "Esta seguro?",
+        text: "Se eliminara el producto de la Promo",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, Eliminar !",
+        cancelButtonText: "No, Cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+            function (isConfirm) {
+                debugger;
+                if (isConfirm) {                 
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "index.php/promo/eliminarProductoPromo",
+                        dataType: 'json',
+                        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+                            ppro_id: pprod
+                        },
+                        success: function (res) {
 
+                            if (res.estado) {
+                                $(parent).remove();
+                                 swal("Eliminado!", "El producto a si eliminado de la promo", "success");
+
+                            } else {
+                                debugger;
+                                sweetAlert("Oops...", res.response, "error");
+
+                            }
+
+                        },
+                        error: function (request, status, error) {
+                            debugger;
+                            console.log(error.message);
+                            sweetAlert("Oops...", error, "error");
+
+                        }
+                    });
+
+                   
+                } else {
+                    swal("Cancelado", "El producto no fue eliminado de la promo", "error");
+                }
+            });
+
+
+
+
+});
 $("#selCat").change(function () {
     table2.columns(4).search($('#selCat').val().trim());//hit search on server
     table2.draw();

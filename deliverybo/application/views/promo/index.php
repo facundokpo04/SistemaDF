@@ -201,7 +201,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" id="mCerrarModal" onclick="cerrarModalProductos()" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Agregar Productos</h4>
             </div>
@@ -244,8 +244,8 @@
               
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="">Guardar</button>
+                <button type="button" class="btn btn-default" id="mbtnCerrarModal" onclick="cerrarModalProductos()">Cancelar</button>
+                <button type="button" class="btn btn-info"  onclick="cerrarModalProductos()">Aceptar</button>
             </div>
         </div>
         <!-- /.modal-content -->
