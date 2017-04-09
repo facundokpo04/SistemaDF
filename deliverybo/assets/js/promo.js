@@ -241,16 +241,25 @@ function actualizarPromo() {
             pro_FechaInicio: $('#txtFechaInicio').val(),
             pro_FechaFin: $('#txtFechaFin').val(),
             pro_id: $('#idPromo').val()
-
-
         },
         success: function (res) {
-
-            guardarImagen();
-
+            debugger;
+            if (res.estado) {                        
+                swal({
+                    title: "La Promo Fue Modificada!",
+                    text: "haga click!",
+                    type: "success",                  
+                },
+                        function () {
+                             location.reload();
+                        });
+            } else {
+                sweetAlert("Oops...", res.response, "error");
+            }
         },
         error: function (request, status, error) {
             console.log(error.message);
+            sweetAlert("Oops...", error, "error");
 
         }
     });
@@ -461,9 +470,9 @@ $('#tblProductos2').DataTable({
 var table2 = $('#tblProductos2').DataTable();
 
 $(document).on("click", ".eliminarProd", function () {
-    
+
     var parent = $(this).parents().get(0);
-     var pprod = $(parent).find('td').eq(0).html();
+    var pprod = $(parent).find('td').eq(0).html();
     swal({
         title: "Esta seguro?",
         text: "Se eliminara el producto de la Promo",
@@ -477,8 +486,8 @@ $(document).on("click", ".eliminarProd", function () {
     },
             function (isConfirm) {
                 debugger;
-                if (isConfirm) {                 
-                    
+                if (isConfirm) {
+
                     $.ajax({
                         type: "POST",
                         url: baseurl + "index.php/promo/eliminarProductoPromo",
@@ -490,7 +499,7 @@ $(document).on("click", ".eliminarProd", function () {
 
                             if (res.estado) {
                                 $(parent).remove();
-                                 swal("Eliminado!", "El producto a si eliminado de la promo", "success");
+                                swal("Eliminado!", "El producto a si eliminado de la promo", "success");
 
                             } else {
                                 debugger;
@@ -507,7 +516,7 @@ $(document).on("click", ".eliminarProd", function () {
                         }
                     });
 
-                   
+
                 } else {
                     swal("Cancelado", "El producto no fue eliminado de la promo", "error");
                 }

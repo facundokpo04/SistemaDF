@@ -172,6 +172,8 @@ class Promo extends CI_Controller {
                 ];
             }
         }
+        
+        echo json_encode($respuesta);
     }
 
     public function updProducto() {
