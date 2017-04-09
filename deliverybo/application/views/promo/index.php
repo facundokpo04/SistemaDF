@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                                    ?>
+<?php // var_dump($model);                                     ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -188,19 +188,14 @@
                 </div> 
             </div> 
             <!-- /.paneles de Variedad/componente/imagen -->
-
-
-
-
         </div> 
 
     </div> 
 
+         <div class="panel-footer"><button type="button" class="btn btn-default" onclick="location.reload()"> Cancelar</button>
+        <button type="button" class="btn btn-info" id="mbtnUpdPromo">Actualizar</button></div>
+</div> 
 
-</div> 
-<div class="panel-footer"><button type="button" class="btn btn-default"><a href="promo">Cancelar</button>
-    <button type="button" class="btn btn-info" id="mbtnUpdPromo">Actualizar</button></div>
-</div> 
 <!-- /.modal -->
 <div class="example-modal modal fade" id="modalAgregarProductos" role="dialog"  style="overflow-y: scroll;" >
     <div class="modal-dialog">
@@ -211,15 +206,15 @@
                 <h4 class="modal-title">Agregar Productos</h4>
             </div>
             <div class="modal-body">
-                <div class="table-responsive"> 
+                  <div class="box-body table-responsive no-padding">
                     <table  id="tblProductos2" class="table table-bordered table-striped">
                         <thead>
-                            <tr>
-                                <th>Seleccione</th>
+                            <tr>                             
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
                                 <th>Precio Original</th>
+                                <th>Seleccione</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -233,7 +228,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
+                <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="">Guardar</button>
             </div>
         </div>
         <!-- /.modal-content -->
