@@ -31,6 +31,9 @@
   
    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/datetimepicker/bootstrap-datetimepicker.min.css">
    
+     <!-- sweetalert -  -->
+   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/sweetalert.css">
+   
 
  
   

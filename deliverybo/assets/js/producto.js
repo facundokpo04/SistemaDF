@@ -1,3 +1,4 @@
+var cantpromodal = 0;
 
 var table = $('#tbProductos').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
@@ -71,7 +72,7 @@ function OcultarForm() {
 }
 
 function cargarFCategorias() {
-    $("#Fcategoria option").remove();
+    $("#selCat option").remove();
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_categorias",
