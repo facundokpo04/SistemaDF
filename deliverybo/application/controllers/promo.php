@@ -14,6 +14,7 @@ class Promo extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('PromoModel', 'pm');
+         $this->load->model('ProductoModel', 'p');
     }
 
     public function index($p = 0) {
@@ -38,7 +39,22 @@ class Promo extends CI_Controller {
         }
         echo json_encode($data);
     }
+   public function get_Productos() {
 
+        try {
+            $result = $this->p->getAllSuc(4);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
     public function get_promoById($idPromo) {
         try {
             $result = $this->pm->obtener($idPromo);

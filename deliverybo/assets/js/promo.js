@@ -40,7 +40,52 @@ function VerFormAgregar( ) {
 
 }
 
+function AbrirModalProductos(){
+		
+        $("#modalAgregarProductos").modal("show");
+        
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/promo/get_Productos",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            
+            if (res.estado) {
 
+                $('#tblProductos2 tbody tr').remove();
+                $.each(res.response.data, function (key, data) {
+debugger;
+
+                    $('#tblProductos2 tbody').append('<tr>' +
+                           ' <td class="agregarprod"><a href="#"  onClick=""><i class="fa fa-fw fa-check"></i></a></td>'  +
+                            ' <td>' +
+                            data.prod_id +
+                            ' </td>' +
+                            ' <td>' +
+                            data.prod_nombre +
+                            ' </td>' +
+                            ' <td>' +
+                            data.prod_descripcionProducto +
+                            ' </td>' +
+                            ' <td>' + '$&nbsp;' +
+                            data.prod_precioBase +
+                            ' </td>' +
+                            '</tr>'
+                            );
+                });
+            } else {
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+    });
+        
+      
+	}
 
 function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
     VerForm();
@@ -197,12 +242,10 @@ function guardarImagen() {
 }
 
 
-$('#agregarCom').click(function () {
+$('#agregarProd').click(function () {
 
-
-    CargarComponetesAgregar($('#idPromo').val());
-
-    $('#modalAgregarComp').modal('show');
+  AbrirModalProductos()
+ 
 
 
 })

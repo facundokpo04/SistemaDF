@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                                   ?>
+<?php // var_dump($model);                                    ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -89,18 +89,18 @@
                         </div>
                         <input type="text" class="form-control pull-right" id='txtFechaInicio' id="txtFechaInicio">
                     </div>
-                       </div>
-                    <div class="col-sm-6 form-group">
-                                <label for="">Fecha Fin</label>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="">Fecha Fin</label>
 
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control pull-right" id='txtFechaFin' id="txtFechaFin">
-                                </div>
-                                </div>   
-                  <div class="col-sm-6 form-group" id="estadodiv" style="display:none">
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id='txtFechaFin' id="txtFechaFin">
+                    </div>
+                </div>   
+                <div class="col-sm-6 form-group" id="estadodiv" style="display:none">
                     <label for="">Estado</label>
                     <div class="input-group col-sm-12"> 
                         <select name="PEstado" id="PEstado" class="form-control">                       
@@ -109,8 +109,8 @@
                         </select>
                     </div>
                 </div>
-                
-                   <div class="col-sm-12">
+
+                <div class="col-sm-12">
                     <ul class="nav nav-tabs" role="tablist" id="paneles">
                         <li class="active"><a href="#tabProductos" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Productos</h4></a></li>                     
                         <li><a href="#tabImagen" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Imagen Promo</h4></a></li>
@@ -128,7 +128,7 @@
                                                     <th>#</th>
                                                     <th>Nombre</th>
                                                     <th>Descripcion</th>
-                                                     <th>Precio Original</th>                                                                                                   
+                                                    <th>Precio Original</th>                                                                                                   
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -140,14 +140,14 @@
 
                                     </div>
                                     <!-- Botón para agregar filas -->
-                                    <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalEditProductos" id="agregarProd"  data-backdrop="static" data-keyboard="false"> Agregar Producto</button>
+                                    <button type="button" class="btn btn-warning" id="agregarProd"  data-backdrop="static" data-keyboard="false"> Agregar Producto</button>
 <!--                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />-->
 
 
                                 </div>
                             </div>
                         </div>
-                     
+
                         <div class="tab-pane" id="tabImagen">  
 
                             <div class="media-body">
@@ -186,22 +186,60 @@
 
 
                 </div> 
-                </div> 
-        <!-- /.paneles de Variedad/componente/imagen -->
-             
-
-        
-
             </div> 
+            <!-- /.paneles de Variedad/componente/imagen -->
+
+
+
 
         </div> 
 
-
     </div> 
-    <div class="panel-footer"><button type="button" class="btn btn-default"><a href="promo">Cancelar</button>
-        <button type="button" class="btn btn-info" id="mbtnUpdPromo">Actualizar</button></div>
+
+
+</div> 
+<div class="panel-footer"><button type="button" class="btn btn-default"><a href="promo">Cancelar</button>
+    <button type="button" class="btn btn-info" id="mbtnUpdPromo">Actualizar</button></div>
 </div> 
 <!-- /.modal -->
+<div class="example-modal modal fade" id="modalAgregarProductos" role="dialog"  style="overflow-y: scroll;" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Productos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive"> 
+                    <table  id="tblProductos2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Seleccione</th>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Precio Original</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info"  data-dismiss="modal" onclick="ActualizarComponentes($('#idProducto').val())">Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->  
+</div>
 
 
 <script type="text/javascript">
