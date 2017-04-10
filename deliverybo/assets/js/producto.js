@@ -1,4 +1,4 @@
-var cantpromodal = 0;
+
 
 var table = $('#tbProductos').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
@@ -7,16 +7,20 @@ var table = $('#tbProductos').DataTable({
     'filter': true,
     'stateSave': true,
     'ajax': {
-        "url": baseurl + "index.php/promo/get_Productos/4",
+        "url": baseurl + "index.php/producto/get_Productos/4",
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+
     },
     'columns': [
         {data: 'prod_id', 'sClass': 'dt-body-center'},
         {data: 'prod_nombre'},
         {data: 'prod_descripcionProducto'},
+        {data: 'prod_idCategoria'},
         {data: 'prod_precioBase'},
+        {data: 'prod_idEstado'},
+        {data: 'prod_idEstadoVisible'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -34,25 +38,61 @@ var table = $('#tbProductos').DataTable({
                         '</div>' +
                         '</span>';
                 // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
-         
+                ocultarForm();
             }
 
         }
 
     ],
     "columnDefs": [
+
         {
-            "targets": [3],
+            "targets": [1],
+            "data": "prod_nombre",
+            "orderData": [1, 0],
+            "render": function (data, type, row) {
+                return "<span style='color:#006699;'></i>&nbsp;&nbsp;" + data + "</span>"
+
+            }
+        },
+        {
+            "targets": [4],
             "data": "prod_precio",
             "orderData": [1, 0],
             "render": function (data, type, row) {
                 return "<span ></i>$&nbsp;&nbsp; " + data + "</span>"
 
             }
-        },             
+        },
+        {
+            "targets": [5],
+            "data": "prod_idEstado",
+            "render": function (data, type, row) {
+
+                if (data == 1) {
+                    return "<span class='label label-success'>Habilitado</span>";
+                } else if (data == 2) {
+                    return "<span class='label label-danger'>Deshabilitado</span>";
+                }
+
+            }
+        },
+        {
+            "targets": [6],
+            "data": "prod_idEstadoVisible",
+            "render": function (data, type, row) {
+
+                if (data == 1) {
+                    return "<span class='label label-success'>Visible</span>";
+                } else if (data == 2) {
+                    return "<span class='label label-danger'>No Visible</span>";
+                }
+
+            }
+        },
     ],
     "order": [[0, "asc"]],
-   
+
 });
 
 function VerForm() {
@@ -72,7 +112,7 @@ function OcultarForm() {
 }
 
 function cargarFCategorias() {
-    $("#selCat option").remove();
+    $("#Fcategoria option").remove();
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/get_categorias",
