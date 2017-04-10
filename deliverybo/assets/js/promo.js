@@ -151,10 +151,38 @@ function actualizarTablaCat(idCat) {
 
 
 }
+function cargarProductos(idPromo) {
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/promo/get_ProductosById/" + idPromo,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            if (res.estado) {
+                debugger;
 
+                $('#tblProductos tbody tr').remove();
+                $.each(res.response, function (key, data) {
+
+                    agregarFilaProducto(data.ppro_id, data.prod_nombre, data.prod_descripcionProducto, data.prod_precioBase);
+
+
+                });
+            } else {
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+    });
+}
 function actualizarTablaProd(idpromo) {
     table.ajax.url(baseurl + "index.php/promo/get_Promos/" + idpromo).load()
 }
+
+// promo
 function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
     VerForm();
 
@@ -198,37 +226,8 @@ function cargarDataPromo(idPromo) {// funcion que llamamos del archivo ajax/Cate
 
 
 }
-
-function cargarProductos(idPromo) {
-    $.ajax({
-        type: "POST",
-        url: baseurl + "index.php/promo/get_ProductosById/" + idPromo,
-        dataType: 'json',
-        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
-        success: function (res) {
-            if (res.estado) {
-                debugger;
-
-                $('#tblProductos tbody tr').remove();
-                $.each(res.response, function (key, data) {
-
-                    agregarFilaProducto(data.ppro_id, data.prod_nombre, data.prod_descripcionProducto, data.prod_precioBase);
-
-
-                });
-            } else {
-                console.log(res.response)
-            }
-        },
-        error: function (request, status, error) {
-            console.log(error.message);
-
-        }
-    });
-}
-
-
 function actualizarPromo() {
+    debugger;
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/promo/updPromo",
@@ -240,11 +239,12 @@ function actualizarPromo() {
             pro_precio: $('#txtPrecio').val(),
             pro_FechaInicio: $('#txtFechaInicio').val(),
             pro_FechaFin: $('#txtFechaFin').val(),
+            pro_idEstado: $('#PEstado').val(),
             pro_id: $('#idPromo').val()
         },
         success: function (res) {
             debugger;
-            if (res.estado) {                        
+            if (res.estado) {                       
                 swal({
                     title: "La Promo Fue Modificada!",
                     text: "haga click!",

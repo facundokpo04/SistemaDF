@@ -135,6 +135,7 @@ class Promo extends CI_Controller {
             'pro_descripcion' => $this->input->post('pro_descripcion'),
             'pro_precio' => $this->input->post('pro_precio'),
             'pro_descuento' => $this->input->post('pro_descuento'),
+            'pro_idEstado' => $this->input->post('pro_idEstado'),
             'pro_FechaInicio' => $FI,
             'pro_FechaFin' => $FF
         ];
@@ -144,7 +145,7 @@ class Promo extends CI_Controller {
         try {
             if (empty($id)) {
                 $response = $this->pm->registrar($data);
-                  $respuesta = [
+                $respuesta = [
                             'estado' => true,
                             'response' => $response
                 ];
