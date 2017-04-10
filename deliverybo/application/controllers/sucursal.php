@@ -350,12 +350,12 @@ class Sucursal extends CI_Controller {
             $result = $this->sm->getAllTel($idSucursal);
             $respuesta = [
                         'estado' => true,
-                        'response' => $result
+                        'data' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [
                         'estado' => false,
-                        'response' => $e->getMessage()
+                        'data' => $e->getMessage()
             ];
         }
         echo json_encode($respuesta);

@@ -1,6 +1,158 @@
 
 
+//datos contactos
+function cargarDatosc(idSucursal) {
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/sucursal/get_DatoContactoById/" + idSucursal,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
 
+
+            if (res.estado) {
+                $('#idDcon').val(res.response.dcon_id);
+                $('#txtFacebook').val(res.response.dcon_facebook);
+                $('#txttwitter').val(res.response.dcon_twitter);
+                $('#txtwebsite').val(res.response.dcon_website);
+                $('#txtemailc').val(res.response.dcon_email);
+                $('#txtDireccion').val(res.response.dcon_direccion);
+
+            } else {
+                console.log(res.response);
+
+            }
+
+
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+    });
+
+}
+function updDatosc(idSucursal) {
+
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/sucursal/updDatoContacto",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            dcon_id: $('#idDcon').val(),
+            dcon_facebook: $('#txtFacebook').val(),
+            dcon_website: $('#txtwebsite').val(),
+            dcon_twitter: $('#txttwitter').val(),
+            dcon_direccion: $('#txtDireccion').val(),
+            dcon_idSucursal: idSucursal,
+            dcon_email: $('#txtemailc').val()
+
+        },
+        success: function (res) {
+            if (res.estado) {
+
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+
+            } else {
+                sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
+                console.log(res.response);
+
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
+            console.log(error.message);
+
+        }
+    });
+
+}
+
+//telefonos
+function limpiarModaltel() {
+    $('#mNumero').val('');
+    $('#mDescripcion').val('');
+    $('#mtipo').val('1');
+    $('#mIdtcon').val('');
+
+}
+ function selTelefono(idTelefono) {
+
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/componente/get_componenteById/" + idComponente,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            
+             if (res.estado) {
+            $('#mDescripcion').val(res.response.com_descripcion);
+            $('#mNombre').val(res.response.com_nombre);
+            $('#mEstado').val(res.response.com_idEstado);//select
+            //ajax para traer todos los estados
+            $('#imagen').attr('src', './assets/imagenes/componentes/' + res.response.com_imagen);
+            $('#mPrecio').val(res.response.com_precio);
+            $('#mIdComponente').val(res.response.com_id);        
+            }
+             else {
+                console.log(res.response);
+
+            }
+
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+    });
+function guardarImagen() {
+    var inputFile = $('input#mImagen');
+    var fileToUpload = inputFile[0].files[0];
+    // make sure there is file to upload
+
+    // provide the form data
+    // that would be sent to sever through ajax
+    if (fileToUpload != 'undefined') {
+        var formData = new FormData();
+        formData.append('com_imagen', fileToUpload);
+        formData.append('com_id', $('#mIdComponente').val());
+        // now upload the file using $.ajax
+        $.ajax({
+            url: baseurl + "index.php/componente/updImagen",
+            type: 'post',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+
+                if (res.estado) {
+
+                    $('#mImagen').attr('src', './assets/imagenes/componente/' + res.response.com_imagen);
+                } else {
+                    console.log(res.response);
+                    window.alert(res.response);
+
+                }
+            },
+            error: function (request, status, error) {
+                console.log(error.message);
+
+            }
+        });
+    }
+};
+
+
+};
 
 iniciar = function (idEmpresa) {
 
@@ -13,7 +165,7 @@ iniciar = function (idEmpresa) {
 
 
             if (res.estado) {
-               $('#idEmpresa').val(res.response.emp_id);
+                $('#idEmpresa').val(res.response.emp_id);
                 $('#txtRazonSocial').val(res.response.razonSocial);
                 $('#txtRubro').val(res.response.Rubro);
                 $('#txtCuit').val(res.response.cuilt);
@@ -37,14 +189,14 @@ iniciar = function (idEmpresa) {
     });
 
 
-    $('#tbSucursales').DataTable({
+    $('#tbTelefonos').DataTable({
         "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
         'paging': true,
         'info': true,
         'filter': true,
         'stateSave': true,
         'ajax': {
-            "url": baseurl + "index.php/sucursal/get_sucursales/1",
+            "url": baseurl + "index.php/sucursal/get_TelById/4",
             "type": "POST",
             "dataType": 'json',
             "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
@@ -52,13 +204,12 @@ iniciar = function (idEmpresa) {
         },
         'columns': [
 
-            {data: 'suc_id', 'sClass': 'dt-body-center'},
-            {data: 'suc_nombre'},
-            {data: 'suc_cuit'},
-            {data: 'suc_razonSocial'},
-            {data: 'suc_direccion'},
+            {data: 'tcon_id', 'sClass': 'dt-body-center'},
+            {data: 'tcon_numero'},
+            {data: 'tcon_descripcion'},
+            {data: 'tcon_tipo'},
             {"orderable": true,
-                render: function (data, type, row) {                 
+                render: function (data, type, row) {
                     return '<span class="pull-right" >' +
                             '<div class="dropdown">' +
                             '  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
@@ -66,7 +217,7 @@ iniciar = function (idEmpresa) {
                             '  <span class="caret"></span>' +
                             '  </button>' +
                             '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                            '    <li><a href="#" title="Editar informacion"   onClick="cargarDataSucursal(\'' + row.suc_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                            '    <li><a href="#" title="Editar informacion"   onClick="cargarDataSucursal(\'' + row.tcon_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
                             '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
                             '    <li><a href="#" title="Eliminar Sucursal" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
                             '    </ul>' +
@@ -81,20 +232,23 @@ iniciar = function (idEmpresa) {
 
         ],
         "columnDefs": [
-
             {
-                "targets": [1],
-                "data": "suc_nombre",
-                "orderData": [1, 0],
+                "targets": [3],
+                "data": "tcon_tipo",
                 "render": function (data, type, row) {
-                    return "<span style='color:#006699;'><i class='fa fa-home'></i>&nbsp;&nbsp;" + data + "</span>"
+
+                    if (data == 1) {
+                        return "<span class='label label-success'><i class='fa  fa-whatsapp'></i>  Whatsapp</span>";
+                    } else if (data == 2) {
+                        return "<span class='label label-primary'><i class='fa   fa-phone'></i>  Fijo</span>";
+                    }
 
                 }
             },
         ],
         "order": [[0, "asc"]],
     });
-
+    cargarDatosc(4);
 
 
 };
@@ -117,26 +271,37 @@ function guardarImagen() {
             success: function (res) {
 
                 if (res.estado) {
+                    swal({
+                        title: "Los Datos Fueron Guardados!",
+                        text: "haga click!",
+                        type: "success",
+                    },
+                            function () {
+                                $('#imagen').attr('src', './assets/imagenes/empresa/' + res.response.logo);
+                            });
 
-                    $('#imagen').attr('src', './assets/imagenes/empresa/' + res.response.logo);
+
                 } else {
+                    sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
                     console.log(res.response);
-                    window.alert(res.response);
+
 
                 }
             },
             error: function (request, status, error) {
+                sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
                 console.log(error.message);
 
             }
         });
-    }else{
-          window.alert("Seleccione una Imagen");
+    } else {
+        sweetAlert("Atencion", "Seleccione una Imagen", "warning");
     }
-};
+}
+;
 $('#btnUpdEmpresa').click(function () {
-    
-    
+
+
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/empresa/updEmpresa",
@@ -154,14 +319,23 @@ $('#btnUpdEmpresa').click(function () {
         },
         success: function (res) {
             if (res.estado) {
-                location.reload();
-                
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
             } else {
+                sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
                 console.log(res.response);
 
             }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
             console.log(error.message);
 
         }
@@ -173,11 +347,21 @@ $('#btnUpdEmpresa').click(function () {
 
 
 });
+$('#btnUpdDatoc').click(function () {
+    updDatosc(4);
+});
 
 $('#btnGuardarImg').click(function () {
 
     guardarImagen();
 })
-       
+$('#mCerrarModal').click(function () {
+    limpiarModaltel();
+
+})
+$('#mbtnCerrarModal').click(function () {
+    limpiarModaltel();
+
+})
 
 iniciar(1);
