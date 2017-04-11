@@ -301,7 +301,7 @@ class Sucursal extends CI_Controller {
         ];
         try {
             if (empty($id)) {
-                $this->sm->registrarTel($data);
+               $response = $this->sm->registrarTel($data);
                 $respuesta = [
                     'estado' => true,
                     'response' => $response

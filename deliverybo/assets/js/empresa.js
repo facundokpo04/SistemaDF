@@ -148,8 +148,7 @@ function selTelefono(idTelefono) {
     ;
 
 
-}
-;
+};
 function eliminarTelefono(idTelefono) {
 
     swal({
@@ -206,8 +205,49 @@ function eliminarTelefono(idTelefono) {
 
 
 
-}
-;
+};
+function updTelefono(idcon){
+     $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/sucursal/updTel",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            tcon_id: $('#mIdtcon').val(),
+            tcon_numero: $('#mNumero').val(),
+            tcon_descripcion: $('#mDescripcion').val(),
+            tcon_idDatoContacto: idcon,
+            tcon_tipo: $('#mtipo').val()
+            
+        },
+        success: function (res) {
+            if (res.estado) {
+
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+
+            } else {
+                sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
+                console.log(res.response);
+
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
+            console.log(error.message);
+
+        }
+    });
+
+    
+};
+
 
 iniciar = function (idEmpresa) {
 
@@ -354,6 +394,11 @@ function guardarImagen() {
     }
 }
 ;
+
+$('#mbtnUpdTelefono').click(function () {
+    updTelefono($('#idDcon').val());
+});
+
 $('#btnUpdEmpresa').click(function () {
 
 
