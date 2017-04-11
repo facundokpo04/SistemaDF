@@ -156,6 +156,13 @@ class SucursalModel extends CI_Model{
             "datocontacto/listartelsuc/$idSucursal"
         );
     }
+    
+     public function obtenerTel($idtel){
+        return RestApi::call(
+            RestApiMethod::GET,
+            "datocontacto/obtenertel/$idtel"
+        );
+    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.

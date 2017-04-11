@@ -78,8 +78,8 @@ class Sucursal extends CI_Controller {
         $result = '';
 
         $result = $this->sm->getPar($idSucursal);
-        
-        
+
+
         $data = [
             'par_zonaEntrega' => $this->input->post('par_zonaEntrega'),
             'par_pedidoMinimo' => $this->input->post('par_pedidoMinimo'),
@@ -90,7 +90,6 @@ class Sucursal extends CI_Controller {
         try {
             if ($result == 'false') {
                 $this->sm->registrarPar($data);
-                
             } else {
                 $this->sm->actualizarPar($data, $idSucursal);
             }
@@ -101,7 +100,7 @@ class Sucursal extends CI_Controller {
             }
         }
         if (count($errors) === 0)
-                 redirect('sucursal');
+            redirect('sucursal');
 
         else {
             $this->load->view('layout/header');
@@ -174,7 +173,7 @@ class Sucursal extends CI_Controller {
             'dh_idSucursal' => $this->input->post('dh_idSucursal')
         ];
 
-       try {
+        try {
             if (empty($id)) {
                 $response = $this->sm->registrarDh($data);
                 $respuesta = ($response->result);
@@ -185,7 +184,6 @@ class Sucursal extends CI_Controller {
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-             
             }
         }
 //                 
@@ -202,35 +200,31 @@ class Sucursal extends CI_Controller {
 //        }
 //        
     }
-    
+
     public function eliminar($idSucursal) {
-        
-        
-            try {
-               $respuesta =  $this->sm->eliminar($idSucursal);
-          
+
+
+        try {
+            $respuesta = $this->sm->eliminar($idSucursal);
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-             
             }
         }
 //           
-         
-           echo json_encode($respuesta);
-        
-        
+
+        echo json_encode($respuesta);
     }
-    
-    /*datos de contacto*/
-    
-    public function updDatoContacto(){
-         $errors = array();
+
+    /* datos de contacto */
+
+    public function updDatoContacto() {
+        $errors = array();
         $result = '';
 
-           $id = $this->input->post('dcon_id');
-        
-        
+        $id = $this->input->post('dcon_id');
+
+
         $data = [
             'dcon_facebook' => $this->input->post('dcon_facebook'),
             'dcon_website' => $this->input->post('dcon_website'),
@@ -238,21 +232,19 @@ class Sucursal extends CI_Controller {
             'dcon_direccion' => $this->input->post('dcon_direccion'),
             'dcon_idSucursal' => $this->input->post('dcon_idSucursal'),
             'dcon_email' => $this->input->post('dcon_email')
-            
         ];
         try {
             if (empty($id)) {
                 $this->sm->registrarDatoC($data);
                 $respuesta = [
-                            'estado' => true,
-                            'response' => $response
+                    'estado' => true,
+                    'response' => $response
                 ];
-                
             } else {
-                  $response = $this->sm->actualizarDatoC($data, $id);
-                  $respuesta = [
-                            'estado' => true,
-                            'response' => $response
+                $response = $this->sm->actualizarDatoC($data, $id);
+                $respuesta = [
+                    'estado' => true,
+                    'response' => $response
                 ];
             }
         } catch (Exception $e) {
@@ -260,66 +252,65 @@ class Sucursal extends CI_Controller {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
                 $respuesta = [
-                            'estado' => false,
-                            'validator' => true,
-                            'response' => $errors
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
                 ];
-            }else {
+            } else {
                 $respuesta = [
-                            'estado' => false,
-                            'validator' => false,
-                            'response' => $e . getMessage()
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e . getMessage()
                 ];
             }
         }
-        
-         echo json_encode($respuesta);
+
+        echo json_encode($respuesta);
     }
-    
+
     public function get_DatoContactoById($idSucursal) {
 
         try {
             $result = $this->sm->getDatoC($idSucursal);
             $respuesta = [
-                        'estado' => true,
-                        'response' => $result
+                'estado' => true,
+                'response' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [
-                        'estado' => false,
-                        'response' => $e->getMessage()
+                'estado' => false,
+                'response' => $e->getMessage()
             ];
         }
         echo json_encode($respuesta);
     }
-    
-    public function updTel(){
-        
-        $errors = array();
-        
 
-           $id = $this->input->post('tcon_id');
-        
-        
+    public function updTel() {
+
+        $errors = array();
+
+
+        $id = $this->input->post('tcon_id');
+
+
         $data = [
             'tcon_numero' => $this->input->post('tcon_numero'),
             'tcon_descripcion' => $this->input->post('tcon_descripcion'),
             'tcon_tipo' => $this->input->post('tcon_tipo'),
-            'tcon_idDatoContacto' => $this->input->post('tcon_idDatoContacto')          
+            'tcon_idDatoContacto' => $this->input->post('tcon_idDatoContacto')
         ];
         try {
             if (empty($id)) {
                 $this->sm->registrarTel($data);
                 $respuesta = [
-                            'estado' => true,
-                            'response' => $response
+                    'estado' => true,
+                    'response' => $response
                 ];
-                
             } else {
-                  $response = $this->sm->actualizarTel($data, $id);
-                  $respuesta = [
-                            'estado' => true,
-                            'response' => $response
+                $response = $this->sm->actualizarTel($data, $id);
+                $respuesta = [
+                    'estado' => true,
+                    'response' => $response
                 ];
             }
         } catch (Exception $e) {
@@ -327,39 +318,73 @@ class Sucursal extends CI_Controller {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
                 $respuesta = [
-                            'estado' => false,
-                            'validator' => true,
-                            'response' => $errors
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
                 ];
-            }else {
+            } else {
                 $respuesta = [
-                            'estado' => false,
-                            'validator' => false,
-                            'response' => $e . getMessage()
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e . getMessage()
                 ];
             }
         }
-        
-         echo json_encode($respuesta);
-        
+
+        echo json_encode($respuesta);
     }
-    
-     public function get_TelById($idSucursal) {
+
+    public function get_TelById($idSucursal) {
 
         try {
             $result = $this->sm->getAllTel($idSucursal);
             $respuesta = [
-                        'estado' => true,
-                        'data' => $result
+                'estado' => true,
+                'data' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [
-                        'estado' => false,
-                        'data' => $e->getMessage()
+                'estado' => false,
+                'data' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
+
+    public function get_Tel($idTelefono) {
+
+        try {
+            $result = $this->sm->obtenerTel($idTelefono);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
             ];
         }
         echo json_encode($respuesta);
     }
     
+    public function eliminarTel($idTelefono) {
+
+        try {
+            $result = $this->sm->eliminarTel($idTelefono);
+             $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+//           
+
+        echo json_encode($respuesta);
+    }
 
 }

@@ -84,25 +84,20 @@ function limpiarModaltel() {
     $('#mIdtcon').val('');
 
 }
- function selTelefono(idTelefono) {
-
+function selTelefono(idTelefono) {
     $.ajax({
         type: "POST",
-        url: baseurl + "index.php/componente/get_componenteById/" + idComponente,
+        url: baseurl + "index.php/sucursal/get_Tel/" + idTelefono,
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            
-             if (res.estado) {
-            $('#mDescripcion').val(res.response.com_descripcion);
-            $('#mNombre').val(res.response.com_nombre);
-            $('#mEstado').val(res.response.com_idEstado);//select
-            //ajax para traer todos los estados
-            $('#imagen').attr('src', './assets/imagenes/componentes/' + res.response.com_imagen);
-            $('#mPrecio').val(res.response.com_precio);
-            $('#mIdComponente').val(res.response.com_id);        
-            }
-             else {
+            debugger;
+            if (res.estado) {
+                $('#mNumero').val(res.response.tcon_numero);
+                $('#mDescripcion').val(res.response.tcon_descripcion);
+                $('#mtipo').val(res.response.tcon_tipo);
+                $('#mIdtcon').val(res.response.tcon_id);
+            } else {
                 console.log(res.response);
 
             }
@@ -113,46 +108,106 @@ function limpiarModaltel() {
 
         }
     });
-function guardarImagen() {
-    var inputFile = $('input#mImagen');
-    var fileToUpload = inputFile[0].files[0];
-    // make sure there is file to upload
+    function guardarImagen() {
+        var inputFile = $('input#mImagen');
+        var fileToUpload = inputFile[0].files[0];
+        // make sure there is file to upload
 
-    // provide the form data
-    // that would be sent to sever through ajax
-    if (fileToUpload != 'undefined') {
-        var formData = new FormData();
-        formData.append('com_imagen', fileToUpload);
-        formData.append('com_id', $('#mIdComponente').val());
-        // now upload the file using $.ajax
-        $.ajax({
-            url: baseurl + "index.php/componente/updImagen",
-            type: 'post',
-            dataType: 'json',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (res) {
+        // provide the form data
+        // that would be sent to sever through ajax
+        if (fileToUpload != 'undefined') {
+            var formData = new FormData();
+            formData.append('com_imagen', fileToUpload);
+            formData.append('com_id', $('#mIdComponente').val());
+            // now upload the file using $.ajax
+            $.ajax({
+                url: baseurl + "index.php/componente/updImagen",
+                type: 'post',
+                dataType: 'json',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
 
-                if (res.estado) {
+                    if (res.estado) {
 
-                    $('#mImagen').attr('src', './assets/imagenes/componente/' + res.response.com_imagen);
-                } else {
-                    console.log(res.response);
-                    window.alert(res.response);
+                        $('#mImagen').attr('src', './assets/imagenes/componente/' + res.response.com_imagen);
+                    } else {
+                        console.log(res.response);
+                        window.alert(res.response);
+
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log(error.message);
 
                 }
-            },
-            error: function (request, status, error) {
-                console.log(error.message);
-
-            }
-        });
+            });
+        }
     }
-};
+    ;
 
 
-};
+}
+;
+function eliminarTelefono(idTelefono) {
+
+    swal({
+        title: "Esta seguro?",
+        text: "Se eliminara el telefono",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, Eliminar !",
+        cancelButtonText: "No, Cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+            function (isConfirm) {
+                debugger;
+
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "index.php/sucursal/eliminarTel/" + idTelefono,
+                        dataType: 'json',
+                        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+                        success: function (res) {
+                            debugger;
+
+                            if (res.estado) {
+
+                                swal({
+                                    title: "Eliminado",
+                                    text: "El Telefono se a eliminado!",
+                                    type: "success",
+                                },
+                                        function () {
+                                            location.reload();
+                                        });
+
+                            } else {
+                                sweetAlert("Ocurrio un Error", res.response, "error");
+
+                            }
+
+                        },
+                        error: function (request, status, error) {
+                            debugger;
+                            console.log(error);
+                            sweetAlert("Ocurrio un Error Inesperado", error, "error");
+
+                        }
+                    });
+                } else {
+                    swal("Cancelado", "El Telefono no fue Eliminado", "error");
+                }
+            });
+
+
+
+}
+;
 
 iniciar = function (idEmpresa) {
 
@@ -217,9 +272,9 @@ iniciar = function (idEmpresa) {
                             '  <span class="caret"></span>' +
                             '  </button>' +
                             '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                            '    <li><a href="#" title="Editar informacion"   onClick="cargarDataSucursal(\'' + row.tcon_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                            '    <li><a href="#" title="Editar informacion"  data-toggle="modal" data-target="#modalEditTelefono" onClick="selTelefono(\'' + row.tcon_id + '\')";><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
                             '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
-                            '    <li><a href="#" title="Eliminar Sucursal" onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
+                            '    <li><a href="#" title="Eliminar Telefono" onClick="eliminarTelefono(\'' + row.tcon_id + '\')"><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
                             '    </ul>' +
                             '</div>' +
                             '</span>';
