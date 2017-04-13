@@ -36,7 +36,7 @@ class Empleado extends CI_Controller {
 
         $data = [];
         $total = 0;
-        $limite = 10;
+        $limite = 20;
         $data = new stdClass();
         try {
             $result = $this->em->getAll($limite, $p);
@@ -54,38 +54,25 @@ class Empleado extends CI_Controller {
 
         try {
             $result = $this->em->obtener($idEmpleado);
-            $data->empleados = $result;
-            $result = $this->sm->getAll(1); //
-            $data->sucursales = $result;
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
 
     public function updEmpleado() {
 
-        $config = [
-            "upload_path" => "./assets/imagenes/empleado",
-            "allowed_types" => "png|jpg"
-        ];
         $errors = array();
 
-        $this->load->library("upload", $config);
-
         $id = $this->input->post('per_id');
-
         $idEmpleado = $this->input->post('emp_id');
-
-
-        if ($this->upload->do_upload('emp_imagen')) {
-            $archivo = array("upload_data" => $this->upload->data());
-            $imagen = $archivo['upload_data']['file_name'];
-        } else {
-            //echo  json_encode($this->upload->display_errors());
-            if (!empty($idEmpleado))
-                $imagen = $this->em->obtener($idEmpleado)->emp_imagen;
-        }
 
         $data = [
             'per_nombre' => $this->input->post('per_nombre'),
@@ -96,8 +83,6 @@ class Empleado extends CI_Controller {
             'per_id' => $this->input->post('per_id'),
             'per_perfilUsuario' => $this->input->post('per_perfilUsuario')
         ];
-        
-//        var_dump($dataEmpleado);
 
         try {
 
@@ -109,9 +94,12 @@ class Empleado extends CI_Controller {
                     'emp_cargo' => $this->input->post('emp_cargo'),
                     'emp_idSucursal' => $this->input->post('emp_idSucursal'),
                     'emp_idPersona' => $id,
-                    'emp_imagen' => $imagen
                 ];
-                $this->em->registrar($dataEmpleado);
+                $response = $this->em->registrar($dataEmpleado);
+                $respuesta = [
+                    'estado' => true,
+                    'response' => $response->result
+                ];
             } else {
                 $dataEmpleado = [
                     'emp_legajo' => $this->input->post('emp_legajo'),
@@ -122,24 +110,127 @@ class Empleado extends CI_Controller {
                 ];
                 $result = $this->pm->actualizar($data, $id);
 
-                $this->em->actualizar($dataEmpleado, $idEmpleado);
+                $response = $this->em->actualizar($dataEmpleado, $idEmpleado);
+                $respuesta = [
+                    'estado' => true,
+                    'response' => $response
+                ];
             }
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
-                var_dump($errors);
+
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
+                ];
+            } else {
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e->getMessage()
+                ];
             }
         }
 
-        echo json_encode($errors);
+        echo json_encode($respuesta);
     }
 
-    public function guardar() {
-        
+    public function updImagen() {
+        $idEmpleado = $this->input->post('emp_id');
+
+        $config = [
+            "upload_path" => "./assets/imagenes/empleado",
+            "allowed_types" => "png|jpg"
+        ];
+        $errors = array();
+
+        $this->load->library("upload", $config);
+
+        if ($this->upload->do_upload('emp_imagen')) {
+            $archivo = array("upload_data" => $this->upload->data());
+            $imagen = $archivo['upload_data']['file_name'];
+            $data = [
+                'emp_imagen' => $imagen
+            ];
+            try {
+                $this->em->actualizar($data, $id);
+
+                echo json_encode(
+                        [
+                            'estado' => true,
+                            'response' => $data
+                        ]
+                );
+            } catch (Exception $e) {
+                if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
+                    $errors = RestApi::getEntityValidationFieldsError();
+
+                    echo json_encode(
+                            [
+                                'estado' => false,
+                                'response' => $errors
+                            ]
+                    );
+                }
+            }
+        } else {
+            echo json_encode(
+                    [
+                        'estado' => false,
+                        'response' => $this->upload->display_errors()
+                    ]
+            );
+            //$imagen = $this->cm->obtener($id)->cat_imagen;
+        }
+    }
+    
+    
+    public function get_Sucursales($idEmpresa=1) {
+
+        try {
+            $result = $this->sm->getAll($idEmpresa);
+
+            $respuesta = [
+                        'estado' => true,
+                        'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                        'estado' => false,
+                        'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
     }
 
-    public function eliminar($id) {
-        
+  
+
+    public function eliminar() {
+             
+         $idEmpleado = $this->input->post('emp_id');
+         $idPersona = $this->input->post('emp_idPersona');
+          
+           
+           try {
+            $result = $this->pm->eliminar($idPersona);
+            $result = $this->em->eliminar($idEmpleado);
+            
+            
+             $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+//           
+
+        echo json_encode($respuesta);
     }
 
 }
