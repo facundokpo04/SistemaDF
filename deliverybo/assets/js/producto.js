@@ -98,7 +98,7 @@ var table = $('#tbProductos').DataTable({
 function VerForm() {
     $("#producto").show(); // Mostramos el formulario
     $("#herramientas").hide(); // ocultamos el boton nuevo
-     $("#filtros").hide();//ocultamos los filtros
+    $("#filtros").hide();//ocultamos los filtros
     $("#productos").hide();
 }
 
@@ -108,7 +108,7 @@ function OcultarForm() {
     $("#herramientas").show(); // ocultamos el boton nuevo
     $("#filtros").show();//ocultamos los filtros
     $("#productos").show();
-    
+
 }
 
 function cargarFCategorias() {
@@ -119,13 +119,14 @@ function cargarFCategorias() {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-             $("#Fcategoria").append("<option value=" + 0 + ">Todas</option>");
+            $("#Fcategoria").append("<option value=" + 0 + ">Todas</option>");
             if (res.estado) {
                 $.each(res.response, function (key, data) {
-                    
+
                     $("#Fcategoria").append("<option value=" + data.cat_id + ">" + data.cat_nombre + "</option>");
                 });
             } else {
+
 
                 console.log(res.response)
             }
@@ -133,6 +134,7 @@ function cargarFCategorias() {
 
         },
         error: function (request, status, error) {
+
             console.log(error.message);
 
         }
@@ -173,16 +175,16 @@ function VerFormAgregar() {
     $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#productos").hide();
 }
-function actualizarTablaCat(idCat){
+function actualizarTablaCat(idCat) {
     debugger;
-if(idCat==0){
-   table.ajax.url(baseurl + "index.php/producto/get_Productos/4").load() 
-    
-}else{
-   table.ajax.url( baseurl + "index.php/producto/get_ProductosCat/" + idCat).load() 
-}
-  
- 
+    if (idCat == 0) {
+        table.ajax.url(baseurl + "index.php/producto/get_Productos/4").load()
+
+    } else {
+        table.ajax.url(baseurl + "index.php/producto/get_ProductosCat/" + idCat).load()
+    }
+
+
 }
 
 
@@ -211,13 +213,15 @@ function cargarDataProducto(idProducto) {// funcion que llamamos del archivo aja
                 $('#idProducto').val(res.response.prod_id);
                 $('#Pcategoria').val(res.response.prod_idCategoria);
             } else {
+                sweetAlert("Oops...", res.response, "error");
 
                 console.log(res.response)
 
             }
         },
         error: function (request, status, error) {
-            console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error);
 
         }
 
@@ -263,10 +267,12 @@ function cargarComponentes(idProducto) {
                             );
                 });
             } else {
-                console.log(res.response)
+                sweetAlert("Oops...", "Ocurrio un Error Al cargar los Componentes!", "error");
+                console.log(res.response);
             }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
@@ -304,11 +310,13 @@ function cargarVariedades(idProducto) {
                             );
                 });
             } else {
+                sweetAlert("Oops...", "Ocurrio un Error Al cargar las Variedades!", "error");
                 console.log(res.response)
 
             }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
@@ -348,10 +356,13 @@ function CargarComponetesAgregar(idProducto) {
                 });
             } else {
 
+                sweetAlert("Oops...", "Ocurrio un Error al cargar los componentes!", "error");
+
                 console.log(res.response);
             }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
@@ -419,9 +430,21 @@ function ActualizarVariedad(idProducto) {
         },
         success: function (res) {
             if (res.estado) {
-                var a = 0;
-                $('#mbtnCerrarModalVar').click();
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            $('#mbtnCerrarModalVar').click();
+                            var a = 0;
+
+                            location.reload();
+                        });
+
+
             } else {
+                sweetAlert("Oops...", JSON.stringify(res.response), "error");
                 console.log(res.response);
                 $('#mbtnCerrarModalVar').click();
 
@@ -456,16 +479,27 @@ function actualizarProducto() {
         },
         success: function (res) {
             if (res.estado) {
-                location.reload();
-                
+
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+
             } else {
+                sweetAlert("Oops...", JSON.stringify(res.response), "error");
                 console.log(res.response);
             }
 
 
         },
         error: function (request, status, error) {
-            console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error);
 
         }
     });
@@ -500,17 +534,18 @@ function guardarImagen() {
                     $('#imagen').attr('src', './assets/imagenes/producto/' + res.response.prod_Imagen);
                 } else {
                     console.log(res.response);
-                    window.alert(res.response);
+                    sweetAlert("Oops...", JSON.stringify(res.response), "error");
 
                 }
             },
             error: function (request, status, error) {
+                sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
                 console.log(error.message);
 
             }
         });
-    }else{
-          window.alert("Seleccione una Imagen");
+    } else {
+        sweetAlert("Oops...", "Seleccione una imagen", "warning");
     }
 }
 
@@ -529,6 +564,9 @@ $(document).on("click", ".eliminarComp", function () {
 
     var parent = $(this).parents().get(0);
     var comp_id = $(parent).find('td').eq(0).html();
+    
+    
+    
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/producto/eliminarComponente",
@@ -568,7 +606,7 @@ $(document).on("click", ".eliminarVar", function () {
 OcultarForm();
 cargarFCategorias();
 
-$( "#Fcategoria" ).change(function(){
+$("#Fcategoria").change(function () {
     actualizarTablaCat(this.value);
 })
 $('#mbtnUpdProducto').click(function () {
