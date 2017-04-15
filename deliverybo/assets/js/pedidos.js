@@ -98,6 +98,11 @@ getCliente = function (idpedido) {
                     '<br>' +
                     'Email: ' +
                     res.per_email);
+            
+             $('#cliente2').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
+                    res.dir_direccion +
+                    '<br>Telefono: ' +
+                    res.per_celular);
 
         },
         error: function (request, status, error) {

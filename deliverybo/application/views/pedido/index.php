@@ -108,6 +108,15 @@
           </tbody>
         </table>
       </div>
+        <div class="col-xs-6">
+       Cliente:
+        <address id="cliente2">
+        
+        </address>
+       
+       
+      </div>
+        
       <!-- /.col -->
     </div>
     <!-- /.row -->
@@ -116,6 +125,8 @@
       <!-- accepted payments column -->
       <div class="col-xs-6">
        <p class="lead">Aclaracion Pedido</p>
+       
+       
       </div>
       <!-- /.col -->
       <div class="col-xs-6">

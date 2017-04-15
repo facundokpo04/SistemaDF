@@ -47,14 +47,14 @@ $app->group('/empleado/', function () {
 //        
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->update($req->getParsedBody(), $args['id']))
+                     json_encode($this->model->empleado->update($req->getParsedBody(), $args['id']))
                    );   
     });
     
     $this->delete('eliminar/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
                    ->write(
-                     json_encode($this->model->categoria->delete($args['id']))
+                     json_encode($this->model->empleado->delete($args['id']))
                    );   
     });
 });

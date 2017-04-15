@@ -70,46 +70,24 @@ class Empleado extends CI_Controller {
     public function updEmpleado() {
 
         $errors = array();
-
-        $id = $this->input->post('per_id');
         $idEmpleado = $this->input->post('emp_id');
-
-        $data = [
-            'per_nombre' => $this->input->post('per_nombre'),
-            'per_email' => $this->input->post('per_email'),
-            'per_documento' => $this->input->post('per_documento'),
-            'per_password' => md5($this->input->post('per_password')),
-            'per_nacionalidad' => $this->input->post('per_nacionalidad'),
-            'per_id' => $this->input->post('per_id'),
-            'per_perfilUsuario' => $this->input->post('per_perfilUsuario')
-        ];
-
-        try {
-
-            if (empty($idEmpleado)) {
-                $result = $this->pm->registrar($data);
-                $id = $result->result;
-                $dataEmpleado = [
+        
+         $dataEmpleado = [
                     'emp_legajo' => $this->input->post('emp_legajo'),
                     'emp_cargo' => $this->input->post('emp_cargo'),
                     'emp_idSucursal' => $this->input->post('emp_idSucursal'),
-                    'emp_idPersona' => $id,
+                    'emp_idPersona' => $this->input->post('emp_idPersona'),
                 ];
+
+        try {
+            if (empty($idEmpleado)) {                           
+               
                 $response = $this->em->registrar($dataEmpleado);
                 $respuesta = [
                     'estado' => true,
                     'response' => $response->result
                 ];
-            } else {
-                $dataEmpleado = [
-                    'emp_legajo' => $this->input->post('emp_legajo'),
-                    'emp_cargo' => $this->input->post('emp_cargo'),
-                    'emp_idSucursal' => $this->input->post('emp_idSucursal'),
-                    'emp_idPersona' => $id,
-                    'emp_imagen' => $imagen
-                ];
-                $result = $this->pm->actualizar($data, $id);
-
+            } else {                             
                 $response = $this->em->actualizar($dataEmpleado, $idEmpleado);
                 $respuesta = [
                     'estado' => true,
@@ -185,40 +163,35 @@ class Empleado extends CI_Controller {
             //$imagen = $this->cm->obtener($id)->cat_imagen;
         }
     }
-    
-    
-    public function get_Sucursales($idEmpresa=1) {
+
+    public function get_Sucursales($idEmpresa = 1) {
 
         try {
             $result = $this->sm->getAll($idEmpresa);
 
             $respuesta = [
-                        'estado' => true,
-                        'response' => $result
+                'estado' => true,
+                'response' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [
-                        'estado' => false,
-                        'response' => $e->getMessage()
+                'estado' => false,
+                'response' => $e->getMessage()
             ];
         }
         echo json_encode($respuesta);
     }
 
-  
-
     public function eliminar() {
-             
-         $idEmpleado = $this->input->post('emp_id');
-         $idPersona = $this->input->post('emp_idPersona');
-          
-           
-           try {
-            $result = $this->pm->eliminar($idPersona);
+
+        $idEmpleado = $this->input->post('emp_id');
+        $idPersona = $this->input->post('emp_idPersona');
+
+
+        try {
             $result = $this->em->eliminar($idEmpleado);
-            
-            
-             $respuesta = [
+            $result = $this->pm->eliminar($idPersona);
+            $respuesta = [
                 'estado' => true,
                 'response' => $result
             ];
