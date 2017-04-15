@@ -82,23 +82,28 @@ selEmpleado = function (idEmpleados) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-
-            var empleados = res.response;
-            $('#mNombre').val(empleados.per_nombre);
-            $('#mEmail').val(empleados.per_email);
-            $('#mDocumento').val(empleados.per_documento); //select
-            //ajax para traer todos los estados
-            $('#mNacionalidad').val(empleados.per_nacionalidad);
-            $('#mPassword').val(empleados.per_password);
-            $('#mPerfilUsuario').val(empleados.per_perfilUsuario);
-            $('#mIdPersona').val(empleados.emp_idPersona);
-            $('#mIdEmpleado').val(empleados.emp_id);
-            $('#mLegajo').val(empleados.emp_legajo);
-            $('#mCargo').val(empleados.emp_cargo);
-            $('#imagen').attr('src', './assets/imagenes/empleado/' + empleados.emp_imagen);
+            if (res.estado) {
+                var empleados = res.response;
+                $('#mNombre').val(empleados.per_nombre);
+                $('#mEmail').val(empleados.per_email);
+                $('#mDocumento').val(empleados.per_documento); //select
+                //ajax para traer todos los estados
+                $('#mNacionalidad').val(empleados.per_nacionalidad);
+                $('#mPassword').val(empleados.per_password);
+                $('#mPerfilUsuario').val(empleados.per_perfilUsuario);
+                $('#mIdPersona').val(empleados.emp_idPersona);
+                $('#mIdEmpleado').val(empleados.emp_id);
+                $('#mLegajo').val(empleados.emp_legajo);
+                $('#mCargo').val(empleados.emp_cargo);
+                $('#imagen').attr('src', './assets/imagenes/empleado/' + empleados.emp_imagen);
 //            $('#mImagen').val(res.cat_imagen);
+            } else {
+                sweetAlert("Oops...", res.response, "error");
+                console.log(res.response);
+            }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
