@@ -54,8 +54,7 @@ class Producto extends CI_Controller {
     }
 
     public function get_productoById($idProducto) {
-
-        try {
+       try {
             $result = $this->pm->obtener($idProducto);
             $respuesta = [
                         'estado' => true,
@@ -69,7 +68,21 @@ class Producto extends CI_Controller {
         }
         echo json_encode($respuesta);
     }
-
+    public function get_variedadById($idVariedad) {
+        try {
+            $result = $this->vm->obtener($idVariedad);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
     public function get_ComponentesById($idProducto) {
 
         try {
@@ -128,7 +141,7 @@ class Producto extends CI_Controller {
             $result = $this->pm->getAllVar($idProducto);
             $respuesta = [
                         'estado' => true,
-                        'response' => $result
+                        'data' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [

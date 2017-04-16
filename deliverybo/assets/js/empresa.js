@@ -107,47 +107,7 @@ function selTelefono(idTelefono) {
             console.log(error.message);
 
         }
-    });
-    function guardarImagen() {
-        var inputFile = $('input#mImagen');
-        var fileToUpload = inputFile[0].files[0];
-        // make sure there is file to upload
-
-        // provide the form data
-        // that would be sent to sever through ajax
-        if (fileToUpload != 'undefined') {
-            var formData = new FormData();
-            formData.append('com_imagen', fileToUpload);
-            formData.append('com_id', $('#mIdComponente').val());
-            // now upload the file using $.ajax
-            $.ajax({
-                url: baseurl + "index.php/componente/updImagen",
-                type: 'post',
-                dataType: 'json',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-
-                    if (res.estado) {
-
-                        $('#mImagen').attr('src', './assets/imagenes/componente/' + res.response.com_imagen);
-                    } else {
-                        console.log(res.response);
-                        window.alert(res.response);
-
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log(error.message);
-
-                }
-            });
-        }
-    }
-    ;
-
-
+    });   
 };
 function eliminarTelefono(idTelefono) {
 
@@ -247,8 +207,6 @@ function updTelefono(idcon){
 
     
 };
-
-
 iniciar = function (idEmpresa) {
 
     $.ajax({
@@ -392,8 +350,7 @@ function guardarImagen() {
     } else {
         sweetAlert("Atencion", "Seleccione una Imagen", "warning");
     }
-}
-;
+};
 
 $('#mbtnUpdTelefono').click(function () {
     updTelefono($('#idDcon').val());

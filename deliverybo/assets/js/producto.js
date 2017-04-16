@@ -94,21 +94,22 @@ var table = $('#tbProductos').DataTable({
     "order": [[0, "asc"]],
 
 });
+var table2 = {};
 
 function VerForm() {
     $("#producto").show(); // Mostramos el formulario
     $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#filtros").hide();//ocultamos los filtros
     $("#productos").hide();
-     $("#estadodiv").show();
-      $("#filtros").hide();
+    $("#estadodiv").show();
+    $("#filtros").hide();
 }
 function OcultarForm() {
     $("#producto").hide(); // Mostramos el formulario
     $("#herramientas").show(); // ocultamos el boton nuevo
     $("#filtros").show();//ocultamos los filtros
     $("#productos").show();
-     $("#filtros").show();
+    $("#filtros").show();
 
 }
 function VerFormAgregar() {
@@ -117,8 +118,8 @@ function VerFormAgregar() {
     $("#panelCont").hide();
     $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#productos").hide();
-     $("#estadodiv").hide();
-      $("#filtros").hide();
+    $("#estadodiv").hide();
+    $("#filtros").hide();
 }
 
 
@@ -277,50 +278,182 @@ function cargarComponentes(idProducto) {
         }
     });
 }
+//variedades
 
+function actualizarTablaVariedades(idProducto){
+      table2.ajax.url(baseurl + "index.php/producto/get_VariedadesById/" + idProducto).load()
+}
 function cargarVariedades(idProducto) {
 
+    table2 = $('#tblVariedades').DataTable({
+        "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
+        'paging': true,
+        'info': false,
+        'filter': false,
+        'stateSave': true,    
+        'ajax': {
+            "url": baseurl + "index.php/producto/get_VariedadesById/" + idProducto,
+            "type": "POST",
+            "dataType": 'json',
+            "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+
+        },
+        'columns': [
+
+            {data: 'var_id', 'sClass': 'dt-body-center'},
+            {data: 'var_nombre'},
+            {data: 'var_descripcion'},
+            {data: 'var_precio'},
+            {"orderable": true,
+                render: function (data, type, row) {
+                    return '<span>' +
+                            '<div class="dropdown">' +
+                            '  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+                            '    Acciones' +
+                            '  <span class="caret"></span>' +
+                            '  </button>' +
+                            '    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+                            '    <li><a href="#" title="Editar informacion"  data-toggle="modal" data-target="#modalEditVariedad" onClick="selVariedad(\'' + row.var_id + '\')";><i style="color:#555;" class="glyphicon glyphicon-edit"></i> Editar</a></li>' +
+                            '    <li><a href="#"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver</a></li>' +
+                            '    <li><a href="#" title="Eliminar Telefono" onClick="eliminarVariedad(\'' + row.var_id + '\')"><i style="color:red;" class="glyphicon glyphicon-remove"></i> Eliminar</a></li>' +
+                            '    </ul>' +
+                            '</div>' +
+                            '</span>';
+                    // '<a href="#" class="btn btn-block btn-primary btn-sm" style="width: 80%;" data-toggle="modal" data-target="#modalEditCategoria" onClick="selCategoria(\'' + row.cat_id + '\');"><i class="fa fa-fw fa-edit"></i></a></td>';
+                }
+            }
+        ],
+        "columnDefs": [
+            {
+                "targets": [3],
+                "data": "var_precio",
+                "render": function (data, type, row) {
+                    return "<span ></i>$&nbsp;&nbsp; " + data + "</span>"
+
+                }
+            },
+        ],
+        "order": [[0, "asc"]],
+    });
+}
+function selVariedad(idVariedad) {
     $.ajax({
         type: "POST",
-        url: baseurl + "index.php/producto/get_VariedadesById/" + idProducto,
+        url: baseurl + "index.php/producto/get_variedadById/" + idVariedad,
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
+            debugger;
             if (res.estado) {
-
-                $('#tblVariedades tbody').empty();
-                $.each(res.response, function (key, data) {
-
-                    $('#tblVariedades tbody').append('<tr>' +
-                            ' <td>' +
-                            data.var_id +
-                            ' </td>' +
-                            ' <td>' +
-                            data.var_nombre +
-                            ' </td>' +
-                            ' <td>' +
-                            data.var_descripcion +
-                            ' </td>' +
-                            ' <td>' + '$&nbsp;' +
-                            data.var_precio +
-                            ' </td>' +
-                            ' <td class="eliminarVar"><a href="#"  onClick=""><i style="color:red;" class="glyphicon glyphicon-remove"></i></a></td>' +
-                            '</tr>'
-                            );
-                });
+                $('#mIdVariedad').val(res.response.var_id);
+                $('#mvNombre').val(res.response.var_nombre);
+                $('#mvDescripcion').val(res.response.var_descripcion);
+                $('#mvTipo').val(res.response.var_tipo);
+                $('#mvPrecio').val(res.response.var_precio);
             } else {
-                sweetAlert("Oops...", "Ocurrio un Error Al cargar las Variedades!", "error");
+                sweetAlert("Oops...", res.response, "error");
                 console.log(res.response)
+            }
+
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error);
+        }
+    });
+};
+function eliminarVariedad(idVariedad) {
+    swal({
+        title: "Esta seguro?",
+        text: "Se eliminar la Variedad del Producto",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, Eliminar !",
+        cancelButtonText: "No, Cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+            function (isConfirm) {
+                debugger;
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "index.php/producto/eliminarVariedad/" + idVariedad,
+                        dataType: 'json',
+                        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+                        },
+                        success: function (res) {
+
+                            if (res.estado) {
+                                debugger;
+                                actualizarTablaVariedades($('#idProducto').val());
+                                swal("Eliminado!", "La Variedad fue eliminada del Producto", "success");
+                            } else {
+                                debugger;
+                                sweetAlert("Oops...", res.response, "error");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            debugger;
+                            console.log(error.message);
+                            sweetAlert("Oops...", error, "error");
+
+                        }
+                    });
+                } else {
+                    swal("Cancelado", "La Variedad No fue eliminada del Producto", "error");
+                }
+            });
+
+
+
+
+};
+function ActualizarVariedad(idProducto) {
+
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/producto/updVariedad",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            var_nombre: $('#mvNombre').val(),
+            var_descripcion: $('#mvDescripcion').val(),
+            var_tipo: $('#mvTipo').val(),
+            var_precio: $('#mvPrecio').val(),
+            var_idProducto: $('#idProducto').val(),
+            var_id: $('#mIdVariedad').val()
+        },
+        success: function (res) {
+            if (res.estado) {
+                swal({
+                    title: "Los Datos Fueron Guardados!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            $('#mbtnCerrarModalVar').click();
+                            actualizarTablaVariedades($('#idProducto').val());
+                        });
+
+
+            } else {
+                sweetAlert("Oops...", JSON.stringify(res.response), "error");
+                console.log(res.response);
+                $('#mbtnCerrarModalVar').click();
+
 
             }
         },
         error: function (request, status, error) {
-            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
     });
 }
+
+
+
 
 function CargarComponetesAgregar(idProducto) {
 
@@ -402,47 +535,7 @@ function ActualizarComponentes() {
     cargarVariedades($('#idProducto').val());
 }
 
-function ActualizarVariedad(idProducto) {
 
-    $.ajax({
-        type: "POST",
-        url: baseurl + "index.php/producto/updVariedad",
-        dataType: 'json',
-        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            var_nombre: $('#mvNombre').val(),
-            var_descripcion: $('#mvDescripcion').val(),
-            var_tipo: $('#mvTipo').val(),
-            var_precio: $('#mvPrecio').val(),
-            var_idProducto: $('#idProducto').val(),
-            var_id: $('#mIdVariedad').val()
-        },
-        success: function (res) {
-            if (res.estado) {
-                swal({
-                    title: "Los Datos Fueron Guardados!",
-                    text: "haga click!",
-                    type: "success",
-                },
-                        function () {
-                            $('#mbtnCerrarModalVar').click();
-                            cargarVariedades($('#idProducto').val());
-                        });
-
-
-            } else {
-                sweetAlert("Oops...", JSON.stringify(res.response), "error");
-                console.log(res.response);
-                $('#mbtnCerrarModalVar').click();
-
-
-            }
-        },
-        error: function (request, status, error) {
-            console.log(error.message);
-
-        }
-    });
-}
 
 function actualizarProducto() {
     $.ajax({
@@ -537,7 +630,7 @@ function guardarImagen() {
 
 
 $('#agregarCom').click(function () {
-  CargarComponetesAgregar($('#idProducto').val());
+    CargarComponetesAgregar($('#idProducto').val());
 })
 
 $(document).on("click", ".eliminarComp", function () {
@@ -591,53 +684,6 @@ $(document).on("click", ".eliminarComp", function () {
 
 
 });
-$(document).on("click", ".eliminarVar", function () {
-
-    var parent = $(this).parents().get(0);
-    var var_id = $(parent).find('td').eq(0).html();
-    debugger;
-    swal({
-        title: "Esta seguro?",
-        text: "Se eliminar la Variedad del Producto",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, Eliminar !",
-        cancelButtonText: "No, Cancelar!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-            function (isConfirm) {
-                debugger;
-                if (isConfirm) {
-                    $.ajax({
-                        type: "POST",
-                        url: baseurl + "index.php/producto/eliminarVariedad/" + var_id,
-                        dataType: 'json',
-                        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-                        },
-                        success: function (res) {
-
-                            if (res.estado) {
-                                $(parent).remove();
-                                swal("Eliminado!", "La Variedad fue eliminada del Producto", "success");
-                            } else {
-                                debugger;
-                                sweetAlert("Oops...", res.response, "error");
-                            }
-                        },
-                        error: function (request, status, error) {
-                            debugger;
-                            console.log(error.message);
-                            sweetAlert("Oops...", error, "error");
-
-                        }
-                    });
-                } else {
-                    swal("Cancelado", "La Variedad No fue eliminada del Producto", "error");
-                }
-            });
-});
 OcultarForm();
 cargarFCategorias();
 
@@ -655,4 +701,15 @@ $('#btnAgregarProd').click(function () {
 })
 $('#btnGuardarImg').click(function () {
     guardarImagen();
+})
+
+
+$('#mbtnCerrarModalVar,#mCerrarModalVar').click(function () {
+
+    $('#mIdVariedad').val('');
+    $('#mvNombre').val('');
+    $('#mvDescripcion').val(''); //select
+    //ajax para traer todos los estados
+    $('#mvTipo').val('');
+    $('#mvPrecio').val('');
 })

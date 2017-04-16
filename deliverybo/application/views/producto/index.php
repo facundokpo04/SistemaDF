@@ -150,8 +150,7 @@
                     </ul> 
                     <div class="tab-content" id="panelCont">
                         <div class="tab-pane active" id="tabVariedad">  
-                            <div class="media-body">
-
+                           
                                 <div class="media-body">
                                     <div class="box-body table-responsive no-padding">
                                         <table  id="tblVariedades" class="table table-bordered table-striped">
@@ -177,7 +176,7 @@
 
 
                                 </div>
-                            </div>
+                          
                         </div>
                         <div class="tab-pane" id="tabComponentes">  
 
