@@ -101,12 +101,14 @@ function VerForm() {
     $("#filtros").hide();//ocultamos los filtros
     $("#productos").hide();
      $("#estadodiv").show();
+      $("#filtros").hide();
 }
 function OcultarForm() {
     $("#producto").hide(); // Mostramos el formulario
     $("#herramientas").show(); // ocultamos el boton nuevo
     $("#filtros").show();//ocultamos los filtros
     $("#productos").show();
+     $("#filtros").show();
 
 }
 function VerFormAgregar() {
@@ -116,6 +118,7 @@ function VerFormAgregar() {
     $("#herramientas").hide(); // ocultamos el boton nuevo
     $("#productos").hide();
      $("#estadodiv").hide();
+      $("#filtros").hide();
 }
 
 
