@@ -49,9 +49,6 @@ class Pedido extends CI_Controller {
     }
 
     public function get_pedidosById($idPedido) {
-
-
-
         try {
             $result = $this->pm->obtener($idPedido);
             $data = $result;
@@ -61,9 +58,6 @@ class Pedido extends CI_Controller {
         echo json_encode($data);
     }
     public function get_detalleById($idPedido) {
-
-
-
         try {
             $result = $this->dm->obtenerPed($idPedido);
             $data = $result;
@@ -74,22 +68,14 @@ class Pedido extends CI_Controller {
     }
 
     public function updPedido() {
-
         $id = $this->input->post('pe_id');
         $errors = array();
         $data = [
             'pe_idEstado' => $this->input->post('pe_idEstado'),
-         
-        ];
-
-
+            ];
         try {
-
-       
-
-               $a= $this->pm->actualizar($data, $id);
-        
-             
+              $a= $this->pm->actualizar($data, $id);
+                    
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
