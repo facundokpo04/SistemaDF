@@ -64,7 +64,7 @@
       <div class="col-xs-12">
         <h2 class="page-header">
           <i class="fa fa-globe"></i> Pizza Color Delivery.
-          <small class="pull-right">Date: 2/10/2014</small>
+          <small class="pull-right"><p id="date"></p></small>
         </h2>
       </div>
       <!-- /.col -->
@@ -125,12 +125,13 @@
       <!-- accepted payments column -->
       <div class="col-xs-6">
        <p class="lead">Aclaracion Pedido</p>
+       <p id="aclaracionP"> </p>
        
        
       </div>
       <!-- /.col -->
-      <div class="col-xs-6">
-        <p class="lead">Amount Due 2/22/2014</p>
+      <div  class="col-xs-6">
+        <p id="fechaP" class="lead"></p>
 
         <div class="table-responsive">
           <table class="table">
@@ -154,13 +155,8 @@
         </div>
     <!-- /.row -->
     <div class="row no-print">
-        <div class="col-xs-12">
-          <a  href="javascript:imprSelec('pedidoD')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>  
-          <a  href="javascript:window.print()" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir2</a>
-          <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir3</a> 
-          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-            <i class="fa fa-download"></i> Generate PDF
-          </button>
+        <div class="col-xs-12">    
+          <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>Imprimir</a>         
         </div>
       </div>
   </section>

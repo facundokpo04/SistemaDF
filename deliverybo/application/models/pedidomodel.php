@@ -2,7 +2,7 @@
 
 class PedidoModel extends CI_Model {
 
-    public function getAll($l = 5, $p = 0) {
+    public function getAll() {
         return RestApi::call(
                         RestApiMethod::GET, "pedidoencabezado/listar"
         );

@@ -38,7 +38,7 @@ class Pedido extends CI_Controller {
         $limite = 10;
         $data = new stdClass();
         try {
-            $result = $this->pm->getAll($limite, $p);
+            $result = $this->pm->getAll();
 
             $total = $result->total;
             $data->data = $result->data;

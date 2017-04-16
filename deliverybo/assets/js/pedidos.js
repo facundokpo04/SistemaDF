@@ -98,8 +98,8 @@ getCliente = function (idpedido) {
                     '<br>' +
                     'Email: ' +
                     res.per_email);
-            
-             $('#cliente2').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
+
+            $('#cliente2').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
                     res.dir_direccion +
                     '<br>Telefono: ' +
                     res.per_celular);
@@ -114,12 +114,6 @@ getCliente = function (idpedido) {
 }
 getPedido = function (idpedido) {
 
-//        <b>Pedido #007612</b><br>
-//        <br>
-//        <b>Pedido ID:</b> 4F3S8J<br>
-//        <b>Fecha Pedido:</b> 2/22/2014<br>
-//        <b>Estado:</b> Pendiente<br>
-//        <b>Metodo Pago:</b> Efectivo
     $('#pedidoE').empty();
     $.ajax({
         type: "POST",
@@ -127,11 +121,16 @@ getPedido = function (idpedido) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
+            debugger;
             $('#pedidoE').append(' <b>Pedido #PED' + res.pe_id + '</b><br>' +
                     '<b>Pedido ID:</b>' + res.pe_id + '<br>' +
-                    '<b>Fecha Pedido:</b> 2/22/2014<br>' +
+                    '<b>Fecha Pedido:</b>' + getFecha(res.pe_fechaPedido) + '<br>' +
+                    '<b>Hora Pedido:</b>' + getHora(res.pe_fechaPedido) + '<br>' +
                     '<b>Estado:</b>' + res.descripcion + '<br>' +
                     '<b>Metodo Pago:</b>' + res.pe_medioPago);
+            
+             $('#fechaP').text("Fecha Pedido: " + getFecha(res.pe_fechaPedido));
+             $('#aclaracionP').text(res.pe_aclaraciones);
 
         },
         error: function (request, status, error) {
@@ -205,12 +204,39 @@ cargarDetalle = function (idPedido) {
 
     });
 }
+fechaActual = function () {
+    n = new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    return(d + "/" + m + "/" + y);
+
+}
+
+getFecha = function (fecha) {
+    n = new Date(fecha);
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    return(d + "/" + m + "/" + y);
+
+}
+getHora = function (fecha) {
+    n = new Date(fecha);
+    h = n.getHours();
+    m = n.getMinutes();
+
+    return(h + ":" + m);
+
+}
 
 selPedido = function (idpedido) {
     VerForm();
-
+    debugger;
     getCliente(idpedido);
     getPedido(idpedido);
     cargarDetalle(idpedido);
+    $('#date').text(fechaActual());
 
 };
+
