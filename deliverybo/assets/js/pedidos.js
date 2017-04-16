@@ -113,7 +113,6 @@ getCliente = function (idpedido) {
 
 }
 getPedido = function (idpedido) {
-
     $('#pedidoE').empty();
     $.ajax({
         type: "POST",
@@ -131,7 +130,6 @@ getPedido = function (idpedido) {
             
              $('#fechaP').text("Fecha Pedido: " + getFecha(res.pe_fechaPedido));
              $('#aclaracionP').text(res.pe_aclaraciones);
-
         },
         error: function (request, status, error) {
             console.log(error.message);
