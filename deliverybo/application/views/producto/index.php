@@ -114,12 +114,12 @@
                         <span class="input-group-addon cajaParametro"><i class="fa  fa-minus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMinCompo" id="txtMinCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
                     </div>	
                 </div> 
-                <div class="col-sm-6 form-group">
+                <div class="col-sm-6 form-group" id="estadodiv">
                     <label for="">Estado</label>
                     <div class="input-group col-sm-12"> 
                         <select name="PEstado" id="PEstado" class="form-control">                       
                             <option value="1">Habilitado</option>
-                            <option value="2">Deshabilitado</option>
+                            <option value="2" selected>Deshabilitado</option>
                         </select>
                     </div>
                 </div>
@@ -256,7 +256,7 @@
 
     </div>  
 
-    <div class="panel-footer"><button type="button" class="btn btn-default">Cancelar</button>
+    <div class="panel-footer"><button type="button" class="btn btn-default" onclick="location.reload()">Cancelar</button>
         <button type="button" class="btn btn-info" id="mbtnUpdProducto">Actualizar</button></div>
 </div> 
 <!-- modal agregar componente -->
