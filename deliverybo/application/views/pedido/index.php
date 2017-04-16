@@ -125,9 +125,7 @@
       <!-- accepted payments column -->
       <div class="col-xs-6">
        <p class="lead">Aclaracion Pedido</p>
-       <p id="aclaracionP"> </p>
-       
-       
+       <p id="aclaracionP"> </p>              
       </div>
       <!-- /.col -->
       <div  class="col-xs-6">
