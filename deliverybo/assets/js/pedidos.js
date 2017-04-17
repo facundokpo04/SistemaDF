@@ -41,9 +41,11 @@ $('#tblPedidos').DataTable({
                         '    Acciones' +
                         '  <span class="caret"></span>' +
                         '  </button>' +
-                        '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick="selPedido(\'' + row.pe_id + '\');"><i style="color:#555;" class="glyphicon glyphicon-edit"></i>Estado</a></li>' +
-                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\')><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
+                        '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +                        
+                        '    <li><a href="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
+                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
+                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
+                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\')"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
                         '    </ul>' +
                         '</div>' +
                         '</span>';
