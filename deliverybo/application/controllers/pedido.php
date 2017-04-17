@@ -14,7 +14,7 @@ class Pedido extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('PedidoModel', 'pm');
-           $this->load->model('PedidoDetalleModel', 'dm');
+        $this->load->model('PedidoDetalleModel', 'dm');
     }
 
     public function index($p = 0) {
@@ -51,20 +51,33 @@ class Pedido extends CI_Controller {
     public function get_pedidosById($idPedido) {
         try {
             $result = $this->pm->obtener($idPedido);
-            $data = $result;
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
+
     public function get_detalleById($idPedido) {
         try {
             $result = $this->dm->obtenerPed($idPedido);
-            $data = $result;
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
 
     public function updPedido() {
@@ -72,58 +85,80 @@ class Pedido extends CI_Controller {
         $errors = array();
         $data = [
             'pe_idEstado' => $this->input->post('pe_idEstado'),
-            ];
+            'pe_idEmpleado' => $this->input->post('pe_idEmpleado'),
+        ];
         try {
-              $a= $this->pm->actualizar($data, $id);
-                    
+            $response = $this->pm->actualizar($data, $id);
+            $respuesta = [
+                'estado' => true,
+                'response' => $response
+            ];
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => true,
+                    'response' => $errors
+                ];
+            } else {
+                $respuesta = [
+                    'estado' => false,
+                    'validator' => false,
+                    'response' => $e->getMessage()
+                ];
             }
         }
 
-        echo json_encode($errors);
+        echo json_encode($respuesta);
     }
 
-    public function guardar() {
-        
-    }
-    
-    public function getCliente($idPedido){               
+    public function getCliente($idPedido) {
         try {
             $result = $this->pm->obtenerCliente($idPedido);
-            $data = $result;
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
+        echo json_encode($respuesta);
     }
     
-     public function getPedido($idPedido){               
+    public function getEmpleado($idPedido) {
+        try {
+            $result = $this->pm->obtenerEmpleado($idPedido);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
+
+    public function getPedido($idPedido) {
         try {
             $result = $this->pm->obtener($idPedido);
-            $data = $result;
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
         } catch (Exception $e) {
-            var_dump($e);
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
         }
-        echo json_encode($data);
-    }
-    
-    public function verDetalle($id) {
-          $this->load->view('layout/header');
-        $this->load->view('layout/menu');
-        //definimos variable para traer la data y mantner la logica de paginacion
-        //inicializacion de paginacion
-
-
-        $this->load->view('pedido/detalle.php',$id);
-
-        //footer
-        $this->load->view('layout/footer');
-        
-    }
-    public function eliminar($id) {
-           
+        echo json_encode($respuesta);
     }
 
 }

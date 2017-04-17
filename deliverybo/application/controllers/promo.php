@@ -66,8 +66,7 @@ class Promo extends CI_Controller {
             $respuesta = [
                 'estado' => false,
                 'response' => $e->getMessage()
-            ];
-            ;
+            ];            
         }
         echo json_encode($respuesta);
     }

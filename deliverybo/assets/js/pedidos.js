@@ -41,7 +41,7 @@ $('#tblPedidos').DataTable({
                         '    Acciones' +
                         '  <span class="caret"></span>' +
                         '  </button>' +
-                        '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +                        
+                        '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
                         '    <li><a href="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
@@ -92,23 +92,28 @@ getCliente = function (idpedido) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
+            if (res.estado) {
+                $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
+                        res.response.dir_direccion +
+                        '<br>Telefono: ' +
+                        res.response.per_celular +
+                        '<br>' +
+                        'Email: ' +
+                        res.response.per_email);
 
-            $('#cliente').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
-                    res.dir_direccion +
-                    '<br>Telefono: ' +
-                    res.per_celular +
-                    '<br>' +
-                    'Email: ' +
-                    res.per_email);
-
-            $('#cliente2').append('<strong>' + res.per_nombre + '</strong><br>Direccion: ' +
-                    res.dir_direccion +
-                    '<br>Telefono: ' +
-                    res.per_celular);
+                $('#cliente2').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
+                        res.response.dir_direccion +
+                        '<br>Telefono: ' +
+                        res.response.per_celular);
+            } else {
+                sweetAlert("Oops...", "Error al Obtner el Cliente!", "error");
+                console.log(res.response)
+            }
 
         },
         error: function (request, status, error) {
             console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
 
         }
     });
@@ -122,18 +127,23 @@ getPedido = function (idpedido) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            debugger;
-            $('#pedidoE').append(' <b>Pedido #PED' + res.pe_id + '</b><br>' +
-                    '<b>Pedido ID:</b>' + res.pe_id + '<br>' +
-                    '<b>Fecha Pedido:</b>' + getFecha(res.pe_fechaPedido) + '<br>' +
-                    '<b>Hora Pedido:</b>' + getHora(res.pe_fechaPedido) + '<br>' +
-                    '<b>Estado:</b>' + res.descripcion + '<br>' +
-                    '<b>Metodo Pago:</b>' + res.pe_medioPago);
-            
-             $('#fechaP').text("Fecha Pedido: " + getFecha(res.pe_fechaPedido));
-             $('#aclaracionP').text(res.pe_aclaraciones);
+            if (res.estado) {
+                $('#pedidoE').append(' <b>Pedido #PED' + res.response.pe_id + '</b><br>' +
+                        '<b>Pedido ID:</b>' + res.response.pe_id + '<br>' +
+                        '<b>Fecha Pedido:</b>' + getFecha(res.response.pe_fechaPedido) + '<br>' +
+                        '<b>Hora Pedido:</b>' + getHora(res.response.pe_fechaPedido) + '<br>' +
+                        '<b>Estado:</b>' + res.response.descripcion + '<br>' +
+                        '<b>Metodo Pago:</b>' + res.response.pe_medioPago);
+
+                $('#fechaP').text("Fecha Pedido: " + getFecha(res.response.pe_fechaPedido));
+                $('#aclaracionP').text(res.response.pe_aclaraciones);
+            } else {
+                sweetAlert("Oops...", "Error al Obtener el Encabezado del Pedido!", "error");
+                console.log(res.response)
+            }
         },
         error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error.message);
 
         }
@@ -150,51 +160,59 @@ cargarDetalle = function (idPedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
-            res.forEach(function (item) {
+            if (res.estado) {
 
-                $('#tbProductos tbody').append('<tr>' +
-                        ' <td>' +
-                        item.producto.dp_Cantidad +
-                        ' </td>' +
-                        ' <td>' +
-                        item.producto.prod_codigoProducto +
-                        ' </td>' +
-                        ' <td>' +
-                        item.producto.prod_nombre +
-                        ' -Grande </td>' +
-                        ' <td>' +
-                        'Sin aceitunas' +
-                        ' </td>' +
-                        ' <td>' + '$&nbsp;' +
-                        item.producto.dp_PrecioUnitario +
-                        '</tr>'
-                        );
-                item.componentes.forEach(function (comp) {
+                res.response.forEach(function (item) {
 
                     $('#tbProductos tbody').append('<tr>' +
                             ' <td>' +
-                            1 +
+                            item.producto.dp_Cantidad +
                             ' </td>' +
                             ' <td>' +
+                            item.producto.prod_codigoProducto +
                             ' </td>' +
                             ' <td>' +
-                            comp.com_nombre +
-                            ' </td>' +
+                            item.producto.prod_nombre +
+                            ' -Grande </td>' +
                             ' <td>' +
-                            '' +
+                            'Sin aceitunas' +
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
-                            comp.com_precio +
+                            item.producto.dp_PrecioUnitario +
                             '</tr>'
                             );
+                    item.componentes.forEach(function (comp) {
+
+                        $('#tbProductos tbody').append('<tr>' +
+                                ' <td>' +
+                                1 +
+                                ' </td>' +
+                                ' <td>' +
+                                ' </td>' +
+                                ' <td>' +
+                                comp.com_nombre +
+                                ' </td>' +
+                                ' <td>' +
+                                '' +
+                                ' </td>' +
+                                ' <td>' + '$&nbsp;' +
+                                comp.com_precio +
+                                '</tr>'
+                                );
+
+                    });
 
                 });
+            } else {
+                sweetAlert("Oops...", "Error al Obtener el Detalle del Pedido!", "error");
+                console.log(error.message);
 
-            });
+            }
 
         },
         error: function (request, status, error) {
             console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
 
         }
 
