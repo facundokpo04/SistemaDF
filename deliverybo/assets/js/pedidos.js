@@ -13,6 +13,7 @@ function OcultarForm() {
 
 OcultarForm();
 
+
 $('#tblPedidos').DataTable({
     "lengthMenu": [[6, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
@@ -42,10 +43,10 @@ $('#tblPedidos').DataTable({
                         '  <span class="caret"></span>' +
                         '  </button>' +
                         '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
-                        '    <li><a href="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
-                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
-                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#" onClick=""><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
-                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\')"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
+                        '    <li><a href="#" onClick="cambiarAPreparado(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
+                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalEnviarPedido" onClick="selPedidoEnviar(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
+                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalCancelarPedido" onClick="selPedidoCancelar(\'' + row.pe_id + '\',\'' + row.pe_idEstado+ '\');"><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
+                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\');"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
                         '    </ul>' +
                         '</div>' +
                         '</span>';
@@ -65,8 +66,14 @@ $('#tblPedidos').DataTable({
 
                 if (data == 1) {
                     return "<span class='label label-warning'>Pendiente</span>";
-                } else if (data == 2) {
-                    return "<span class='label label-succes'>Enviado</span>";
+                }else if (data == 2) {
+                    return "<span class='label label-info'>Preparando</span>";
+                } 
+                else if (data == 3) {
+                    return "<span class='label label-success'>Enviando</span>";
+                }
+                else if (data == 4) {
+                    return "<span class='label label-danger'>Cancelado</span>";
                 }
 
             }
@@ -83,6 +90,114 @@ $('#tblPedidos').DataTable({
     ],
     "order": [[0, "asc"]],
 });
+
+
+cambiarAPreparado = function (idPedido) {
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/updPedido/",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            pe_id:idPedido,
+            pe_idEstado: 2
+        },
+        success: function (res) {
+            if (res.estado) {
+                swal({
+                    title: "El Pedido cambio a Preparando!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+            } else {
+                sweetAlert("Oops...", "Error al cambiar el Estado del Pedido!", "error");
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error.message);
+
+        }
+    });
+
+
+};
+cambiarAEnviado = function (idPedido, idEmpleado) {
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/updPedido/",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            pe_id:idPedido,
+            pe_idEstado: 3,
+            pe_idEmpleado: idEmpleado
+
+        },
+        success: function (res) {
+            if (res.estado) {
+                swal({
+                    title: "El Pedido cambio a Enviando!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+            } else {
+                sweetAlert("Oops...", "Error al cambiar el Estado del Pedido!", "error");
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error.message);
+
+        }
+    });
+
+};
+
+cancelarPedido = function (idPedido, motivo) {
+
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/updPedido/",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
+            pe_id:idPedido,
+            pe_idEstado: 4,
+            pe_motivoCancelado: motivo
+
+        },
+        success: function (res) {
+            if (res.estado) {
+                swal({
+                    title: "El Pedido cambio a Cancelado!",
+                    text: "haga click!",
+                    type: "success",
+                },
+                        function () {
+                            location.reload();
+                        });
+
+            } else {
+                sweetAlert("Oops...", "Error al cambiar el Estado del Pedido!", "error");
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error.message);
+
+        }
+    });
+
+};
 
 getCliente = function (idpedido) {
     $('#cliente').empty();
@@ -150,6 +265,27 @@ getPedido = function (idpedido) {
     });
 
 }
+cargarEmpleados = function () {
+    $("#mRepartidor option").remove();
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/empleado/get_empleados/1",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            $.each(res.data, function (key, data) {
+                ;
+                $("#mRepartidor").append("<option value=" + data.emp_id + ">" + data.per_nombre + '-' + data.emp_cargo + "</option>");
+            });
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+
+    });
+}
+
 cargarDetalle = function (idPedido) {
 
     $('#tbProductos tbody').empty()
@@ -247,7 +383,6 @@ getHora = function (fecha) {
     return(h + ":" + m);
 
 }
-
 selPedido = function (idpedido) {
     VerForm();
     debugger;
@@ -257,4 +392,67 @@ selPedido = function (idpedido) {
     $('#date').text(fechaActual());
 
 };
+selPedidoEnviar = function (idpedido) {
+
+
+    cargarEmpleados();
+    $('#midPedido').val(idpedido);
+    debugger;
+   
+
+};
+
+selPedidoCancelar = function (idpedido,idEstado) { 
+   
+    $('#midcPedido').val(idpedido);
+    $('#midEPedido').val(idEstado);
+    $('#mMotivo').val('');  
+};
+
+$('#mbtnEnviarPedido').click(function () {
+
+    var idPedido= $('#midPedido').val();
+    var idEmpleado = $('#mRepartidor').val();
+  cambiarAEnviado(idPedido,idEmpleado);
+
+
+
+
+
+})
+
+$('#mbtnCancelarPedido').click(function () {
+
+    var idPedido= $('#midcPedido').val();
+    var motivo = $('#mMotivo').val();
+    var estadoPedido=$('#midEPedido').val();
+    
+    swal({
+        title: "Esta seguro?",
+        text: "Se Cancelara el Pedido",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, Cancelar !",
+        cancelButtonText: "No, Volver!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+            function (isConfirm) {
+                debugger;
+                if (isConfirm) {
+                    
+                    if(estadoPedido==2 || estadoPedido==3){
+                       swal("Atencion", "No se puede cancelar un pedido que esta siendo Enviado/Preparado", "error");
+                        
+                    }
+                    else{
+                        cancelarPedido(idPedido,motivo);                                            
+                    }
+                } else {
+                    swal("Cancelado", "EL Pedido Fue Cancelado", "error");
+                }
+            });
+    
+})
 

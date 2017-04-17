@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);        ?>
+<?php // var_dump($model);         ?>
 <ol class="breadcrumb">
     <li class="active">Pedidos Hoy</li>
 </ol>
@@ -12,44 +12,44 @@
                 <h3 class="box-title">PEDIDOS</h3>
             </div>
             <!-- /.box-header -->
-           <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Ultimos Pedidos</h3>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ultimos Pedidos</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin" id="tblPedidos">
+                            <thead>
+                                <tr>
+                                    <th>Pedido ID</th>
+                                    <th>Estado</th>
+                                    <th>Cliente</th>                 
+                                    <th>Celular</th>
+                                    <th>Direccion</th>
+                                    <th>Telefono</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>                   
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                </div>
+                <!-- /.box-footer -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin" id="tblPedidos">
-                  <thead>
-                  <tr>
-                    <th>Pedido ID</th>
-                    <th>Estado</th>
-                    <th>Cliente</th>                 
-                    <th>Celular</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>                   
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
-           
-              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-            </div>
-            <!-- /.box-footer -->
-          </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -59,109 +59,211 @@
 </div>
 <div id="pedido" class="row" style="display:none;"> 
     <section class="invoice">
-    <!-- title row -->
-    <div class="row">
-      <div class="col-xs-12">
-        <h2 class="page-header">
-          <i class="fa fa-globe"></i> Pizza Color Delivery.
-          <small class="pull-right"><p id="date"></p></small>
-        </h2>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- info row -->
-    <div class="row invoice-info">
-      <div class="col-sm-4 invoice-col">
-        Cliente:
-        <address id="cliente">
-        
-        </address>
-      </div>
-      <!-- /.col -->
-    
-      <!-- /.col -->
-      <div id="pedidoE" class="col-sm-4 invoice-col">
-        
-        
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-
-    <!-- Table row -->
-      <div id="pedidoD">
-    <div  id="pedidoD2" class="row">
-      <div class="col-xs-12 table-responsive">
-        <table id="tbProductos" class="table table-striped">
-          <thead>
-          <tr>
-            <th>Cant</th>
-            <th>Item</th>
-            <th>Nombre</th>
-            <th>Aclaracion</th>
-            <th>Subtotal</th>
-          </tr>
-          </thead>
-          <tbody>
-                
-          </tbody>
-        </table>
-      </div>
-        <div class="col-xs-6">
-       Cliente:
-        <address id="cliente2">
-        
-        </address>
-       
-       
-      </div>
-        
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-
-    <div class="row">
-      <!-- accepted payments column -->
-      <div class="col-xs-6">
-       <p class="lead">Aclaracion Pedido</p>
-       <p id="aclaracionP"> </p>              
-      </div>
-      <!-- /.col -->
-      <div  class="col-xs-6">
-        <p id="fechaP" class="lead"></p>
-
-        <div class="table-responsive">
-          <table class="table">
-            <tr>
-              <th style="width:50%">Subtotal:</th>
-              <td>$250.30</td>
-            </tr>        
-            <tr>
-              <th>Envio:</th>
-              <td>$5.80</td>
-            </tr>
-            <tr>
-              <th>Total:</th>
-              <td>$265.24</td>
-            </tr>
-          </table>
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Pizza Color Delivery.
+                    <small class="pull-right"><p id="date"></p></small>
+                </h2>
+            </div>
+            <!-- /.col -->
         </div>
-      </div>
-      <!-- /.col -->
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                Cliente:
+                <address id="cliente">
+
+                </address>
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+            <div id="pedidoE" class="col-sm-4 invoice-col">
+
+
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Table row -->
+        <div id="pedidoD">
+            <div  id="pedidoD2" class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table id="tbProductos" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cant</th>
+                                <th>Item</th>
+                                <th>Nombre</th>
+                                <th>Aclaracion</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                    Cliente:
+                    <address id="cliente2">
+
+                    </address>
+
+
+                </div>
+
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-xs-6">
+                    <p class="lead">Aclaracion Pedido</p>
+                    <p id="aclaracionP"> </p>              
+                </div>
+                <!-- /.col -->
+                <div  class="col-xs-6">
+                    <p id="fechaP" class="lead"></p>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th style="width:50%">Subtotal:</th>
+                                <td>$250.30</td>
+                            </tr>        
+                            <tr>
+                                <th>Envio:</th>
+                                <td>$5.80</td>
+                            </tr>
+                            <tr>
+                                <th>Total:</th>
+                                <td>$265.24</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row no-print">
+            <div class="col-xs-12">    
+                <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>Imprimir</a>         
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+    }
+
+    .example-modal .modal {
+        background: transparent !important;
+    }
+</style>
+
+<div class="example-modal modal fade" id="modalEnviarPedido" tabindex="-1" >
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Enviar Pedido</h4>
+                </div>
+                <div class="modal-body">
+                        <form class="form-horizontal">
+                            <!-- parametros ocultos -->
+                            <input type="hidden" id="midPedido">
+
+                            <div class="box-body">                                
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Repartidor</label>
+                                    <div class="col-sm-9"> 
+                                        <select name="mRepartidor" id="mRepartidor" class="form-control">                       
+                                       
+                                        </select>
+                                    </div>
+                                </div>                         
+                            </div>
+                        </form>
+                                         
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info" id="mbtnEnviarPedido">Actualizar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
+    <!-- /.modal -->
+</div>
+
+<div class="example-modal modal fade" id="modalCancelarPedido" tabindex="-1" >
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cancelar Pedido</h4>
+                </div>
+                <div class="modal-body">
+                        <form class="form-horizontal">
+                            <!-- parametros ocultos -->
+                            <input type="hidden" id="midcPedido">
+                            <input type="hidden" id="midEPedido">
+
+                            <div class="box-body">                                
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Motivo</label>
+                                    <div class="col-sm-9"> 
+                                        <textarea id="mMotivo" class="form-control" rows="3" placeholder="Escriba brevemente el motivo ..."></textarea>
+                                    </div>
+                                </div>                         
+                            </div>
+                        </form>
+                                         
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Volver</button>
+                    <button type="button" class="btn btn-danger" id="mbtnCancelarPedido">Cancelar Pedido</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
         </div>
-    <!-- /.row -->
-    <div class="row no-print">
-        <div class="col-xs-12">    
-          <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>Imprimir</a>         
-        </div>
-      </div>
-  </section>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 </div>
 
 <script type="text/javascript">
-function imprSelec(muestra)
-{var ficha=document.getElementById(muestra);var ventimp=window.open(' ','popimpr');ventimp.document.write(ficha.innerHTML);ventimp.document.close();ventimp.print();ventimp.close();}
+    function imprSelec(muestra)
+    {
+        var ficha = document.getElementById(muestra);
+        var ventimp = window.open(' ', 'popimpr');
+        ventimp.document.write(ficha.innerHTML);
+        ventimp.document.close();
+        ventimp.print();
+        ventimp.close();
+    }
 </script>
 <script type="text/javascript">
     var baseurl = "<?php echo base_url(); ?>";

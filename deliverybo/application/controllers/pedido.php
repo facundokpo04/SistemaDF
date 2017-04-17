@@ -8,11 +8,6 @@ class Pedido extends CI_Controller {
 
     public function __CONSTRUCT() {
         parent::__construct();
-
-//        $this->user = ['user' => RestApi::getUserData()];
-        // Valida que exista el usuario obtenido del token, del caso contrario lo regresa a la pagina de inicio que es nuestro controlador auth
-//        if($this->user['user'] === null) redirect('');
-//
         $this->load->model('PedidoModel', 'pm');
         $this->load->model('PedidoDetalleModel', 'dm');
     }
@@ -21,13 +16,7 @@ class Pedido extends CI_Controller {
         //header
         $this->load->view('layout/header');
         $this->load->view('layout/menu');
-        //definimos variable para traer la data y mantner la logica de paginacion
-        //inicializacion de paginacion
-
-
         $this->load->view('pedido/index.php');
-
-        //footer
         $this->load->view('layout/footer');
     }
 
@@ -86,6 +75,7 @@ class Pedido extends CI_Controller {
         $data = [
             'pe_idEstado' => $this->input->post('pe_idEstado'),
             'pe_idEmpleado' => $this->input->post('pe_idEmpleado'),
+            'pe_motivoCancelado' => $this->input->post('pe_motivoCancelado'),
         ];
         try {
             $response = $this->pm->actualizar($data, $id);
