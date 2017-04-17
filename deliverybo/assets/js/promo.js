@@ -70,14 +70,9 @@ function agregarProd(idProd) {
                 cantpromodal++;
                 $("#msj p").html("<strong>" + cantpromodal + " Producto Agregado</strong>")
                 $("#msj").show();
-
-
             } else {
                 sweetAlert("Oops...", "Ocurrio Algun Error!", "error");
             }
-
-
-
         },
         error: function (request, status, error) {
             console.log(error.message);
