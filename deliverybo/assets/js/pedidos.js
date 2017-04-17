@@ -33,6 +33,7 @@ $('#tblPedidos').DataTable({
         {data: 'pe_cli_tel'},
         {data: 'dir_direccion'},
         {data: 'dir_telefonoFijo'},
+        {data: 'pe_idEmpleado'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -46,7 +47,7 @@ $('#tblPedidos').DataTable({
                         '    <li><a href="#" onClick="cambiarAPreparado(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalEnviarPedido" onClick="selPedidoEnviar(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalCancelarPedido" onClick="selPedidoCancelar(\'' + row.pe_id + '\',\'' + row.pe_idEstado+ '\');"><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
-                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\');"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
+                        '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\',\'' + row.pe_idEmpleado + '\');"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
                         '    </ul>' +
                         '</div>' +
                         '</span>';
@@ -90,7 +91,6 @@ $('#tblPedidos').DataTable({
     ],
     "order": [[0, "asc"]],
 });
-
 
 cambiarAPreparado = function (idPedido) {
     $.ajax({
@@ -222,6 +222,37 @@ getCliente = function (idpedido) {
                         res.response.per_celular);
             } else {
                 sweetAlert("Oops...", "Error al Obtner el Cliente!", "error");
+                console.log(res.response)
+            }
+
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+
+        }
+    });
+
+}
+
+getEmpleado = function (idEmpleado) {
+    $('#empleadoP').empty();
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/empleado/get_empleadoById/" + idEmpleado,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            if (res.estado) {
+                $('#empleadoP').append('Empleado:<br>'+
+                        '<b>Empleado ID :</b>' + res.response.emp_id + '<br>' +
+                        '<b>Nombre : </b>' + res.response.per_nombre + '<br>' +
+                        '<b>Legajo: </b>' + res.response.emp_legajo + '<br>' +                       
+                        '<b>Cargo: </b>' + res.response.emp_cargo 
+                      );
+               
+            } else {
+                sweetAlert("Oops...", "Error al Obtner el Empleado!", "error");
                 console.log(res.response)
             }
 
@@ -383,11 +414,12 @@ getHora = function (fecha) {
     return(h + ":" + m);
 
 }
-selPedido = function (idpedido) {
+selPedido = function (idpedido,idempleado) {
     VerForm();
     debugger;
     getCliente(idpedido);
     getPedido(idpedido);
+    getEmpleado(idempleado);
     cargarDetalle(idpedido);
     $('#date').text(fechaActual());
 

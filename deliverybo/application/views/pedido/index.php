@@ -34,6 +34,7 @@
                                     <th>Celular</th>
                                     <th>Direccion</th>
                                     <th>Telefono</th>
+                                    <th>Empleado ID</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -76,6 +77,12 @@
                 <address id="cliente">
 
                 </address>
+            </div>
+            
+              <div id="empleadoP" class="col-sm-4 invoice-col">
+                     Empleado:
+
+
             </div>
             <!-- /.col -->
 
