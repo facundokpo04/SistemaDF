@@ -10,6 +10,7 @@ class Pedido extends CI_Controller {
         parent::__construct();
         $this->load->model('PedidoModel', 'pm');
         $this->load->model('PedidoDetalleModel', 'dm');
+        $this->load->model('PromoPedidoModel', 'dp');
     }
 
     public function index($p = 0) {
@@ -36,8 +37,8 @@ class Pedido extends CI_Controller {
         }
         echo json_encode($data);
     }
-    
-      public function get_pedidosFecha($fecha) {
+
+    public function get_pedidosFecha($fecha) {
 
         $data = [];
         $total = 0;
@@ -73,6 +74,22 @@ class Pedido extends CI_Controller {
     public function get_detalleById($idPedido) {
         try {
             $result = $this->dm->obtenerPed($idPedido);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
+
+    public function get_detallePromoById($idPedido) {
+        try {
+            $result = $this->dp->getAllPed($idPedido);
             $respuesta = [
                 'estado' => true,
                 'response' => $result
@@ -135,7 +152,7 @@ class Pedido extends CI_Controller {
         }
         echo json_encode($respuesta);
     }
-    
+
     public function getEmpleado($idPedido) {
         try {
             $result = $this->pm->obtenerEmpleado($idPedido);

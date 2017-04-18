@@ -395,6 +395,82 @@ cargarDetalle = function (idPedido) {
 
 
     });
+    
+}
+
+cargarDetallePromo = function (idPedido){
+     $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/get_detallePromoById/" + idPedido,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+
+            if (res.estado) {
+                debugger;
+                
+
+                res.response.forEach(function (item) {
+
+                    $('#tbProductos tbody').append('<tr>' +
+                            ' <td>' +
+                            item.promo.ppro_cantidad +
+                            ' </td>' +
+                            ' <td>' +
+                            '-' +
+                            ' </td>' +
+                            ' <td>' +
+                            item.promo.ppro_nombre +
+                            '</td>' +
+                            ' <td>' +
+                            item.promo.ppro_aclaracion + +
+                            ' </td>' +
+                            ' <td>' + '$&nbsp;' +
+                            item.promo.ppro_total +
+                            '</tr>'
+                            );
+                    item.productos.forEach(function (prod) {
+
+                        $('#tbProductos tbody').append('<tr>' +
+                               ' <td>' +
+                                '-'+
+                            ' </td>' +
+                            ' <td>' +
+                            '' +
+                            ' </td>' +
+                            ' <td>' +
+                            prod.prod_nombre +'-'+(prod.var_nombre = null)? '':prod.var_nombre +
+                            '</td>' +
+                            ' <td>' +
+                            (prod.pp_aclaracion = null)? 'Sin Aclaracion ': prod.pp_aclaracion  + 
+                            ' </td>' +
+                            ' <td>' + '-' +
+                            
+                            '</tr>'
+                                );
+
+                    });
+
+                });
+            } else {
+                sweetAlert("Oops...", "Error al Obtener el Detalle del Pedido!", "error");
+                console.log(error.message);
+
+            }
+
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+
+        }
+
+
+
+
+
+    });
+    
 }
 fechaActual = function () {
     n = new Date();
@@ -437,6 +513,7 @@ selPedido = function (idpedido, idempleado) {
     getPedido(idpedido);
     getEmpleado(idempleado);
     cargarDetalle(idpedido);
+    cargarDetallePromo(idpedido);
     $('#date').text(fechaActual());
 
 };
