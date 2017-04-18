@@ -2,7 +2,8 @@
 $('#txtFechaPedido').datepicker({
     autoclose: true,
     format: 'yyyy-mm-dd'
-}).datepicker("setDate", new Date());;
+}).datepicker("setDate", new Date());
+;
 
 
 function VerForm() {
@@ -97,7 +98,7 @@ $('#tblPedidos').DataTable({
 });
 
 var tablaP = $('#tblPedidos').DataTable();
- tablaP.search('').columns().search('').draw();
+tablaP.search('').columns().search('').draw();
 
 cambiarAPreparado = function (idPedido) {
     $.ajax({
@@ -335,7 +336,6 @@ cargarDetalle = function (idPedido) {
         success: function (res) {
 
             if (res.estado) {
-
                 res.response.forEach(function (item) {
 
                     $('#tbProductos tbody').append('<tr>' +
@@ -345,11 +345,11 @@ cargarDetalle = function (idPedido) {
                             ' <td>' +
                             item.producto.prod_codigoProducto +
                             ' </td>' +
+                            ' <td><strong>' +
+                            item.producto.prod_nombre +'-'+item.producto.var_nombre+
+                            '</td><strong>' +
                             ' <td>' +
-                            item.producto.prod_nombre +
-                            ' -Grande </td>' +
-                            ' <td>' +
-                            'Sin aceitunas' +
+                             item.producto.pp_aclaracion +
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
                             item.producto.dp_PrecioUnitario +
@@ -395,11 +395,11 @@ cargarDetalle = function (idPedido) {
 
 
     });
-    
+
 }
 
-cargarDetallePromo = function (idPedido){
-     $.ajax({
+cargarDetallePromo = function (idPedido) {
+    $.ajax({
         type: "POST",
         url: baseurl + "index.php/pedido/get_detallePromoById/" + idPedido,
         dataType: 'json',
@@ -409,8 +409,8 @@ cargarDetallePromo = function (idPedido){
             if (res.estado) {
                 debugger;
                 
-
-                res.response.forEach(function (item) {
+             if( res.response instanceof Array)
+                  res.response.forEach(function (item) {
 
                     $('#tbProductos tbody').append('<tr>' +
                             ' <td>' +
@@ -419,39 +419,43 @@ cargarDetallePromo = function (idPedido){
                             ' <td>' +
                             '-' +
                             ' </td>' +
-                            ' <td>' +
+                            ' <td><strong>' +
                             item.promo.ppro_nombre +
-                            '</td>' +
+                            '</strong></td>' +
                             ' <td>' +
-                            item.promo.ppro_aclaracion + +
+                            item.promo.ppro_aclaracion+
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
                             item.promo.ppro_total +
                             '</tr>'
                             );
                     item.productos.forEach(function (prod) {
-
+                        
                         $('#tbProductos tbody').append('<tr>' +
-                               ' <td>' +
-                                '-'+
-                            ' </td>' +
-                            ' <td>' +
-                            '' +
-                            ' </td>' +
-                            ' <td>' +
-                            prod.prod_nombre +'-'+(prod.var_nombre = null)? '':prod.var_nombre +
-                            '</td>' +
-                            ' <td>' +
-                            (prod.pp_aclaracion = null)? 'Sin Aclaracion ': prod.pp_aclaracion  + 
-                            ' </td>' +
-                            ' <td>' + '-' +
-                            
-                            '</tr>'
+                                ' <td>' +
+                                '-' +
+                                ' </td>' +
+                                ' <td>' +
+                                '' +
+                                ' </td>' +
+                                ' <td>' +
+                                prod.prod_nombre + '-' + prod.var_nombre +
+                                '</td>' +
+                                ' <td>' +
+                                prod.pp_aclaracion +
+                                ' </td>' +
+                                ' <td>' + '-' +
+                                '</tr>'
                                 );
 
                     });
 
                 });
+            
+
+
+
+               
             } else {
                 sweetAlert("Oops...", "Error al Obtener el Detalle del Pedido!", "error");
                 console.log(error.message);
@@ -470,7 +474,7 @@ cargarDetallePromo = function (idPedido){
 
 
     });
-    
+
 }
 fechaActual = function () {
     n = new Date();
@@ -508,7 +512,6 @@ getHora = function (fecha) {
 }
 selPedido = function (idpedido, idempleado) {
     VerForm();
-    debugger;
     getCliente(idpedido);
     getPedido(idpedido);
     getEmpleado(idempleado);
@@ -592,12 +595,12 @@ $("#selEst").change(function () {
 
 $("#txtFechaPedido").change(function () {
     debugger;
-   var fecha = $('#txtFechaPedido').val();
-   
-   if(fecha){
-       debugger;
-       tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/"+fecha).load();
-       
-   }
+    var fecha = $('#txtFechaPedido').val();
+
+    if (fecha) {
+        debugger;
+        tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
+
+    }
 //   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
 })
