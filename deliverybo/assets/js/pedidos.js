@@ -1,8 +1,7 @@
 
-$.datepicker.setDefaults($.datepicker.regional["es"]);
 $('#txtFechaPedido').datepicker({
     autoclose: true,
-    format: 'dd/mm/yyyy'
+    format: 'yyyy-mm-dd'
 }).datepicker("setDate", new Date());;
 
 
@@ -414,6 +413,15 @@ getFecha = function (fecha) {
     return(d + "/" + m + "/" + y);
 
 }
+
+getFechafiltro = function (fecha) {
+    n = new Date(fecha);
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    return(y + "-" + m + "-" + d);
+
+}
 getHora = function (fecha) {
     n = new Date(fecha);
     h = n.getHours();
@@ -506,6 +514,13 @@ $("#selEst").change(function () {
 })
 
 $("#txtFechaPedido").change(function () {
-   debugger;
-   $("#txtFechaPedido").val();
+    debugger;
+   var fecha = $('#txtFechaPedido').val();
+   
+   if(fecha){
+       debugger;
+       tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/"+fecha).load();
+       
+   }
+//   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
 })

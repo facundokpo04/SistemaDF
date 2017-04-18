@@ -7,6 +7,12 @@ class PedidoModel extends CI_Model {
                         RestApiMethod::GET, "pedidoencabezado/listar"
         );
     }
+    
+     public function getAllfecha($id) {
+        return RestApi::call(
+                        RestApiMethod::GET, "pedidoencabezado/listarfecha/$id"
+        );
+    }
 
     public function obtener($id) {
         return RestApi::call(

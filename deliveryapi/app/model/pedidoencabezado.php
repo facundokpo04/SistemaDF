@@ -33,7 +33,6 @@ class PedidoEncabezadoModel {
                 ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
                 ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
                 ->where("tr.relacion='pedidoestado'")
-                
                 ->orderBy('pe.pe_id ASC')
                 ->fetchAll();
 
@@ -49,6 +48,37 @@ class PedidoEncabezadoModel {
         ];
     }
 
+    public function getAllFecha($idFecha) {
+
+        $fechainicio = $idFecha . ' 00:00:00';
+        $fechafin = $idFecha . ' 23:59:59';
+
+        $data = $this->db->from("pedidoencabezado pe")
+                ->select("pe.*,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion,tr.relacion,tr.descripcion")
+                ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
+                ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
+                ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
+                ->where('tr.relacion = :estado and pe.pe_fechaPedido  BETWEEN :fechainicio AND :fechafin', array(
+                    ':estado' => 'pedidoestado',
+                    ':fechainicio' => $fechainicio,
+                    ':fechafin' => $fechafin,
+                ))
+                ->fetchAll();
+
+
+        $total = $this->db->from($this->table)
+                        ->select('COUNT(*) Total')
+                        ->fetch()
+                ->Total;
+
+        return [
+            'data' => $data,
+            'fechai' => $fechainicio,
+            'fechaf' => $fechafin,
+            'total' => $total
+        ];
+    }
+
     public function insert($data) {
 
 
@@ -60,16 +90,16 @@ class PedidoEncabezadoModel {
 
     public function get($id) {
         return $this->db->from("pedidoencabezado pe")
-                ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion,tr.relacion,tr.descripcion")
-                ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
-                ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
-                ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
-               ->where('pe_id', $id)
-                ->fetch();
+                        ->select("pe.pe_id,pe.pe_idEstado,pe.pe_cli_tel,p.per_nombre,p.per_documento,d.dir_telefonoFijo,d.dir_direccion,tr.relacion,tr.descripcion")
+                        ->leftJoin('persona p ON p.per_id = pe.pe_idPersona')
+                        ->leftJoin('direccion d ON d.dir_id = pe.pe_idDireccion')
+                        ->leftJoin('tablasrelacion tr ON pe.pe_idEstado = tr.valor')
+                        ->where('pe_id', $id)
+                        ->fetch();
     }
 
     public function getCliente($id) {
-        
+
         return $this->db->from('persona p')
                         ->select('p.per_id,p.per_nombre,p.per_email,p.per_documento,p.per_celular,p.per_nacionalidad,d.dir_direccion,d.dir_telefonoFijo')
                         ->leftJoin('pedidoencabezado pe ON p.per_id = pe.pe_idPersona')

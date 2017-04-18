@@ -36,6 +36,23 @@ class Pedido extends CI_Controller {
         }
         echo json_encode($data);
     }
+    
+      public function get_pedidosFecha($fecha) {
+
+        $data = [];
+        $total = 0;
+        $limite = 10;
+        $data = new stdClass();
+        try {
+            $result = $this->pm->getAllfecha($fecha);
+
+            $total = $result->total;
+            $data->data = $result->data;
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
 
     public function get_pedidosById($idPedido) {
         try {
