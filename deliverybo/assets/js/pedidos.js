@@ -1,4 +1,11 @@
 
+$.datepicker.setDefaults($.datepicker.regional["es"]);
+$('#txtFechaPedido').datepicker({
+    autoclose: true,
+    format: 'dd/mm/yyyy'
+}).datepicker("setDate", new Date());;
+
+
 function VerForm() {
     $("#pedido").show();// Mostramos el formulario
     $("#pedidos").hide();
@@ -46,7 +53,7 @@ $('#tblPedidos').DataTable({
                         '    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">' +
                         '    <li><a href="#" onClick="cambiarAPreparado(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-cutlery"></i>Preparando Pedido</a></li>' +
                         '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalEnviarPedido" onClick="selPedidoEnviar(\'' + row.pe_id + '\');"><i style="color:#555;" class="fa fa-fw fa-motorcycle"></i>Enviando Pedido</a></li>' +
-                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalCancelarPedido" onClick="selPedidoCancelar(\'' + row.pe_id + '\',\'' + row.pe_idEstado+ '\');"><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
+                        '    <li><a href="#" title="Cambiar Estado" data-toggle="modal" data-target="#modalCancelarPedido" onClick="selPedidoCancelar(\'' + row.pe_id + '\',\'' + row.pe_idEstado + '\');"><i style="color:#555;" class="fa fa-fw fa-close"></i>Cancelar Pedido</a></li>' +
                         '    <li><a href="#" onClick="selPedido(\'' + row.pe_id + '\',\'' + row.pe_idEmpleado + '\');"><i class="glyphicon glyphicon-eye-open" style="color:#006699"></i> Ver Pedido</a></li>' +
                         '    </ul>' +
                         '</div>' +
@@ -67,13 +74,11 @@ $('#tblPedidos').DataTable({
 
                 if (data == 1) {
                     return "<span class='label label-warning'>Pendiente</span>";
-                }else if (data == 2) {
+                } else if (data == 2) {
                     return "<span class='label label-info'>Preparando</span>";
-                } 
-                else if (data == 3) {
+                } else if (data == 3) {
                     return "<span class='label label-success'>Enviando</span>";
-                }
-                else if (data == 4) {
+                } else if (data == 4) {
                     return "<span class='label label-danger'>Cancelado</span>";
                 }
 
@@ -92,13 +97,16 @@ $('#tblPedidos').DataTable({
     "order": [[0, "asc"]],
 });
 
+var tablaP = $('#tblPedidos').DataTable();
+ tablaP.search('').columns().search('').draw();
+
 cambiarAPreparado = function (idPedido) {
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/pedido/updPedido/",
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            pe_id:idPedido,
+            pe_id: idPedido,
             pe_idEstado: 2
         },
         success: function (res) {
@@ -132,7 +140,7 @@ cambiarAEnviado = function (idPedido, idEmpleado) {
         url: baseurl + "index.php/pedido/updPedido/",
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            pe_id:idPedido,
+            pe_id: idPedido,
             pe_idEstado: 3,
             pe_idEmpleado: idEmpleado
 
@@ -169,7 +177,7 @@ cancelarPedido = function (idPedido, motivo) {
         url: baseurl + "index.php/pedido/updPedido/",
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
-            pe_id:idPedido,
+            pe_id: idPedido,
             pe_idEstado: 4,
             pe_motivoCancelado: motivo
 
@@ -244,13 +252,13 @@ getEmpleado = function (idEmpleado) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-                $('#empleadoP').append('Empleado:<br>'+
+                $('#empleadoP').append('Empleado:<br>' +
                         '<b>Empleado ID :</b>' + res.response.emp_id + '<br>' +
                         '<b>Nombre : </b>' + res.response.per_nombre + '<br>' +
-                        '<b>Legajo: </b>' + res.response.emp_legajo + '<br>' +                       
-                        '<b>Cargo: </b>' + res.response.emp_cargo 
-                      );
-               
+                        '<b>Legajo: </b>' + res.response.emp_legajo + '<br>' +
+                        '<b>Cargo: </b>' + res.response.emp_cargo
+                        );
+
             } else {
                 sweetAlert("Oops...", "Error al Obtner el Empleado!", "error");
                 console.log(res.response)
@@ -414,7 +422,7 @@ getHora = function (fecha) {
     return(h + ":" + m);
 
 }
-selPedido = function (idpedido,idempleado) {
+selPedido = function (idpedido, idempleado) {
     VerForm();
     debugger;
     getCliente(idpedido);
@@ -430,22 +438,22 @@ selPedidoEnviar = function (idpedido) {
     cargarEmpleados();
     $('#midPedido').val(idpedido);
     debugger;
-   
+
 
 };
 
-selPedidoCancelar = function (idpedido,idEstado) { 
-   
+selPedidoCancelar = function (idpedido, idEstado) {
+
     $('#midcPedido').val(idpedido);
     $('#midEPedido').val(idEstado);
-    $('#mMotivo').val('');  
+    $('#mMotivo').val('');
 };
 
 $('#mbtnEnviarPedido').click(function () {
 
-    var idPedido= $('#midPedido').val();
+    var idPedido = $('#midPedido').val();
     var idEmpleado = $('#mRepartidor').val();
-  cambiarAEnviado(idPedido,idEmpleado);
+    cambiarAEnviado(idPedido, idEmpleado);
 
 
 
@@ -455,10 +463,10 @@ $('#mbtnEnviarPedido').click(function () {
 
 $('#mbtnCancelarPedido').click(function () {
 
-    var idPedido= $('#midcPedido').val();
+    var idPedido = $('#midcPedido').val();
     var motivo = $('#mMotivo').val();
-    var estadoPedido=$('#midEPedido').val();
-    
+    var estadoPedido = $('#midEPedido').val();
+
     swal({
         title: "Esta seguro?",
         text: "Se Cancelara el Pedido",
@@ -473,18 +481,31 @@ $('#mbtnCancelarPedido').click(function () {
             function (isConfirm) {
                 debugger;
                 if (isConfirm) {
-                    
-                    if(estadoPedido==2 || estadoPedido==3){
-                       swal("Atencion", "No se puede cancelar un pedido que esta siendo Enviado/Preparado", "error");
-                        
-                    }
-                    else{
-                        cancelarPedido(idPedido,motivo);                                            
+
+                    if (estadoPedido == 2 || estadoPedido == 3) {
+                        swal("Atencion", "No se puede cancelar un pedido que esta siendo Enviado/Preparado", "error");
+
+                    } else {
+                        cancelarPedido(idPedido, motivo);
                     }
                 } else {
                     swal("Cancelado", "EL Pedido Fue Cancelado", "error");
                 }
             });
-    
+
 })
 
+$("#selEst").change(function () {
+    if ($('#selEst').val() != 0) {
+        tablaP.columns(1).search($('#selEst').val().trim());//hit search on server
+        tablaP.draw();
+    } else {
+
+        tablaP.search('').columns().search('').draw();
+    }
+})
+
+$("#txtFechaPedido").change(function () {
+   debugger;
+   $("#txtFechaPedido").val();
+})

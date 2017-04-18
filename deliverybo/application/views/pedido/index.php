@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);         ?>
+<?php // var_dump($model);           ?>
 <ol class="breadcrumb">
     <li class="active">Pedidos Hoy</li>
 </ol>
@@ -24,6 +24,36 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>                                
+                                <td>
+                                    <div class="input-group date"  style="width:200px">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id='txtFechaPedido' id="txtFechaPedido">
+                                    </div>                                   
+                                </td>  
+
+
+                            </tr>
+                            <tr>                                
+                                <td>
+                                    <select id="selEst" style="width:200px">
+                                        <option value="0" selected>Todos</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Preparando">Preparando</option>
+                                        <option value="Enviando">Enviando</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>                                     
+                                </td>  
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
                     <div class="table-responsive">
                         <table class="table no-margin" id="tblPedidos">
                             <thead>
@@ -78,9 +108,9 @@
 
                 </address>
             </div>
-            
-              <div id="empleadoP" class="col-sm-4 invoice-col">
-                     Empleado:
+
+            <div id="empleadoP" class="col-sm-4 invoice-col">
+                Empleado:
 
 
             </div>
@@ -192,22 +222,22 @@
                     <h4 class="modal-title">Enviar Pedido</h4>
                 </div>
                 <div class="modal-body">
-                        <form class="form-horizontal">
-                            <!-- parametros ocultos -->
-                            <input type="hidden" id="midPedido">
+                    <form class="form-horizontal">
+                        <!-- parametros ocultos -->
+                        <input type="hidden" id="midPedido">
 
-                            <div class="box-body">                                
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Repartidor</label>
-                                    <div class="col-sm-9"> 
-                                        <select name="mRepartidor" id="mRepartidor" class="form-control">                       
-                                       
-                                        </select>
-                                    </div>
-                                </div>                         
-                            </div>
-                        </form>
-                                         
+                        <div class="box-body">                                
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Repartidor</label>
+                                <div class="col-sm-9"> 
+                                    <select name="mRepartidor" id="mRepartidor" class="form-control">                       
+
+                                    </select>
+                                </div>
+                            </div>                         
+                        </div>
+                    </form>
+
 
                 </div>
                 <div class="modal-footer">
@@ -232,21 +262,21 @@
                     <h4 class="modal-title">Cancelar Pedido</h4>
                 </div>
                 <div class="modal-body">
-                        <form class="form-horizontal">
-                            <!-- parametros ocultos -->
-                            <input type="hidden" id="midcPedido">
-                            <input type="hidden" id="midEPedido">
+                    <form class="form-horizontal">
+                        <!-- parametros ocultos -->
+                        <input type="hidden" id="midcPedido">
+                        <input type="hidden" id="midEPedido">
 
-                            <div class="box-body">                                
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Motivo</label>
-                                    <div class="col-sm-9"> 
-                                        <textarea id="mMotivo" class="form-control" rows="3" placeholder="Escriba brevemente el motivo ..."></textarea>
-                                    </div>
-                                </div>                         
-                            </div>
-                        </form>
-                                         
+                        <div class="box-body">                                
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Motivo</label>
+                                <div class="col-sm-9"> 
+                                    <textarea id="mMotivo" class="form-control" rows="3" placeholder="Escriba brevemente el motivo ..."></textarea>
+                                </div>
+                            </div>                         
+                        </div>
+                    </form>
+
 
                 </div>
                 <div class="modal-footer">
