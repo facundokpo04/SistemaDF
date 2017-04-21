@@ -232,18 +232,21 @@ $('#mbtnCerrarModal').click(function () {
     $('#mDescripcion').val('');
     $('#mNombre').val('');
     $('#mEstado').val('1');//select
+    $('#mEstadoVisible').val('1');
     //ajax para traer todos los estados
     $('#mIdCategoria').val('');
+     $('#imgCategoria').val('');
      $('.nav-tabs a:first').tab('show') 
 })
 $('#mCerrarModal').click(function () {
-     debugger;
-    $('#mDescripcion').val('');
+      $('#mDescripcion').val('');
     $('#mNombre').val('');
     $('#mEstado').val('1');//select
+    $('#mEstadoVisible').val('1');
     //ajax para traer todos los estados
     $('#mIdCategoria').val('');
-     $('.nav-tabs a:first').tab('show') 
+    $('#imgCategoria').val('');
+    $('.nav-tabs a:first').tab('show')
        
 })
 
