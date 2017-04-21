@@ -20,6 +20,7 @@ $('#tblCategorias').DataTable({
         {data: 'cat_nombre'},
         {data: 'cat_descripcion'},
         {data: 'cat_idEstado'},
+         {data: 'cat_idEstadoVisible'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -58,6 +59,19 @@ $('#tblCategorias').DataTable({
 
             }
         },
+         {
+            "targets": [4],
+            "data": "cat_idEstadoVisible",
+            "render": function (data, type, row) {
+
+                if (data == 1) {
+                    return "<span class='label label-success'>Habilitado</span>";
+                } else if (data == 2) {
+                    return "<span class='label label-danger'>Deshabilitado</span>";
+                }
+
+            }
+        },
         {
             "targets": [1],
             "data": "cat_nombre",
@@ -83,9 +97,13 @@ selCategoria = function (idCategorias) {
         success: function (res) {
 
             if (res.estado) {
+                debugger;
                 $('#mDescripcion').val(res.response.cat_descripcion);
                 $('#mNombre').val(res.response.cat_nombre);
-                $('#mEstado').val(res.response.cat_idEstado);//select
+                $('#mEstado').val(res.response.cat_idEstado);
+                $('#mEstadoVisible').val(res.response.cat_idEstadoVisible);
+                $('#imgCategoria').val(res.response.cat_imagen),
+                //select
                 //ajax para traer todos los estados
                 $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
                 $('#mIdCategoria').val(res.response.cat_id);
@@ -112,7 +130,7 @@ function guardarImagen() {
 
         var formData = new FormData();
         formData.append('cat_imagen', fileToUpload);
-        formData.append('cat_id', $('#mIdCategoria').val());
+
         // now upload the file using $.ajax
         $.ajax({
             url: baseurl + "index.php/categoria/updImagen",
@@ -124,8 +142,19 @@ function guardarImagen() {
             success: function (res) {
 
                 if (res.estado) {
+                   
+                    swal({
+                    title: "La Imagen Fue Subida con exito!",
+                    text: "haga click en actualizar para guardar!",
+                    type: "success",
+                    showLoaderOnConfirm: true,
+                },   function () {
+                    
+                             $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response);
+                               $('#imgCategoria').val(res.response);
+                        });
 
-                    $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
+                   
                 } else {
                     console.log(res.response);
                     sweetAlert("Oops...", res.response, "error");
@@ -198,7 +227,6 @@ function eliminarCategoria(idCategoria) {
 }
 
 
-
 $('#mbtnCerrarModal').click(function () {
 
     $('#mDescripcion').val('');
@@ -228,9 +256,12 @@ $('#mbtnUpdCategoria').click(function () {
             cat_nombre: $('#mNombre').val(),
             cat_descripcion: $('#mDescripcion').val(),
             cat_idEstado: $('#mEstado').val(),
+            cat_idEstadoVisible: $('#mEstadoVisible').val(),
+            cat_imagen: $('#imgCategoria').val(),
             cat_id: $('#mIdCategoria').val()
         },
         success: function (res) {
+            debugger;
             if (res.estado) {
                 swal({
                     title: "Los Datos Fueron Guardados!",

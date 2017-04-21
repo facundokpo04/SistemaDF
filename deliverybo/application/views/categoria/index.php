@@ -31,6 +31,7 @@
                             <th>Nombre</th>
                             <th>Descripcion</th>
                             <th>Estado</th>
+                            <th>Visible Menu</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -91,6 +92,7 @@
                             <form class="form-horizontal">
                         <!-- parametros ocultos -->
                         <input type="hidden" id="mIdCategoria">
+                         <input type="hidden" id="imgCategoria">
 
                         <div class="box-body">
                             <div class="form-group">
@@ -118,6 +120,15 @@
                                     <select name="mEstado" id="mEstado" class="form-control">                       
                                         <option value="1">Habilitado</option>
                                         <option value="2">Deshabilitado</option>
+                                    </select>
+                                </div>
+                            </div>                           
+                               <div class="form-group">
+                                <label class="col-sm-3 control-label">Visible Menu</label>
+                                <div class="col-sm-9"> 
+                                    <select name="mEstadoVisible" id="mEstadoVisible" class="form-control">                       
+                                        <option value="1">Habilitado</option>
+                                        <option value="2" selected>Deshabilitado</option>
                                     </select>
                                 </div>
                             </div>

@@ -239,14 +239,14 @@ function actualizarPromo() {
         },
         success: function (res) {
             debugger;
-            if (res.estado) {                       
+            if (res.estado) {
                 swal({
                     title: "La Promo Fue Modificada!",
                     text: "haga click!",
-                    type: "success",                  
+                    type: "success",
                 },
                         function () {
-                             location.reload();
+                            location.reload();
                         });
             } else {
                 sweetAlert("Oops...", res.response, "error");
@@ -288,7 +288,15 @@ function guardarImagen() {
             contentType: false,
             success: function (res) {
 
-                $('#imagen').attr('src', './assets/imagenes/promo/' + res.pro_Imagen);
+                swal({
+                    title: "La Imagen Fue Modificada!",
+                    text: "haga click!",
+                    type: "success",
+                    
+                },
+                        function () {
+                            $('#imagen').attr('src', './assets/imagenes/promos/' + res.response.pro_imagen);
+                        });
 
             },
             error: function (request, status, error) {
