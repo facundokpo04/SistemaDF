@@ -139,9 +139,13 @@ class Producto extends CI_Controller {
 
         try {
             $result = $this->pm->getAllVar($idProducto);
+           
+             $total = $result->total;
+             
             $respuesta = [
                         'estado' => true,
-                        'data' => $result
+                        'data' => $result->data,
+                        'total ' => $result->total
             ];
         } catch (Exception $e) {
             $respuesta = [
