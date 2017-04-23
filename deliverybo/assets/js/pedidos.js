@@ -1,5 +1,5 @@
 
-$('#txtFechaPedido').datepicker({
+var dp = $('#txtFechaPedido').datepicker({
     autoclose: true,
     format: 'yyyy-mm-dd'
 }).datepicker("setDate", new Date());
@@ -18,6 +18,7 @@ function OcultarForm() {
 }
 function fechaHoy(){
     debugger;
+     dp.datepicker("setDate", new Date());
      var fecha = $('#txtFechaPedido').val();
 
     if (fecha) {
