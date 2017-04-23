@@ -16,9 +16,19 @@ function OcultarForm() {
     $("#pedido").hide();// Mostramos el formulario
     $("#pedidos").show();
 }
+function fechaHoy(){
+    debugger;
+     var fecha = $('#txtFechaPedido').val();
 
+    if (fecha) {
+        debugger;
+        tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
+
+    }
+}
 
 OcultarForm();
+
 
 
 $('#tblPedidos').DataTable({
@@ -98,7 +108,10 @@ $('#tblPedidos').DataTable({
 });
 
 var tablaP = $('#tblPedidos').DataTable();
+fechaHoy();
 tablaP.search('').columns().search('').draw();
+
+
 
 cambiarAPreparado = function (idPedido) {
     $.ajax({
