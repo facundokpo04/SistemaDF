@@ -614,7 +614,7 @@ function guardarImagen() {
 
                     swal({
                         title: "La Imagen Fue Subida con exito!",
-                        text: "haga click en actualizar para guardar!",
+                        text: "Luego haga click en actualizar para guardar!",
                         type: "success",
                         showLoaderOnConfirm: true,
                     }, function () {
@@ -725,5 +725,4 @@ $('#mbtnCerrarModalVar,#mCerrarModalVar').click(function () {
     //ajax para traer todos los estados
     $('#mvTipo').val('');
     $('#mvPrecio').val('');
-      $('#imgProducto').val('');
 })

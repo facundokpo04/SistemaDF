@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                                        ?>
+<?php // var_dump($model);                                         ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -57,6 +57,7 @@
             <div class="panel-heading">Datos de la Promo </div>
             <div class="panel-body" >
                 <input id="idPromo" name="idPromo" style="display:none;">
+                <input id="imgPromo" name="imgPromo" style="display:none;">
                 <div class="col-sm-6 form-group">
                     <label for="">Nombre</label>
                     <div class="input-group">
@@ -234,14 +235,14 @@
 
                     </table>
                     <div id="msj" class="alert alert-success alert-dismissible" style="display: none">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-check"></i> Mensaje</h4>
-                    <p> </p>
-                </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-check"></i> Mensaje</h4>
+                        <p> </p>
+                    </div>
 
                 </div>
 
-              
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="mbtnCerrarModal" onclick="cerrarModalProductos()">Cancelar</button>
