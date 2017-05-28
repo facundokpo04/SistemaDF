@@ -168,19 +168,8 @@
                     <p id="fechaP" class="lead"></p>
 
                     <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <th style="width:50%">Subtotal:</th>
-                                <td>$250.30</td>
-                            </tr>        
-                            <tr>
-                                <th>Envio:</th>
-                                <td>$5.80</td>
-                            </tr>
-                            <tr>
-                                <th>Total:</th>
-                                <td>$265.24</td>
-                            </tr>
+                        <table class="table" id="tblTotal">
+                            
                         </table>
                     </div>
                 </div>
@@ -190,7 +179,7 @@
         <!-- /.row -->
         <div class="row no-print">
             <div class="col-xs-12">    
-                 <button type="button" class="btn btn-default" onclick="location.reload()">Volver</button>
+                <button type="button" class="btn btn-default" onclick="location.reload()">Volver</button>
                 <a  href="javascript:imprSelec('pedidoD2')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>Imprimir</a>         
             </div>
         </div>
@@ -283,6 +272,44 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Volver</button>
                     <button type="button" class="btn btn-danger" id="mbtnCancelarPedido">Cancelar Pedido</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<div class="example-modal modal fade" id="modalResumenPedido" tabindex="-1" >
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="mCerrarModal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Resumen Pedido</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <!-- parametros ocultos -->
+                        <input type="hidden" id="midcPedido">
+                        <input type="hidden" id="midEPedido">
+
+                        <div class="box-body">                                
+                            <div class="form-group">                              
+                                <div class="col-sm-9" id="resumenP"> 
+                                  
+                                </div>
+                            </div>                         
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Volver</button>
+                    <a  href="javascript:imprSelec('resumenP')" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>Imprimir</a> 
                 </div>
             </div>
             <!-- /.modal-content -->

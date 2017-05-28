@@ -165,7 +165,7 @@ $('#mbtnCerrarModal').click(function () {
     ////select
     //ajax para traer todos los estados
     $('#mIdCategoria').val('');
-      $('.nav-tabs a:first').tab('show') 
+    $('.nav-tabs a:first').tab('show')
 })
 $('#mCerrarModal').click(function () {
 
@@ -177,7 +177,7 @@ $('#mCerrarModal').click(function () {
     ////select
     //ajax para traer todos los estados
     $('#mIdCategoria').val('');
-      $('.nav-tabs a:first').tab('show') 
+    $('.nav-tabs a:first').tab('show')
 })
 
 $('#mbtnUpdComponente').click(function () {

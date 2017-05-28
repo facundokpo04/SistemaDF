@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);                                         ?>
+<?php // var_dump($model);                                        ?>
 <ol class="breadcrumb">
     <li class="active">Promos</li>
 </ol>
@@ -143,10 +143,8 @@
                                     <!-- Botón para agregar filas -->
                                     <button type="button" class="btn btn-warning" id="agregarProd"  data-backdrop="static" data-keyboard="false"> Agregar Producto</button>
 <!--                                    <input type="button" class="btn btn-info" id="guardarVar" value="Guardar" />-->
-
-
                                 </div>
-                            </div>
+                            </div>                                                     
                         </div>
 
                         <div class="tab-pane" id="tabImagen">  
@@ -157,7 +155,7 @@
 
                                     <div class="col-lg-12 form-group">
                                         <label for="">Imagen Promo</label>
-                                        <span class="label label-primary">La imagen debe ser de 76 x 76</span>     
+                                        <span class="label label-primary">La imagen debe ser de 480 x 240</span>     
                                         <div class="input-group">
                                             <span class="input-group-addon cajaParametro"><i class="fa fa-picture-o fa-fw"></i> </span>
                                             <input class="form-control" type="file" name="pImagen" id="pImagen" tabindex="16">  
@@ -177,7 +175,7 @@
                                     </div>
                                 </div>    
                                 <!-- Botón para agregar filas -->
-                                <input type="button" class="btn btn-info" id="btnGuardarImg" value="Guardar" />
+                                <input type="button" class="btn btn-info" id="btnGuardarImg" value="Subir Imagen" />
 
 
                             </div>
@@ -235,14 +233,14 @@
 
                     </table>
                     <div id="msj" class="alert alert-success alert-dismissible" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><i class="icon fa fa-check"></i> Mensaje</h4>
-                        <p> </p>
-                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Mensaje</h4>
+                    <p> </p>
+                </div>
 
                 </div>
 
-
+              
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="mbtnCerrarModal" onclick="cerrarModalProductos()">Cancelar</button>

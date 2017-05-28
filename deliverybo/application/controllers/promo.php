@@ -14,7 +14,7 @@ class Promo extends CI_Controller {
 //        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('PromoModel', 'pm');
-        $this->load->model('ProductoModel', 'p');
+         $this->load->model('ProductoModel', 'p');
     }
 
     public function index($p = 0) {
@@ -39,8 +39,7 @@ class Promo extends CI_Controller {
         }
         echo json_encode($data);
     }
-
-    public function get_Productos() {
+   public function get_Productos() {
 
         try {
             $result = $this->p->getAllSuc(4);
@@ -56,7 +55,6 @@ class Promo extends CI_Controller {
         }
         echo json_encode($respuesta);
     }
-
     public function get_promoById($idPromo) {
         try {
             $result = $this->pm->obtener($idPromo);
@@ -68,7 +66,7 @@ class Promo extends CI_Controller {
             $respuesta = [
                 'estado' => false,
                 'response' => $e->getMessage()
-            ];
+            ];            
         }
         echo json_encode($respuesta);
     }
@@ -159,6 +157,7 @@ class Promo extends CI_Controller {
         echo json_encode($respuesta);
     }
 
+
     public function updProducto() {
         $errors = array();
 
@@ -246,25 +245,25 @@ class Promo extends CI_Controller {
     public function eliminar($idPromo) {
 
 
-        try {
+           try {
             $response = $this->pm->eliminar($idPromo);
             $respuesta = [
-                'estado' => true,
-                'response' => $response
+                        'estado' => true,
+                        'response' => $response
             ];
         } catch (Exception $e) {
             if ($e->getMessage() === RestApiErrorCode::UNPROCESSABLE_ENTITY) {
                 $errors = RestApi::getEntityValidationFieldsError();
                 $respuesta = [
-                    'estado' => false,
-                    'validator' => true,
-                    'response' => $errors
+                            'estado' => false,
+                            'validator' => true,
+                            'response' => $errors
                 ];
             } else {
                 $respuesta = [
-                    'estado' => false,
-                    'validator' => false,
-                    'response' => $e->getMessage()
+                            'estado' => false,
+                            'validator' => false,
+                            'response' => $e->getMessage()
                 ];
             }
         }

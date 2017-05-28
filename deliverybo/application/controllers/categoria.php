@@ -13,7 +13,7 @@ class Categoria extends CI_Controller {
 //        $this->user = ['user' => RestApi::getUserData()];
         // Valida que exista el usuario obtenido del token, del caso contrario lo regresa a la pagina de inicio que es nuestro controlador auth
 //        if($this->user['user'] === null) redirect('');
-
+     
         $this->load->model('CategoriaModel', 'cm');
     }
 
@@ -45,25 +45,27 @@ class Categoria extends CI_Controller {
         echo json_encode($data);
     }
 
+    
     public function get_categoriaById($idCategoria) {
 
 
 
         try {
             $result = $this->cm->obtener($idCategoria);
-            $respuesta = [
-                'estado' => true,
-                'response' => $result
+             $respuesta = [
+                        'estado' => true,
+                        'response' => $result
             ];
         } catch (Exception $e) {
             $respuesta = [
-                'estado' => false,
-                'response' => $e->getMessage()
+                        'estado' => false,
+                        'response' => $e->getMessage()
             ];
         }
         echo json_encode($respuesta);
     }
 
+    
     public function updCategoria() {
         $errors = array();
         $id = $this->input->post('cat_id');
@@ -142,10 +144,10 @@ class Categoria extends CI_Controller {
         }
     }
 
-    public function eliminar($idCategoria) {
-        try {
+    public function eliminar($idCategoria){
+              try {
             $result = $this->cm->eliminar($idCategoria);
-            $respuesta = [
+             $respuesta = [
                 'estado' => true,
                 'response' => $result
             ];
@@ -159,5 +161,5 @@ class Categoria extends CI_Controller {
 
         echo json_encode($respuesta);
     }
-
+    
 }

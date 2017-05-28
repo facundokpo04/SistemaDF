@@ -3,7 +3,6 @@ var dp = $('#txtFechaPedido').datepicker({
     autoclose: true,
     format: 'yyyy-mm-dd'
 }).datepicker("setDate", new Date());
-;
 
 
 function VerForm() {
@@ -16,20 +15,19 @@ function OcultarForm() {
     $("#pedido").hide();// Mostramos el formulario
     $("#pedidos").show();
 }
-function fechaHoy(){
-    debugger;
-     dp.datepicker("setDate", new Date());
-     var fecha = $('#txtFechaPedido').val();
+function fechaHoy() {
+
+    dp.datepicker("setDate", new Date());
+    var fecha = $('#txtFechaPedido').val();
 
     if (fecha) {
-        debugger;
+
         tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
 
     }
 }
 
 OcultarForm();
-
 
 
 $('#tblPedidos').DataTable({
@@ -100,19 +98,19 @@ $('#tblPedidos').DataTable({
             "data": "pe_id",
             "orderData": [1, 0],
             "render": function (data, type, row) {
-                return '<a href="pedido/verDetalle/' + data + '">PED' + data + '</a>'
+
+                return '<a data-toggle="modal" data-target="#modalResumenPedido" onClick="selPedidoResumen(\'' + data + '\');"> #PED' + data + '</a>'
 
             }
         },
     ],
+
     "order": [[0, "asc"]],
 });
 
 var tablaP = $('#tblPedidos').DataTable();
 fechaHoy();
 tablaP.search('').columns().search('').draw();
-
-
 
 cambiarAPreparado = function (idPedido) {
     $.ajax({
@@ -230,9 +228,12 @@ getCliente = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
+                debugger;
                 $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
                         res.response.dir_direccion +
-                        '<br>Telefono: ' +
+                        '<br>Telefono Fijo: ' +
+                        res.response.dir_telefonoFijo +
+                        '<br>Celular: ' +
                         res.response.per_celular +
                         '<br>' +
                         'Email: ' +
@@ -305,6 +306,14 @@ getPedido = function (idpedido) {
 
                 $('#fechaP').text("Fecha Pedido: " + getFecha(res.response.pe_fechaPedido));
                 $('#aclaracionP').text(res.response.pe_aclaraciones);
+
+                $('#tblTotal').append(' <tr><th style="width:50%">Subtotal:</th>' +
+                        '<td> $' + res.response.pe_Total + '</td>' +
+                        '</tr><tr><th>Envio:</th><td>$0.0</td></tr><tr>' +
+                        '<th>Total:</th>' +
+                        '<td>$' + res.response.pe_Total + '</td>' +
+                        '</tr>');
+
             } else {
                 sweetAlert("Oops...", "Error al Obtener el Encabezado del Pedido!", "error");
                 console.log(res.response)
@@ -360,10 +369,10 @@ cargarDetalle = function (idPedido) {
                             item.producto.prod_codigoProducto +
                             ' </td>' +
                             ' <td><strong>' +
-                            item.producto.prod_nombre +'-'+item.producto.var_nombre+
+                            item.producto.prod_nombre + '-' + item.producto.var_nombre +
                             '</td><strong>' +
                             ' <td>' +
-                             item.producto.pp_aclaracion +
+                            item.producto.pp_aclaracion +
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
                             item.producto.dp_PrecioUnitario +
@@ -422,54 +431,54 @@ cargarDetallePromo = function (idPedido) {
 
             if (res.estado) {
                 debugger;
-                
-             if( res.response instanceof Array)
-                  res.response.forEach(function (item) {
 
-                    $('#tbProductos tbody').append('<tr>' +
-                            ' <td>' +
-                            item.promo.ppro_cantidad +
-                            ' </td>' +
-                            ' <td>' +
-                            '-' +
-                            ' </td>' +
-                            ' <td><strong>' +
-                            item.promo.ppro_nombre +
-                            '</strong></td>' +
-                            ' <td>' +
-                            item.promo.ppro_aclaracion+
-                            ' </td>' +
-                            ' <td>' + '$&nbsp;' +
-                            item.promo.ppro_total +
-                            '</tr>'
-                            );
-                    item.productos.forEach(function (prod) {
-                        
+                if (res.response instanceof Array)
+                    res.response.forEach(function (item) {
+
                         $('#tbProductos tbody').append('<tr>' +
+                                ' <td>' +
+                                item.promo.ppro_cantidad +
+                                ' </td>' +
                                 ' <td>' +
                                 '-' +
                                 ' </td>' +
+                                ' <td><strong>' +
+                                item.promo.ppro_nombre +
+                                '</strong></td>' +
                                 ' <td>' +
-                                '' +
+                                item.promo.ppro_aclaracion +
                                 ' </td>' +
-                                ' <td>' +
-                                prod.prod_nombre + '-' + prod.var_nombre +
-                                '</td>' +
-                                ' <td>' +
-                                prod.pp_aclaracion +
-                                ' </td>' +
-                                ' <td>' + '-' +
+                                ' <td>' + '$&nbsp;' +
+                                item.promo.ppro_total +
                                 '</tr>'
                                 );
+                        item.productos.forEach(function (prod) {
+
+                            $('#tbProductos tbody').append('<tr>' +
+                                    ' <td>' +
+                                    '-' +
+                                    ' </td>' +
+                                    ' <td>' +
+                                    '' +
+                                    ' </td>' +
+                                    ' <td>' +
+                                    prod.prod_nombre + '-' + prod.var_nombre +
+                                    '</td>' +
+                                    ' <td>' +
+                                    prod.pp_aclaracion +
+                                    ' </td>' +
+                                    ' <td>' + '-' +
+                                    '</tr>'
+                                    );
+
+                        });
 
                     });
 
-                });
-            
 
 
 
-               
+
             } else {
                 sweetAlert("Oops...", "Error al Obtener el Detalle del Pedido!", "error");
                 console.log(error.message);
@@ -543,7 +552,43 @@ selPedidoEnviar = function (idpedido) {
 
 
 };
+selPedidoResumen = function (idpedido) {
 
+    debugger;
+    $('#resumenP').empty();
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/pedido/getPedido/" + idpedido,
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            if (res.estado) {
+                debugger;
+                
+                var str =res.response.pe_resumen
+                var res = str.replace(/\n/g, "<br />");
+                
+                $('#resumenP').html('<p>'+res+'</p>');
+              
+                
+              
+
+            } else {
+                sweetAlert("Oops...", "Error al Obtener el Encabezado del Pedido!", "error");
+                console.log(res.response)
+            }
+        },
+        error: function (request, status, error) {
+            sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
+            console.log(error.message);
+
+        }
+    });
+  
+
+
+
+};
 selPedidoCancelar = function (idpedido, idEstado) {
 
     $('#midcPedido').val(idpedido);
@@ -591,7 +636,7 @@ $('#mbtnCancelarPedido').click(function () {
                         cancelarPedido(idPedido, motivo);
                     }
                 } else {
-                   swal("Volver", "EL Pedido No Fue Cancelado", "error");
+                    swal("Volver", "EL Pedido No Fue Cancelado", "error");
                     location.reload();
                 }
             });

@@ -6,12 +6,8 @@ chmod -R 777 delBo
 a2enmod rewrite
 
 
-Deliveri BO
 
-sudo rm -R delBo
-git clone https://github.com/facundokpo04/delBo.git
-chmod -R 777 delBo
-service apache2 restart
+
 
 
 sudo rm -R delApi

@@ -2,9 +2,9 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0.0
+      <b>Version</b> 1.0.1
     </div>
-    <strong>Copyright &copy; 2017 <a href="">Iguazu Software</a>.</strong> All rights
+    <strong>Copyright &copy; 2016-2017 <a href="">Iguazu Sistemas</a>.</strong> All rights
     reserved.
   </footer>
 </div>
@@ -54,10 +54,9 @@
 
 
 <script src="<?php echo base_url(); ?>assets/plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
 <!-- sweetalert -->
 <script src="<?php echo base_url(); ?>assets/dist/js/sweetalert.min.js"></script>
-
-
 
 
 

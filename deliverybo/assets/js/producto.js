@@ -281,8 +281,8 @@ function cargarComponentes(idProducto) {
 }
 //variedades
 
-function actualizarTablaVariedades(idProducto) {
-    table2.ajax.url(baseurl + "index.php/producto/get_VariedadesById/" + idProducto).load()
+function actualizarTablaVariedades(idProducto){
+      table2.ajax.url(baseurl + "index.php/producto/get_VariedadesById/" + idProducto).load()
 }
 function cargarVariedades(idProducto) {
 
@@ -291,7 +291,7 @@ function cargarVariedades(idProducto) {
         'paging': true,
         'info': false,
         'filter': false,
-        'stateSave': true,
+        'stateSave': true,    
         'ajax': {
             "url": baseurl + "index.php/producto/get_VariedadesById/" + idProducto,
             "type": "POST",
@@ -614,7 +614,7 @@ function guardarImagen() {
 
                     swal({
                         title: "La Imagen Fue Subida con exito!",
-                        text: "Luego haga click en actualizar para guardar!",
+                        text: "haga click en actualizar para guardar!",
                         type: "success",
                         showLoaderOnConfirm: true,
                     }, function () {

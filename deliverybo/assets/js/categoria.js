@@ -20,7 +20,7 @@ $('#tblCategorias').DataTable({
         {data: 'cat_nombre'},
         {data: 'cat_descripcion'},
         {data: 'cat_idEstado'},
-         {data: 'cat_idEstadoVisible'},
+        {data: 'cat_idEstadoVisible'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -59,7 +59,7 @@ $('#tblCategorias').DataTable({
 
             }
         },
-         {
+        {
             "targets": [4],
             "data": "cat_idEstadoVisible",
             "render": function (data, type, row) {
@@ -103,9 +103,9 @@ selCategoria = function (idCategorias) {
                 $('#mEstado').val(res.response.cat_idEstado);
                 $('#mEstadoVisible').val(res.response.cat_idEstadoVisible);
                 $('#imgCategoria').val(res.response.cat_imagen),
-                //select
-                //ajax para traer todos los estados
-                $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
+                        //select
+                        //ajax para traer todos los estados
+                        $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response.cat_imagen);
                 $('#mIdCategoria').val(res.response.cat_id);
             } else {
                 sweetAlert("Oops...", res.response, "error");
@@ -142,19 +142,19 @@ function guardarImagen() {
             success: function (res) {
 
                 if (res.estado) {
-                   
-                    swal({
-                    title: "La Imagen Fue Subida con exito!",
-                    text: "haga click en actualizar para guardar!",
-                    type: "success",
-                    showLoaderOnConfirm: true,
-                },   function () {
-                    
-                             $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response);
-                               $('#imgCategoria').val(res.response);
-                        });
 
-                   
+                    swal({
+                        title: "La Imagen Fue Subida con exito!",
+                        text: "No se olvide de Actualizar para Guardar los Cambios",
+                        type: "success",
+                        showLoaderOnConfirm: true,
+                    }, function () {
+
+                        $('#imagen').attr('src', './assets/imagenes/categoria/' + res.response);
+                        $('#imgCategoria').val(res.response);
+                    });
+
+
                 } else {
                     console.log(res.response);
                     sweetAlert("Oops...", res.response, "error");
@@ -170,7 +170,8 @@ function guardarImagen() {
     } else {
         sweetAlert("Oops...", "Seleccione un Imagen", "warning");
     }
-};
+}
+;
 
 function eliminarCategoria(idCategoria) {
     swal({
@@ -188,7 +189,7 @@ function eliminarCategoria(idCategoria) {
                 if (isConfirm) {
                     $.ajax({
                         type: "POST",
-                        url: baseurl + "index.php/categoria/eliminar/"+idCategoria,
+                        url: baseurl + "index.php/categoria/eliminar/" + idCategoria,
                         dataType: 'json',
                         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
 
@@ -235,11 +236,11 @@ $('#mbtnCerrarModal').click(function () {
     $('#mEstadoVisible').val('1');
     //ajax para traer todos los estados
     $('#mIdCategoria').val('');
-     $('#imgCategoria').val('');
-     $('.nav-tabs a:first').tab('show') 
+    $('#imgCategoria').val('');
+    $('.nav-tabs a:first').tab('show')
 })
 $('#mCerrarModal').click(function () {
-      $('#mDescripcion').val('');
+    $('#mDescripcion').val('');
     $('#mNombre').val('');
     $('#mEstado').val('1');//select
     $('#mEstadoVisible').val('1');
@@ -247,7 +248,7 @@ $('#mCerrarModal').click(function () {
     $('#mIdCategoria').val('');
     $('#imgCategoria').val('');
     $('.nav-tabs a:first').tab('show')
-       
+
 })
 
 $('#mbtnUpdCategoria').click(function () {

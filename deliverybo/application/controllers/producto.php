@@ -139,10 +139,7 @@ class Producto extends CI_Controller {
 
         try {
             $result = $this->pm->getAllVar($idProducto);
-           
-             $total = $result->total;
-             
-            $respuesta = [
+              $respuesta = [
                         'estado' => true,
                         'data' => $result->data,
                         'total ' => $result->total
@@ -156,7 +153,7 @@ class Producto extends CI_Controller {
         echo json_encode($respuesta);
     }
 
-    public function updImagen() {
+     public function updImagen() {
         $id = $this->input->post('prod_id');
         $config = [
             "upload_path" => "./assets/imagenes/producto",
@@ -187,6 +184,7 @@ class Producto extends CI_Controller {
             //$imagen = $this->cm->obtener($id)->cat_imagen;
         }
     }
+
 
     public function updVariedad() {
 //         $errors = array();
