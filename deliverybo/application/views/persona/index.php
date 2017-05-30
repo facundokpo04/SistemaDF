@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);        ?>
+<?php // var_dump($model);         ?>
 <ol class="breadcrumb">
     <li class="active">Persona</li>
 </ol>
@@ -12,9 +12,7 @@
         <div class="btn-group"> 
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditPersona" >Agregar</button>
         </div>
-        <div class="btn-group"> 
-            <button class="btn btn-danger" type="button" onClick="">Eliminar</button>
-        </div>
+      
 
     </div>
 </div>
@@ -33,8 +31,11 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Email</th>
+                            <th>Contraseña</th>
                             <th>Documento</th>
                             <th>Nacionalida</th>
+                            <th>Celular</th>
+                            <th>Perfil</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -76,7 +77,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar/ Eliminar Categor&iacute;a</h4>
+                    <h4 class="modal-title">Agregar/Editar Persona</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
@@ -87,39 +88,46 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nombre Persona</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mNombre" id="mNombre" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mNombre" id="mNombre" class="form-control"  placeholder="">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Documento</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mDocumento" id="mDocumento" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mDocumento" id="mDocumento" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mEmail" id="mEmail" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mEmail" id="mEmail" class="form-control"  placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Password</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mPassword" id="mPassword" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mPassword" id="mPassword" class="form-control"  placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nacionalidad</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mNacionalidad" id="mNacionalidad" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            
+                             <div class="form-group">
+                                <label class="col-sm-3 control-label">Numero Celular</label>
+                                <div class="col-sm-9"> 
+                                    <input type="text" name="mCelular" id="mCelular" class="form-control"  placeholder="">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Perfil Usuario</label>
                                 <div class="col-sm-9"> 
-                                    <input type="text" name="mPerfilUsuariod" id="mPerfilUsuario" class="form-control" id="mtxtNombre" placeholder="">
+                                    <input type="text" name="mPerfilUsuario" id="mPerfilUsuario" class="form-control" placeholder="">
                                 </div>
                             </div>
 
@@ -128,7 +136,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdPersona">Actualizar</button>
+                    <button type="button" class="btn btn-info" id="mbtnUpdPersona">Actualizar</button> 
                 </div>
             </div>
             <!-- /.modal-content -->

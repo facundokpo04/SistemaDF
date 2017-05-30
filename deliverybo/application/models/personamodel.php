@@ -7,6 +7,12 @@ class PersonaModel extends CI_Model {
                         RestApiMethod::GET, "persona/listar/$l/$p"
         );
     }
+    
+      public function getAll2() {
+        return RestApi::call(
+                        RestApiMethod::GET, "persona/listar2"
+        );
+    }
 
     public function obtener($id) {
         return RestApi::call(

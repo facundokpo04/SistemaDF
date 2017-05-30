@@ -30,14 +30,16 @@ class Persona extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function get_personas($limite = 10, $p = 0) {
+    public function get_personas() {
 
         $data = [];
         $total = 0;
         $limite = 10;
         $data = new stdClass();
         try {
-            $result = $this->pm->getAll($limite, $p);
+//            $result = $this->pm->getAll($limite, $p);
+            
+            $result = $this->pm->getAll2();
 
             $total = $result->total;
             $data->data = $result->data;
