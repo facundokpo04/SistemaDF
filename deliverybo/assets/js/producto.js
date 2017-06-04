@@ -253,7 +253,7 @@ function cargarComponentes(idProducto) {
                     $('#tblComponentes tbody').append('<tr>' +
                             ' <td>' +
                             data.com_id +
-                            ' </td>' +
+                            '</td>' +
                             ' <td>' +
                             data.com_nombre +
                             ' </td>' +
@@ -672,6 +672,7 @@ $(document).on("click", ".eliminarComp", function () {
                             idComponente: comp_id
                         },
                         success: function (res) {
+                            debugger;
 
                             if (res.estado) {
                                 $(parent).remove();
