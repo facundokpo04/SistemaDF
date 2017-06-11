@@ -1,8 +1,18 @@
 
 var dp = $('#txtFechaPedido').datepicker({
     autoclose: true,
-    format: 'yyyy-mm-dd'
+    format: 'yyyy-mm-dd',
+    closeText: 'Cerrar',
+    prevText: '<Ant',
+    nextText: 'Sig>',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá']
 }).datepicker("setDate", new Date());
+
 
 
 function VerForm() {
@@ -49,7 +59,8 @@ $('#tblPedidos').DataTable({
         {data: 'pe_cli_tel'},
         {data: 'dir_direccion'},
         {data: 'dir_telefonoFijo'},
-        {data: 'pe_idEmpleado'},
+        {data: 'pe_nombreEmp'},
+        {data: 'pe_fechaPedido'},
         {"orderable": true,
             render: function (data, type, row) {
 
@@ -103,6 +114,16 @@ $('#tblPedidos').DataTable({
 
             }
         },
+        {
+            "targets": [7],
+            "data": "pe_fechaPedido",
+            "orderData": [1, 0],
+            "render": function (data, type, row) {
+
+                return getHora(data);
+
+            }
+        },
     ],
 
     "order": [[0, "asc"]],
@@ -146,7 +167,7 @@ cambiarAPreparado = function (idPedido) {
 
 
 };
-cambiarAEnviado = function (idPedido, idEmpleado) {
+cambiarAEnviado = function (idPedido, idEmpleado,nombreEmpleado) {
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/pedido/updPedido/",
@@ -154,7 +175,8 @@ cambiarAEnviado = function (idPedido, idEmpleado) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
             pe_id: idPedido,
             pe_idEstado: 3,
-            pe_idEmpleado: idEmpleado
+            pe_idEmpleado: idEmpleado,
+            pe_nombreEmp: nombreEmpleado
 
         },
         success: function (res) {
@@ -337,7 +359,7 @@ cargarEmpleados = function () {
         success: function (res) {
             $.each(res.data, function (key, data) {
                 ;
-                $("#mRepartidor").append("<option value=" + data.emp_id + ">" + data.per_nombre + '-' + data.emp_cargo + "</option>");
+                $("#mRepartidor").append("<option value=" + data.emp_id + ">" + data.per_nombre+"</option>");
             });
         },
         error: function (request, status, error) {
@@ -564,14 +586,14 @@ selPedidoResumen = function (idpedido) {
         success: function (res) {
             if (res.estado) {
                 debugger;
-                
-                var str =res.response.pe_resumen
+
+                var str = res.response.pe_resumen
                 var res = str.replace(/\n/g, "<br />");
-                
-                $('#resumenP').html('<p>'+res+'</p>');
-              
-                
-              
+
+                $('#resumenP').html('<p>' + res + '</p>');
+
+
+
 
             } else {
                 sweetAlert("Oops...", "Error al Obtener el Encabezado del Pedido!", "error");
@@ -584,7 +606,7 @@ selPedidoResumen = function (idpedido) {
 
         }
     });
-  
+
 
 
 
@@ -600,7 +622,9 @@ $('#mbtnEnviarPedido').click(function () {
 
     var idPedido = $('#midPedido').val();
     var idEmpleado = $('#mRepartidor').val();
-    cambiarAEnviado(idPedido, idEmpleado);
+    var nombreEmpleado =$('#mRepartidor option:selected').text();
+    debugger;
+    cambiarAEnviado(idPedido, idEmpleado,nombreEmpleado);
 
 
 
