@@ -50,7 +50,7 @@ class Empleado extends CI_Controller {
 
     public function get_empleadoById($idEmpleado) {
 
-        $data = new stdClass();
+   
 
         try {
             $result = $this->em->obtener($idEmpleado);

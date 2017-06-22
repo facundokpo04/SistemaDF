@@ -11,6 +11,7 @@ class Pedido extends CI_Controller {
         $this->load->model('PedidoModel', 'pm');
         $this->load->model('PedidoDetalleModel', 'dm');
         $this->load->model('PromoPedidoModel', 'dp');
+        $user = RestApi::getUserData();
     }
 
     public function index($p = 0) {

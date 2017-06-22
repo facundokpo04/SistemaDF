@@ -97,6 +97,7 @@
 <?php if($this->uri->segment(1)=='aderezo'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/aderezo.js') ?>"></script>
 <?php }?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/home.js') ?>"></script>
 </body>
 </html>
 

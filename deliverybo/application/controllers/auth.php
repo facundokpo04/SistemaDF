@@ -50,4 +50,11 @@ class Auth extends CI_Controller {
         RestApi::destroyToken();
         redirect('');
     }
+    
+    public function getUser(){
+        
+        
+      $user = RestApi::getUserData();
+          echo json_encode($user);
+    }
 }
