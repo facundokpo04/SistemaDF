@@ -346,4 +346,10 @@
 </script>
 <script type="text/javascript">
     var baseurl = "<?php echo base_url(); ?>";
+    
+    var int=self.setInterval("refresh()",60000);
+    function refresh()
+    {
+        location.reload(true);
+    }
 </script>
