@@ -74,10 +74,10 @@
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning" id="cantPedidos">10</span>
+              <span class="label label-warning" id="cantPedidos"></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header" id="cantPedidostext">Tienes 10 Pedido</li>
+              <li class="header" id="cantPedidostext"></li>
               <li>
               
               </li>
@@ -88,10 +88,10 @@
           <li class="dropdown tasks-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
-              <span class="label label-danger" id="cantPedidosF">9</span>
+              <span class="label label-danger" id="cantPedidosF"></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header" id="cantPedidosFtext">Ha finalizado 10 Pedidos</li>
+              <li class="header" id="cantPedidosFtext"></li>
               
               <li class="footer">
                 <a href="pedido">Ir al Tablero</a>

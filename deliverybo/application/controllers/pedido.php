@@ -21,6 +21,35 @@ class Pedido extends CI_Controller {
         $this->load->view('pedido/index.php');
         $this->load->view('layout/footer');
     }
+    
+    public function get_pedidosFechaPed($fecha) {
+
+       
+        $data = new stdClass();
+        try {
+            $data = $this->pm->getAllfechaPedPe($fecha);
+
+            
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+    
+    public function get_pedidosFechaEnv($fecha) {
+
+       
+        $data = new stdClass();
+        try {
+            $data = $this->pm->getAllfechaPedEn($fecha);
+
+          
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        echo json_encode($data);
+    }
+
 
     public function get_pedidos($limite = 5, $p = 0) {
 

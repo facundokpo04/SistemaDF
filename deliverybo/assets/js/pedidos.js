@@ -29,7 +29,6 @@ function fechaHoy() {
 
     dp.datepicker("setDate", new Date());
     var fecha = $('#txtFechaPedido').val();
-
     if (fecha) {
         tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
     }
