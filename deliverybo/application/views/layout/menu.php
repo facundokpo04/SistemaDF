@@ -76,7 +76,8 @@
                     <li><a href="sucursal"><a href="sucursal"><i class="fa fa-home"></i> Sucursales</a></li>
                 </ul>
             </li>
-            <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>           
+            <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li> 
+            <li><a onclick="salir()"><i class="fa fa-power-off" ></i> <span>Salir</span></a></li>
           
         </ul>
     </section>

@@ -13,7 +13,30 @@ function fechaHoyMenu() {
 
     return fecha;
 }
+salir = function () {
 
+    debugger;
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/auth/logout",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+            window.location.href = '';
+
+        },
+        error: function (request, status, error) {
+          
+//            window.location.href = '';
+            console.log(error.message);
+            //direccionar al login?
+
+
+        }
+    });
+
+
+}
 getUsuario = function () {
     $.ajax({
         type: "POST",
