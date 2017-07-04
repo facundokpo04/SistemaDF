@@ -11,7 +11,7 @@ class Empleado extends CI_Controller {
 
         $this->user = ['user' => RestApi::getUserData()];
         // Valida que exista el usuario obtenido del token, del caso contrario lo regresa a la pagina de inicio que es nuestro controlador auth
-     if($this->user['user'] === null) redirect('');
+        if($this->user['user'] === null) redirect('');
 //
         $this->load->model('EmpleadoModel', 'em');
         $this->load->model('SucursalModel', 'sm');
@@ -50,7 +50,7 @@ class Empleado extends CI_Controller {
 
     public function get_empleadoById($idEmpleado) {
 
-   
+        $data = new stdClass();
 
         try {
             $result = $this->em->obtener($idEmpleado);
@@ -66,6 +66,26 @@ class Empleado extends CI_Controller {
         }
         echo json_encode($respuesta);
     }
+    
+       public function get_empleadoByIdPer($idPersona) {
+
+        $data = new stdClass();
+
+        try {
+            $result = $this->em->obtenerPer($idPersona);
+            $respuesta = [
+                'estado' => true,
+                'response' => $result
+            ];
+        } catch (Exception $e) {
+            $respuesta = [
+                'estado' => false,
+                'response' => $e->getMessage()
+            ];
+        }
+        echo json_encode($respuesta);
+    }
+
 
     public function updEmpleado() {
 

@@ -49,10 +49,10 @@ getUsuario = function () {
 
             $('#nombreEmp1').append(res.NombreCompleto);
 
-            $('#detalleEmp').append(res.NombreCompleto + 'Administrador' +
+            $('#detalleEmp').append(res.NombreCompleto + ' - Administrador' +
                     '<small>Administrador del Sistema</small>');
             $('#nombreEmp2').append(res.NombreCompleto);
-//            getUsuarioimg(res.id);
+           //getUsuarioimg(res.id);
 
 
 
@@ -68,18 +68,18 @@ getUsuario = function () {
 
 
 }
-getUsuarioimg = function (idEmpleado) {
+getUsuarioimg = function (idPersona) {
     $.ajax({
         type: "POST",
-        url: baseurl + "index.php/empleado/get_empleadoById/" + idEmpleado,
+        url: baseurl + "index.php/empleado/get_empleadoByIdPer/" + idPersona,
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
 
 
             $('#empimg').attr('src', './assets/imagenes/empleado/' + res.response.emp_imagen);
-            $('#empimg1').attr('src', './assets/imagenes/empleado/' + res.response.emp_imagen);
-            $('#empimg2').attr('src', './assets/imagenes/empleado/' + res.response.emp_imagen);
+            $('#emplimg1').attr('src', './assets/imagenes/empleado/' + res.response.emp_imagen);
+            $('#emplimg2').attr('src', './assets/imagenes/empleado/' + res.response.emp_imagen);
 
 
 

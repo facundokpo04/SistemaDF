@@ -24,11 +24,12 @@ class Auth extends CI_Controller {
         if($r->response){
             // Seteamos el token
             
-            RestApi::setToken($r->result);                       // User
+            RestApi::setToken($r->result);
+            
+            // User
             $user = RestApi::getUserData();
             
             if($user->Perfil == 'Admin') {
-                
                 redirect('pedido');
             } else {
                 RestApi::destroyToken();
@@ -45,7 +46,7 @@ class Auth extends CI_Controller {
 //        $this->load->view('footer');
     }
     
-    public function logout(){
+     public function logout(){
         RestApi::destroyToken();
          echo json_encode('exito');
         
