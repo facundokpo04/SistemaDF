@@ -1,4 +1,4 @@
-<?php // var_dump($model);                                 ?>
+<?php // var_dump($model);                                  ?>
 <ol class="breadcrumb">
     <li class="active">Productos</li>
 </ol>
@@ -32,7 +32,7 @@
 
     </div>
 </div>
-<div id="productos" class="row">
+<div id="productos" class="row" >
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
@@ -66,89 +66,90 @@
 </div>
 
 <div id="producto" class="row" style="display:none;" >   
-    <div class="col-lg-12">     
-        <div class="panel panel-bluedark">
+    <div  class="col-lg-12">     
+        <div  class="panel panel-bluedark">
             <div class="panel-heading">Datos del Producto</div>
-            <div class="panel-body" >
+            <div  class="panel-body" >
 
+              
+                    <input id="idProducto" name="idProducto" style="display:none;">
+                    <input id="imgProducto" name="imgProducto" style="display:none;">
 
-                <input id="idProducto" name="idProducto" style="display:none;">
-                <input id="imgProducto" name="imgProducto" style="display:none;">
+                    <div class="col-sm-6 form-group">
+                        <label for="">Nombre</label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
+                        </div>	
+                    </div>    
+                    <div class="col-sm-6 form-group">
+                        <label for="">Descripcion</label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
+                        </div>
+                    </div>     
 
-                <div class="col-sm-6 form-group">
-                    <label for="">Nombre</label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><input class="form-control" placeholder="" name="txtNombre" id="txtNombre" type="text" autocomplete="on" autofocus="" tabindex="2" >
-                    </div>	
-                </div>    
-                <div class="col-sm-6 form-group">
-                    <label for="">Descripcion</label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i> </span><strong><input class="form-control" placeholder="" name="txtDescripcion" id="txtDescripcion" type="text" autocomplete="on" autofocus="" tabindex="1"  required=""></strong>
+                    <div class="col-sm-6 form-group">
+                        <label for="">Codigo Producto</label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i></span><input class="form-control" placeholder="" name="txtCodigo" id="txtCodigo" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
+                        </div>	
+                    </div>     
+
+                    <div class="col-sm-6 form-group">
+                        <label for="">Precio </label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
+                        </div>	
+                    </div>   
+
+                    <div class="col-sm-6 form-group">
+                        <label for="">Max Cant Componentes </label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa  fa-plus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMaxCompo" id="txtMaxCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
+                        </div>	
+                    </div> 
+                    <div class="col-sm-6 form-group">
+                        <label for="">Min Cant Componentes </label>
+                        <div class="input-group">
+                            <span class="input-group-addon cajaParametro"><i class="fa  fa-minus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMinCompo" id="txtMinCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
+                        </div>	
+                    </div> 
+                    <div class="col-sm-6 form-group" id="estadodiv">
+                        <label for="">Estado</label>
+                        <div class="input-group col-sm-12"> 
+                            <select name="PEstado" id="PEstado" class="form-control">                       
+                                <option value="1">Habilitado</option>
+                                <option value="2" selected>Deshabilitado</option>
+                            </select>
+                        </div>
                     </div>
-                </div>     
-
-                <div class="col-sm-6 form-group">
-                    <label for="">Codigo Producto</label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa fa-th-list fa-fw"></i></span><input class="form-control" placeholder="" name="txtCodigo" id="txtCodigo" type="text" autocomplete="on" autofocus="" tabindex="3" required="">
-                    </div>	
-                </div>     
-
-                <div class="col-sm-6 form-group">
-                    <label for="">Precio </label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa  fa-dollar fa-fw"></i> </span><input class="form-control" placeholder="" name="txtPrecio" id="txtPrecio" type="number" step="any" autocomplete="on" autofocus="" tabindex="4" >
-                    </div>	
-                </div>   
-
-                <div class="col-sm-6 form-group">
-                    <label for="">Max Cant Componentes </label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa  fa-plus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMaxCompo" id="txtMaxCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
-                    </div>	
-                </div> 
-                <div class="col-sm-6 form-group">
-                    <label for="">Min Cant Componentes </label>
-                    <div class="input-group">
-                        <span class="input-group-addon cajaParametro"><i class="fa  fa-minus-circle fa-fw"></i> </span><input class="form-control" placeholder="" name="txtMinCompo" id="txtMinCompo" type="number" autocomplete="on" autofocus="" tabindex="4" >
-                    </div>	
-                </div> 
-                <div class="col-sm-6 form-group" id="estadodiv">
-                    <label for="">Estado</label>
-                    <div class="input-group col-sm-12"> 
-                        <select name="PEstado" id="PEstado" class="form-control">                       
-                            <option value="1">Habilitado</option>
-                            <option value="2" selected>Deshabilitado</option>
-                        </select>
+                    <div  class="col-sm-6 form-group">
+                        <label for="">Visible Menu</label>
+                        <div class="input-group col-sm-12" > 
+                            <select   name="VEstado" id="VEstado" class="form-control">                       
+                                <option value="1">Visible</option>
+                                <option value="2">No Visible</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div  class="col-sm-6 form-group">
-                    <label for="">Visible Menu</label>
-                    <div class="input-group col-sm-12" > 
-                        <select   name="VEstado" id="VEstado" class="form-control">                       
-                            <option value="1">Visible</option>
-                            <option value="2">No Visible</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div  class="col-sm-6 form-group">
-                    <label for="">Categoria</label>
-                    <div class="input-group col-sm-12" > 
-                        <select   name="Pcategoria" id="Pcategoria" class="form-control">                       
-                            <option value="">Selecciona una Categoria</option>
-                        </select>
+                    <div  class="col-sm-6 form-group">
+                        <label for="">Categoria</label>
+                        <div class="input-group col-sm-12" > 
+                            <select   name="Pcategoria" id="Pcategoria" class="form-control">                       
+                                <option value="">Selecciona una Categoria</option>
+                            </select>
+                        </div>
+
                     </div>
-                  
-                </div>
-                  <div  class="col-sm-6 form-group">
+                    <div  class="col-sm-6 form-group">
                         <label for="">Aderezos</label>
                         <div class="input-group col-sm-12" > 
                             <input type="checkbox" id="Paderezos"> incluir aderezos
                             <div id="checkbox-value"></div>
                         </div>
                     </div>
+                
                 <!-- /.paneles de Variedad/componente/imagen -->
                 <div class="col-sm-12">
                     <ul class="nav nav-tabs" role="tablist" id="paneles">

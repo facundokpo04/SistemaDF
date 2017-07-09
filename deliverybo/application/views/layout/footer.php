@@ -57,8 +57,13 @@
 
 <!-- sweetalert -->
 <script src="<?php echo base_url(); ?>assets/dist/js/sweetalert.min.js"></script>
+<!-- jqueryloading -->
+<script src="<?php echo base_url(); ?>assets/dist/js/jquery.loading.min.js"></script>
+
 //iniciliza todo
 <script   type="text/javascript" src="<?php echo base_url('assets/js/home.js') ?>"></script>
+
+
 
 
  
@@ -99,6 +104,10 @@
 <script   type="text/javascript" src="<?php echo base_url('assets/js/aderezo.js') ?>"></script>
 <?php }?>
 
+
+<script type="text/javascript">
+    var baseurl = "<?php echo base_url(); ?>";
+</script>
 </body>
 </html>
 

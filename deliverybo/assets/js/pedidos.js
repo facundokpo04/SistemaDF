@@ -28,15 +28,21 @@ function OcultarForm() {
 function fechaHoy() {
 
     dp.datepicker("setDate", new Date());
-    var fecha = $('#txtFechaPedido').val();
-    if (fecha) {
-        tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
-    }
+    
 }
 
 OcultarForm();
 
+$("#txtFechaPedido").change(function () {
+   
+    var fecha = $('#txtFechaPedido').val();
 
+    if (fecha) {
+        tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
+
+    }
+//   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
+})
 $('#tblPedidos').DataTable({
     "lengthMenu": [[6, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
@@ -688,4 +694,4 @@ $("#txtFechaPedido").change(function () {
 //   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
 })
 
-  var int=self.setInterval("fechaHoy()",60000);
+//  var int=self.setInterval("fechaHoy()",60000);

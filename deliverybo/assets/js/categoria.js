@@ -282,6 +282,7 @@ $('#mbtnUpdCategoria').click(function () {
             }
         },
         error: function (request, status, error) {
+            debugger;
             sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error);
         }
