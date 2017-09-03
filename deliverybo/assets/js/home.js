@@ -96,7 +96,7 @@ getUsuarioimg = function (idPersona) {
 
 getPedidosCant = function (fechamenu) {
 
-    var cantpedidos=0;
+    var cantpedidos = 0;
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/pedido/get_pedidosFechaPed/" + fechamenu,
@@ -109,15 +109,25 @@ getPedidosCant = function (fechamenu) {
 
             $('#cantPedidos').append(parseInt(res));
             $('#cantPedidostext').append('Tienes ' + (isNaN(parseInt(res)) ? '0' : parseInt(res)) + ' Pedidos Para Enviar');
-            cantpedidos=(isNaN(parseInt(res)) ? 0 : parseInt(res)) 
-            if(cantpedidos>pedidosAct){
-                pedidosAct=cantpedidos;
-                 playSound();
+            cantpedidos = (isNaN(parseInt(res)) ? 0 : parseInt(res))
+            if (cantpedidos > pedidosAct) {
+                pedidosAct = cantpedidos;
+                playSound();
+
+                Push.create("Nuevo Pedido", {
+                    body: "Pedidos Pendientes: "+cantpedidos,
+                    icon: 'assets/imagenes/logo1.png',
+                    timeout: 30000,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
+
+            } else {
+                pedidosAct = cantpedidos;
             }
-            else{
-                  pedidosAct=cantpedidos;
-            }
-            
+
 
         },
         error: function (request, status, error) {
@@ -197,11 +207,21 @@ getPedidosCantEn = function (fechamenu) {
 
 
 var fechamenu = fechaHoyMenu();
-var pedidosAct=0;
+var pedidosAct = 0;
 getPedidosCant(fechamenu);
 getPedidosCantEn(fechamenu);
 getPedidosCantPre(fechamenu);
 getUsuario();
+debugger;
+Push.Permission.request(onGranted, onDenied);
+
+
+function onGranted() {}
+;
+function onDenied() {
+    
+}
+;
 
 
 var int2 = self.setInterval("refreshmenu()", 30000);
@@ -211,6 +231,8 @@ function refreshmenu()
     getPedidosCant(fechamenu);
     getPedidosCantEn(fechamenu);
     getPedidosCantPre(fechamenu);
+
+
 
 
 }
