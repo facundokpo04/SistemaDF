@@ -1,5 +1,5 @@
 
-<?php // var_dump($model);             ?>
+<?php // var_dump($model);              ?>
 <ol class="breadcrumb">
     <li class="active">Pedidos Hoy</li>
 </ol>
@@ -135,7 +135,8 @@
                             <tr>
                                 <th>Cant</th>
                                 <th>Item</th>
-                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Producto</th>
                                 <th>Aclaracion</th>
                                 <th>Subtotal</th>
                             </tr>

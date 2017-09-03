@@ -254,7 +254,7 @@ getCliente = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-                debugger;
+             
                 $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
                         res.response.dir_direccion +
                         '<br>Telefono Fijo: ' +
@@ -387,7 +387,7 @@ cargarDetalle = function (idPedido) {
 
             if (res.estado) {
                 res.response.forEach(function (item) {
-
+debugger;
                     $('#tbProductos tbody').append('<tr>' +
                             ' <td>' +
                             item.producto.dp_Cantidad +
@@ -395,8 +395,11 @@ cargarDetalle = function (idPedido) {
                             ' <td>' +
                             item.producto.prod_codigoProducto +
                             ' </td>' +
+                            ' <td>' +
+                            item.producto.cat_nombre +
+                            ' </td>' +
                             ' <td><strong>' +
-                            item.producto.prod_nombre + '-' + (item.producto.var_nombre ? item.producto.var_nombre : '') +
+                            item.producto.prod_nombre + (item.producto.var_nombre ? ('-' + item.producto.var_nombre) : '') +
                             '</td><strong>' +
                             ' <td>' +
                             item.producto.pp_aclaracion +
@@ -457,7 +460,7 @@ cargarDetallePromo = function (idPedido) {
         success: function (res) {
 
             if (res.estado) {
-                debugger;
+              
 
                 if (res.response instanceof Array)
                     res.response.forEach(function (item) {
@@ -465,6 +468,9 @@ cargarDetallePromo = function (idPedido) {
                         $('#tbProductos tbody').append('<tr>' +
                                 ' <td>' +
                                 item.promo.ppro_cantidad +
+                                ' </td>' +
+                                ' <td>' +
+                                '-' +
                                 ' </td>' +
                                 ' <td>' +
                                 '-' +
@@ -488,8 +494,11 @@ cargarDetallePromo = function (idPedido) {
                                     ' <td>' +
                                     '' +
                                     ' </td>' +
+                                     ' <td>' +
+                                    '' +
+                                    ' </td>' +
                                     ' <td>' +
-                                    prod.prod_nombre + '-' + (prod.var_nombre ? prod.var_nombre : '') +
+                                    prod.prod_nombre + '-' + (prod.var_nombre ? ('-' + prod.var_nombre) : '') +
                                     '</td>' +
                                     ' <td>' +
                                     prod.pp_aclaracion +
@@ -557,7 +566,7 @@ getHora = function (fecha) {
     h = n.getHours();
     m = n.getMinutes();
     
-debugger;
+
     return(h + ":" +( m>9 ? m:"0"+m));
 
 }
@@ -576,13 +585,13 @@ selPedidoEnviar = function (idpedido) {
 
     cargarEmpleados();
     $('#midPedido').val(idpedido);
-    debugger;
+ 
 
 
 };
 selPedidoResumen = function (idpedido) {
 
-    debugger;
+
     $('#resumenP').empty();
     $.ajax({
         type: "POST",
@@ -591,7 +600,7 @@ selPedidoResumen = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-                debugger;
+           
 
                 var str = res.response.pe_resumen
                 var res = str.replace(/\n/g, "<br />");
@@ -629,7 +638,7 @@ $('#mbtnEnviarPedido').click(function () {
     var idPedido = $('#midPedido').val();
     var idEmpleado = $('#mRepartidor').val();
     var nombreEmpleado = $('#mRepartidor option:selected').text();
-    debugger;
+  
     cambiarAEnviado(idPedido, idEmpleado, nombreEmpleado);
 
 
@@ -656,7 +665,7 @@ $('#mbtnCancelarPedido').click(function () {
         closeOnCancel: false
     },
             function (isConfirm) {
-                debugger;
+              
                 if (isConfirm) {
 
                     if (estadoPedido == 2 || estadoPedido == 3) {

@@ -78,6 +78,9 @@
             </li>
             <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentacion</span></a></li> 
             <li><a onclick="salir()"><i class="fa fa-power-off" ></i> <span>Salir</span></a></li>
+            
+          <li>  <button onclick="playSound();">Play</button>  </li>
+        <div id="sound"></div>
           
         </ul>
     </section>
