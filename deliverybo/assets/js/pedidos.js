@@ -254,7 +254,7 @@ getCliente = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-             
+
                 $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
                         res.response.dir_direccion +
                         '<br>Telefono Fijo: ' +
@@ -323,12 +323,15 @@ getPedido = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
+                debugger;
                 $('#pedidoE').append(' <b>Pedido #PED' + res.response.pe_id + '</b><br>' +
                         '<b>Pedido ID:</b>' + res.response.pe_id + '<br>' +
                         '<b>Fecha Pedido:</b>' + getFecha(res.response.pe_fechaPedido) + '<br>' +
                         '<b>Hora Pedido:</b>' + getHora(res.response.pe_fechaPedido) + '<br>' +
                         '<b>Estado:</b>' + res.response.descripcion + '<br>' +
-                        '<b>Metodo Pago:</b>' + res.response.pe_medioPago);
+                        '<b>Metodo Pago:</b>' + (res.response.pe_medioPago == 'Debito' ? "<span class='label label-danger'> Tarjeta de Debito </span>" : res.response.pe_medioPago));
+
+
 
                 $('#fechaP').text("Fecha Pedido: " + getFecha(res.response.pe_fechaPedido));
                 $('#aclaracionP').text(res.response.pe_aclaraciones);
@@ -387,7 +390,7 @@ cargarDetalle = function (idPedido) {
 
             if (res.estado) {
                 res.response.forEach(function (item) {
-debugger;
+                    debugger;
                     $('#tbProductos tbody').append('<tr>' +
                             ' <td>' +
                             item.producto.dp_Cantidad +
@@ -402,7 +405,7 @@ debugger;
                             item.producto.prod_nombre + (item.producto.var_nombre ? ('-' + item.producto.var_nombre) : '') +
                             '</td><strong>' +
                             ' <td>' +
-                            item.producto.pp_aclaracion +
+                            (item.producto.pp_aclaracion == 'Sin Aclaracion' ? item.producto.pp_aclaracion : "<span class='label label-info'>"+ item.producto.pp_aclaracion +"</span>") +
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
                             item.producto.dp_PrecioUnitario +
@@ -460,7 +463,7 @@ cargarDetallePromo = function (idPedido) {
         success: function (res) {
 
             if (res.estado) {
-              
+
 
                 if (res.response instanceof Array)
                     res.response.forEach(function (item) {
@@ -494,7 +497,7 @@ cargarDetallePromo = function (idPedido) {
                                     ' <td>' +
                                     '' +
                                     ' </td>' +
-                                     ' <td>' +
+                                    ' <td>' +
                                     '' +
                                     ' </td>' +
                                     ' <td>' +
@@ -565,9 +568,9 @@ getHora = function (fecha) {
     n = new Date(fecha);
     h = n.getHours();
     m = n.getMinutes();
-    
 
-    return(h + ":" +( m>9 ? m:"0"+m));
+
+    return(h + ":" + (m > 9 ? m : "0" + m));
 
 }
 selPedido = function (idpedido, idempleado) {
@@ -585,7 +588,7 @@ selPedidoEnviar = function (idpedido) {
 
     cargarEmpleados();
     $('#midPedido').val(idpedido);
- 
+
 
 
 };
@@ -600,7 +603,7 @@ selPedidoResumen = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
-           
+
 
                 var str = res.response.pe_resumen
                 var res = str.replace(/\n/g, "<br />");
@@ -638,7 +641,7 @@ $('#mbtnEnviarPedido').click(function () {
     var idPedido = $('#midPedido').val();
     var idEmpleado = $('#mRepartidor').val();
     var nombreEmpleado = $('#mRepartidor option:selected').text();
-  
+
     cambiarAEnviado(idPedido, idEmpleado, nombreEmpleado);
 
 
@@ -665,7 +668,7 @@ $('#mbtnCancelarPedido').click(function () {
         closeOnCancel: false
     },
             function (isConfirm) {
-              
+
                 if (isConfirm) {
 
                     if (estadoPedido == 2 || estadoPedido == 3) {
