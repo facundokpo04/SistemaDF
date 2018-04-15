@@ -103,7 +103,7 @@ getPedidosCant = function (fechamenu) {
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
-            debugger;
+            
             $('#cantPedidos').empty();
             $('#cantPedidostext').empty();
 
@@ -115,7 +115,7 @@ getPedidosCant = function (fechamenu) {
                 playSound();
 
                 Push.create("Nuevo Pedido", {
-                    body: "Pedidos Pendientes: "+cantpedidos,
+                    body: "Pedidos Pendientes: " + cantpedidos,
                     icon: 'assets/imagenes/logo1.png',
                     timeout: 30000,
                     onClick: function () {
@@ -207,27 +207,27 @@ getPedidosCantEn = function (fechamenu) {
 
 
 var fechamenu = fechaHoyMenu();
-debugger;
-if (!sessionStorage.pedidosAct){
+
+if (!sessionStorage.pedidosAct) {
     sessionStorage.pedidosAct = 0;
 }
 getPedidosCant(fechamenu);
 getPedidosCantEn(fechamenu);
 getPedidosCantPre(fechamenu);
 getUsuario();
-debugger;
+
 Push.Permission.request(onGranted, onDenied);
 
 
 function onGranted() {}
 ;
 function onDenied() {
-    
+
 }
 ;
 
 
-var int2 = self.setInterval("refreshmenu()", 30000);
+var int2 = self.setInterval("refreshmenu()", 20000);
 function refreshmenu()
 {
     fechamenu = fechaHoyMenu();
@@ -235,12 +235,14 @@ function refreshmenu()
     getPedidosCantEn(fechamenu);
     getPedidosCantPre(fechamenu);
 
-
+    if (sessionStorage.pedidosAct > 0) {
+        this.playSound();
+    }
 
 
 }
 function playSound() {
-    var audio = new Audio('assets/sonidos/coin.mp3');
+    var audio = new Audio('assets/sonidos/phone.mp3');
     audio.play();
 }
 
