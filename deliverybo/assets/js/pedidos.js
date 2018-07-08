@@ -1,4 +1,12 @@
 
+
+onload = function ()
+{
+    fechaHoy();
+    
+
+}
+
 var dp = $('#txtFechaPedido').datepicker({
     autoclose: true,
     format: 'yyyy-mm-dd',
@@ -38,19 +46,20 @@ $("#txtFechaPedido").change(function () {
     var fecha = $('#txtFechaPedido').val();
 
     if (fecha) {
+        tablaP.clear();
         tablaP.ajax.url(baseurl + "index.php/pedido/get_pedidosFecha/" + fecha).load();
 
     }
 //   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
 })
 $('#tblPedidos').DataTable({
-    "lengthMenu": [[6, 10, 15, -1], [5, 10, 15, "Todo"]],
+    "lengthMenu": [[6,10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
     'info': true,
     'filter': true,
     'stateSave': true,
     'ajax': {
-        "url": baseurl + "index.php/pedido/get_pedidos/",
+        "url": baseurl + "index.php/pedido/get_pedidosFecha/"+ $('#txtFechaPedido').val() ,
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
@@ -153,7 +162,8 @@ cambiarAPreparado = function (idPedido) {
                     type: "success",
                 },
                         function () {
-                            location.reload();
+                            //location.reload();
+                            fechaHoy();
                         });
 
             } else {
@@ -190,7 +200,9 @@ cambiarAEnviado = function (idPedido, idEmpleado, nombreEmpleado) {
                     type: "success",
                 },
                         function () {
-                            location.reload();
+                            //location.reload();
+                            fechaHoy();
+                            $('#modalEnviarPedido').modal('hide');
                         });
 
             } else {
@@ -227,7 +239,9 @@ cancelarPedido = function (idPedido, motivo) {
                     type: "success",
                 },
                         function () {
-                            location.reload();
+                            // location.reload();
+                            fechaHoy();
+                            $('#modalCancelarPedido').modal('hide');
                         });
 
             } else {
@@ -405,7 +419,7 @@ cargarDetalle = function (idPedido) {
                             item.producto.prod_nombre + (item.producto.var_nombre ? ('-' + item.producto.var_nombre) : '') +
                             '</td><strong>' +
                             ' <td>' +
-                            (item.producto.pp_aclaracion == 'Sin Aclaracion' ? item.producto.pp_aclaracion : "<span class='label label-info'>"+ item.producto.pp_aclaracion +"</span>") +
+                            (item.producto.pp_aclaracion == 'Sin Aclaracion' ? item.producto.pp_aclaracion : "<span class='label label-info'>" + item.producto.pp_aclaracion + "</span>") +
                             ' </td>' +
                             ' <td>' + '$&nbsp;' +
                             item.producto.dp_PrecioUnitario +
@@ -671,7 +685,8 @@ $('#mbtnCancelarPedido').click(function () {
 
                 if (isConfirm) {
 
-                    if (estadoPedido == 2 || estadoPedido == 3) {
+                    // if (estadoPedido == 2 || estadoPedido == 3) {
+                    if (false) {
                         swal("Atencion", "No se puede cancelar un pedido que esta siendo Enviado/Preparado", "error");
 
                     } else {
@@ -695,4 +710,4 @@ $("#selEst").change(function () {
     }
 })
 
-var int = self.setInterval("fechaHoy()", 60000);
+var int = self.setInterval("fechaHoy()", 30000);
