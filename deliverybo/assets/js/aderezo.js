@@ -1,6 +1,4 @@
 
-debugger;
-
 $('#tblAderezo').DataTable({
     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
