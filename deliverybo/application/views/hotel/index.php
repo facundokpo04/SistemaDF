@@ -95,7 +95,7 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-th-list fa-fw"></i> </span>
-                                                    <input type="text" name="mNombre" id="mNombre" class="form-control"  placeholder="">
+                                                    <input type="text" name="mNombre" id="mNombre" class="form-control"  placeholder="" required>
                                                 </div>
                                             </div>
                                         </div> 
@@ -104,7 +104,7 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i> </span>
-                                                    <input type="text" name="mDireccion" id="mDireccion" class="form-control"  placeholder="">
+                                                    <input type="text" name="mDireccion" id="mDireccion" class="form-control"  placeholder="" required>
                                                 </div>
                                             </div>
                                         </div> 
@@ -113,7 +113,7 @@
                                             <div class="col-sm-9"> 
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-phone-square fa-fw"></i> </span>
-                                                    <input type="text" name="mTelefono" id="mTelefono" class="form-control"  placeholder="">
+                                                    <input type="number" name="mTelefono" id="mTelefono" class="form-control"  placeholder="" required>
                                                 </div>
                                             </div>
                                         </div>  
@@ -135,7 +135,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="mbtnCerrarModal" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-info" id="mbtnUpdAderezo">Actualizar</button>
+                    <button type="button" class="btn btn-info" id="mbtnUpdHotel">Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

@@ -159,14 +159,19 @@ $('#mbtnCerrarModal').click(function () {
 //
 //
 $('#mbtnUpdHotel').click(function () {
+    
+    debugger;
+    
+     if (!($('#mNombre').val()=== '' ||$('#mDireccion').val()=== '' || $('#mTelefono').val()=== '')) 
+         {
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/hotel/updHotel",
         dataType: 'json',
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
             hotel_nombre: $('#mNombre').val(),
-            hote_direccion: $('#mDireccion').val(),
-            hotel_nombre: $('#mTelefono').val(),
+            hotel_direccion: $('#mDireccion').val(),
+            hotel_telefono: $('#mTelefono').val(),
             hotel_estado: $('#mEstado').val(),
             hotel_id: $('#mIdHotel').val()
         },
@@ -191,7 +196,11 @@ $('#mbtnUpdHotel').click(function () {
             sweetAlert("Oops...", "Ocurrio un Error Inesperado!", "error");
             console.log(error);
         }
-    });
+    });}
+else
+    {
+        sweetAlert("Oops...", "Debe completar todos los campos", "warning");
+    }
 });
 
 

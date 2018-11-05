@@ -73,7 +73,6 @@ class Hotel extends CI_Controller {
         $data = [
             'hotel_nombre' => $this->input->post('hotel_nombre'),
             'hotel_direccion' => $this->input->post('hotel_direccion'),
-            'hotel_direccion' => $this->input->post('hotel_direccion'),
             'hotel_telefono' => $this->input->post('hotel_telefono'),
             'hotel_estado' => $this->input->post('hotel_estado')
         ];
