@@ -100,6 +100,23 @@ $('#tblPedidos').DataTable({
     ],
     "columnDefs": [
         {
+            "targets": [4],
+            "data": "dir_direccion",
+            "render": function (data, type, row) {
+
+                if (data == 1) {
+                    return "<span class='label label-warning'>Pendiente</span>";
+                } else if (data == 2) {
+                    return "<span class='label label-info'>Preparando</span>";
+                } else if (data == 3) {
+                    return "<span class='label label-success'>Enviando</span>";
+                } else if (data == 4) {
+                    return "<span class='label label-danger'>Cancelado</span>";
+                }
+
+            }
+        },
+        {
             "targets": [1],
             "data": "pe_idEstado",
             "render": function (data, type, row) {
