@@ -3,7 +3,7 @@
 onload = function ()
 {
     fechaHoy();
-    
+
 
 }
 
@@ -53,13 +53,13 @@ $("#txtFechaPedido").change(function () {
 //   tablaP.ajax.url(baseurl + "index.php/producto/get_pedidosFecha/"+fecha).load();
 })
 $('#tblPedidos').DataTable({
-    "lengthMenu": [[6,10, 15, -1], [5, 10, 15, "Todo"]],
+    "lengthMenu": [[6, 10, 15, -1], [5, 10, 15, "Todo"]],
     'paging': true,
     'info': true,
     'filter': true,
     'stateSave': true,
     'ajax': {
-        "url": baseurl + "index.php/pedido/get_pedidosFecha/"+ $('#txtFechaPedido').val() ,
+        "url": baseurl + "index.php/pedido/get_pedidosFecha/" + $('#txtFechaPedido').val(),
         "type": "POST",
         "dataType": 'json',
         "data": {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
@@ -69,7 +69,7 @@ $('#tblPedidos').DataTable({
         {data: 'pe_idEstado'},
         {data: 'per_nombre'},
         {data: 'pe_cli_tel'},
-        {data: 'dir_direccion'},
+        {data: 'dir_tipodireccion'},
         {data: 'dir_telefonoFijo'},
         {data: 'pe_nombreEmp'},
         {data: 'pe_fechaPedido'},
@@ -100,10 +100,9 @@ $('#tblPedidos').DataTable({
     ],
     "columnDefs": [
         {
-            "targets": [4],
-            "data": "dir_direccion",
+            "targets": [1],
+            "data": "pe_idEstado",
             "render": function (data, type, row) {
-
                 if (data == 1) {
                     return "<span class='label label-warning'>Pendiente</span>";
                 } else if (data == 2) {
@@ -117,18 +116,13 @@ $('#tblPedidos').DataTable({
             }
         },
         {
-            "targets": [1],
-            "data": "pe_idEstado",
+            "targets": [4],
+            "data": "dir_tipodireccion",
             "render": function (data, type, row) {
-
                 if (data == 1) {
-                    return "<span class='label label-warning'>Pendiente</span>";
+                    return row.dir_direccion;
                 } else if (data == 2) {
-                    return "<span class='label label-info'>Preparando</span>";
-                } else if (data == 3) {
-                    return "<span class='label label-success'>Enviando</span>";
-                } else if (data == 4) {
-                    return "<span class='label label-danger'>Cancelado</span>";
+                    return '<b>Hotel: </b>\'' + row.dir_nombreHotel + '\' <b>Habitacion: </b> \'' + row.dir_habitacion + '\'<br>' + row.dir_direccion;
                 }
 
             }
@@ -285,21 +279,52 @@ getCliente = function (idpedido) {
         data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
         success: function (res) {
             if (res.estado) {
+                debugger;
+                if (res.response.dir_tipodireccion !=2) {
+                    $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
+                            res.response.dir_direccion +
+                            '<br>Telefono Fijo: ' +
+                            res.response.dir_telefonoFijo +
+                            '<br>Celular: ' +
+                            res.response.per_celular +
+                            '<br>' +
+                            'Email: ' +
+                            res.response.per_email);
 
-                $('#cliente').append('<strong>' + res.response.per_nombre + '</strong><br>Direccion: ' +
-                        res.response.dir_direccion +
-                        '<br>Telefono Fijo: ' +
-                        res.response.dir_telefonoFijo +
-                        '<br>Celular: ' +
-                        res.response.per_celular +
-                        '<br>' +
-                        'Email: ' +
-                        res.response.per_email);
+                    $('#cliente2').append(' <strong>&nbspCliente:&nbsp</strong> ' + res.response.per_nombre + '<strong>&nbspDireccion: &nbsp</strong> ' +
+                            res.response.dir_direccion +
+                            '<strong>&nbspTelefono:&nbsp</strong> ' +
+                            res.response.per_celular);
+                }
+                else{
+                    debugger;
+                       $('#cliente').append('<strong>' + res.response.per_nombre + 
+                              '</strong><br>Hotel: ' +
+                            res.response.dir_nombreHotel +  
+                            '</strong><br>Habitacion/Dpto: ' +
+                            res.response.dir_habitacion +  
+                            '</strong><br>Direccion: ' +
+                            res.response.dir_direccion +
+                            '<br>Telefono Fijo: ' +
+                            res.response.dir_telefonoFijo +
+                            '<br>Celular: ' +
+                            res.response.per_celular +
+                            '<br>' +
+                            'Email: ' +
+                            res.response.per_email);
 
-                $('#cliente2').append(' <strong>&nbspCliente:&nbsp</strong> ' + res.response.per_nombre + '<strong>&nbspDireccion: &nbsp</strong> ' +
-                        res.response.dir_direccion +
-                        '<strong>&nbspTelefono:&nbsp</strong> ' +
-                        res.response.per_celular);
+                    $('#cliente2').append(' <strong>&nbspCliente:&nbsp</strong> ' + res.response.per_nombre 
+                            + '<strong>&nbspHotel: &nbsp</strong> ' +
+                            res.response.dir_nombreHotel +
+                            '<strong>&nbspHabitacion/Dpto: &nbsp</strong> ' +
+                            res.response.dir_habitacion +
+                            '<strong>&nbspDireccion: &nbsp</strong> ' +
+                            res.response.dir_direccion +
+                            '<strong>&nbspTelefono:&nbsp</strong> ' +
+                            res.response.per_celular);
+                    
+                }
+
             } else {
                 sweetAlert("Oops...", "Error al Obtner el Cliente!", "error");
                 console.log(res.response)
