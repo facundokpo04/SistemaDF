@@ -119,10 +119,10 @@ $('#tblPedidos').DataTable({
             "targets": [4],
             "data": "dir_tipodireccion",
             "render": function (data, type, row) {
-                if (data == 1) {
+                if (data != 2) {
                     return row.dir_direccion;
                 } else if (data == 2) {
-                    return '<b>Hotel: </b>\'' + row.dir_nombreHotel + '\' <b>Habitacion: </b> \'' + row.dir_habitacion + '\'<br>' + row.dir_direccion;
+                    return'<b>Hotel: </b>' + row.dir_nombreHotel + ' <b>Habitacion: </b> ' + row.dir_habitacion + '<br>' + row.dir_direccion;
                 }
 
             }
