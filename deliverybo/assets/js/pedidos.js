@@ -27,8 +27,6 @@ function VerForm() {
     $("#pedido").show();// Mostramos el formulario
     $("#pedidos").hide();
 }
-
-
 function OcultarForm() {
     $("#pedido").hide();// Mostramos el formulario
     $("#pedidos").show();
@@ -38,9 +36,26 @@ function fechaHoy() {
     dp.datepicker("setDate", new Date());
 
 }
+enviarEmail = function () {
+    
+    $.ajax({
+        type: "POST",
+        url: baseurl + "index.php/email/sendMailGmail",
+        dataType: 'json',
+        data: {'<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'},
+        success: function (res) {
+           debugger;
+        },
+        error: function (request, status, error) {
+            console.log(error.message);
+
+        }
+
+    });
+}
 
 OcultarForm();
-
+enviarEmail();
 $("#txtFechaPedido").change(function () {
 
     var fecha = $('#txtFechaPedido').val();
@@ -751,5 +766,7 @@ $("#selEst").change(function () {
         tablaP.search('').columns().search('').draw();
     }
 })
+
+
 
 var int = self.setInterval("fechaHoy()", 30000);
