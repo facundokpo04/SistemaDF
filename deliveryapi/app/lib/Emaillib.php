@@ -7,31 +7,63 @@ use PHPMailer\PHPMailer\Exception;
 
 class Email {
 
-    public function sendMailGmail() {
-        //cargamos la libreria email de ci
-        $this->load->library("email");
+    private static $configGmail = array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_port' => '465',
+        'smtp_user' => 'deliveryiguazu@gmail.com',
+        'smtp_pass' => '34060319fa',
+        'mailtype' => 'html',
+        'charset' => 'utf-8',
+        'newline' => "\r\n"
+    );
 
-        //configuracion para gmail
-        $configGmail = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => '465',
-            'smtp_user' => 'deliveryiguazu@gmail.com',
-            'smtp_pass' => '34060319fa',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        );
-
-        //cargamos la configuración para enviar con gmail
-        $this->email->initialize($configGmail);
-
-        $this->email->from('deliveryiguazu@gmail.com');
-        $this->email->to("facundokpo04@gmail.com");
-        $this->email->subject('Bienvenido/a a uno-de-piera.com');
-        $this->email->message('<h2>Email enviado con codeigniter haciendo uso del smtp de gmail</h2><hr><br> Bienvenido al blog');
-        $this->email->send();
-        //con esto podemos ver el resultado
-        echo json_encode($this->email->print_debugger());
+// Crea un nuevo token guardando la información del usuario que hemos autenticado
+    public static function SendEmail($email, $password) {
+        try {
+            $mail = new PHPMailer;
+            $mail->IsSMTP(); // enable SMTP
+            $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+            $mail->SMTPAuth = true; // authentication enabled
+            $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+            $mail->Host = "ssl://smtp.googlemail.com";
+            $mail->Port = 465; // or 587
+            $mail->IsHTML(true);
+            $mail->Username = "deliveryiguazu@gmail.com";
+            $mail->Password = "34060319fa";
+            $mail->SetFrom("deliveryiguazu@gmail.com", 'deliveryiguazu.com');
+            $mail->addAddress($email);
+            $mail->addReplyTo('no-reply@deliveryiguazu.com', 'deliveryiguazu.com');
+            $mail->Subject = 'Instructions for resetting the password for your account with PizzaColorApp';
+            $mail->Body = "
+        <p>Hi,</p>
+        <p>            
+        Thanks for choosing PizzaColorDelivery! We have received a request for a password reset on the account associated with this email address.
+        </p>
+        <p>
+        Su Password es <b >\"$password\"</b>.  If you did not initiate this request,
+        please disregard this message.
+        </p>
+        <p>
+        If you have any questions about this email, you may contact us at deliveryiguazu@gmail.com.
+        </p>
+        <p>
+        With regards,
+        <br>
+        The Pizza Color Delivery Team
+        </p>";
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+        }
     }
+
 }
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
