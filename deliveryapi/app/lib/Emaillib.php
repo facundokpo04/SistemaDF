@@ -23,7 +23,7 @@ class Email {
         try {
             $mail = new PHPMailer;
             $mail->IsSMTP(); // enable SMTP
-            $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+            $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
             $mail->SMTPAuth = true; // authentication enabled
             $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
             $mail->Host = "ssl://smtp.googlemail.com";
@@ -34,28 +34,30 @@ class Email {
             $mail->SetFrom("deliveryiguazu@gmail.com", 'deliveryiguazu.com');
             $mail->addAddress($email);
             $mail->addReplyTo('no-reply@deliveryiguazu.com', 'deliveryiguazu.com');
-            $mail->Subject = 'Instructions for resetting the password for your account with PizzaColorApp';
+            $mail->Subject = "Instrucciones para restablecer el Password de su cuenta en PizzaColorApp";
             $mail->Body = "
-        <p>Hi,</p>
-        <p>            
-        Thanks for choosing PizzaColorDelivery! We have received a request for a password reset on the account associated with this email address.
-        </p>
-        <p>
-        Su Password es <b >\"$password\"</b>.  If you did not initiate this request,
-        please disregard this message.
-        </p>
-        <p>
-        If you have any questions about this email, you may contact us at deliveryiguazu@gmail.com.
-        </p>
-        <p>
-        With regards,
-        <br>
-        The Pizza Color Delivery Team
-        </p>";
-            $mail->send();
-            echo 'Message has been sent';
+            <p>Hola,</p>
+            <p>            
+              Gracias por elegir Pizza Color Delivery! Hemos recibido una solicitud para restablecer la contraseña en la cuenta asociada con esta dirección de correo electrónico.
+            </p>
+            <p>
+            Su Password es <b >\"$password\"</b>. Si Usted no inició esta solicitud,
+            Por favor ignore este mensaje
+            </p>
+            <p>
+            Si tiene alguna pregunta sobre este correo electrónico, puede contactarnos en deliveryiguazu@gmail.com.
+            </p>
+            <p>
+            Saludos,
+            <br>
+            El eqipo de Pizza Color Delivery 
+            </p>";
+            $enviado=$mail->send();
+           return true;
         } catch (Exception $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            
+            //echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            return false;
         }
     }
 

@@ -75,19 +75,21 @@ class AuthModel {
     }
 
     public function recuperarPassword($correo) {
-     
+
         $persona = $this->db->from($this->table)
                 ->where('per_email', $correo)
                 ->fetch();
 
         if (is_object($persona)) {
-            $password=  $persona->per_password;
-//            var_dump($persona);
-           $respuesta=Email::SendEmail($correo,$password);
-//var_dump($token);
-            $this->response->result = $respuesta;
+            $password = $persona->per_password;
 
-            return $this->response->SetResponse(true, 'Credenciales Validas', $token);
+            $respuesta = Email::SendEmail($correo, $password);
+
+            if ($respuesta) {
+                return $this->response->SetResponse(true, 'El password fue enviado a ' . $correo);
+            } else {
+                 return $this->response->SetResponse(true, 'No fue posible reestablecer la contraseña con ese correo');
+            }
         } else {
             return $this->response->SetResponse(false, "Su correo no esta registrado");
         }
