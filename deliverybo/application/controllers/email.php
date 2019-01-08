@@ -11,6 +11,9 @@ class Email extends CI_Controller {
     public function sendMailGmail() {
         //cargamos la libreria email de ci
         $this->load->library("email");
+        $email = $this->input->post('email');
+        $estado = $this->input->post('estado');
+        $nrPedido = $this->input->post('idPedido');
 
         //configuracion para gmail
         $configGmail = array(
@@ -28,9 +31,21 @@ class Email extends CI_Controller {
         $this->email->initialize($configGmail);
 
         $this->email->from('deliveryiguazu@gmail.com');
-        $this->email->to("facundokpo04@gmail.com");
-        $this->email->subject('Bienvenido/a a uno-de-piera.com');
-        $this->email->message('<h2>Email enviado con codeigniter haciendo uso del smtp de gmail</h2><hr><br> Bienvenido al blog');
+        $this->email->to($email);
+        $this->email->message("
+            <p>Hola estimado cliente</p>
+            <p>            
+              Gracias por elegir Pizza Color Delivery! Queriamos Avisarle que su pedido esta siendo  <b>\"$estado\".</b>
+            </p>   <p>
+            Si tiene alguna pregunta sobre este correo electrónico, puede contactarnos en deliveryiguazu@gmail.com.
+            </p>
+            <p>
+            Saludos,
+            <br>
+            El equipo de Pizza Color Delivery 
+            </p>");
+        $this->email->subject("Su pedido \"$nrPedido\" de Pizza Color Delivery esta siendo \"$estado\"  ");
+
         $this->email->send();
         //con esto podemos ver el resultado
         echo json_encode($this->email->print_debugger());
