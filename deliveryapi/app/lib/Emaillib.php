@@ -50,7 +50,7 @@ class Email {
             <p>
             Saludos,
             <br>
-            El eqipo de Pizza Color Delivery 
+            El equipo de Pizza Color Delivery 
             </p>";
             $enviado=$mail->send();
            return true;
