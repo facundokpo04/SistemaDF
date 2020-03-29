@@ -106,6 +106,9 @@
 <?php if($this->uri->segment(1)=='hotel'){?>
 <script   type="text/javascript" src="<?php echo base_url('assets/js/hotel.js') ?>"></script>
 <?php }?>
+<?php if($this->uri->segment(1)=='publicidad'){?>
+<script   type="text/javascript" src="<?php echo base_url('assets/js/publicidad.js') ?>"></script>
+<?php }?>
 
 <script type="text/javascript">
     var baseurl = "<?php echo base_url(); ?>";

@@ -88,7 +88,6 @@ $('#tblCategorias').DataTable({
 
 selCategoria = function (idCategorias) {
 
-
     $.ajax({
         type: "POST",
         url: baseurl + "index.php/categoria/get_categoriaById/" + idCategorias,
